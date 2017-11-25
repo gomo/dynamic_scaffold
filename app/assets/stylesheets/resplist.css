@@ -1,0 +1,155 @@
+@charset "UTF-8";
+/*<ul id="access-list" class="resplist resplist-striped">
+  <li class="resplist-row">
+    <div class="resplist-heading">Some Title</div>
+    <div class="resplist-items">
+      <div class="resplist-item resplist-item-xs">
+        <div class="resplist-label">ID</div>
+        <div class="resplist-value">1</div>
+      </div>
+      <div class="resplist-item resplist-item-md">
+        <div class="resplist-label">Name</div>
+        <div class="resplist-value">Micheal Jackson</div>
+      </div>
+      <div class="resplist-item resplist-item-md">
+        <div class="resplist-label">Born</div>
+        <div class="resplist-value">1958/8/29</div>
+      </div>
+      <div class="resplist-item resplist-item-md">
+        <div class="resplist-label">Died</div>
+        <div class="resplist-value">2009/6/25</div>
+      </div>
+      <div class="resplist-item resplist-item-md">
+        <div class="resplist-label">Occupations</div>
+        <div class="resplist-value">Musician, singer-songwriter, arranger, dancer, entertainer, choreographer, actor, businessman, philanthropist</div>
+      </div>
+      <div class="resplist-item pull-right">
+        <div class="resplist-value">
+          <div class="btn-group">
+            <a href="#" class="btn btn-primary">編集</a>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-default up-button"><i class="icon-chevron-up"></i></button>
+            <button class="btn btn-default down-button"><i class="icon-chevron-down"></i></button>
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-danger delete-button"><i class="icon-remove"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="resplist-footer">Some Footer</div>
+  </li>
+</ul>*/
+.resplist-items:before, .resplist-item:before, .resplist-row:before, .resplist-items:after, .resplist-item:after, .resplist-row:after {
+  content: " ";
+  display: table;
+}
+.resplist-items:after, .resplist-item:after, .resplist-row:after {
+  clear: both;
+}
+
+ul.resplist {
+  list-style: none;
+  padding: 0;
+  border-collapse: separate;
+}
+
+.resplist-striped .resplist-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.resplist-heading {
+  font-weight: bold;
+  padding: 8px 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1px dotted #dfdfdf;
+  max-width: 100%;
+}
+
+.resplist-footer {
+  padding: 8px 20px;
+}
+
+.resplist-label {
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 11px;
+  color: #888;
+  display: table;
+  padding: 0 20px;
+  height: 15px;
+  line-height: 15px;
+}
+
+.resplist-label-hidden {
+  background-color: transparent;
+}
+
+.resplist-value {
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 14px;
+  padding: 0 20px;
+  height: 38px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.resplist-label + .resplist-value {
+  height: 22px;
+  line-height: 22px;
+}
+
+.resplist-item {
+  float: left;
+  max-width: 100%;
+  margin: 8px 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.resplist-row {
+  background-color: #fff;
+  border-top: 1px solid #dddddd;
+  padding: 0;
+}
+
+.resplist-item-xs {
+  width: 60px;
+}
+
+.resplist-item-sm {
+  width: 120px;
+}
+
+.resplist-item-md {
+  width: 180px;
+}
+
+.resplist-item-lg {
+  width: 240px;
+}
+
+@media (max-width: 768px) {
+  .resplist-heading {
+    padding: 8px 12px;
+  }
+
+  .resplist-footer {
+    padding: 8px 12px;
+  }
+
+  .resplist-item {
+    margin: 8px 0;
+  }
+
+  .resplist-label {
+    padding: 0 12px;
+  }
+
+  .resplist-value {
+    padding: 0 12px;
+  }
+}

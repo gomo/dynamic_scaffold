@@ -1,1 +1,14 @@
-bbbb<%= @test_var %>
+<ul class="resplist resplist-striped">
+  <%@scaffold.list.each do |record|%>
+    <li class="resplist-row">
+      <div class="resplist-items">
+      <%@scaffold.displays.each do |disp|%>
+        <div class="resplist-item">
+          <div class="resplist-label"><%= disp.label %></div>
+          <div class="resplist-value"><%= disp.value record %></div>
+        </div>
+      <%end%>
+      </div>
+    </li>
+  <%end%>
+</ul>

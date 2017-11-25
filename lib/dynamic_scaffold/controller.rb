@@ -1,4 +1,3 @@
-require 'active_support/core_ext/class/attribute'
 module DynamicScaffold
   module Controller
     extend ActiveSupport::Concern
@@ -8,12 +7,17 @@ module DynamicScaffold
 
       def dynamic_scaffold(model)
         self.manager = Manager.new(model)
-        yield self.manager
+        yield manager
+      end
+    end
+
+    included do
+      before_action do
+        @scaffold = self.class.manager
       end
     end
 
     def index
-      @test_var = 'foobar'
       render 'dynamic_scaffold/index'
     end
   end
