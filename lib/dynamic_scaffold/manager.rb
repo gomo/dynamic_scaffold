@@ -14,8 +14,8 @@ module DynamicScaffold
       if @dispalys.empty?
         model.column_names.each do |column|
           @dispalys << Display::Attribute.new(
-            model.human_attribute_name(column),
-            column
+            column,
+            label: model.human_attribute_name(column)
           )
         end
       end

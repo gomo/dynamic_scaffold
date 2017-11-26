@@ -8,8 +8,8 @@ describe 'DynamicScaffold::Manager' do
       displays = manager.displays
       expect(displays.size).to eq Country.column_names.size
       Country.column_names.each_index do |idx|
-        expect(displays[idx].label).to eq Country.human_attribute_name(Country.column_names[idx])
         countries.each do |country|
+          expect(displays[idx].label(country)).to eq Country.human_attribute_name(Country.column_names[idx])
           expect(displays[idx].value(country)).to eq country.public_send(Country.column_names[idx])
         end
       end
