@@ -8,7 +8,7 @@ module DynamicScaffold
       end
 
       def value(record)
-        record[@attribute_name]
+        record.public_send(@attribute_name)
       end
     end
   end
