@@ -18,7 +18,6 @@ module DynamicScaffold
     end
 
     def index
-      render 'dynamic_scaffold/index'
     end
   end
 end
