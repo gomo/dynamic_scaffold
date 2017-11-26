@@ -22,13 +22,11 @@ module DynamicScaffold
       @dispalys
     end
 
-    def add_display(*args)
-      type = args.shift
-      case type
-      when :attr then
-        @dispalys << Display::Attribute.new(*args)
+    def add_display(*args, &block)
+      if block
+        @dispalys << Display::Block.new(*args, block)
       else
-        raise "Unknown type #{type}"
+        @dispalys << Display::Attribute.new(*args)
       end
     end
   end

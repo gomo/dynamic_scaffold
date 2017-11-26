@@ -19,9 +19,11 @@ describe 'DynamicScaffold::Manager' do
   end
 
   context '#add_display' do
-    it ':attr' do
+    it 'No block' do
       manager = DynamicScaffold::Manager.new Country
-      manager.add_display(:attr, :id, 'ID',
+      manager.add_display(
+        :id,
+        'ID',
         class: 'foobar',
         'data-foo' => 'data foo value',
         style: 'width: 100px;'
@@ -33,6 +35,26 @@ describe 'DynamicScaffold::Manager' do
       country = FactoryBot.create(:country)
       expect(display.label(country)).to eq 'ID'
       expect(display.value(country)).to eq country.id
+      expect(display.class_attr).to eq 'class="foobar"'
+      expect(display.html_attr).to eq 'data-foo="data foo value" style="width: 100px;"'
+    end
+    it 'block' do
+      manager = DynamicScaffold::Manager.new Country
+      manager.add_display(
+        'Name',
+        class: 'foobar',
+        'data-foo' => 'data foo value',
+        style: 'width: 100px;'
+      ) do |country|
+        country.name
+      end
+
+      display = manager.displays[0]
+      expect(display).to be_a(DynamicScaffold::Display::Block)
+
+      country = FactoryBot.create(:country)
+      expect(display.label(country)).to eq 'Name'
+      expect(display.value(country)).to eq country.name
       expect(display.class_attr).to eq 'class="foobar"'
       expect(display.html_attr).to eq 'data-foo="data foo value" style="width: 100px;"'
     end
