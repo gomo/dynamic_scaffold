@@ -67,3 +67,6 @@ Metrics/MethodLength:
 Rails/HttpPositionalArguments:
   Exclude:
     - "spec/dummy/config/routes.rb"
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: new_line

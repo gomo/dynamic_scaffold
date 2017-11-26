@@ -4,7 +4,7 @@ describe 'DynamicScaffold::Display' do
   context 'Attribute' do
     it 'should send the attribute name to the model and get its value.' do
       country = FactoryBot.create(:country)
-      display = DynamicScaffold::Display::Attribute.new :id, label: 'ID'
+      display = DynamicScaffold::Display::Attribute.new :id, 'ID'
       expect(display.label(country)).to eq 'ID'
       expect(display.value(country)).to eq country.id
     end
