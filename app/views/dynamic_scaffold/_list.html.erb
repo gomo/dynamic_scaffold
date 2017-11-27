@@ -2,11 +2,7 @@
   <div class="text-left">
     <a href="new" class="btn btn-outline-primary btn-sm"><%= dynamic_scaffold_config.add_icon %> <%= t('dynamic_scaffold.add') %></a>
   </div>
-  <div class="text-right">
-    <button class="btn btn-outline-success btn-success btn-sm">
-      <%= t('dynamic_scaffold.save_order') %>
-    </button>
-  </div>
+  <%= render 'dynamic_scaffold/save_order'%>
 </div>
 <div class="dynamicScaffold-row">
   <ul class="resplist resplist-striped">
@@ -45,9 +41,5 @@
   </ul>
 </div>
 <div class="dynamicScaffold-row">
-  <div class="text-right">
-    <button class="btn btn-outline-success btn-success btn-sm">
-      <%= t('dynamic_scaffold.save_order') %>
-    </button>
-  </div>
+  <%= render 'dynamic_scaffold/save_order'%>
 </div>
