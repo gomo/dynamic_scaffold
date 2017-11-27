@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'spring'
   s.add_development_dependency 'spring-watcher-listen', '~> 2.0.0'
   s.add_development_dependency 'sassc-rails', '~> 1.3'
-  s.add_development_dependency 'bootstrap-sass', '~> 3'
+  s.add_development_dependency 'bootstrap', '~> 4.0.0.beta2.1'
   s.add_development_dependency 'rails-controller-testing'
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "factory_bot_rails"
