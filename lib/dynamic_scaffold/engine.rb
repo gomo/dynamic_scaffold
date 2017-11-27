@@ -1,3 +1,4 @@
+require 'classnames-rails-view'
 module DynamicScaffold
   class Engine < ::Rails::Engine
     config.dynamic_scaffold = ActiveSupport::OrderedOptions.new

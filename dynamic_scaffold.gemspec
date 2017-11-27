@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '~> 5.1.4'
   s.add_dependency 'classnames-rails-view', '~> 0.1'
 
-  s.add_development_dependency 'classnames-rails-view', '~> 0.1'
   s.add_development_dependency 'capybara', '~> 2.13'
   s.add_development_dependency 'pry-rails', '~> 0.3'
   s.add_development_dependency 'pry-byebug', '~> 3.5'
