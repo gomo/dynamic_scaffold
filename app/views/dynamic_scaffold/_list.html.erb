@@ -9,6 +9,26 @@
         </div>
       <%end%>
       </div>
+      <div class="resplist-footer clearfix">
+        <div class="float-right">
+          <div class="btn-group">
+            <a href="#" class="btn btn-primary"><%= dynamic_scaffold_config.edit_icon %> Edit</a>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-secondary btn-defualt">
+              <%= dynamic_scaffold_config.up_icon %>
+            </button>
+            <button class="btn btn-secondary btn-defualt">
+              <%= dynamic_scaffold_config.down_icon %>
+            </button>
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-danger" name="submit_delete" value="1">
+              <%= dynamic_scaffold_config.delete_icon %>
+            </button>
+          </div>
+        </div>
+      </div>
     </li>
   <%end%>
 </ul>
