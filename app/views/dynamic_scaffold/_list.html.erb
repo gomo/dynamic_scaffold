@@ -1,34 +1,53 @@
-<ul class="resplist resplist-striped">
-  <%@manager.list.each do |record|%>
-    <li class="resplist-row">
-      <div class="resplist-items">
-      <%@manager.displays.each do |disp|%>
-        <div class="<%= classNames('resplist-item', disp.class_attr_value) %>"<%= disp.html_attr %>>
-          <div class="resplist-label"><%= disp.label record %></div>
-          <div class="resplist-value"><%= disp.value record %></div>
+<div class="dynamicScaffold-row">
+  <div class="text-left">
+    <a href="new" class="btn btn-outline-primary btn-sm"><%= dynamic_scaffold_config.add_icon %> <%= t('dynamic_scaffold.add') %></a>
+  </div>
+  <div class="text-right">
+    <button class="btn btn-outline-success btn-success btn-sm">
+      <%= t('dynamic_scaffold.save_order') %>
+    </button>
+  </div>
+</div>
+<div class="dynamicScaffold-row">
+  <ul class="resplist resplist-striped">
+    <%@manager.list.each do |record|%>
+      <li class="resplist-row">
+        <div class="resplist-items">
+        <%@manager.displays.each do |disp|%>
+          <div class="<%= classNames('resplist-item', disp.class_attr_value) %>"<%= disp.html_attr %>>
+            <div class="resplist-label"><%= disp.label record %></div>
+            <div class="resplist-value"><%= disp.value record %></div>
+          </div>
+        <%end%>
         </div>
-      <%end%>
-      </div>
-      <div class="resplist-footer clearfix">
-        <div class="float-right">
-          <div class="btn-group">
-            <a href="#" class="btn btn-primary"><%= dynamic_scaffold_config.edit_icon %> Edit</a>
-          </div>
-          <div class="btn-group">
-            <button class="btn btn-secondary btn-defualt">
-              <%= dynamic_scaffold_config.up_icon %>
-            </button>
-            <button class="btn btn-secondary btn-defualt">
-              <%= dynamic_scaffold_config.down_icon %>
-            </button>
-          </div>
-          <div class="btn-group">
-            <button type="submit" class="btn btn-danger" name="submit_delete" value="1">
-              <%= dynamic_scaffold_config.delete_icon %>
-            </button>
+        <div class="resplist-footer clearfix">
+          <div class="float-right">
+            <div class="btn-group">
+              <a href="edit" class="btn btn-outline-primary btn-sm"><%= dynamic_scaffold_config.edit_icon %> <%= t('dynamic_scaffold.edit') %></a>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-outline-dark btn-defualt btn-sm">
+                <%= dynamic_scaffold_config.up_icon %>
+              </button>
+              <button class="btn btn-outline-dark btn-defualt btn-sm">
+                <%= dynamic_scaffold_config.down_icon %>
+              </button>
+            </div>
+            <div class="btn-group">
+              <button type="submit" class="btn btn-danger btn-sm">
+                <%= dynamic_scaffold_config.delete_icon %>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </li>
-  <%end%>
-</ul>
+      </li>
+    <%end%>
+  </ul>
+</div>
+<div class="dynamicScaffold-row">
+  <div class="text-right">
+    <button class="btn btn-outline-success btn-success btn-sm">
+      <%= t('dynamic_scaffold.save_order') %>
+    </button>
+  </div>
+</div>

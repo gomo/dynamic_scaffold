@@ -1,0 +1,5 @@
+ja:
+  dynamic_scaffold:
+    add: '追加'
+    edit: '編集'
+    save_order: '並び順を保存'
