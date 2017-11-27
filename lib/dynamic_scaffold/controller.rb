@@ -13,7 +13,7 @@ module DynamicScaffold
 
     included do
       before_action do
-        @scaffold = self.class.manager
+        @manager = self.class.manager
       end
     end
 

@@ -56,8 +56,20 @@ describe 'DynamicScaffold::Manager' do
         style: 'width: 100px;'
       )
       display = manager.displays[0]
-      expect(display.class_attr).to eq 'class="foobar"'
+      expect(display.class_attr_value).to eq 'foobar'
       expect(display.html_attr).to eq 'data-foo="data foo value" style="width: 100px;"'
+    end
+    it 'should be used as an argument of the method to be sent when the second argument is an array.' do
+      manager = DynamicScaffold::Manager.new Country
+      manager.add_display(
+        :fdate,
+        [:created_at, '%Y-%m-%d %H:%M:%S'],
+        'Create Date'
+      )
+      display = manager.displays[0]
+      country = FactoryBot.create(:country)
+      expect(display.label country).to eq 'Create Date'
+      expect(display.value country).to eq country.fdate(:created_at, '%Y-%m-%d %H:%M:%S')
     end
   end
 end
