@@ -1,5 +1,17 @@
 require 'rails_helper'
 
+class DynamicScaffoldSpecView
+  extend ActionView::Context
+  extend ActionView::Helpers::FormHelper
+  extend ActionView::Helpers::CaptureHelper
+  extend ActionView::Helpers::UrlHelper
+  extend ActionView::Helpers::FormTagHelper
+  extend ActionView::Helpers::TagHelper
+  def self.protect_against_forgery?
+    false
+  end
+end
+
 describe 'DynamicScaffold::Manager' do
   context '#displays' do
     it 'should output all columns by default.' do
@@ -70,6 +82,20 @@ describe 'DynamicScaffold::Manager' do
       country = FactoryBot.create(:country)
       expect(display.label country).to eq 'Create Date'
       expect(display.value country).to eq country.fdate(:created_at, '%Y-%m-%d %H:%M:%S')
+    end
+  end
+
+  context '#forms' do
+    it 'should output all columns by default.' do
+      manager = DynamicScaffold::Manager.new Country
+
+      forms = manager.forms
+      expect(forms.size).to eq Country.column_names.size - 1
+
+      country = FactoryBot.create(:country)
+      DynamicScaffoldSpecView.form_with model: country, url: './create' do |form|
+        p(form.text_field[:name] )
+      end
     end
   end
 end

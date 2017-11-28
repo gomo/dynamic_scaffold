@@ -19,5 +19,9 @@ module DynamicScaffold
 
     def index
     end
+
+    def new
+      @record = @manager.model.new
+    end
   end
 end

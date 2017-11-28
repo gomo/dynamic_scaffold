@@ -1,9 +1,9 @@
 module DynamicScaffold
-  module Helper
+  module ActionView
     extend ActiveSupport::Concern
 
     included do
-      include DynamicScaffold::Helper::LocalInstanceMethods
+      include DynamicScaffold::ActionView::LocalInstanceMethods
     end
 
     module LocalInstanceMethods
@@ -14,4 +14,4 @@ module DynamicScaffold
   end
 end
 
-ActionView::Base.send :include, DynamicScaffold::Helper
+::ActionView::Base.send :include, DynamicScaffold::ActionView

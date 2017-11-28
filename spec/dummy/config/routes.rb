@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   scope "/:locale" do
     namespace 'controls' do
       scope 'master', as: :master do
-        get 'country', to: 'country#index'
-        get 'state', to: 'state#index'
+        dynamic_scaffold_for 'country'
+        dynamic_scaffold_for 'state'
       end
     end
   end

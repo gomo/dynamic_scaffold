@@ -10,13 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124081606) do
+ActiveRecord::Schema.define(version: 20171128064503) do
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
     t.integer "sequence"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "country_attributes", primary_key: ["code", "country_id"], force: :cascade do |t|
+    t.string "code"
+    t.string "value"
+    t.integer "country_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code", "country_id"], name: "sqlite_autoindex_country_attributes_1", unique: true
+    t.index ["country_id"], name: "index_country_attributes_on_country_id"
   end
 
   create_table "states", force: :cascade do |t|
