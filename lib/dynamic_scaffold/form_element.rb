@@ -4,7 +4,7 @@ module DynamicScaffold
     def initialize(*args)
       @html_attrs = args.extract_options!
       class_attr = @html_attrs.delete(:class)
-      @classnames = ['form-control']
+      @classnames = []
       @classnames.push(class_attr) if class_attr
 
       @attribute_name = args[0]
@@ -12,9 +12,12 @@ module DynamicScaffold
       self.label = args[2]
     end
 
-    def render(form, record)
-      options = @html_attrs.merge(class: @classnames.join(' '))
-      form.public_send(@type, @attribute_name, options)
+    def render(form, html_attrs = {})
+      class_attr = @html_attrs.delete(:class)
+
+      classnames = class_attr ? @classnames.dup.push(class_attr) : @classnames
+      options = classnames.size > 0 ? @html_attrs.merge(class: classnames.join(' ')) : @html_attrs
+      form.public_send(@type, @attribute_name, options.merge(html_attrs))
     end
 
     def description?

@@ -30,13 +30,11 @@ module DynamicScaffold
     def forms
       if @forms.empty?
         model.column_names.each do |column|
-          unless primary_key? column
-            @forms << FormElement.new(
-              column,
-              :text_field,
-              model.human_attribute_name(column)
-            )
-          end
+          @forms << FormElement.new(
+            column,
+            :text_field,
+            model.human_attribute_name(column)
+          )
         end
       end
       @forms
@@ -47,16 +45,5 @@ module DynamicScaffold
       @forms << elem
       elem
     end
-
-    private
-
-      def primary_key?(column)
-        pkey = model.primary_key
-        if pkey.is_a? Array
-          pkey.include? column.to_s
-        else
-          pkey == column.to_s
-        end
-      end
   end
 end

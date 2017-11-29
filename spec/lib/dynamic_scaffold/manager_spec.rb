@@ -90,11 +90,34 @@ describe 'DynamicScaffold::Manager' do
       manager = DynamicScaffold::Manager.new Country
 
       forms = manager.forms
-      expect(forms.size).to eq Country.column_names.size - 1
+      expect(forms.size).to eq Country.column_names.size
 
       country = FactoryBot.create(:country)
       DynamicScaffoldSpecView.form_with model: country, url: './create' do |form|
-        p(form.text_field[:name] )
+        expect(forms[0].label).to eq 'Id'
+        expect(forms[0].render(form)).to(
+          eq "<input type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
+        )
+
+        expect(forms[1].label).to eq 'Name'
+        expect(forms[1].render(form)).to(
+          eq "<input type=\"text\" value=\"#{country.name}\" name=\"country[name]\" />"
+        )
+
+        expect(forms[2].label).to eq 'Sequence'
+        expect(forms[2].render(form)).to(
+          eq "<input type=\"text\" value=\"#{country.sequence}\" name=\"country[sequence]\" />"
+        )
+
+        expect(forms[3].label).to eq 'Created at'
+        expect(forms[3].render(form)).to(
+          eq "<input type=\"text\" value=\"#{country.created_at}\" name=\"country[created_at]\" />"
+        )
+
+        expect(forms[4].label).to eq 'Updated at'
+        expect(forms[4].render(form)).to(
+          eq "<input type=\"text\" value=\"#{country.updated_at}\" name=\"country[updated_at]\" />"
+        )
       end
     end
   end

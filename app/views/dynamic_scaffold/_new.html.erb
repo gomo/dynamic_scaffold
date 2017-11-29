@@ -1,11 +1,11 @@
 <%= form_with model: @record, url: './create' do |form| %>
   <%@manager.forms.each do |elem|%>
     <% if elem.type? :hidden_field %>
-      <%= elem.render(form, @record) %>
+      <%= elem.render(form) %>
     <% else %>
       <div class="form-group">
         <label><%= elem.label %></label>
-        <%= elem.render(form, @record) %>
+        <%= elem.render(form, class: 'form-control') %>
         <%if elem.description?%>
           <small class="form-text text-muted"><%= elem.description %></small>
         <%end%>
