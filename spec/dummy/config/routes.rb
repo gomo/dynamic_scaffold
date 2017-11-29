@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       scope 'master', as: :master do
         dynamic_scaffold_for 'country'
         dynamic_scaffold_for 'state'
+        dynamic_scaffold_for 'shop'
       end
     end
   end

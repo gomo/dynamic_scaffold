@@ -2,6 +2,21 @@
   <%@manager.forms.each do |elem|%>
     <% if elem.type? :hidden_field %>
       <%= elem.render(form) %>
+    <% elsif elem.type? :check_boxes %>
+      <div class="form-group">
+        <%if elem.label?%>
+          <label><%= elem.label(form) %></label>
+        <%end%>
+        <div>
+        <%= elem.render(form) do |cb|%>
+          <div class="form-check">
+          <%= cb.label class: 'form-check-label' do%>
+            <%= cb.check_box class: 'form-check-input' %> <%= cb.text %> 
+          <%end%>
+          </div>
+        <%end%>
+        </div>
+      </div> 
     <% else %>
       <div class="form-group">
         <label><%= elem.label(form) %></label>
@@ -12,5 +27,12 @@
       </div>
     <% end %>
   <% end %>
-  <%= form.button t('dynamic_scaffold.save'), class: 'btn btn-outline-warning btn-warning' %>
+  <div>
+    <%= content_tag :a, href: './', class: 'btn btn-outline-secondary btn-default' do%>
+      <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.back') %>
+    <%end%>
+    <%= content_tag :button, class: 'btn btn-outline-warning btn-warning' do%>
+      <%= dynamic_scaffold_icon :save %> <%= t('dynamic_scaffold.save') %>
+    <%end%>
+  </div>
 <% end %>

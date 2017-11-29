@@ -11,6 +11,10 @@ module DynamicScaffold
       @label = args[2]
     end
 
+    def label?
+      false
+    end
+
     def label(form)
       return @label if @label
       form.object.class.human_attribute_name @attribute_name

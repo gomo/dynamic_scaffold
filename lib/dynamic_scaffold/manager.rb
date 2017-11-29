@@ -38,7 +38,12 @@ module DynamicScaffold
     end
 
     def add_form(*args)
-      elem = FormElement.new(*args)
+      case args[1]
+      when :check_boxes then
+        elem = Form::CheckBoxes.new(*args)
+      else
+        elem = FormElement.new(*args)
+      end
       @forms << elem
       elem
     end

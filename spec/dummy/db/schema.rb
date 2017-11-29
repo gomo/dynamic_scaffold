@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128064503) do
+ActiveRecord::Schema.define(version: 20171129083931) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "sequence"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
@@ -19,14 +26,22 @@ ActiveRecord::Schema.define(version: 20171128064503) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "country_attributes", primary_key: ["code", "country_id"], force: :cascade do |t|
-    t.string "code"
-    t.string "value"
-    t.integer "country_id"
+  create_table "shop_states", force: :cascade do |t|
+    t.integer "shop_id"
+    t.integer "state_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["code", "country_id"], name: "sqlite_autoindex_country_attributes_1", unique: true
-    t.index ["country_id"], name: "index_country_attributes_on_country_id"
+    t.index ["shop_id"], name: "index_shop_states_on_shop_id"
+    t.index ["state_id"], name: "index_shop_states_on_state_id"
+  end
+
+  create_table "shops", force: :cascade do |t|
+    t.string "name"
+    t.text "memo"
+    t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_shops_on_category_id"
   end
 
   create_table "states", force: :cascade do |t|
