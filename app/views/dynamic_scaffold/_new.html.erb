@@ -5,7 +5,7 @@
     <% else %>
       <div class="form-group">
         <label><%= elem.label(form) %></label>
-        <%= elem.render(form, class: 'form-control') %>
+        <%= elem.render(form, 'form-control') %>
         <%if elem.description?%>
           <small class="form-text text-muted"><%= instance_eval(&elem.description) %></small>
         <%end%>

@@ -1,11 +1,10 @@
 module DynamicScaffold
   class FormElement
-    attr_accessor
     def initialize(*args)
-      @html_attrs = args.extract_options!
-      class_attr = @html_attrs.delete(:class)
-      @classnames = []
-      @classnames.push(class_attr) if class_attr
+      @html_attributes = args.extract_options!
+      classnames = @html_attributes.delete(:class)
+      @classnames_list = []
+      @classnames_list.push(classnames) if classnames
 
       @attribute_name = args[0]
       @type = args[1]
@@ -17,12 +16,14 @@ module DynamicScaffold
       form.object.class.human_attribute_name @attribute_name
     end
 
-    def render(form, html_attrs = {})
-      class_attr = @html_attrs.delete(:class)
+    def render(form, classnames = nil)
+      classnames_list = @classnames_list
+      classnames_list = [*classnames_list, classnames] if classnames
 
-      classnames = class_attr ? @classnames.dup.push(class_attr) : @classnames
-      options = !classnames.empty? ? @html_attrs.merge(class: classnames.join(' ')) : @html_attrs
-      form.public_send(@type, @attribute_name, options.merge(html_attrs))
+      options = @html_attributes.dup
+      options[:class] = classnames_list.join(' ') unless classnames_list.empty?
+
+      form.public_send(@type, @attribute_name, options)
     end
 
     def description(&block)

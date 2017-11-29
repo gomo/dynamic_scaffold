@@ -140,5 +140,39 @@ describe 'DynamicScaffold::Manager' do
         expect(elem.label(form)).to eq 'Id'
       end
     end
+
+    it 'should be able to generate HTML attributes with the last hash argument.' do
+      country = FactoryBot.create(:country)
+      manager = DynamicScaffold::Manager.new Country
+      manager.add_form(
+        :id,
+        :text_field,
+        class: 'foobar',
+        'data-foobar' => 'foobar value',
+        style: 'width: 50%;'
+      )
+      elem = manager.forms[0]
+      DynamicScaffoldSpecView.form_with model: country, url: './create' do |form|
+        expect(elem.render(form)).to(
+          eq "<input data-foobar=\"foobar value\" style=\"width: 50%;\" class=\"foobar\" type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
+        )
+      end
+    end
+
+    it 'should be able to add class attributes with the last argument of render.' do
+      country = FactoryBot.create(:country)
+      manager = DynamicScaffold::Manager.new Country
+      manager.add_form(
+        :id,
+        :text_field,
+        class: 'foobar'
+      )
+      elem = manager.forms[0]
+      DynamicScaffoldSpecView.form_with model: country, url: './create' do |form|
+        expect(elem.render(form, 'add')).to(
+          eq "<input class=\"foobar add\" type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
+        )
+      end
+    end
   end
 end
