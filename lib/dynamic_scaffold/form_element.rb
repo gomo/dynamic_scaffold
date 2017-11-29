@@ -1,6 +1,6 @@
 module DynamicScaffold
   class FormElement
-    attr_accessor :description
+    attr_accessor
     def initialize(*args)
       @html_attrs = args.extract_options!
       class_attr = @html_attrs.delete(:class)
