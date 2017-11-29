@@ -31,7 +31,7 @@ module DynamicScaffold
     def forms
       if @forms.empty?
         model.column_names.each do |column|
-          @forms << FormElement.new(column, :text_field)
+          @forms << Form::Element.new(column, :text_field)
         end
       end
       @forms
@@ -42,7 +42,7 @@ module DynamicScaffold
       when :check_boxes then
         elem = Form::CheckBoxes.new(*args)
       else
-        elem = FormElement.new(*args)
+        elem = Form::Element.new(*args)
       end
       @forms << elem
       elem
