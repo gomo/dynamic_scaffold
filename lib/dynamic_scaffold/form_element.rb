@@ -1,6 +1,6 @@
 module DynamicScaffold
   class FormElement
-    attr_accessor :label, :description
+    attr_accessor :description
     def initialize(*args)
       @html_attrs = args.extract_options!
       class_attr = @html_attrs.delete(:class)
@@ -9,7 +9,12 @@ module DynamicScaffold
 
       @attribute_name = args[0]
       @type = args[1]
-      self.label = args[2]
+      @label = args[2]
+    end
+
+    def label(form)
+      return @label if @label
+      form.object.class.human_attribute_name @attribute_name
     end
 
     def render(form, html_attrs = {})
@@ -20,8 +25,13 @@ module DynamicScaffold
       form.public_send(@type, @attribute_name, options.merge(html_attrs))
     end
 
+    def description(&block)
+      @description = block if block_given?
+      @description
+    end
+
     def description?
-      description != nil
+      @description != nil
     end
 
     def type?(type)

@@ -11,8 +11,8 @@ module DynamicScaffold
         options = resources.extract_options!
         path = resources[0]
         controller = resources[1] ? resources[1] : resources[0]
-        get(path, { to: "#{resources[0]}#index" }.merge(options).merge(trailing_slash: true))
-        get("#{path}/new", { to: "#{resources[0]}#new" }.merge(options))
+        get(path, { to: "#{controller}#index" }.merge(options).merge(trailing_slash: true))
+        get("#{path}/new", { to: "#{controller}#new" }.merge(options))
       end
     end
   end

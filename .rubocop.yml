@@ -21,6 +21,7 @@ Metrics/LineLength:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
+    - dynamic_scaffold.gemspec
 
 Rails:
   Enabled: true

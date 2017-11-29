@@ -4,10 +4,10 @@
       <%= elem.render(form) %>
     <% else %>
       <div class="form-group">
-        <label><%= elem.label %></label>
+        <label><%= elem.label(form) %></label>
         <%= elem.render(form, class: 'form-control') %>
         <%if elem.description?%>
-          <small class="form-text text-muted"><%= elem.description %></small>
+          <small class="form-text text-muted"><%= instance_eval(&elem.description) %></small>
         <%end%>
       </div>
     <% end %>

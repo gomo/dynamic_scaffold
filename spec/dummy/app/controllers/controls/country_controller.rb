@@ -8,12 +8,18 @@ module Controls
       s.add_display(:fdate, [:created_at, '%Y-%m-%d %H:%M:%S'], 'Create Date', style: 'width: 162px;')
 
       s.add_form(:id, :hidden_field)
-
-      s.add_form(:name, :text_field).description = <<-DESC.html_safe
-        blah [option] {file}<br>
-        --version show version<br>
-        --help    show this help<br>
-      DESC
+      s.add_form(:name, :text_field).description do
+        content_tag :p do
+          out = []
+          out << 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+          out << 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+          out << tag(:br)
+          out << 'Ut enim ad minim veniam, quis nostrud exercitation ullamco '
+          out << 'laboris nisi ut aliquip ex ea commodo consequat. '
+          out << tag(:br)
+          safe_join(out)
+        end
+      end
     end
   end
 end

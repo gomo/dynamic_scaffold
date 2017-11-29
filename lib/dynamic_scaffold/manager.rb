@@ -14,10 +14,7 @@ module DynamicScaffold
     def displays
       if @dispalys.empty?
         model.column_names.each do |column|
-          @dispalys << Display::Attribute.new(
-            column,
-            model.human_attribute_name(column)
-          )
+          @dispalys << Display::Attribute.new(column)
         end
       end
       @dispalys
@@ -30,11 +27,7 @@ module DynamicScaffold
     def forms
       if @forms.empty?
         model.column_names.each do |column|
-          @forms << FormElement.new(
-            column,
-            :text_field,
-            model.human_attribute_name(column)
-          )
+          @forms << FormElement.new(column, :text_field)
         end
       end
       @forms
