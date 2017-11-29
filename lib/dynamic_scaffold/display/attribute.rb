@@ -1,10 +1,8 @@
 module DynamicScaffold
   module Display
-    class Attribute
-      attr_reader :classnames, :html_attributes
+    class Attribute < Base
       def initialize(*args)
-        @html_attributes = args.extract_options!
-        @classnames = @html_attributes.delete(:class)
+        super(args.extract_options!)
         @attribute_name = args[0]
         if args[1].is_a? Array
           @args = args[1]
