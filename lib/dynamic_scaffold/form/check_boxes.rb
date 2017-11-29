@@ -13,26 +13,26 @@ module DynamicScaffold
       def label?
         !@label.nil?
       end
-  
+
       def label(_form)
         @label
       end
-  
+
       def render(form)
         form.collection_check_boxes(@name, @query, @value_attribute_name, @label_attribute_name) do |builder|
           yield builder
         end
       end
-  
+
       def description(&block)
         @description = block if block_given?
         @description
       end
-  
+
       def description?
         @description != nil
       end
-  
+
       def type?(type)
         @type == type
       end

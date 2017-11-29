@@ -6,13 +6,13 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
     sequence: nc
   )
 
-  category = Category.create!(
+  Category.create!(
     name: Faker::Job.field,
     sequence: nc
   )
 
   3.times do |ns|
-    state = State.create!(
+    State.create!(
       name: Faker::Address.state,
       sequence: ns,
       country: country
