@@ -93,15 +93,14 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
-    context 'Multiple element' do
-      it 'check boxes.' do
+    context 'Check boxes' do
+      it 'should be able to render checkboxes.' do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
-        manager.add_form(:states, :check_boxes, State.all, :id, :name, 'State')
+        manager.add_form(:states, :check_boxes, State.all, :id, :name)
         elem = manager.forms[0]
         helper.form_with model: shop, url: './create' do |form|
-          expect(elem.label(form)).to eq 'State'
           expect(elem.type?(:check_boxes)).to be true
           num = 0
           elem.render(form) do |b|
@@ -110,6 +109,26 @@ RSpec.describe ApplicationHelper, type: :helper do
             expect(b.check_box).to eq "<input type=\"checkbox\" value=\"#{state.id}\" name=\"shop[states][]\" id=\"shop_states_#{num + 1}\" />"
             num += 1
           end
+        end
+      end
+      it 'should be able to specify a label.' do
+        FactoryBot.create_list(:state, 3)
+        shop = FactoryBot.create(:shop)
+        manager = DynamicScaffold::Manager.new Shop
+        manager.add_form(:states, :check_boxes, State.all, :id, :name, 'State')
+        elem = manager.forms[0]
+        helper.form_with model: shop, url: './create' do |form|
+          expect(elem.label(form)).to eq 'State'
+        end
+      end
+      it 'should return nil for the label if you omit it.' do
+        FactoryBot.create_list(:state, 3)
+        shop = FactoryBot.create(:shop)
+        manager = DynamicScaffold::Manager.new Shop
+        manager.add_form(:states, :check_boxes, State.all, :id, :name)
+        elem = manager.forms[0]
+        helper.form_with model: shop, url: './create' do |form|
+          expect(elem.label(form)).to be_nil
         end
       end
     end
