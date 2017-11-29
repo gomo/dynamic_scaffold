@@ -68,8 +68,8 @@ describe 'DynamicScaffold::Manager' do
         style: 'width: 100px;'
       )
       display = manager.displays[0]
-      expect(display.class_attr_value).to eq 'foobar'
-      expect(display.html_attr).to eq 'data-foo="data foo value" style="width: 100px;"'
+      expect(display.classnames).to eq 'foobar'
+      expect(display.html_attributes).to eq 'data-foo' => 'data foo value', style: 'width: 100px;'
     end
     it 'should be used as an argument of the method to be sent when the second argument is an array.' do
       manager = DynamicScaffold::Manager.new Country

@@ -1,9 +1,10 @@
 module DynamicScaffold
   module Display
     class Attribute
+      attr_reader :classnames, :html_attributes
       def initialize(*args)
-        @html_attrs = args.extract_options!
-        @class_attr = @html_attrs.delete(:class)
+        @html_attributes = args.extract_options!
+        @classnames = @html_attributes.delete(:class)
         @attribute_name = args[0]
         if args[1].is_a? Array
           @args = args[1]
@@ -21,14 +22,6 @@ module DynamicScaffold
       def label(record)
         return @label if @label
         record.class.human_attribute_name(@attribute_name)
-      end
-
-      def class_attr_value
-        @class_attr
-      end
-
-      def html_attr
-        @html_attrs.map {|k, v| "#{k}=\"#{v}\"" }.join(' ').html_safe
       end
     end
   end

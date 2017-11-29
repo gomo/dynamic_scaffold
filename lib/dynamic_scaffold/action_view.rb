@@ -7,8 +7,8 @@ module DynamicScaffold
     end
 
     module LocalInstanceMethods
-      def dynamic_scaffold_config
-        ::Rails.application.config.dynamic_scaffold
+      def dynamic_scaffold_icon(name)
+        instance_exec name, &::Rails.application.config.dynamic_scaffold.icons
       end
     end
   end
