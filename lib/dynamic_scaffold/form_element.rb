@@ -16,12 +16,12 @@ module DynamicScaffold
       class_attr = @html_attrs.delete(:class)
 
       classnames = class_attr ? @classnames.dup.push(class_attr) : @classnames
-      options = classnames.size > 0 ? @html_attrs.merge(class: classnames.join(' ')) : @html_attrs
+      options = !classnames.empty? ? @html_attrs.merge(class: classnames.join(' ')) : @html_attrs
       form.public_send(@type, @attribute_name, options.merge(html_attrs))
     end
 
     def description?
-      self.description != nil
+      description != nil
     end
 
     def type?(type)

@@ -12,7 +12,6 @@ module DynamicScaffold
           @args = []
           @label = args[1]
         end
-        
       end
 
       def value(record)

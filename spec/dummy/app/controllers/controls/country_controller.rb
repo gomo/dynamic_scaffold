@@ -8,7 +8,7 @@ module Controls
       s.add_display(:fdate, [:created_at, '%Y-%m-%d %H:%M:%S'], 'Create Date', style: 'width: 162px;')
 
       s.add_form(:id, :hidden_field)
-      
+
       s.add_form(:name, :text_field).description = <<-DESC.html_safe
         blah [option] {file}<br>
         --version show version<br>

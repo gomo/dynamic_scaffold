@@ -80,8 +80,8 @@ describe 'DynamicScaffold::Manager' do
       )
       display = manager.displays[0]
       country = FactoryBot.create(:country)
-      expect(display.label country).to eq 'Create Date'
-      expect(display.value country).to eq country.fdate(:created_at, '%Y-%m-%d %H:%M:%S')
+      expect(display.label(country)).to eq 'Create Date'
+      expect(display.value(country)).to eq country.fdate(:created_at, '%Y-%m-%d %H:%M:%S')
     end
   end
 
