@@ -12,17 +12,6 @@ AllCops:
 
   DisplayCopNames: true
 
-Metrics/LineLength:
-  Exclude:
-    - classnames-rails-view.gemspec
-    - spec/dummy/config/**/*
-    - spec/dummy/Rakefile
-
-Metrics/BlockLength:
-  Exclude:
-    - spec/**/*
-    - dynamic_scaffold.gemspec
-
 Rails:
   Enabled: true
 
@@ -35,10 +24,6 @@ Style/ConditionalAssignment:
 
 Layout/IndentationConsistency:
   EnforcedStyle: rails
-
-Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - "spec/**/*"
 
 Layout/IndentHash:
   EnforcedStyle: 'consistent'
@@ -56,11 +41,23 @@ Layout/FirstParameterIndentation:
   EnforcedStyle: consistent
 
 Metrics/LineLength:
+  Enabled: false
+
+Metrics/LineLength:
   Max: 128
   AllowURI: true
   URISchemes:
     - http
     - https
+  Exclude:
+    - spec/dummy/config/**/*
+    - spec/dummy/Rakefile
+    - spec/lib/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/lib/**/*
+    - dynamic_scaffold.gemspec
 
 Metrics/MethodLength:
   Max: 20

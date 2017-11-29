@@ -15,7 +15,7 @@ module DynamicScaffold
         end
       end
 
-      def value(record)
+      def value(record, _view)
         record.public_send(@attribute_name, *@args)
       end
 

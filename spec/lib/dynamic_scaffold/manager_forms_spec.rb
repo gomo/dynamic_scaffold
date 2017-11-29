@@ -1,6 +1,6 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe ApplicationHelper, :type => :helper do
+RSpec.describe ApplicationHelper, type: :helper do
   context 'DynamicScaffold::Manager#forms' do
     it 'should output all columns by default.' do
       manager = DynamicScaffold::Manager.new Country

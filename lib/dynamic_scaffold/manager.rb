@@ -20,8 +20,12 @@ module DynamicScaffold
       @dispalys
     end
 
-    def add_display(*args)
-      @dispalys << Display::Attribute.new(*args)
+    def add_display(*args, &block)
+      if block_given?
+        @dispalys << Display::Block.new(*args, block)
+      else
+        @dispalys << Display::Attribute.new(*args)
+      end
     end
 
     def forms
