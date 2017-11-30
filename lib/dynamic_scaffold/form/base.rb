@@ -1,8 +1,11 @@
 module DynamicScaffold
   module Form
     class Base
-      def initialize(*args)
-        @html_attributes = args.extract_options!
+      def initialize(name, type, label, html_attributes = {})
+        @name = name
+        @type = type
+        @label = label
+        @html_attributes = html_attributes
         classnames = @html_attributes.delete(:class)
         @classnames_list = []
         @classnames_list.push(classnames) if classnames
@@ -27,7 +30,7 @@ module DynamicScaffold
 
       def label(form)
         return @label if @label
-        form.object.class.human_attribute_name @attribute_name if @attribute_name
+        form.object.class.human_attribute_name @name
       end
 
       protected

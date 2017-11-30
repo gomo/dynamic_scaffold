@@ -2,15 +2,12 @@ module DynamicScaffold
   module Form
     class Element < Base
       def initialize(*args)
-        super(*args)
-
-        @attribute_name = args[0]
-        @type = args[1]
-        @label = args[2]
+        html_attributes = args.extract_options!
+        super(args[0], args[1], args[2], html_attributes)
       end
 
       def render(form, classnames = nil)
-        form.public_send(@type, @attribute_name, build_html_attributes(classnames))
+        form.public_send(@type, @name, build_html_attributes(classnames))
       end
     end
   end

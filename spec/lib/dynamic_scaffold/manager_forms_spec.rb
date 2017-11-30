@@ -121,14 +121,14 @@ RSpec.describe ApplicationHelper, type: :helper do
           expect(elem.label(form)).to eq 'State'
         end
       end
-      it 'should return nil for the label if you omit it.' do
+      it 'should use the column name for the label if you omit it.' do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
         manager.add_form(:states, :check_boxes, State.all, :id, :name)
         elem = manager.forms[0]
         helper.form_with model: shop, url: './create' do |form|
-          expect(elem.label(form)).to be_nil
+          expect(elem.label(form)).to eq 'States'
         end
       end
       it 'should be able to send options and html attributes to collection_check_boxes.' do
