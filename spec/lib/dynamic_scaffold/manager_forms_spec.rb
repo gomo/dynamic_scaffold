@@ -133,7 +133,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
     context 'Radio buttons' do
-      it 'should be able to render checkboxes.' do
+      it 'should be able to render radio buttons.' do
         statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
@@ -146,6 +146,31 @@ RSpec.describe ApplicationHelper, type: :helper do
             status = statuses[num]
             expect(b.label).to eq "<label for=\"shop_status_#{num + 1}\">#{status.last}</label>"
             expect(b.radio_button).to eq "<input type=\"radio\" value=\"#{status.first}\" name=\"shop[status]\" id=\"shop_status_#{num + 1}\" />"
+            num += 1
+          end
+        end
+      end
+    end
+    context 'Select options' do
+      it 'should be able to render select.' do
+        FactoryBot.create_list(:category, 3)
+        shop = FactoryBot.create(:shop)
+        manager = DynamicScaffold::Manager.new Shop
+        manager.add_form(:category_id, :select_options, Category.all, :id, :name, 'Category')
+        elem = manager.forms[0]
+        helper.form_with model: shop, url: './create' do |form|
+          expect(elem.type?(:select_options)).to be true
+          result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
+          expect(result.shift).to eq '<select name="shop[category_id]">'
+          expect(result.pop).to eq '</select>'
+          num = 0
+          result.each do |option|
+            category = Category.all.offset(num).first
+            if shop.category_id == category.id
+              expect(option).to eq "<option selected=\"selected\" value=\"#{category.id}\">#{category.name}</option>"
+            else
+              expect(option).to eq "<option value=\"#{category.id}\">#{category.name}</option>"
+            end
             num += 1
           end
         end

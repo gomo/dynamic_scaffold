@@ -2,10 +2,7 @@ module DynamicScaffold
   module Form
     class Element < Base
       def initialize(*args)
-        @html_attributes = args.extract_options!
-        classnames = @html_attributes.delete(:class)
-        @classnames_list = []
-        @classnames_list.push(classnames) if classnames
+        detect_html_attributes!(args)
 
         @attribute_name = args[0]
         @type = args[1]
@@ -18,13 +15,7 @@ module DynamicScaffold
       end
 
       def render(form, classnames = nil)
-        classnames_list = @classnames_list
-        classnames_list = [*classnames_list, classnames] if classnames
-
-        options = @html_attributes.dup
-        options[:class] = classnames_list.join(' ') unless classnames_list.empty?
-
-        form.public_send(@type, @attribute_name, options)
+        form.public_send(@type, @attribute_name, build_html_attributes(classnames))
       end
     end
   end

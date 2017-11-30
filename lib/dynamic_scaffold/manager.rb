@@ -43,6 +43,8 @@ module DynamicScaffold
         elem = Form::CheckBoxes.new(*args)
       when :radio_buttons then
         elem = Form::RadioButtons.new(*args)
+      when :select_options then
+        elem = Form::SelectOptions.new(*args)
       else
         elem = Form::Element.new(*args)
       end
