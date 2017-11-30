@@ -156,7 +156,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
-        manager.add_form(:category_id, :select_options, Category.all, :id, :name, 'Category')
+        manager.add_form(:category_id, :select_options, Category.all, :id, :name)
         elem = manager.forms[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:select_options)).to be true
@@ -173,6 +173,30 @@ RSpec.describe ApplicationHelper, type: :helper do
             end
             num += 1
           end
+        end
+      end
+      it 'should be able to send options and html attributes to collection_select.' do
+        FactoryBot.create_list(:category, 3)
+        shop = FactoryBot.create(:shop)
+        manager = DynamicScaffold::Manager.new Shop
+        manager.add_form(
+          :category_id,
+          :select_options,
+          Category.all,
+          :id,
+          :name,
+          'Category', {
+            include_blank: 'Select Category'
+          }, {
+            class: 'foobar',
+            style: 'width: 200px;'
+          }
+        )
+        elem = manager.forms[0]
+        helper.form_with model: shop, url: './create' do |form|
+          result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
+          expect(result.shift).to eq '<select style="width: 200px;" class="foobar" name="shop[category_id]">'
+          expect(result.shift).to eq '<option value="">Select Category</option>'
         end
       end
     end

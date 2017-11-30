@@ -1,6 +1,13 @@
 module DynamicScaffold
   module Form
     class Base
+      def initialize(*args)
+        @html_attributes = args.extract_options!
+        classnames = @html_attributes.delete(:class)
+        @classnames_list = []
+        @classnames_list.push(classnames) if classnames
+      end
+
       def description(&block)
         @description = block if block_given?
         @description
@@ -19,14 +26,6 @@ module DynamicScaffold
       end
 
       protected
-
-        def detect_html_attributes!(args)
-          @html_attributes = args.extract_options!
-          classnames = @html_attributes.delete(:class)
-          @classnames_list = []
-          @classnames_list.push(classnames) if classnames
-        end
-
         def build_html_attributes(classnames)
           classnames_list = @classnames_list
           classnames_list = [*classnames_list, classnames] if classnames

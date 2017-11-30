@@ -2,7 +2,7 @@ module DynamicScaffold
   module Form
     class Element < Base
       def initialize(*args)
-        detect_html_attributes!(args)
+        super(*args)
 
         @attribute_name = args[0]
         @type = args[1]

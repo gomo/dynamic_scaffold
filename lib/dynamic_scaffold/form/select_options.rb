@@ -2,7 +2,7 @@ module DynamicScaffold
   module Form
     class SelectOptions < Base
       def initialize(name, type, collection, value_method, text_method, label = nil, options = {}, html_attributes = {})
-        detect_html_attributes!([html_attributes])
+        super(html_attributes)
         @name = name
         @type = type
         @collection = collection
