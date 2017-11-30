@@ -131,6 +131,35 @@ RSpec.describe ApplicationHelper, type: :helper do
           expect(elem.label(form)).to be_nil
         end
       end
+      it 'should be able to send options and html attributes to collection_check_boxes.' do
+        FactoryBot.create_list(:state, 3)
+        shop = FactoryBot.create(:shop)
+        manager = DynamicScaffold::Manager.new Shop
+        manager.add_form(
+          :states,
+          :check_boxes,
+          State.all,
+          :id,
+          :name,
+          'State', {
+            disabled: State.all.map(&:id)
+          }, {
+            class: 'foobar',
+            style: 'font-size: 20px;'
+          }
+        )
+        elem = manager.forms[0]
+        helper.form_with model: shop, url: './create' do |form|
+          num = 0
+          elem.render(form) do |b|
+            state = State.all.offset(num).first
+            expect(b.check_box).to eq(
+              "<input style=\"font-size: 20px;\" class=\"foobar\" disabled=\"disabled\" type=\"checkbox\" value=\"#{state.id}\" name=\"shop[states][]\" id=\"shop_states_#{num + 1}\" />"
+            )
+            num += 1
+          end
+        end
+      end
     end
     context 'Radio buttons' do
       it 'should be able to render radio buttons.' do
@@ -146,6 +175,35 @@ RSpec.describe ApplicationHelper, type: :helper do
             status = statuses[num]
             expect(b.label).to eq "<label for=\"shop_status_#{num + 1}\">#{status.last}</label>"
             expect(b.radio_button).to eq "<input type=\"radio\" value=\"#{status.first}\" name=\"shop[status]\" id=\"shop_status_#{num + 1}\" />"
+            num += 1
+          end
+        end
+      end
+      it 'should be able to send options and html attributes to collection_radit_buttons.' do
+        statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
+        shop = FactoryBot.create(:shop)
+        manager = DynamicScaffold::Manager.new Shop
+        manager.add_form(
+          :status,
+          :radio_buttons,
+          statuses,
+          :first,
+          :last,
+          'Status', {
+            disabled: [1, 2, 3]
+          }, {
+            class: 'foobar',
+            style: 'font-size: 20px;'
+          }
+        )
+        elem = manager.forms[0]
+        helper.form_with model: shop, url: './create' do |form|
+          num = 0
+          elem.render(form) do |b|
+            status = statuses[num]
+            expect(b.radio_button).to eq(
+              "<input style=\"font-size: 20px;\" class=\"foobar\" disabled=\"disabled\" type=\"radio\" value=\"#{status.first}\" name=\"shop[status]\" id=\"shop_status_#{num + 1}\" />"
+            )
             num += 1
           end
         end

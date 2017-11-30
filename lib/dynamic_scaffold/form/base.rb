@@ -25,7 +25,13 @@ module DynamicScaffold
         !@label.nil?
       end
 
+      def label(form)
+        return @label if @label
+        form.object.class.human_attribute_name @attribute_name if @attribute_name
+      end
+
       protected
+
         def build_html_attributes(classnames)
           classnames_list = @classnames_list
           classnames_list = [*classnames_list, classnames] if classnames
