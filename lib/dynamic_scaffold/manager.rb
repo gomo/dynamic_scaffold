@@ -41,6 +41,8 @@ module DynamicScaffold
       case args[1]
       when :check_boxes then
         elem = Form::CheckBoxes.new(*args)
+      when :radio_buttons then
+        elem = Form::RadioButtons.new(*args)
       else
         elem = Form::Element.new(*args)
       end
