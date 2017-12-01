@@ -48,7 +48,7 @@ module DynamicScaffold
       color_field
     ].each do |name|
       define_method(name) do |*args|
-        @form_fields << Form::Element.new(name, *args)
+        @form_fields << Form::Single.new(name, *args)
       end
     end
 
@@ -60,7 +60,7 @@ module DynamicScaffold
     def form_fields
       if @form_fields.empty?
         @manager.model.column_names.each do |column|
-          @form_fields << Form::Element.new(:text_field, column)
+          @form_fields << Form::Single.new(:text_field, column)
         end
       end
       @form_fields
