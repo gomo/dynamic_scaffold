@@ -48,7 +48,7 @@ module DynamicScaffold
       color_field
     ].each do |name|
       define_method(name) do |*args|
-        @form_fields << Form::Single.new(name, *args)
+        @form_fields << Editor::FormField::Single.new(name, *args)
       end
     end
 
@@ -60,26 +60,26 @@ module DynamicScaffold
     def form_fields
       if @form_fields.empty?
         @manager.model.column_names.each do |column|
-          @form_fields << Form::Single.new(:text_field, column)
+          @form_fields << Editor::FormField::Single.new(:text_field, column)
         end
       end
       @form_fields
     end
 
     def collection_check_boxes(*args)
-      @form_fields << Form::CollectionCheckBoxes.new(:collection_check_boxes, *args)
+      @form_fields << Editor::FormField::CollectionCheckBoxes.new(:collection_check_boxes, *args)
     end
 
     def collection_radio_buttons(*args)
-      @form_fields << Form::CollectionRadioButtons.new(:collection_radio_buttons, *args)
+      @form_fields << Editor::FormField::CollectionRadioButtons.new(:collection_radio_buttons, *args)
     end
 
     def collection_select(*args)
-      @form_fields << Form::CollectionSelect.new(:collection_select, *args)
+      @form_fields << Editor::FormField::CollectionSelect.new(:collection_select, *args)
     end
 
     def grouped_collection_select(*args)
-      @form_fields << Form::GroupedCollectionSelect.new(:grouped_collection_select, *args)
+      @form_fields << Editor::FormField::GroupedCollectionSelect.new(:grouped_collection_select, *args)
     end
   end
 end
