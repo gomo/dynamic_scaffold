@@ -2,16 +2,16 @@ module Controls
   class CountryController < ApplicationController
     include DynamicScaffold::Controller
     dynamic_scaffold Country do |s|
-      s.add_display(:id, style: 'width: 80px;')
-      s.add_display(:name, style: 'width: 220px;')
-      s.add_display(:fdate, [:updated_at, '%Y-%m-%d %H:%M:%S'], 'Update Date', style: 'width: 162px;')
-      s.add_display(:fdate, [:created_at, '%Y-%m-%d %H:%M:%S'], 'Create Date', style: 'width: 162px;')
-      s.add_display('To state', style: 'width: 240px;') do |record|
+      s.list.item(:id, style: 'width: 80px;')
+      s.list.item(:name, style: 'width: 220px;')
+      s.list.item(:fdate, [:updated_at, '%Y-%m-%d %H:%M:%S'], 'Update Date', style: 'width: 162px;')
+      s.list.item(:fdate, [:created_at, '%Y-%m-%d %H:%M:%S'], 'Create Date', style: 'width: 162px;')
+      s.list.item('To state', style: 'width: 240px;') do |record|
         content_tag :a, "To state of #{record.name}", href: 'foobar'
       end
 
-      s.add_form(:id, :hidden_field)
-      s.add_form(:name, :text_field).description do
+      s.editor.hidden_field(:id)
+      s.editor.text_field(:name).description do
         content_tag :p do
           out = []
           out << 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
