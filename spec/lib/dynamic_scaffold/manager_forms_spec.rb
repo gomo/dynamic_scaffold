@@ -258,8 +258,8 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
-    context 'Grouped options' do
-      it 'should be able to render grouped select.' do
+    context 'Grouped Collection Select' do
+      it 'should be able to render select with optgroup.' do
         grouped_options = [[
           'Group 1',
           [[1, 'Item 1'], [2, 'Item 2'], [3, 'Item 3']]
@@ -270,10 +270,10 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
-        manager.add_form(:category_id, :grouped_options, grouped_options, :last, :first, :first, :last)
+        manager.add_form(:category_id, :grouped_collection_select, grouped_options, :last, :first, :first, :last)
         elem = manager.forms[0]
         helper.form_with model: shop, url: './create' do |form|
-          expect(elem.type?(:grouped_options)).to be true
+          expect(elem.type?(:grouped_collection_select)).to be true
           result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
           option_checker = proc do |value, name|
             if shop.category_id == value

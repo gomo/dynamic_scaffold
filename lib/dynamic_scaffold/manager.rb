@@ -45,8 +45,8 @@ module DynamicScaffold
         elem = Form::CollectionRadioButtons.new(*args)
       when :collection_select then
         elem = Form::CollectionSelect.new(*args)
-      when :grouped_options then
-        elem = Form::GroupedOptions.new(*args)
+      when :grouped_collection_select then
+        elem = Form::GroupedCollectionSelect.new(*args)
       else
         elem = Form::Element.new(*args)
       end
