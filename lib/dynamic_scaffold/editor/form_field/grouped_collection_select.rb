@@ -7,7 +7,7 @@ module DynamicScaffold
           @group_method = group_method
           @group_label_method = group_label_method
         end
-  
+
         def render(form, classnames = nil)
           form.grouped_collection_select(
             @name,

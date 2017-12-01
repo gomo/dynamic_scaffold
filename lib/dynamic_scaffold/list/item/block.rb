@@ -7,11 +7,11 @@ module DynamicScaffold
           @label = args[0]
           @block = block
         end
-  
+
         def value(record, view)
           view.instance_exec(record, &@block)
         end
-  
+
         def label(_record)
           @label
         end
