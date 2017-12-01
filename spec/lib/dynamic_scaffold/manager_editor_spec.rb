@@ -42,7 +42,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)
         manager = DynamicScaffold::Manager.new Country
-        manager.editor.text_field(:id, 'FOOBAR')
+        manager.editor.text_field(:id).label('FOOBAR')
         elem = manager.editor.form_fields[0]
         helper.form_with model: country, url: './create' do |form|
           expect(elem.label(form)).to eq 'FOOBAR'
@@ -127,7 +127,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
-        manager.editor.collection_check_boxes(:states, State.all, :id, :name, 'State')
+        manager.editor.collection_check_boxes(:states, State.all, :id, :name).label('State')
         elem = manager.editor.form_fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.label(form)).to eq 'State'
@@ -151,8 +151,7 @@ RSpec.describe ApplicationHelper, type: :helper do
           :states,
           State.all,
           :id,
-          :name,
-          'State', {
+          :name, {
             disabled: State.all.map(&:id)
           }, {
             class: 'foobar',
@@ -198,8 +197,7 @@ RSpec.describe ApplicationHelper, type: :helper do
           :status,
           statuses,
           :first,
-          :last,
-          'Status', {
+          :last, {
             disabled: [1, 2, 3]
           }, {
             class: 'foobar',
@@ -251,8 +249,7 @@ RSpec.describe ApplicationHelper, type: :helper do
           :category_id,
           Category.all,
           :id,
-          :name,
-          'Category', {
+          :name, {
             include_blank: 'Select Category'
           }, {
             class: 'foobar',

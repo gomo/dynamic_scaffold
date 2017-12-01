@@ -2,10 +2,9 @@ module DynamicScaffold
   module Editor
     module FormField
       class Base
-        def initialize(type, name, label, html_attributes = {})
+        def initialize(type, name, html_attributes = {})
           @name = name
           @type = type
-          @label = label
           @html_attributes = html_attributes
           classnames = @html_attributes.delete(:class)
           @classnames_list = []
@@ -33,13 +32,19 @@ module DynamicScaffold
           @type == type
         end
 
-        def label?
-          !@label.nil?
+        def label(arg)
+          if arg.is_a? String
+            @label = arg
+            self
+          else
+            return @label if @label
+            # TODO Stop passing form to label. (Make FormField and List::Item have manager reference)
+            arg.object.class.human_attribute_name @name
+          end
         end
 
-        def label(form)
-          return @label if @label
-          form.object.class.human_attribute_name @name
+        def label?
+          !@label.nil?
         end
 
         protected

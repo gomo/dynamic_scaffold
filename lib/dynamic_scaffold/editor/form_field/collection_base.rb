@@ -2,8 +2,8 @@ module DynamicScaffold
   module Editor
     module FormField
       class CollectionBase < Base
-        def initialize(name, type, collection, value_method, text_method, label = nil, options = {}, html_attributes = {}) # rubocop:disable Metrics/ParameterLists, Metrics/LineLength
-          super(name, type, label, html_attributes)
+        def initialize(name, type, collection, value_method, text_method, options = {}, html_attributes = {}) # rubocop:disable Metrics/ParameterLists, Metrics/LineLength
+          super(name, type, html_attributes)
           @collection = collection
           @value_method = value_method
           @text_method = text_method
