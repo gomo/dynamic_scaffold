@@ -43,8 +43,8 @@ module DynamicScaffold
         elem = Form::CollectionCheckBoxes.new(*args)
       when :collection_radio_buttons then
         elem = Form::CollectionRadioButtons.new(*args)
-      when :options then
-        elem = Form::Options.new(*args)
+      when :collection_select then
+        elem = Form::CollectionSelect.new(*args)
       when :grouped_options then
         elem = Form::GroupedOptions.new(*args)
       else

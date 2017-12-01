@@ -1,6 +1,6 @@
 module DynamicScaffold
   module Form
-    class Options < CollectionBase
+    class CollectionSelect < CollectionBase
       def render(form, classnames = nil)
         form.collection_select(
           @name,

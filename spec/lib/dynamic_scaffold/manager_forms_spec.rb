@@ -209,15 +209,15 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
-    context 'Options' do
+    context 'Collection Select' do
       it 'should be able to render select.' do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
-        manager.add_form(:category_id, :options, Category.all, :id, :name)
+        manager.add_form(:category_id, :collection_select, Category.all, :id, :name)
         elem = manager.forms[0]
         helper.form_with model: shop, url: './create' do |form|
-          expect(elem.type?(:options)).to be true
+          expect(elem.type?(:collection_select)).to be true
           result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
           expect(result.shift).to eq '<select name="shop[category_id]">'
           expect(result.pop).to eq '</select>'
@@ -239,7 +239,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager = DynamicScaffold::Manager.new Shop
         manager.add_form(
           :category_id,
-          :options,
+          :collection_select,
           Category.all,
           :id,
           :name,
