@@ -1,33 +1,15 @@
 module DynamicScaffold
   class Manager
-    attr_accessor :model
-    attr_reader :form
+    attr_reader :model, :form, :list
     def initialize(model)
-      self.model = model
-      @dispalys = []
+      @model = model
       @forms = []
       @form = FormBuilder.new(self)
+      @list = ListBuilder.new(self)
     end
 
-    def list
+    def records
       model.all
-    end
-
-    def displays
-      if @dispalys.empty?
-        model.column_names.each do |column|
-          @dispalys << Display::Attribute.new(column)
-        end
-      end
-      @dispalys
-    end
-
-    def add_display(*args, &block)
-      if block_given?
-        @dispalys << Display::Block.new(*args, block)
-      else
-        @dispalys << Display::Attribute.new(*args)
-      end
     end
 
     def forms
@@ -42,23 +24,30 @@ module DynamicScaffold
     def _add_form(form)
       @forms << form
     end
+  end
 
-    # def add_form(*args)
-    #   case args[1]
-    #   when :collection_check_boxes then
-    #     elem = Form::CollectionCheckBoxes.new(*args)
-    #   when :collection_radio_buttons then
-    #     elem = Form::CollectionRadioButtons.new(*args)
-    #   when :collection_select then
-    #     elem = Form::CollectionSelect.new(*args)
-    #   when :grouped_collection_select then
-    #     elem = Form::GroupedCollectionSelect.new(*args)
-    #   else
-    #     elem = Form::Element.new(*args)
-    #   end
-    #   @forms << elem
-    #   elem
-    # end
+  class ListBuilder
+    def initialize(manager)
+      @manager = manager
+      @items = []
+    end
+
+    def item(*args, &block)
+      if block
+        @items << Display::Block.new(*args, block)
+      else
+        @items << Display::Attribute.new(*args)
+      end
+    end
+
+    def items
+      if @items.empty?
+        @manager.model.column_names.each do |column|
+          @items << Display::Attribute.new(column)
+        end
+      end
+      @items
+    end
   end
 
   class FormBuilder

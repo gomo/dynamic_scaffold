@@ -6,10 +6,10 @@
 </div>
 <div class="dynamicScaffold-row">
   <ul class="resplist resplist-striped">
-    <%@manager.list.each do |record|%>
+    <%@manager.list.records.each do |record|%>
       <li class="resplist-row">
         <div class="resplist-items">
-        <%@manager.displays.each do |disp|%>
+        <%@manager.list.items.each do |disp|%>
           <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
             <div class="resplist-label"><%= disp.label record %></div>
             <div class="resplist-value"><%= disp.value record, self %></div>
