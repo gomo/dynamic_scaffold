@@ -10,15 +10,23 @@ module DynamicScaffold
           classnames = @html_attributes.delete(:class)
           @classnames_list = []
           @classnames_list.push(classnames) if classnames
+          @notes = []
         end
 
-        def description(&block)
-          @description = block if block_given?
-          @description
+        def notes?
+          !@notes.empty?
         end
 
-        def description?
-          @description != nil
+        def note(&block)
+          @notes << block if block_given?
+          self
+        end
+
+        def render_notes(record, view)
+          htmls = @notes.map do |note|
+            view.instance_exec(record, &note)
+          end
+          view.safe_join(htmls)
         end
 
         def type?(type)

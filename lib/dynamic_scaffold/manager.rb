@@ -6,10 +6,6 @@ module DynamicScaffold
       @editor = EditorBuilder.new(self)
       @list = ListBuilder.new(self)
     end
-
-    def records
-      model.all
-    end
   end
 
   class ListBuilder
@@ -33,6 +29,10 @@ module DynamicScaffold
         end
       end
       @items
+    end
+
+    def records
+      @manager.model.all
     end
   end
 

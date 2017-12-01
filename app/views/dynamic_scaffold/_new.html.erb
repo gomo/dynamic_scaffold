@@ -21,8 +21,8 @@
       <div class="form-group">
         <label><%= elem.label(form) %></label>
         <%= elem.render(form, 'form-control') %>
-        <%if elem.description?%>
-          <small class="form-text text-muted"><%= instance_eval(&elem.description) %></small>
+        <%if elem.notes?%>
+          <small class="form-text text-muted"><%= elem.render_notes(form.object, self) %></small>
         <%end%>
       </div>
     <% end %>

@@ -90,6 +90,20 @@ RSpec.describe ApplicationHelper, type: :helper do
           )
         end
       end
+
+      it 'should be able to add notes in the note method.' do
+        country = FactoryBot.create(:country)
+        manager = DynamicScaffold::Manager.new Country
+        manager.editor.text_field(:id).note do
+          content_tag(:p, 'foo')
+        end.note do
+          content_tag(:p, 'bar')
+        end
+        elem = manager.editor.form_fields[0]
+        helper.form_with model: country, url: './create' do |form|
+          expect(elem.render_notes(country, helper)).to eq '<p>foo</p><p>bar</p>'
+        end
+      end
     end
     context 'CollectionCheckBoxes' do
       it 'should be able to render check boxes.' do
