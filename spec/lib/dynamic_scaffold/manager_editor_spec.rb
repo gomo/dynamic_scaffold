@@ -37,7 +37,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
-  context 'DynamicScaffold::Manager#add_form' do
+  context 'DynamicScaffold::Manager#editor' do
     context 'Simple element' do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)
