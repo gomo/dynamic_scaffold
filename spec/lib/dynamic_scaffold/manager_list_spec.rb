@@ -23,7 +23,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)
         manager = DynamicScaffold::Manager.new Country
-        manager.list.item(:id, 'FOOBAR')
+        manager.list.item(:id).label('FOOBAR')
         item = manager.list.items[0]
         expect(item.label(country)).to eq 'FOOBAR'
       end
@@ -78,29 +78,9 @@ RSpec.describe ApplicationHelper, type: :helper do
         country = FactoryBot.create(:country)
         expect(item.label(country)).to eq 'To State'
       end
-      it 'should return nil for the label if you omit it.' do
-        manager = DynamicScaffold::Manager.new Country
-        manager.list.item {|record| }
-        item = manager.list.items[0]
-        country = FactoryBot.create(:country)
-        expect(item.label(country)).to be_nil
-      end
       it 'should be able to generate HTML attributes with the last hash argument.' do
         country = FactoryBot.create(:country)
 
-        # no lable
-        manager = DynamicScaffold::Manager.new Country
-        manager.list.item(
-          class: 'foobar',
-          'data-foo' => 'data foo value',
-          style: 'width: 100px;'
-        ) {|record| }
-
-        item = manager.list.items[0]
-        expect(item.label(country)).to be_nil
-        expect(item.html_attributes).to eq 'data-foo' => 'data foo value', style: 'width: 100px;'
-
-        # with lable
         manager = DynamicScaffold::Manager.new Country
         manager.list.item(
           'FOOBAR',

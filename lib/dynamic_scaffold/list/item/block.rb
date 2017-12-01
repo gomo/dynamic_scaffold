@@ -11,10 +11,6 @@ module DynamicScaffold
         def value(record, view)
           view.instance_exec(record, &@block)
         end
-
-        def label(_record)
-          @label
-        end
       end
     end
   end

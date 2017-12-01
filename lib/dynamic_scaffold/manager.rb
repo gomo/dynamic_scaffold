@@ -16,10 +16,12 @@ module DynamicScaffold
 
     def item(*args, &block)
       if block
-        @items << List::Item::Block.new(*args, block)
+        item = List::Item::Block.new(*args, block)
       else
-        @items << List::Item::Attribute.new(*args)
+        item = List::Item::Attribute.new(*args)
       end
+      @items << item
+      item
     end
 
     def items
