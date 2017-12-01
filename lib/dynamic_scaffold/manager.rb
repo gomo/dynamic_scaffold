@@ -39,8 +39,8 @@ module DynamicScaffold
 
     def add_form(*args)
       case args[1]
-      when :check_boxes then
-        elem = Form::CheckBoxes.new(*args)
+      when :collection_check_boxes then
+        elem = Form::CollectionCheckBoxes.new(*args)
       when :radio_buttons then
         elem = Form::RadioButtons.new(*args)
       when :options then

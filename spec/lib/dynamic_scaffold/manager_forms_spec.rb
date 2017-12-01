@@ -93,15 +93,15 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
-    context 'Check boxes' do
-      it 'should be able to render checkboxes.' do
+    context 'Collection Check Box' do
+      it 'should be able to render check boxes.' do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
-        manager.add_form(:states, :check_boxes, State.all, :id, :name)
+        manager.add_form(:states, :collection_check_boxes, State.all, :id, :name)
         elem = manager.forms[0]
         helper.form_with model: shop, url: './create' do |form|
-          expect(elem.type?(:check_boxes)).to be true
+          expect(elem.type?(:collection_check_boxes)).to be true
           num = 0
           elem.render(form) do |b|
             state = State.all.offset(num).first
@@ -115,7 +115,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
-        manager.add_form(:states, :check_boxes, State.all, :id, :name, 'State')
+        manager.add_form(:states, :collection_check_boxes, State.all, :id, :name, 'State')
         elem = manager.forms[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.label(form)).to eq 'State'
@@ -125,7 +125,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
-        manager.add_form(:states, :check_boxes, State.all, :id, :name)
+        manager.add_form(:states, :collection_check_boxes, State.all, :id, :name)
         elem = manager.forms[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.label(form)).to eq 'States'
@@ -137,7 +137,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager = DynamicScaffold::Manager.new Shop
         manager.add_form(
           :states,
-          :check_boxes,
+          :collection_check_boxes,
           State.all,
           :id,
           :name,
