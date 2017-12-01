@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
-  context 'DynamicScaffold::Manager#forms' do
+  context 'DynamicScaffold::Manager#fields' do
     it 'should output all columns by default.' do
       manager = DynamicScaffold::Manager.new Country
 
-      forms = manager.forms
+      forms = manager.form.fields
       expect(forms.size).to eq Country.column_names.size
 
       country = FactoryBot.create(:country)
@@ -43,7 +43,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         country = FactoryBot.create(:country)
         manager = DynamicScaffold::Manager.new Country
         manager.form.text_field(:id, 'FOOBAR')
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: country, url: './create' do |form|
           expect(elem.label(form)).to eq 'FOOBAR'
         end
@@ -53,7 +53,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         country = FactoryBot.create(:country)
         manager = DynamicScaffold::Manager.new Country
         manager.form.text_field(:id)
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: country, url: './create' do |form|
           expect(elem.label(form)).to eq 'Id'
         end
@@ -68,7 +68,7 @@ RSpec.describe ApplicationHelper, type: :helper do
           'data-foobar' => 'foobar value',
           style: 'width: 50%;'
         )
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: country, url: './create' do |form|
           expect(elem.render(form)).to(
             eq "<input data-foobar=\"foobar value\" style=\"width: 50%;\" class=\"foobar\" type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
@@ -83,7 +83,7 @@ RSpec.describe ApplicationHelper, type: :helper do
           :id,
           class: 'foobar'
         )
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: country, url: './create' do |form|
           expect(elem.render(form, 'add')).to(
             eq "<input class=\"foobar add\" type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
@@ -97,7 +97,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
         manager.form.collection_check_boxes(:states, State.all, :id, :name)
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_check_boxes)).to be true
           num = 0
@@ -114,7 +114,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
         manager.form.collection_check_boxes(:states, State.all, :id, :name, 'State')
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.label(form)).to eq 'State'
         end
@@ -124,7 +124,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
         manager.form.collection_check_boxes(:states, State.all, :id, :name)
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.label(form)).to eq 'States'
         end
@@ -145,7 +145,7 @@ RSpec.describe ApplicationHelper, type: :helper do
             style: 'font-size: 20px;'
           }
         )
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           num = 0
           elem.render(form) do |b|
@@ -164,7 +164,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
         manager.form.collection_radio_buttons(:status, statuses, :first, :last)
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_radio_buttons)).to be true
           num = 0
@@ -192,7 +192,7 @@ RSpec.describe ApplicationHelper, type: :helper do
             style: 'font-size: 20px;'
           }
         )
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           num = 0
           elem.render(form) do |b|
@@ -211,7 +211,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
         manager.form.collection_select(:category_id, Category.all, :id, :name)
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_select)).to be true
           result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
@@ -245,7 +245,7 @@ RSpec.describe ApplicationHelper, type: :helper do
             style: 'width: 200px;'
           }
         )
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
           expect(result.shift).to eq '<select style="width: 200px;" class="foobar" name="shop[category_id]">'
@@ -266,7 +266,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
         manager.form.grouped_collection_select(:category_id, grouped_options, :last, :first, :first, :last)
-        elem = manager.forms[0]
+        elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:grouped_collection_select)).to be true
           result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
