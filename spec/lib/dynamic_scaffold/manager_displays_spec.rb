@@ -60,18 +60,6 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(display.classnames).to eq 'foobar'
         expect(display.html_attributes).to eq 'data-foo' => 'data foo value', style: 'width: 100px;'
       end
-      it 'should be used as an argument of the method to be sent when the second argument is an array.' do
-        manager = DynamicScaffold::Manager.new Country
-        manager.add_display(
-          :fdate,
-          [:created_at, '%Y-%m-%d %H:%M:%S'],
-          'Create Date'
-        )
-        display = manager.displays[0]
-        country = FactoryBot.create(:country)
-        expect(display.label(country)).to eq 'Create Date'
-        expect(display.value(country, helper)).to eq country.fdate(:created_at, '%Y-%m-%d %H:%M:%S')
-      end
     end
     context 'Block' do
       it 'should call block in the context of view when passing block.' do

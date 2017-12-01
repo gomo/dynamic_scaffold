@@ -4,17 +4,11 @@ module DynamicScaffold
       def initialize(*args)
         super(args.extract_options!)
         @attribute_name = args[0]
-        if args[1].is_a? Array
-          @args = args[1]
-          @label = args[2]
-        else
-          @args = []
-          @label = args[1]
-        end
+        @label = args[1]
       end
 
       def value(record, _view)
-        record.public_send(@attribute_name, *@args)
+        record.public_send(@attribute_name)
       end
 
       def label(record)
