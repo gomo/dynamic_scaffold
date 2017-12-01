@@ -1,7 +1,7 @@
 module DynamicScaffold
   module Form
     class Base
-      def initialize(name, type, label, html_attributes = {})
+      def initialize(type, name, label, html_attributes = {})
         @name = name
         @type = type
         @label = label
