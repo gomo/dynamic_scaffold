@@ -18,7 +18,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
-  context 'DynamicScaffold::Manager#list.item' do
+  context 'DynamicScaffold::Manager::List::Item' do
     context 'Attribute' do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)

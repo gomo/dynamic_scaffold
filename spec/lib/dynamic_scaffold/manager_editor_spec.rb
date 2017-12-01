@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
-  context 'DynamicScaffold::Manager#fields' do
+  context 'DynamicScaffold::Manager#editor.fields' do
     it 'should output all columns by default.' do
       manager = DynamicScaffold::Manager.new Country
 
@@ -37,8 +37,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
-  context 'DynamicScaffold::Manager#editor' do
-    context 'Simple element' do
+  context 'DynamicScaffold::Manager::Editor::FormField' do
+    context 'Simple' do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)
         manager = DynamicScaffold::Manager.new Country
@@ -91,7 +91,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
-    context 'Collection Check Box' do
+    context 'CollectionCheckBoxes' do
       it 'should be able to render check boxes.' do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
@@ -158,7 +158,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
-    context 'Collection Radio Buttons' do
+    context 'CollectionRadioButtons' do
       it 'should be able to render radio buttons.' do
         statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
         shop = FactoryBot.create(:shop)
@@ -205,7 +205,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
-    context 'Collection Select' do
+    context 'CollectionSelect' do
       it 'should be able to render select.' do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
@@ -253,7 +253,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
-    context 'Grouped Collection Select' do
+    context 'GroupedCollectionSelect' do
       it 'should be able to render select with optgroup.' do
         grouped_options = [[
           'Group 1',

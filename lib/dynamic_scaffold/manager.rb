@@ -48,7 +48,9 @@ module DynamicScaffold
       color_field
     ].each do |name|
       define_method(name) do |*args|
-        @form_fields << Editor::FormField::Single.new(name, *args)
+        field = Editor::FormField::Single.new(name, *args)
+        @form_fields << field
+        field
       end
     end
 
@@ -67,19 +69,27 @@ module DynamicScaffold
     end
 
     def collection_check_boxes(*args)
-      @form_fields << Editor::FormField::CollectionCheckBoxes.new(:collection_check_boxes, *args)
+      field = Editor::FormField::CollectionCheckBoxes.new(:collection_check_boxes, *args)
+      @form_fields << field
+      field
     end
 
     def collection_radio_buttons(*args)
-      @form_fields << Editor::FormField::CollectionRadioButtons.new(:collection_radio_buttons, *args)
+      field = Editor::FormField::CollectionRadioButtons.new(:collection_radio_buttons, *args)
+      @form_fields << field
+      field
     end
 
     def collection_select(*args)
-      @form_fields << Editor::FormField::CollectionSelect.new(:collection_select, *args)
+      field = Editor::FormField::CollectionSelect.new(:collection_select, *args)
+      @form_fields << field
+      field
     end
 
     def grouped_collection_select(*args)
-      @form_fields << Editor::FormField::GroupedCollectionSelect.new(:grouped_collection_select, *args)
+      field = Editor::FormField::GroupedCollectionSelect.new(:grouped_collection_select, *args)
+      @form_fields << field
+      field
     end
   end
 end
