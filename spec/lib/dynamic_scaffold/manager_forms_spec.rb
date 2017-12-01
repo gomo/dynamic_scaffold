@@ -161,15 +161,15 @@ RSpec.describe ApplicationHelper, type: :helper do
         end
       end
     end
-    context 'Radio buttons' do
+    context 'Collection Radio Buttons' do
       it 'should be able to render radio buttons.' do
         statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
         shop = FactoryBot.create(:shop)
         manager = DynamicScaffold::Manager.new Shop
-        manager.add_form(:status, :radio_buttons, statuses, :first, :last)
+        manager.add_form(:status, :collection_radio_buttons, statuses, :first, :last)
         elem = manager.forms[0]
         helper.form_with model: shop, url: './create' do |form|
-          expect(elem.type?(:radio_buttons)).to be true
+          expect(elem.type?(:collection_radio_buttons)).to be true
           num = 0
           elem.render(form) do |b|
             status = statuses[num]
@@ -185,7 +185,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager = DynamicScaffold::Manager.new Shop
         manager.add_form(
           :status,
-          :radio_buttons,
+          :collection_radio_buttons,
           statuses,
           :first,
           :last,

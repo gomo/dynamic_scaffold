@@ -1,6 +1,6 @@
 module DynamicScaffold
   module Form
-    class RadioButtons < CollectionBase
+    class CollectionRadioButtons < CollectionBase
       def render(form, classnames = nil)
         form.collection_radio_buttons(
           @name,
