@@ -4,7 +4,7 @@ module DynamicScaffold
       class Single < Base
         def initialize(*args)
           html_attributes = args.extract_options!
-          super(args[0], args[1], html_attributes)
+          super(args[0], args[1], args[2], html_attributes)
         end
 
         def render(form, classnames = nil)

@@ -10,27 +10,27 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       country = FactoryBot.create(:country)
       helper.form_with model: country, url: './create' do |form|
-        expect(forms[0].label(form)).to eq 'Id'
+        expect(forms[0].label).to eq 'Id'
         expect(forms[0].render(form)).to(
           eq "<input type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
         )
 
-        expect(forms[1].label(form)).to eq 'Name'
+        expect(forms[1].label).to eq 'Name'
         expect(forms[1].render(form)).to(
           eq "<input type=\"text\" value=\"#{country.name}\" name=\"country[name]\" />"
         )
 
-        expect(forms[2].label(form)).to eq 'Sequence'
+        expect(forms[2].label).to eq 'Sequence'
         expect(forms[2].render(form)).to(
           eq "<input type=\"text\" value=\"#{country.sequence}\" name=\"country[sequence]\" />"
         )
 
-        expect(forms[3].label(form)).to eq 'Created at'
+        expect(forms[3].label).to eq 'Created at'
         expect(forms[3].render(form)).to(
           eq "<input type=\"text\" value=\"#{country.created_at}\" name=\"country[created_at]\" />"
         )
 
-        expect(forms[4].label(form)).to eq 'Updated at'
+        expect(forms[4].label).to eq 'Updated at'
         expect(forms[4].render(form)).to(
           eq "<input type=\"text\" value=\"#{country.updated_at}\" name=\"country[updated_at]\" />"
         )
@@ -45,7 +45,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager.editor.text_field(:id).label('FOOBAR')
         elem = manager.editor.form_fields[0]
         helper.form_with model: country, url: './create' do |form|
-          expect(elem.label(form)).to eq 'FOOBAR'
+          expect(elem.label).to eq 'FOOBAR'
         end
       end
 
@@ -55,7 +55,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager.editor.text_field(:id)
         elem = manager.editor.form_fields[0]
         helper.form_with model: country, url: './create' do |form|
-          expect(elem.label(form)).to eq 'Id'
+          expect(elem.label).to eq 'Id'
         end
       end
 
@@ -130,7 +130,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager.editor.collection_check_boxes(:states, State.all, :id, :name).label('State')
         elem = manager.editor.form_fields[0]
         helper.form_with model: shop, url: './create' do |form|
-          expect(elem.label(form)).to eq 'State'
+          expect(elem.label).to eq 'State'
         end
       end
       it 'should use the column name for the label if you omit it.' do
@@ -140,7 +140,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager.editor.collection_check_boxes(:states, State.all, :id, :name)
         elem = manager.editor.form_fields[0]
         helper.form_with model: shop, url: './create' do |form|
-          expect(elem.label(form)).to eq 'States'
+          expect(elem.label).to eq 'States'
         end
       end
       it 'should be able to send options and html attributes to collection_check_boxes.' do

@@ -3,8 +3,8 @@ module DynamicScaffold
     module Item
       class Block < Base
         def initialize(*args, block)
-          super(args.extract_options!)
-          @label = args[0]
+          super(args[0], args.extract_options!)
+          @label = args[1]
           @block = block
         end
 

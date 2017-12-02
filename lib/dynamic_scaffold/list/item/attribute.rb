@@ -3,8 +3,8 @@ module DynamicScaffold
     module Item
       class Attribute < Base
         def initialize(*args)
-          super(args.extract_options!)
-          @attribute_name = args[0]
+          super(args[0], args.extract_options!)
+          @attribute_name = args[1]
         end
 
         def value(record, _view)

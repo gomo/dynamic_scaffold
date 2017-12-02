@@ -2,7 +2,8 @@ module DynamicScaffold
   module Editor
     module FormField
       class Base
-        def initialize(type, name, html_attributes = {})
+        def initialize(manager, type, name, html_attributes = {})
+          @manager = manager
           @name = name
           @type = type
           @html_attributes = html_attributes
@@ -32,14 +33,13 @@ module DynamicScaffold
           @type == type
         end
 
-        def label(arg)
-          if arg.is_a? String
-            @label = arg
+        def label(label = nil)
+          if label
+            @label = label
             self
           else
             return @label if @label
-            # TODO Stop passing form to label. (Make FormField and List::Item have manager reference)
-            arg.object.class.human_attribute_name @name
+            @manager.model.human_attribute_name @name
           end
         end
 

@@ -11,7 +11,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       countries = FactoryBot.create_list(:country, 3)
       Country.column_names.each_index do |idx|
         countries.each do |country|
-          expect(items[idx].label(country)).to eq Country.human_attribute_name(Country.column_names[idx])
+          expect(items[idx].label).to eq Country.human_attribute_name(Country.column_names[idx])
           expect(items[idx].value(country, helper)).to eq country.public_send(Country.column_names[idx])
         end
       end
@@ -25,14 +25,14 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager = DynamicScaffold::Manager.new Country
         manager.list.item(:id).label('FOOBAR')
         item = manager.list.items[0]
-        expect(item.label(country)).to eq 'FOOBAR'
+        expect(item.label).to eq 'FOOBAR'
       end
       it 'should use the column name for the label if you omit it.' do
         country = FactoryBot.create(:country)
         manager = DynamicScaffold::Manager.new Country
         manager.list.item(:id)
         item = manager.list.items[0]
-        expect(item.label(country)).to eq Country.human_attribute_name :id
+        expect(item.label).to eq Country.human_attribute_name :id
       end
       it 'should be able to retrieve its value if you specify a column name.' do
         country = FactoryBot.create(:country)
@@ -76,7 +76,14 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager.list.item('To State') {|record| }
         item = manager.list.items[0]
         country = FactoryBot.create(:country)
-        expect(item.label(country)).to eq 'To State'
+        expect(item.label).to eq 'To State'
+      end
+      it 'should return nil for the label if you omit it.' do
+        manager = DynamicScaffold::Manager.new Country
+        manager.list.item {|record| }
+        item = manager.list.items[0]
+        country = FactoryBot.create(:country)
+        expect(item.label).to be_nil
       end
       it 'should be able to generate HTML attributes with the last hash argument.' do
         country = FactoryBot.create(:country)
@@ -89,7 +96,7 @@ RSpec.describe ApplicationHelper, type: :helper do
           style: 'width: 100px;'
         ) {|record| }
         item = manager.list.items[0]
-        expect(item.label(country)).to eq 'FOOBAR'
+        expect(item.label).to eq 'FOOBAR'
         expect(item.html_attributes).to eq 'data-foo' => 'data foo value', style: 'width: 100px;'
       end
     end
