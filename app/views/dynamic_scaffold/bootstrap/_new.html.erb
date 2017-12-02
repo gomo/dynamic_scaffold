@@ -1,0 +1,41 @@
+<%= form_with model: @record, url: './create' do |form| %>
+  <%@manager.editor.form_fields.each do |elem|%>
+    <% if elem.type? :hidden_field %>
+      <%= elem.render(form) %>
+    <% else %>
+      <div class="form-group">
+        <label><%= elem.label %></label>
+        <% if elem.type? :collection_check_boxes %>
+          <%= elem.render(form) do |cb|%>
+            <div class="form-check checkbox">
+              <%= cb.label class: 'form-check-label' do%>
+                <%= cb.check_box class: 'form-check-input' %> <%= cb.text %> 
+              <%end%>
+            </div>
+          <%end%>
+        <% elsif elem.type? :collection_radio_buttons %>
+          <%= elem.render(form) do |cb|%>
+            <div class="form-check radio">
+              <%= cb.label class: 'form-check-label' do%>
+                <%= cb.radio_button class: 'form-check-input' %> <%= cb.text %> 
+              <%end%>
+            </div>
+          <%end%>
+        <% else %>
+          <%= elem.render(form, 'form-control') %>
+        <% end %>
+        <%if elem.notes?%>
+          <div class="form-text text-muted"><%= elem.render_notes(form.object, self) %></div>
+        <%end%>
+      </div>
+    <% end %>
+  <% end %>
+  <div>
+    <a href="./" class="btn btn-outline-secondary btn-default">
+      <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.buttons.back') %>
+    </a>
+    <a href="./" class="btn btn-outline-warning btn-warning">
+      <%= dynamic_scaffold_icon :save %> <%= t('dynamic_scaffold.buttons.save') %>
+    </a>
+  </div>
+<% end %>

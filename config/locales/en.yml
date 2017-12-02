@@ -1,0 +1,4 @@
+en:
+  dynamic_scaffold:
+    messages:
+      no_records: '%{model} is not registered.'

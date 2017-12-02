@@ -43,10 +43,6 @@ module DynamicScaffold
           end
         end
 
-        def label?
-          !@label.nil?
-        end
-
         protected
 
           def build_html_attributes(classnames)

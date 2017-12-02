@@ -6,7 +6,7 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
     sequence: nc
   )
 
-  Category.create!(
+  category = Category.create!(
     name: Faker::Job.field,
     sequence: nc
   )
@@ -18,4 +18,10 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
       country: country
     )
   end
+
+  Shop.create!(
+    name: Faker::StarWars.planet,
+    memo: Faker::StarWars.quote,
+    category: category
+  )
 end

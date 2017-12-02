@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20171129083931) do
     t.string "name"
     t.text "memo"
     t.integer "category_id"
+    t.integer "status", limit: 1, default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_shops_on_category_id"

@@ -1,19 +1,27 @@
 module Controls
   class ShopController < ApplicationController
     include DynamicScaffold::Controller
-    dynamic_scaffold Country do |s|
-      s.add_display(:id, style: 'width: 80px;')
-      s.add_display(:name, style: 'width: 220px;')
-      s.add_display(:fdate, [:updated_at, '%Y-%m-%d %H:%M:%S'], 'Update Date', style: 'width: 162px;')
-      s.add_display(:fdate, [:created_at, '%Y-%m-%d %H:%M:%S'], 'Create Date', style: 'width: 162px;')
-      s.add_display('To state', style: 'width: 240px;') do |record|
-        content_tag :a, "To state of #{record.name}", href: 'foobar'
+    dynamic_scaffold Shop do |m|
+      m.list.item(:id, style: 'width: 80px').label('Number')
+      m.list.item :name, style: 'width: 120px'
+      m.list.item :updated_at, style: 'width: 180px' do |rec, name|
+        rec.fdate name, '%Y-%m-%d %H:%M:%S'
+      end
+      m.list.item(:created_at, style: 'width: 180px').label 'Create Date' do |rec, name|
+        rec.fdate name, '%Y-%m-%d %H:%M:%S'
+      end
+      m.list.item do |rec, name|
+        link_to "Show #{rec.name}", controls_master_shop_path
       end
 
-      s.add_form(:id, :hidden_field)
-      s.add_form(:name, :text_field)
-      s.add_form(:memo, :text_area, rows: 10)
-      s.add_form(:states, :check_boxes, State.all, :id, :name, 'States')
+      m.editor.hidden_field :id
+      m.editor.text_field(:name).label 'Shop Name'
+      m.editor.text_area :memo, rows: 8
+      m.editor.collection_select(
+        :category_id, Category.all, :id, :name, include_blank: 'Select Category'
+      )
+      m.editor.collection_check_boxes(:states, State.all, :id, :name)
+      m.editor.collection_radio_buttons(:status, Shop.statuses.map{|k, v| [v, k.titleize]}, :first, :last)
     end
   end
 end
