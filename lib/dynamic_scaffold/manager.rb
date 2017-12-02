@@ -1,9 +1,9 @@
 module DynamicScaffold
   class Manager
-    attr_reader :model, :editor, :list
+    attr_reader :model, :form, :list
     def initialize(model)
       @model = model
-      @editor = EditorBuilder.new(self)
+      @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
     end
   end
@@ -34,7 +34,7 @@ module DynamicScaffold
     end
   end
 
-  class EditorBuilder
+  class FormBuilder
     %i[
       text_field
       check_box
@@ -46,47 +46,47 @@ module DynamicScaffold
       color_field
     ].each do |name|
       define_method(name) do |*args|
-        field = Editor::FormField::Single.new(@manager, name, *args)
-        @form_fields << field
+        field = Form::Field::Single.new(@manager, name, *args)
+        @fields << field
         field
       end
     end
 
     def initialize(manager)
       @manager = manager
-      @form_fields = []
+      @fields = []
     end
 
-    def form_fields
-      if @form_fields.empty?
+    def fields
+      if @fields.empty?
         @manager.model.column_names.each do |column|
-          @form_fields << Editor::FormField::Single.new(@manager, :text_field, column)
+          @fields << Form::Field::Single.new(@manager, :text_field, column)
         end
       end
-      @form_fields
+      @fields
     end
 
     def collection_check_boxes(*args)
-      field = Editor::FormField::CollectionCheckBoxes.new(@manager, :collection_check_boxes, *args)
-      @form_fields << field
+      field = Form::Field::CollectionCheckBoxes.new(@manager, :collection_check_boxes, *args)
+      @fields << field
       field
     end
 
     def collection_radio_buttons(*args)
-      field = Editor::FormField::CollectionRadioButtons.new(@manager, :collection_radio_buttons, *args)
-      @form_fields << field
+      field = Form::Field::CollectionRadioButtons.new(@manager, :collection_radio_buttons, *args)
+      @fields << field
       field
     end
 
     def collection_select(*args)
-      field = Editor::FormField::CollectionSelect.new(@manager, :collection_select, *args)
-      @form_fields << field
+      field = Form::Field::CollectionSelect.new(@manager, :collection_select, *args)
+      @fields << field
       field
     end
 
     def grouped_collection_select(*args)
-      field = Editor::FormField::GroupedCollectionSelect.new(@manager, :grouped_collection_select, *args)
-      @form_fields << field
+      field = Form::Field::GroupedCollectionSelect.new(@manager, :grouped_collection_select, *args)
+      @fields << field
       field
     end
   end

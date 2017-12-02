@@ -1,6 +1,6 @@
 module DynamicScaffold
-  module Editor
-    module FormField
+  module Form
+    module Field
       class Single < Base
         def initialize(*args)
           html_attributes = args.extract_options!

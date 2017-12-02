@@ -1,6 +1,6 @@
 module DynamicScaffold
-  module Editor
-    module FormField
+  module Form
+    module Field
       class Base
         def initialize(manager, type, name, html_attributes = {})
           @manager = manager

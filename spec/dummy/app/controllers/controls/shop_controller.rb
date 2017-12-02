@@ -14,14 +14,21 @@ module Controls
         link_to "Show #{rec.name}", controls_master_shop_path
       end
 
-      m.editor.hidden_field :id
-      m.editor.text_field(:name).label 'Shop Name'
-      m.editor.text_area :memo, rows: 8
-      m.editor.collection_select(
+      # You can use form helper methods like ...
+      # text_field, check_box, radio_button, password_field, hidden_field, file_field, text_area, color_field
+      # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select
+      m.form.hidden_field :id
+
+      # `label` method change label from I18n model attribute name.
+      m.form.text_field(:name).label 'Shop Name'
+
+      # Last hash arg is given to HTML attributes.
+      m.form.text_area :memo, rows: 8
+      m.form.collection_select(
         :category_id, Category.all, :id, :name, include_blank: 'Select Category'
       )
-      m.editor.collection_check_boxes(:states, State.all, :id, :name)
-      m.editor.collection_radio_buttons(:status, Shop.statuses.map{|k, v| [v, k.titleize]}, :first, :last)
+      m.form.collection_check_boxes(:states, State.all, :id, :name)
+      m.form.collection_radio_buttons(:status, Shop.statuses.map{|k, v| [v, k.titleize]}, :first, :last)
     end
   end
 end

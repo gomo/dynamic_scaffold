@@ -1,6 +1,6 @@
 module DynamicScaffold
-  module Editor
-    module FormField
+  module Form
+    module Field
       class CollectionCheckBoxes < CollectionBase
         def render(form, classnames = nil)
           form.collection_check_boxes(

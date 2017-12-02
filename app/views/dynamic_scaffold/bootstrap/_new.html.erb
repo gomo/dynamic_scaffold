@@ -1,5 +1,5 @@
 <%= form_with model: @record, url: './create' do |form| %>
-  <%@manager.editor.form_fields.each do |elem|%>
+  <%@manager.form.fields.each do |elem|%>
     <% if elem.type? :hidden_field %>
       <%= elem.render(form) %>
     <% else %>

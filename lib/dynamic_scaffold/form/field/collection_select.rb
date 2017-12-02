@@ -1,18 +1,16 @@
 module DynamicScaffold
-  module Editor
-    module FormField
-      class CollectionRadioButtons < CollectionBase
+  module Form
+    module Field
+      class CollectionSelect < CollectionBase
         def render(form, classnames = nil)
-          form.collection_radio_buttons(
+          form.collection_select(
             @name,
             @collection,
             @value_method,
             @text_method,
             @options,
             build_html_attributes(classnames)
-          ) do |builder|
-            yield builder
-          end
+          )
         end
       end
     end

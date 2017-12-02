@@ -1,6 +1,6 @@
 module DynamicScaffold
-  module Editor
-    module FormField
+  module Form
+    module Field
       class CollectionBase < Base
         def initialize(manager, name, type, collection, value_method, text_method, options = {}, html_attributes = {}) # rubocop:disable Metrics/ParameterLists, Metrics/LineLength
           super(manager, name, type, html_attributes)
