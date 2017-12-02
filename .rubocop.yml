@@ -68,3 +68,6 @@ Rails/HttpPositionalArguments:
 
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: new_line
+
+Style/MultilineBlockChain:
+  Enabled: false

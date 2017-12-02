@@ -44,7 +44,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager = DynamicScaffold::Manager.new Country
         manager.form.text_field(:id).label('FOOBAR')
         elem = manager.form.fields[0]
-        helper.form_with model: country, url: './create' do |form|
+        helper.form_with model: country, url: './create' do |_form|
           expect(elem.label).to eq 'FOOBAR'
         end
       end
@@ -54,7 +54,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager = DynamicScaffold::Manager.new Country
         manager.form.text_field(:id)
         elem = manager.form.fields[0]
-        helper.form_with model: country, url: './create' do |form|
+        helper.form_with model: country, url: './create' do |_form|
           expect(elem.label).to eq 'Id'
         end
       end
@@ -100,7 +100,7 @@ RSpec.describe ApplicationHelper, type: :helper do
           content_tag(:p, 'bar')
         end
         elem = manager.form.fields[0]
-        helper.form_with model: country, url: './create' do |form|
+        helper.form_with model: country, url: './create' do |_form|
           expect(elem.render_notes(country, helper)).to eq '<p>foo</p><p>bar</p>'
         end
       end
@@ -129,7 +129,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager = DynamicScaffold::Manager.new Shop
         manager.form.collection_check_boxes(:states, State.all, :id, :name).label('State')
         elem = manager.form.fields[0]
-        helper.form_with model: shop, url: './create' do |form|
+        helper.form_with model: shop, url: './create' do |_form|
           expect(elem.label).to eq 'State'
         end
       end
@@ -139,7 +139,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         manager = DynamicScaffold::Manager.new Shop
         manager.form.collection_check_boxes(:states, State.all, :id, :name)
         elem = manager.form.fields[0]
-        helper.form_with model: shop, url: './create' do |form|
+        helper.form_with model: shop, url: './create' do |_form|
           expect(elem.label).to eq 'States'
         end
       end

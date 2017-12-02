@@ -10,7 +10,7 @@ module Controls
       m.list.item(:created_at, style: 'width: 180px').label 'Create Date' do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
       end
-      m.list.item do |rec, name|
+      m.list.item do |rec, _name|
         link_to "Show #{rec.name}", controls_master_shop_path
       end
 
@@ -28,7 +28,7 @@ module Controls
         :category_id, Category.all, :id, :name, include_blank: 'Select Category'
       )
       m.form.collection_check_boxes(:states, State.all, :id, :name)
-      m.form.collection_radio_buttons(:status, Shop.statuses.map{|k, v| [v, k.titleize]}, :first, :last)
+      m.form.collection_radio_buttons(:status, Shop.statuses.map {|k, v| [v, k.titleize] }, :first, :last)
     end
   end
 end
