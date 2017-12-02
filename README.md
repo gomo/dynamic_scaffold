@@ -1,8 +1,7 @@
 # DynamicScaffold
-Short description and motivation.
+Scaffold which dynamically generates CRUD using a common view.
 
-## Usage
-How to use my plugin.
+Once the view is built in, it can be used with multiple models. In addition, you can flexibly customize the items displayed by model.
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -16,10 +15,25 @@ And then execute:
 $ bundle
 ```
 
-Or install it yourself as:
-```bash
-$ gem install dynamic_scaffold
+## Usage
+
+### Routes
+
+```rb
+# config/routes.rb
+Rails.application.routes.draw do
+  dynamic_scaffold_for 'shop'
+end
 ```
+
+This will generate the following routes.
+
+```
+  Prefix Verb URI Pattern                                    Controller#Action
+    shop GET  /shop(.:format)                                 shop#index {:trailing_slash=>true}
+shop_new GET  /shop/new(.:format)                             shop#new
+```
+
 
 ## Contributing
 Contribution directions go here.

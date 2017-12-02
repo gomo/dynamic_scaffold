@@ -64,37 +64,55 @@ RSpec.describe ApplicationHelper, type: :helper do
     context 'Block' do
       it 'should call block in the context of view when passing block.' do
         manager = DynamicScaffold::Manager.new Country
-        manager.list.item 'To State' do |record|
+        manager.list.item do |record, name|
           content_tag :a, record.name, href: 'foobar'
         end
         item = manager.list.items[0]
         country = FactoryBot.create(:country)
         expect(item.value(country, helper)).to eq "<a href=\"foobar\">#{country.name}</a>"
       end
-      it 'should be able to specify a label.' do
+      it 'should be able to use a combination of attribute names and blocks.' do
         manager = DynamicScaffold::Manager.new Country
-        manager.list.item('To State') {|record| }
+        manager.list.item :created_at do |record, name|
+          record.fdate name, '%Y-%m-%d %H:%M:%S'
+        end
+        item = manager.list.items[0]
+        country = FactoryBot.create(:country)
+        expect(item.value(country, helper)).to eq country.fdate(:created_at, '%Y-%m-%d %H:%M:%S')
+      end
+      it 'should be able to pass blocks to Label.' do
+        manager = DynamicScaffold::Manager.new Country
+        manager.list.item.label('To State') do |record, name|
+          content_tag :a, record.name, href: 'foobar'
+        end
         item = manager.list.items[0]
         country = FactoryBot.create(:country)
         expect(item.label).to eq 'To State'
+        expect(item.value(country, helper)).to eq "<a href=\"foobar\">#{country.name}</a>"
       end
-      it 'should return nil for the label if you omit it.' do
+      it 'should return nil for the label if you omit attribute name and label.' do
         manager = DynamicScaffold::Manager.new Country
         manager.list.item {|record| }
         item = manager.list.items[0]
         country = FactoryBot.create(:country)
         expect(item.label).to be_nil
       end
+      it 'should return attribute name for the label with name without label.' do
+        manager = DynamicScaffold::Manager.new Country
+        manager.list.item(:id){|record, name|}
+        item = manager.list.items[0]
+        country = FactoryBot.create(:country)
+        expect(item.label).to eq 'Id'
+      end
       it 'should be able to generate HTML attributes with the last hash argument.' do
         country = FactoryBot.create(:country)
 
         manager = DynamicScaffold::Manager.new Country
         manager.list.item(
-          'FOOBAR',
           class: 'foobar',
           'data-foo' => 'data foo value',
           style: 'width: 100px;'
-        ) {|record| }
+        ).label('FOOBAR') {|record| }
         item = manager.list.items[0]
         expect(item.label).to eq 'FOOBAR'
         expect(item.html_attributes).to eq 'data-foo' => 'data foo value', style: 'width: 100px;'

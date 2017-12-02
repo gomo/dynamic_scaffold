@@ -5,7 +5,7 @@
     <% elsif elem.type? :check_boxes %>
       <div class="form-group">
         <%if elem.label?%>
-          <label><%= elem.label(form) %></label>
+          <label><%= elem.label %></label>
         <%end%>
         <div>
         <%= elem.render(form) do |cb|%>
@@ -19,20 +19,20 @@
       </div> 
     <% else %>
       <div class="form-group">
-        <label><%= elem.label(form) %></label>
+        <label><%= elem.label %></label>
         <%= elem.render(form, 'form-control') %>
         <%if elem.notes?%>
-          <small class="form-text text-muted"><%= elem.render_notes(form.object, self) %></small>
+          <div class="form-text text-muted"><%= elem.render_notes(form.object, self) %></div>
         <%end%>
       </div>
     <% end %>
   <% end %>
   <div>
-    <%= content_tag :a, href: './', class: 'btn btn-outline-secondary btn-default' do%>
+    <a href="./" class="btn btn-outline-secondary btn-default">
       <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.back') %>
-    <%end%>
-    <%= content_tag :button, class: 'btn btn-outline-warning btn-warning' do%>
+    </a>
+    <a href="./" class="btn btn-outline-warning btn-warning">
       <%= dynamic_scaffold_icon :save %> <%= t('dynamic_scaffold.save') %>
-    <%end%>
+    </a>
   </div>
 <% end %>

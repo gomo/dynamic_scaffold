@@ -11,7 +11,7 @@
         <div class="resplist-items">
         <%@manager.list.items.each do |disp|%>
           <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
-            <div class="resplist-label"><%= disp.label record %></div>
+            <div class="resplist-label"><%= disp.label %></div>
             <div class="resplist-value"><%= disp.value record, self %></div>
           <%end%>
         <%end%>

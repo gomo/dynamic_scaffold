@@ -15,11 +15,7 @@ module DynamicScaffold
     end
 
     def item(*args, &block)
-      if block
-        item = List::Item::Block.new(@manager, *args, block)
-      else
-        item = List::Item::Attribute.new(@manager, *args)
-      end
+      item = List::Item.new(@manager, *args, block)
       @items << item
       item
     end
@@ -27,7 +23,7 @@ module DynamicScaffold
     def items
       if @items.empty?
         @manager.model.column_names.each do |column|
-          @items << List::Item::Attribute.new(@manager, column)
+          @items << List::Item.new(@manager, column, nil)
         end
       end
       @items

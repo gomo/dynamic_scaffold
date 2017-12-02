@@ -7,7 +7,7 @@ module DynamicScaffold
 
       def dynamic_scaffold(model)
         self.manager = Manager.new(model)
-        yield manager
+        yield manager if block_given?
       end
     end
 
