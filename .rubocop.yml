@@ -57,6 +57,7 @@ Metrics/LineLength:
 Metrics/BlockLength:
   Exclude:
     - spec/lib/**/*
+    - spec/controllers/**/*
     - dynamic_scaffold.gemspec
 
 Metrics/MethodLength:

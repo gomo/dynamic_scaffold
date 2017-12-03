@@ -68,7 +68,7 @@ module DynamicScaffold
     end
 
     def sorter_param(record)
-      [*record.class.primary_key].map{|col| "#{col}:#{record[col]}"}.join(',')
+      [*record.class.primary_key].map {|col| "#{col}:#{record[col]}" }.join(',')
     end
   end
 
