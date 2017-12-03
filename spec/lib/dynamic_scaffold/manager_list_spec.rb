@@ -112,5 +112,26 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(item.html_attributes).to eq 'data-foo' => 'data foo value', style: 'width: 100px;'
       end
     end
+    context 'Sorter' do
+      it 'should be able to generate sequence number.' do
+        manager = DynamicScaffold::Manager.new Country
+        # desc
+        manager.list.sorter sequence: :desc
+        manager.list.init_sequence (1..5).to_a
+        expect(manager.list.next_sequence!).to eq 4
+        expect(manager.list.next_sequence!).to eq 3
+        expect(manager.list.next_sequence!).to eq 2
+        expect(manager.list.next_sequence!).to eq 1
+        expect(manager.list.next_sequence!).to eq 0
+
+        manager.list.sorter sequence: :asc
+        manager.list.init_sequence (1..5).to_a
+        expect(manager.list.next_sequence!).to eq 0
+        expect(manager.list.next_sequence!).to eq 1
+        expect(manager.list.next_sequence!).to eq 2
+        expect(manager.list.next_sequence!).to eq 3
+        expect(manager.list.next_sequence!).to eq 4
+      end
+    end
   end
 end

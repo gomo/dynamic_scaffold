@@ -26,7 +26,7 @@
                 <a href="edit" class="btn btn-primary btn-outline-primary btn-sm"><%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %></a>
               </div>
               <% if @manager.list.sorter %>
-              <input type="hidden" name="pkeys[]" value="<%= [*record.class.primary_key].map{|col| "#{col}:#{record[col]}"}.join(',') %>">
+              <input type="hidden" name="pkeys[]" value="<%= @manager.list.sorter_param(record) %>">
               <div class="btn-group">
                 <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-up">
                   <%= dynamic_scaffold_icon(:up) %>

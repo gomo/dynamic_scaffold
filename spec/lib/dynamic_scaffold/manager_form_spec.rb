@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
-  context 'DynamicScaffold::Manager#editor.fields' do
+  context 'DynamicScaffold::Manager#form.fields' do
     it 'should output all columns by default.' do
       manager = DynamicScaffold::Manager.new Country
 
@@ -37,7 +37,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
-  context 'DynamicScaffold::Manager::Editor::FormField' do
+  context 'DynamicScaffold::Manager::form::FormField' do
     context 'Simple' do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)

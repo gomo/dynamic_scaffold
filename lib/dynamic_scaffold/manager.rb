@@ -53,7 +53,7 @@ module DynamicScaffold
       if sorter_direction == :asc
         @sequence = 0
       elsif sorter_direction == :desc
-        @sequence = pkeys.size
+        @sequence = pkeys.size - 1
       end
     end
 
@@ -65,6 +65,10 @@ module DynamicScaffold
         @sequence -= 1
       end
       val
+    end
+
+    def sorter_param(record)
+      [*record.class.primary_key].map{|col| "#{col}:#{record[col]}"}.join(',')
     end
   end
 
