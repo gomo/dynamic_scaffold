@@ -10,7 +10,7 @@
   <% else %>
   <ul class="resplist resplist-striped">
     <%@manager.list.records.each do |record|%>
-      <li class="resplist-row">
+      <li class="resplist-row js-item-row">
         <div class="resplist-items">
         <%@manager.list.items.each do |disp|%>
           <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
@@ -24,14 +24,16 @@
             <div class="btn-group">
               <a href="edit" class="btn btn-primary btn-outline-primary btn-sm"><%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %></a>
             </div>
+            <% if @manager.list.sorter %>
             <div class="btn-group">
-              <button class="btn btn-outline-secondary btn-default btn-sm">
+              <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-up">
                 <%= dynamic_scaffold_icon(:up) %>
               </button>
-              <button class="btn btn-outline-secondary btn-default btn-sm">
+              <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-down">
                 <%= dynamic_scaffold_icon(:down) %>
               </button>
             </div>
+            <% end %>
             <div class="btn-group">
               <button type="submit" class="btn btn-danger btn-sm">
                 <%= dynamic_scaffold_icon(:delete) %>

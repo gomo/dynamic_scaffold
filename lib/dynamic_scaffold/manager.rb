@@ -12,6 +12,12 @@ module DynamicScaffold
     def initialize(manager)
       @manager = manager
       @items = []
+      @sorter = nil
+    end
+
+    def sorter(params = nil)
+      @sorter = params if params
+      @sorter
     end
 
     def item(*args, &block)
