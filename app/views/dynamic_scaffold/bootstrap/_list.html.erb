@@ -1,3 +1,4 @@
+<%= form_with method: :patch, url: './sort' do%>
 <div class="dynamicScaffold-row">
   <div class="text-left">
     <a href="new" class="btn btn-outline-primary btn-primary btn-sm"><%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.buttons.add') %></a>
@@ -8,44 +9,46 @@
   <% if @manager.list.records.empty? %>
     <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: @manager.model.model_name.human) %></p>
   <% else %>
-  <ul class="resplist resplist-striped">
-    <%@manager.list.records.each do |record|%>
-      <li class="resplist-row js-item-row">
-        <div class="resplist-items">
-        <%@manager.list.items.each do |disp|%>
-          <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
-            <div class="resplist-label"><%= disp.label %></div>
-            <div class="resplist-value"><%= disp.value record, self %></div>
+    <ul class="resplist resplist-striped">
+      <%@manager.list.records.each do |record|%>
+        <li class="resplist-row js-item-row">
+          <div class="resplist-items">
+          <%@manager.list.items.each do |disp|%>
+            <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
+              <div class="resplist-label"><%= disp.label %></div>
+              <div class="resplist-value"><%= disp.value record, self %></div>
+            <%end%>
           <%end%>
-        <%end%>
-        </div>
-        <div class="resplist-footer clearfix">
-          <div class="float-right pull-right">
-            <div class="btn-group">
-              <a href="edit" class="btn btn-primary btn-outline-primary btn-sm"><%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %></a>
-            </div>
-            <% if @manager.list.sorter %>
-            <div class="btn-group">
-              <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-up">
-                <%= dynamic_scaffold_icon(:up) %>
-              </button>
-              <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-down">
-                <%= dynamic_scaffold_icon(:down) %>
-              </button>
-            </div>
-            <% end %>
-            <div class="btn-group">
-              <button type="submit" class="btn btn-danger btn-sm">
-                <%= dynamic_scaffold_icon(:delete) %>
-              </button>
+          </div>
+          <div class="resplist-footer clearfix">
+            <div class="float-right pull-right">
+              <div class="btn-group">
+                <a href="edit" class="btn btn-primary btn-outline-primary btn-sm"><%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %></a>
+              </div>
+              <% if @manager.list.sorter %>
+              <input type="hidden" name="pkeys[]" value="<%= [*record.class.primary_key].map{|col| "#{col}:#{record[col]}"}.join(',') %>">
+              <div class="btn-group">
+                <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-up">
+                  <%= dynamic_scaffold_icon(:up) %>
+                </button>
+                <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-down">
+                  <%= dynamic_scaffold_icon(:down) %>
+                </button>
+              </div>
+              <% end %>
+              <div class="btn-group">
+                <button type="submit" class="btn btn-danger btn-sm">
+                  <%= dynamic_scaffold_icon(:delete) %>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </li>
-    <%end%>
-  </ul>
+        </li>
+      <%end%>
+    </ul>
   <% end %>
 </div>
 <div class="dynamicScaffold-row">
   <%= render 'dynamic_scaffold/bootstrap/save_order'%>
 </div>
+<% end %>

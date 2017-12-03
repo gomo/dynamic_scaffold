@@ -13,6 +13,7 @@ module DynamicScaffold
         controller = resources[1] ? resources[1] : resources[0]
         get(path, { to: "#{controller}#index" }.merge(options).merge(trailing_slash: true))
         get("#{path}/new", { to: "#{controller}#new" }.merge(options))
+        patch("#{path}/sort", { to: "#{controller}#sort" }.merge(options))
       end
     end
   end

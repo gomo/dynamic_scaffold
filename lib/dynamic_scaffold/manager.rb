@@ -36,7 +36,35 @@ module DynamicScaffold
     end
 
     def records
-      @manager.model.all
+      ar = @manager.model.all
+      ar = ar.order @sorter if @sorter
+      ar
+    end
+
+    def sorter_attribute
+      @sorter.keys.first
+    end
+
+    def sorter_direction
+      @sorter.values.first
+    end
+
+    def init_sequence(pkeys)
+      if sorter_direction == :asc
+        @sequence = 0
+      elsif sorter_direction == :desc
+        @sequence = pkeys.size
+      end
+    end
+
+    def next_sequence!
+      val = @sequence
+      if sorter_direction == :asc
+        @sequence += 1
+      elsif sorter_direction == :desc
+        @sequence -= 1
+      end
+      val
     end
   end
 

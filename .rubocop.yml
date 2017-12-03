@@ -71,3 +71,6 @@ Layout/MultilineMethodCallBraceLayout:
 
 Style/MultilineBlockChain:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 20

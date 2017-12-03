@@ -12,7 +12,7 @@ module Controls
       s.list.item(:created_at, style: 'width: 162px;') do |rec, name|
         rec.fdate(name, '%Y-%m-%d %H:%M:%S')
       end
-      s.list.item('To state', style: 'width: 240px;') do |rec, name|
+      s.list.item('To state', style: 'width: 240px;') do |rec, _name|
         content_tag :a, "To state of #{rec.name}", href: 'foobar'
       end
 

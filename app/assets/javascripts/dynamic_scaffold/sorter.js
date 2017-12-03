@@ -26,6 +26,7 @@ function pageOnLoad(){
   function addSwapEvent(buttons, swapAction){
     buttons.forEach(function(button){
       button.addEventListener('click', function(e){
+        e.preventDefault()
         const source = button.closest('.js-item-row')
         swapAction(source)
         flash(source)
