@@ -24,11 +24,15 @@ module DynamicScaffold
       @record = @dynamic_scaffold.model.new
     end
 
+    def edit
+      @record = @dynamic_scaffold.model.where(pkey_to_hash(params[:key])).first
+    end
+
     def sort
-      params = sort_params
-      @dynamic_scaffold_util.reset_sequence params.size
+      @dynamic_scaffold_util.reset_sequence params['pkeys'].size
       @dynamic_scaffold.model.transaction do
-        params.each do |pkeys|
+        params['pkeys'].each do |pkeys|
+          pkeys = pkey_to_hash(pkeys)
           rec = @dynamic_scaffold.model.where(pkeys).first
           rec.update!(
             @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold_util.next_sequence!
@@ -50,12 +54,10 @@ module DynamicScaffold
     end
     private
 
-      def sort_params
+      def pkey_to_hash(pkey)
         # Support multiple pkey
-        # Convert ["key:1,code:foo"] to [{key: "1", code: "foo"}]
-        params['pkeys'].map do |chunk|
-          chunk.split(',').map {|v| v.split(':') }.each_with_object({}) {|v, res| res[v.first] = v.last }
-        end
+        # Convert "key:1,code:foo" to {key: "1", code: "foo"}
+        pkey.split(',').map {|v| v.split(':') }.each_with_object({}) {|v, res| res[v.first] = v.last }
       end
 
       def record_params

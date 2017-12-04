@@ -13,9 +13,9 @@ RSpec.describe Controls::CountryController, type: :controller do
       expect(countries[2].name).to eq 'Country 1'
 
       pkeys = []
-      pkeys << util.sorter_param(countries[1])
-      pkeys << util.sorter_param(countries[0])
-      pkeys << util.sorter_param(countries[2])
+      pkeys << util.pkey_param(countries[1])
+      pkeys << util.pkey_param(countries[0])
+      pkeys << util.pkey_param(countries[2])
       patch :sort, params: { locale: :en, pkeys: pkeys }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'
@@ -23,9 +23,9 @@ RSpec.describe Controls::CountryController, type: :controller do
       expect(countries[2].name).to eq 'Country 1'
 
       pkeys = []
-      pkeys << util.sorter_param(countries[0])
-      pkeys << util.sorter_param(countries[2])
-      pkeys << util.sorter_param(countries[1])
+      pkeys << util.pkey_param(countries[0])
+      pkeys << util.pkey_param(countries[2])
+      pkeys << util.pkey_param(countries[1])
       patch :sort, params: { locale: 'ja', pkeys: pkeys }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'

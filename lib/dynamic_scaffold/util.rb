@@ -23,17 +23,19 @@ module DynamicScaffold
       val
     end
 
-    def sorter_param(record)
+    def pkey_param(record)
       [*record.class.primary_key].map {|col| "#{col}:#{record[col]}" }.join(',')
     end
 
-    def path_for(action, *_args)
+    def path_for(action, *args)
       route = Rails.application.routes.routes.find do |r|
         params = r.required_defaults
         params[:controller] == @controller.params[:controller] && (params[:action] == action.to_s && r.name)
       end
 
-      @controller.send("#{route.name}_path")
+      raise "Missing #{@controller.params[:controller]}##{action.to_s}" if route.nil?
+
+      @controller.send("#{route.name}_path", *args)
     end
   end
 end
