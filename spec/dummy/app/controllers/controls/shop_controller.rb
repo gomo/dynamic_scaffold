@@ -30,23 +30,5 @@ module Controls
       c.form.collection_check_boxes(:state_ids, State.all, :id, :name)
       c.form.collection_radio_buttons(:status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
     end
-
-    def create
-      @record = @dynamic_scaffold.model.new
-      @record.attributes = record_params
-      if @record.save
-        redirect_to controls_master_shop_path
-      else
-        render 'controls/shop/new'
-      end
-    end
-
-    private
-
-      def record_params
-        params
-          .require(@dynamic_scaffold.model.name.underscore)
-          .permit(*@dynamic_scaffold.form.fields.map(&:strong_parameter))
-      end
   end
 end

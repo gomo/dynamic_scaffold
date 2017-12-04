@@ -1,4 +1,4 @@
-<%= form_with method: :post, model: @record, url: './' do |form| %>
+<%= form_with method: :post, model: @record, url: @dynamic_scaffold_util.path_for(:index) do |form| %>
   <%@dynamic_scaffold.form.fields.each do |elem|%>
     <% if elem.type? :hidden_field %>
       <%= elem.render(form) %>

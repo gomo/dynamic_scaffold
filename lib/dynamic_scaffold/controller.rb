@@ -36,9 +36,18 @@ module DynamicScaffold
         end
       end
 
-      redirect_back fallback_location: '/', status: 303
+      redirect_back fallback_location: @dynamic_scaffold_util.path_for(:index), status: 303
     end
 
+    def create
+      @record = @dynamic_scaffold.model.new
+      @record.attributes = record_params
+      if @record.save
+        redirect_to @dynamic_scaffold_util.path_for(:index)
+      else
+        render "#{params[:controller]}/new"
+      end
+    end
     private
 
       def sort_params
@@ -47,6 +56,12 @@ module DynamicScaffold
         params['pkeys'].map do |chunk|
           chunk.split(',').map {|v| v.split(':') }.each_with_object({}) {|v, res| res[v.first] = v.last }
         end
+      end
+
+      def record_params
+        params
+          .require(@dynamic_scaffold.model.name.underscore)
+          .permit(*@dynamic_scaffold.form.fields.map(&:strong_parameter))
       end
   end
 end
