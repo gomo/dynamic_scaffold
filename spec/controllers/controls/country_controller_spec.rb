@@ -38,7 +38,7 @@ RSpec.describe Controls::CountryController, type: :controller do
     it 'should be able to get path.' do
       get :index, params: { locale: :en, trailing_slash: true }
       util = assigns(:dynamic_scaffold_util)
-  
+
       expect(util.path_for(:index)).to eq '/en/controls/master/country/'
       expect(util.path_for(:new)).to eq '/en/controls/master/country/new'
       expect(util.path_for(:sort)).to eq '/en/controls/master/country/sort'

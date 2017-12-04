@@ -27,15 +27,13 @@ module DynamicScaffold
       [*record.class.primary_key].map {|col| "#{col}:#{record[col]}" }.join(',')
     end
 
-    def path_for(action, *args)
-      route = Rails.application.routes.routes.find do |route|
-        params = route.required_defaults
-        params[:controller] == @controller.params[:controller] && (params[:action] == action.to_s && route.name)
+    def path_for(action, *_args)
+      route = Rails.application.routes.routes.find do |r|
+        params = r.required_defaults
+        params[:controller] == @controller.params[:controller] && (params[:action] == action.to_s && r.name)
       end
 
-      @controller.instance_exec do
-        eval "#{route.name}_path"
-      end
+      @controller.send("#{route.name}_path")
     end
   end
 end
