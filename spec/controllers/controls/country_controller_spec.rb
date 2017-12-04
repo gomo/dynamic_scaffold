@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Controls::CountryController, type: :controller do
   describe 'Sort' do
     it 'should be able to sort.' do
-      manager = DynamicScaffold::Manager.new Country
+      get :index, params: { locale: :en, trailing_slash: true }
+      manager = assigns(:manager)
 
       FactoryBot.create_list(:country, 3)
       countries = Country.all.order sequence: :desc
@@ -16,7 +17,7 @@ RSpec.describe Controls::CountryController, type: :controller do
       pkeys << manager.list.sorter_param(countries[1])
       pkeys << manager.list.sorter_param(countries[0])
       pkeys << manager.list.sorter_param(countries[2])
-      patch :sort, params: { locale: 'ja', pkeys: pkeys }
+      patch :sort, params: { locale: :en, pkeys: pkeys }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'
       expect(countries[1].name).to eq 'Country 3'
