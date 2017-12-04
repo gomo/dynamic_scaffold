@@ -14,6 +14,7 @@ module DynamicScaffold
     included do
       before_action do
         @dynamic_scaffold = self.class.manager
+        @dynamic_scaffold_util = Util.new(self.class.manager)
       end
     end
 
@@ -25,12 +26,12 @@ module DynamicScaffold
 
     def sort
       params = sort_params
-      @dynamic_scaffold.list.init_sequence params
+      @dynamic_scaffold_util.reset_sequence params.size
       @dynamic_scaffold.model.transaction do
         params.each do |pkeys|
           rec = @dynamic_scaffold.model.where(pkeys).first
           rec.update!(
-            @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold.list.next_sequence!
+            @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold_util.next_sequence!
           )
         end
       end

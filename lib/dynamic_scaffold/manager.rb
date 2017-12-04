@@ -48,28 +48,6 @@ module DynamicScaffold
     def sorter_direction
       @sorter.values.first
     end
-
-    def init_sequence(pkeys)
-      if sorter_direction == :asc
-        @sequence = 0
-      elsif sorter_direction == :desc
-        @sequence = pkeys.size - 1
-      end
-    end
-
-    def next_sequence!
-      val = @sequence
-      if sorter_direction == :asc
-        @sequence += 1
-      elsif sorter_direction == :desc
-        @sequence -= 1
-      end
-      val
-    end
-
-    def sorter_param(record)
-      [*record.class.primary_key].map {|col| "#{col}:#{record[col]}" }.join(',')
-    end
   end
 
   class FormBuilder
