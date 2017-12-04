@@ -2,8 +2,8 @@ module DynamicScaffold
   module Form
     module Field
       class GroupedCollectionSelect < CollectionBase
-        def initialize(manager, name, type, collection, group_method, group_label_method, option_key_method, option_value_method, options = {}, html_options = {}) # rubocop:disable Metrics/ParameterLists, Metrics/LineLength
-          super(manager, name, type, collection, option_key_method, option_value_method, options, html_options)
+        def initialize(config, name, type, collection, group_method, group_label_method, option_key_method, option_value_method, options = {}, html_options = {}) # rubocop:disable Metrics/ParameterLists, Metrics/LineLength
+          super(config, name, type, collection, option_key_method, option_value_method, options, html_options)
           @group_method = group_method
           @group_label_method = group_label_method
         end

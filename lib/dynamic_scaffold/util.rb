@@ -1,22 +1,22 @@
 module DynamicScaffold
   class Util
-    def initialize(manager)
-      @dynamic_scaffold = manager
+    def initialize(config)
+      @config = config
     end
 
     def reset_sequence(record_count)
-      if @dynamic_scaffold.list.sorter_direction == :asc
+      if @config.list.sorter_direction == :asc
         @sequence = 0
-      elsif @dynamic_scaffold.list.sorter_direction == :desc
+      elsif @config.list.sorter_direction == :desc
         @sequence = record_count - 1
       end
     end
 
     def next_sequence!
       val = @sequence
-      if @dynamic_scaffold.list.sorter_direction == :asc
+      if @config.list.sorter_direction == :asc
         @sequence += 1
-      elsif @dynamic_scaffold.list.sorter_direction == :desc
+      elsif @config.list.sorter_direction == :desc
         @sequence -= 1
       end
       val

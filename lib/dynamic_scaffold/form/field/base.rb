@@ -3,8 +3,8 @@ module DynamicScaffold
     module Field
       class Base
         attr_reader :name
-        def initialize(manager, type, name, html_attributes = {})
-          @dynamic_scaffold = manager
+        def initialize(config, type, name, html_attributes = {})
+          @config = config
           @name = name
           @type = type
           @html_attributes = html_attributes
@@ -41,7 +41,7 @@ module DynamicScaffold
             self
           else
             return @label if @label
-            @dynamic_scaffold.model.human_attribute_name @name
+            @config.model.human_attribute_name @name
           end
         end
 
