@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
-  context 'DynamicScaffold::Manager#form.fields' do
+  context 'DynamicScaffold::Config#form.fields' do
     it 'should output all columns by default.' do
-      manager = DynamicScaffold::Manager.new Country
+      manager = DynamicScaffold::Config.new Country
 
       forms = manager.form.fields
       expect(forms.size).to eq Country.column_names.size
@@ -37,11 +37,11 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
-  context 'DynamicScaffold::Manager::form::FormField' do
+  context 'DynamicScaffold::Config::form::FormField' do
     context 'Simple' do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)
-        manager = DynamicScaffold::Manager.new Country
+        manager = DynamicScaffold::Config.new Country
         manager.form.text_field(:id).label('FOOBAR')
         elem = manager.form.fields[0]
         helper.form_with model: country, url: './create' do |_form|
@@ -51,7 +51,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       it 'should use the column name for the label if you omit it.' do
         country = FactoryBot.create(:country)
-        manager = DynamicScaffold::Manager.new Country
+        manager = DynamicScaffold::Config.new Country
         manager.form.text_field(:id)
         elem = manager.form.fields[0]
         helper.form_with model: country, url: './create' do |_form|
@@ -61,7 +61,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       it 'should be able to generate HTML attributes with the last hash argument.' do
         country = FactoryBot.create(:country)
-        manager = DynamicScaffold::Manager.new Country
+        manager = DynamicScaffold::Config.new Country
         manager.form.text_field(
           :id,
           class: 'foobar',
@@ -78,7 +78,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       it 'should be able to add class attributes with the last argument of render.' do
         country = FactoryBot.create(:country)
-        manager = DynamicScaffold::Manager.new Country
+        manager = DynamicScaffold::Config.new Country
         manager.form.text_field(
           :id,
           class: 'foobar'
@@ -93,7 +93,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       it 'should be able to add notes in the note method.' do
         country = FactoryBot.create(:country)
-        manager = DynamicScaffold::Manager.new Country
+        manager = DynamicScaffold::Config.new Country
         manager.form.text_field(:id).note do
           content_tag(:p, 'foo')
         end.note do
@@ -109,7 +109,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to render check boxes.' do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
-        manager = DynamicScaffold::Manager.new Shop
+        manager = DynamicScaffold::Config.new Shop
         manager.form.collection_check_boxes(:states, State.all, :id, :name)
         elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
@@ -126,7 +126,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to specify a label.' do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
-        manager = DynamicScaffold::Manager.new Shop
+        manager = DynamicScaffold::Config.new Shop
         manager.form.collection_check_boxes(:states, State.all, :id, :name).label('State')
         elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |_form|
@@ -136,7 +136,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should use the column name for the label if you omit it.' do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
-        manager = DynamicScaffold::Manager.new Shop
+        manager = DynamicScaffold::Config.new Shop
         manager.form.collection_check_boxes(:states, State.all, :id, :name)
         elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |_form|
@@ -146,7 +146,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to send options and html attributes to collection_check_boxes.' do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
-        manager = DynamicScaffold::Manager.new Shop
+        manager = DynamicScaffold::Config.new Shop
         manager.form.collection_check_boxes(
           :states,
           State.all,
@@ -175,7 +175,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to render radio buttons.' do
         statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
         shop = FactoryBot.create(:shop)
-        manager = DynamicScaffold::Manager.new Shop
+        manager = DynamicScaffold::Config.new Shop
         manager.form.collection_radio_buttons(:status, statuses, :first, :last)
         elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
@@ -192,7 +192,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to send options and html attributes to collection_radit_buttons.' do
         statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
         shop = FactoryBot.create(:shop)
-        manager = DynamicScaffold::Manager.new Shop
+        manager = DynamicScaffold::Config.new Shop
         manager.form.collection_radio_buttons(
           :status,
           statuses,
@@ -221,7 +221,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to render select.' do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
-        manager = DynamicScaffold::Manager.new Shop
+        manager = DynamicScaffold::Config.new Shop
         manager.form.collection_select(:category_id, Category.all, :id, :name)
         elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
@@ -244,7 +244,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to send options and html attributes to collection_select.' do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
-        manager = DynamicScaffold::Manager.new Shop
+        manager = DynamicScaffold::Config.new Shop
         manager.form.collection_select(
           :category_id,
           Category.all,
@@ -275,7 +275,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         ]]
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
-        manager = DynamicScaffold::Manager.new Shop
+        manager = DynamicScaffold::Config.new Shop
         manager.form.grouped_collection_select(:category_id, grouped_options, :last, :first, :first, :last)
         elem = manager.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|

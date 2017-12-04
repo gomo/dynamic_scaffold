@@ -1,5 +1,5 @@
 module DynamicScaffold
-  class Manager
+  class Config
     attr_reader :model, :form, :list
     def initialize(model)
       @model = model

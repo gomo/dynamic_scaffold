@@ -3,18 +3,18 @@ module DynamicScaffold
     extend ActiveSupport::Concern
 
     class_methods do
-      attr_accessor :manager
+      attr_accessor :dynamic_scaffold_config
 
       def dynamic_scaffold(model)
-        self.manager = Manager.new(model)
-        yield manager if block_given?
+        self.dynamic_scaffold_config = Config.new(model)
+        yield dynamic_scaffold_config if block_given?
       end
     end
 
     included do
       before_action do
-        @dynamic_scaffold = self.class.manager
-        @dynamic_scaffold_util = Util.new(self.class.manager)
+        @dynamic_scaffold = self.class.dynamic_scaffold_config
+        @dynamic_scaffold_util = Util.new(@dynamic_scaffold)
       end
     end
 

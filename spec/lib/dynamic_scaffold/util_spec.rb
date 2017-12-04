@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'DynamicScaffold::Util' do
   context 'sequence' do
     it 'should be able to generate sequence number.' do
-      manager = DynamicScaffold::Manager.new Country
+      manager = DynamicScaffold::Config.new Country
       util = DynamicScaffold::Util.new manager
       # desc
       manager.list.sorter sequence: :desc

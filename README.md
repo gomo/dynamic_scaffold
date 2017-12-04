@@ -46,14 +46,14 @@ class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |m|
     # customize here
-    # `m` is DynamicScaffold::Manager
+    # `m` is DynamicScaffold::Config
   end
 end
 ```
 
 #### Customize list
 
-We customize the list through the `DynamicScaffold::Manager#list` property.
+We customize the list through the `DynamicScaffold::Config#list` property.
 
 ```rb
 # app/controllers/shop_controller.rb
@@ -87,7 +87,7 @@ end
 
 #### Customize form
 
-We customize the form through the `DynamicScaffold::Manager#form` property.
+We customize the form through the `DynamicScaffold::Config#form` property.
 
 ```rb
 # app/controllers/shop_controller.rb
