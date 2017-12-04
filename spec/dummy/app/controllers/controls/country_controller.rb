@@ -1,23 +1,23 @@
 module Controls
   class CountryController < ApplicationController
     include DynamicScaffold::Controller
-    dynamic_scaffold Country do |s|
-      s.list.sorter sequence: :desc
+    dynamic_scaffold Country do |c|
+      c.list.sorter sequence: :desc
 
-      s.list.item(:id, style: 'width: 80px;')
-      s.list.item(:name, style: 'width: 220px;')
-      s.list.item(:updated_at, style: 'width: 162px;') do |rec, name|
+      c.list.item(:id, style: 'width: 80px;')
+      c.list.item(:name, style: 'width: 220px;')
+      c.list.item(:updated_at, style: 'width: 162px;') do |rec, name|
         rec.fdate(name, '%Y-%m-%d %H:%M:%S')
       end
-      s.list.item(:created_at, style: 'width: 162px;') do |rec, name|
+      c.list.item(:created_at, style: 'width: 162px;') do |rec, name|
         rec.fdate(name, '%Y-%m-%d %H:%M:%S')
       end
-      s.list.item('To state', style: 'width: 240px;') do |rec, _name|
+      c.list.item('To state', style: 'width: 240px;') do |rec, _name|
         content_tag :a, "To state of #{rec.name}", href: 'foobar'
       end
 
-      s.form.hidden_field(:id)
-      s.form.text_field(:name).note do
+      c.form.hidden_field(:id)
+      c.form.text_field(:name).note do
         content_tag :p do
           out = []
           out << 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
