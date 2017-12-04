@@ -53,6 +53,21 @@ module DynamicScaffold
       end
     end
 
+    def update
+      rec_params = record_params()
+      ar = @dynamic_scaffold.model.all
+      [*@dynamic_scaffold.model.primary_key].each do |pkey|
+        ar = ar.where(pkey => rec_params[pkey])
+      end
+      @record = ar.first
+      @record.attributes = rec_params
+      if @record.save
+        redirect_to @dynamic_scaffold_util.path_for(:index)
+      else
+        render "#{params[:controller]}/edit"
+      end
+    end
+
     private
 
       def pkey_to_hash(pkey)
