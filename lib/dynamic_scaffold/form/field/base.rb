@@ -2,6 +2,7 @@ module DynamicScaffold
   module Form
     module Field
       class Base
+        attr_reader :name
         def initialize(manager, type, name, html_attributes = {})
           @manager = manager
           @name = name
@@ -11,6 +12,7 @@ module DynamicScaffold
           @classnames_list = []
           @classnames_list.push(classnames) if classnames
           @notes = []
+          @multiple = false
         end
 
         def notes?
@@ -41,6 +43,11 @@ module DynamicScaffold
             return @label if @label
             @manager.model.human_attribute_name @name
           end
+        end
+
+        def strong_parameter
+          return { @name => [] } if @multiple
+          @name
         end
 
         protected

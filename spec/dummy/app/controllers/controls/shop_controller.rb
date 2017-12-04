@@ -27,8 +27,26 @@ module Controls
       m.form.collection_select(
         :category_id, Category.all, :id, :name, include_blank: 'Select Category'
       )
-      m.form.collection_check_boxes(:states, State.all, :id, :name)
-      m.form.collection_radio_buttons(:status, Shop.statuses.map {|k, v| [v, k.titleize] }, :first, :last)
+      m.form.collection_check_boxes(:state_ids, State.all, :id, :name)
+      m.form.collection_radio_buttons(:status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
     end
+
+    def create
+      @record = @manager.model.new
+      @record.attributes = record_params
+      if @record.save
+        redirect_to controls_master_shop_path
+      else
+        render 'controls/shop/new'
+      end
+    end
+
+    private
+
+      def record_params
+        params
+          .require(@manager.model.name.underscore)
+          .permit(*@manager.form.fields.map(&:strong_parameter))
+      end
   end
 end

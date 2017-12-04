@@ -1,3 +1,7 @@
 .dynamicScaffold-row{
   margin-bottom: 10px
 }
+
+.dynamicScaffold-error-message{
+  color: #dc3545;
+}

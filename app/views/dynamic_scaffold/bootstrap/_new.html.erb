@@ -1,9 +1,9 @@
-<%= form_with model: @record, url: './create' do |form| %>
+<%= form_with method: :post, model: @record, url: './' do |form| %>
   <%@manager.form.fields.each do |elem|%>
     <% if elem.type? :hidden_field %>
       <%= elem.render(form) %>
     <% else %>
-      <div class="form-group">
+      <div class="<%= classNames('form-group', {'has-error': @record.errors[elem.name].any?}) %>">
         <label><%= elem.label %></label>
         <% if elem.type? :collection_check_boxes %>
           <%= elem.render(form) do |cb|%>
@@ -22,8 +22,15 @@
             </div>
           <%end%>
         <% else %>
-          <%= elem.render(form, 'form-control') %>
+          <%= elem.render(form, classNames('form-control', {'is-invalid': @record.errors[elem.name].any?})) %>
         <% end %>
+        <%if @record.errors[elem.name].any?%>
+          <ul class="dynamicScaffold-error-message">
+            <%@record.errors.full_messages_for(elem.name).each do |err|%>
+            <li><%= dynamic_scaffold_icon :error %> <%= err %></li>
+            <%end%>
+          </ul>
+        <%end%>
         <%if elem.notes?%>
           <div class="form-text text-muted"><%= elem.render_notes(form.object, self) %></div>
         <%end%>
@@ -34,7 +41,7 @@
     <a href="./" class="btn btn-outline-secondary btn-default">
       <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.buttons.back') %>
     </a>
-    <a href="./" class="btn btn-outline-warning btn-warning">
+    <button type="submit" class="btn btn-outline-warning btn-warning">
       <%= dynamic_scaffold_icon :save %> <%= t('dynamic_scaffold.buttons.save') %>
     </a>
   </div>
