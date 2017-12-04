@@ -33,7 +33,7 @@ module DynamicScaffold
         params[:controller] == @controller.params[:controller] && (params[:action] == action.to_s && r.name)
       end
 
-      raise "Missing #{@controller.params[:controller]}##{action.to_s}" if route.nil?
+      raise "Missing #{@controller.params[:controller]}##{action}" if route.nil?
 
       @controller.send("#{route.name}_path", *args)
     end

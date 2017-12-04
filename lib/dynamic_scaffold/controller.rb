@@ -52,6 +52,7 @@ module DynamicScaffold
         render "#{params[:controller]}/new"
       end
     end
+
     private
 
       def pkey_to_hash(pkey)
