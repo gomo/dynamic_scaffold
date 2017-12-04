@@ -1,5 +1,5 @@
 <%= form_with method: :post, model: @record, url: './' do |form| %>
-  <%@manager.form.fields.each do |elem|%>
+  <%@dynamic_scaffold.form.fields.each do |elem|%>
     <% if elem.type? :hidden_field %>
       <%= elem.render(form) %>
     <% else %>

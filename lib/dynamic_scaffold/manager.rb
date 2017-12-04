@@ -10,7 +10,7 @@ module DynamicScaffold
 
   class ListBuilder
     def initialize(manager)
-      @manager = manager
+      @dynamic_scaffold = manager
       @items = []
       @sorter = nil
     end
@@ -21,22 +21,22 @@ module DynamicScaffold
     end
 
     def item(*args, &block)
-      item = List::Item.new(@manager, *args, block)
+      item = List::Item.new(@dynamic_scaffold, *args, block)
       @items << item
       item
     end
 
     def items
       if @items.empty?
-        @manager.model.column_names.each do |column|
-          @items << List::Item.new(@manager, column, nil)
+        @dynamic_scaffold.model.column_names.each do |column|
+          @items << List::Item.new(@dynamic_scaffold, column, nil)
         end
       end
       @items
     end
 
     def records
-      ar = @manager.model.all
+      ar = @dynamic_scaffold.model.all
       ar = ar.order @sorter if @sorter
       ar
     end
@@ -84,46 +84,46 @@ module DynamicScaffold
       color_field
     ].each do |name|
       define_method(name) do |*args|
-        field = Form::Field::Single.new(@manager, name, *args)
+        field = Form::Field::Single.new(@dynamic_scaffold, name, *args)
         @fields << field
         field
       end
     end
 
     def initialize(manager)
-      @manager = manager
+      @dynamic_scaffold = manager
       @fields = []
     end
 
     def fields
       if @fields.empty?
-        @manager.model.column_names.each do |column|
-          @fields << Form::Field::Single.new(@manager, :text_field, column)
+        @dynamic_scaffold.model.column_names.each do |column|
+          @fields << Form::Field::Single.new(@dynamic_scaffold, :text_field, column)
         end
       end
       @fields
     end
 
     def collection_check_boxes(*args)
-      field = Form::Field::CollectionCheckBoxes.new(@manager, :collection_check_boxes, *args)
+      field = Form::Field::CollectionCheckBoxes.new(@dynamic_scaffold, :collection_check_boxes, *args)
       @fields << field
       field
     end
 
     def collection_radio_buttons(*args)
-      field = Form::Field::CollectionRadioButtons.new(@manager, :collection_radio_buttons, *args)
+      field = Form::Field::CollectionRadioButtons.new(@dynamic_scaffold, :collection_radio_buttons, *args)
       @fields << field
       field
     end
 
     def collection_select(*args)
-      field = Form::Field::CollectionSelect.new(@manager, :collection_select, *args)
+      field = Form::Field::CollectionSelect.new(@dynamic_scaffold, :collection_select, *args)
       @fields << field
       field
     end
 
     def grouped_collection_select(*args)
-      field = Form::Field::GroupedCollectionSelect.new(@manager, :grouped_collection_select, *args)
+      field = Form::Field::GroupedCollectionSelect.new(@dynamic_scaffold, :grouped_collection_select, *args)
       @fields << field
       field
     end

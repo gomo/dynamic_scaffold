@@ -1,6 +1,6 @@
 <%= stylesheet_link_tag 'dynamic_scaffold/resplist', media: 'all' %>
 <%= stylesheet_link_tag 'dynamic_scaffold/common', media: 'all' %>
 <%= javascript_include_tag 'dynamic_scaffold/polyfill' %>
-<% if @manager.list.sorter %>
+<% if @dynamic_scaffold.list.sorter %>
   <%= javascript_include_tag 'dynamic_scaffold/sorter' %>
 <% end %>

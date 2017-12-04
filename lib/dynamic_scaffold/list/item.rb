@@ -4,7 +4,7 @@ module DynamicScaffold
       attr_reader :classnames, :html_attributes
 
       def initialize(manager, *args, block)
-        @manager = manager
+        @dynamic_scaffold = manager
         @html_attributes = args.extract_options!
         @classnames = @html_attributes.delete(:class)
         @attribute_name = args[0]
@@ -27,7 +27,7 @@ module DynamicScaffold
         elsif @label
           @label
         elsif @attribute_name
-          @manager.model.human_attribute_name @attribute_name
+          @dynamic_scaffold.model.human_attribute_name @attribute_name
         end
       end
     end

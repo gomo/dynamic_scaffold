@@ -13,24 +13,24 @@ module DynamicScaffold
 
     included do
       before_action do
-        @manager = self.class.manager
+        @dynamic_scaffold = self.class.manager
       end
     end
 
     def index; end
 
     def new
-      @record = @manager.model.new
+      @record = @dynamic_scaffold.model.new
     end
 
     def sort
       params = sort_params
-      @manager.list.init_sequence params
-      @manager.model.transaction do
+      @dynamic_scaffold.list.init_sequence params
+      @dynamic_scaffold.model.transaction do
         params.each do |pkeys|
-          rec = @manager.model.where(pkeys).first
+          rec = @dynamic_scaffold.model.where(pkeys).first
           rec.update!(
-            @manager.list.sorter_attribute => @manager.list.next_sequence!
+            @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold.list.next_sequence!
           )
         end
       end

@@ -32,7 +32,7 @@ module Controls
     end
 
     def create
-      @record = @manager.model.new
+      @record = @dynamic_scaffold.model.new
       @record.attributes = record_params
       if @record.save
         redirect_to controls_master_shop_path
@@ -45,8 +45,8 @@ module Controls
 
       def record_params
         params
-          .require(@manager.model.name.underscore)
-          .permit(*@manager.form.fields.map(&:strong_parameter))
+          .require(@dynamic_scaffold.model.name.underscore)
+          .permit(*@dynamic_scaffold.form.fields.map(&:strong_parameter))
       end
   end
 end

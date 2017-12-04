@@ -4,7 +4,7 @@ RSpec.describe Controls::CountryController, type: :controller do
   describe 'Sort' do
     it 'should be able to sort.' do
       get :index, params: { locale: :en, trailing_slash: true }
-      manager = assigns(:manager)
+      manager = assigns(:dynamic_scaffold)
 
       FactoryBot.create_list(:country, 3)
       countries = Country.all.order sequence: :desc
