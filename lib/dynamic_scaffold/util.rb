@@ -1,7 +1,8 @@
 module DynamicScaffold
   class Util
-    def initialize(config)
+    def initialize(config, controller)
       @config = config
+      @controller = controller
     end
 
     def reset_sequence(record_count)
@@ -24,6 +25,17 @@ module DynamicScaffold
 
     def sorter_param(record)
       [*record.class.primary_key].map {|col| "#{col}:#{record[col]}" }.join(',')
+    end
+
+    def path_for(action, *args)
+      route = Rails.application.routes.routes.find do |route|
+        params = route.required_defaults
+        params[:controller] == @controller.params[:controller] && (params[:action] == action.to_s && route.name)
+      end
+
+      @controller.instance_exec do
+        eval "#{route.name}_path"
+      end
     end
   end
 end

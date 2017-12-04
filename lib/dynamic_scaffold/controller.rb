@@ -14,7 +14,7 @@ module DynamicScaffold
     included do
       before_action do
         @dynamic_scaffold = self.class.dynamic_scaffold_config
-        @dynamic_scaffold_util = Util.new(@dynamic_scaffold)
+        @dynamic_scaffold_util = Util.new(@dynamic_scaffold, self)
       end
     end
 

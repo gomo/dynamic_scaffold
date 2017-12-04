@@ -4,7 +4,7 @@ describe 'DynamicScaffold::Util' do
   context 'sequence' do
     it 'should be able to generate sequence number.' do
       config = DynamicScaffold::Config.new Country
-      util = DynamicScaffold::Util.new config
+      util = DynamicScaffold::Util.new(config, nil)
       # desc
       config.list.sorter sequence: :desc
       util.reset_sequence((1..5).to_a.size)
