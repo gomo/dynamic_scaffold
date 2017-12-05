@@ -25,7 +25,7 @@ module DynamicScaffold
     end
 
     def edit
-      @record = @dynamic_scaffold.model.where(pkey_to_hash(params[:key])).first
+      @record = @dynamic_scaffold.model.where(key_params).first
     end
 
     def sort
@@ -60,6 +60,8 @@ module DynamicScaffold
         ar = ar.where(pkey => rec_params[pkey])
       end
       @record = ar.first
+      raise ActiveRecord::RecordNotFound if @record.nil?
+      
       @record.attributes = rec_params
       if @record.save
         redirect_to @dynamic_scaffold_util.path_for(:index)
@@ -69,11 +71,16 @@ module DynamicScaffold
     end
 
     private
-
       def pkey_to_hash(pkey)
         # Support multiple pkey
         # Convert "key:1,code:foo" to {key: "1", code: "foo"}
         pkey.split(',').map {|v| v.split(':') }.each_with_object({}) {|v, res| res[v.first] = v.last }
+      end
+
+      def key_params
+        params
+          .require('key')
+          .permit(*[*@dynamic_scaffold.model.primary_key])
       end
 
       def record_params

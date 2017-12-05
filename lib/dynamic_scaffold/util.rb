@@ -23,8 +23,12 @@ module DynamicScaffold
       val
     end
 
-    def pkey_param(record)
-      [*record.class.primary_key].map {|col| "#{col}:#{record[col]}" }.join(',')
+    def pkey_params(record)
+      [*record.class.primary_key].each_with_object({}){|col, res| res[col] = record[col] }
+    end
+
+    def pkey_string(record)
+      pkey_params(record).map{|k, v| "#{k}:#{v}"}.join(',')
     end
 
     def path_for(action, *args)

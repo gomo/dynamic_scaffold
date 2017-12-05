@@ -23,10 +23,10 @@
           <div class="resplist-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
-                <a href="<%= @dynamic_scaffold_util.path_for(:edit, key: @dynamic_scaffold_util.pkey_param(record)) %>" class="btn btn-primary btn-outline-primary btn-sm"><%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %></a>
+                <a href="<%= @dynamic_scaffold_util.path_for(:edit, key: @dynamic_scaffold_util.pkey_params(record)) %>" class="btn btn-primary btn-outline-primary btn-sm"><%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %></a>
               </div>
               <% if @dynamic_scaffold.list.sorter %>
-              <input type="hidden" name="pkeys[]" value="<%= @dynamic_scaffold_util.pkey_param(record) %>">
+              <input type="hidden" name="pkeys[]" value="<%= @dynamic_scaffold_util.pkey_string(record) %>">
               <div class="btn-group">
                 <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-up">
                   <%= dynamic_scaffold_icon(:up) %>
