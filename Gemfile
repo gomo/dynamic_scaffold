@@ -12,4 +12,13 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-gem 'rails-controller-testing', group: [:test]
+
+
+
+
+group :development, :test do
+  gem 'rails-controller-testing'
+  gem 'bootstrap', '~> 4.0.0.beta2.1'
+  gem 'sassc-rails', '~> 1.3'
+  gem 'font-awesome-rails', '~> 4.7'
+end

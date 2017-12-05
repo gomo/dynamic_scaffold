@@ -11,7 +11,6 @@
  * It is generally better to create a new file per style scope.
  *
  */
-@import 'reset';
-@include global-reset;
+//= require reset
 @import 'font-awesome';
 @import 'bootstrap';
