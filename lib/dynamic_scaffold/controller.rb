@@ -54,14 +54,14 @@ module DynamicScaffold
     end
 
     def update
-      rec_params = record_params()
+      rec_params = record_params
       ar = @dynamic_scaffold.model.all
       [*@dynamic_scaffold.model.primary_key].each do |pkey|
         ar = ar.where(pkey => rec_params[pkey])
       end
       @record = ar.first
       raise ActiveRecord::RecordNotFound if @record.nil?
-      
+
       @record.attributes = rec_params
       if @record.save
         redirect_to @dynamic_scaffold_util.path_for(:index)
@@ -71,6 +71,7 @@ module DynamicScaffold
     end
 
     private
+
       def pkey_to_hash(pkey)
         # Support multiple pkey
         # Convert "key:1,code:foo" to {key: "1", code: "foo"}
@@ -80,7 +81,7 @@ module DynamicScaffold
       def key_params
         params
           .require('key')
-          .permit(*[*@dynamic_scaffold.model.primary_key])
+          .permit(*@dynamic_scaffold.model.primary_key)
       end
 
       def record_params
