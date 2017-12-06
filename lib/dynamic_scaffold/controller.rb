@@ -28,19 +28,12 @@ module DynamicScaffold
       @record = @dynamic_scaffold.model.where(key_params).first
     end
 
-    def sort
-      @dynamic_scaffold_util.reset_sequence params['pkeys'].size
-      @dynamic_scaffold.model.transaction do
-        params['pkeys'].each do |pkeys|
-          pkeys = pkey_to_hash(pkeys)
-          rec = @dynamic_scaffold.model.where(pkeys).first
-          rec.update!(
-            @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold_util.next_sequence!
-          )
-        end
+    def sort_or_destroy
+      if !params['submit_sort'].nil?
+        sort
+      elsif !params['submit_destroy'].nil?
+        destroy
       end
-
-      redirect_back fallback_location: @dynamic_scaffold_util.path_for(:index), status: 303
     end
 
     def create
@@ -71,6 +64,31 @@ module DynamicScaffold
     end
 
     private
+
+      def destroy
+        pkey_params = pkey_to_hash(params['submit_destroy'])
+        record = @dynamic_scaffold.model.where(pkey_params).first
+        raise ActiveRecord::RecordNotFound if record.nil?
+        
+        record.destroy
+
+        redirect_to @dynamic_scaffold_util.path_for(:index)
+      end
+
+      def sort
+        @dynamic_scaffold_util.reset_sequence params['pkeys'].size
+        @dynamic_scaffold.model.transaction do
+          params['pkeys'].each do |pkeys|
+            pkeys = pkey_to_hash(pkeys)
+            rec = @dynamic_scaffold.model.where(pkeys).first
+            rec.update!(
+              @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold_util.next_sequence!
+            )
+          end
+        end
+  
+        redirect_back fallback_location: @dynamic_scaffold_util.path_for(:index), status: 303
+      end
 
       def pkey_to_hash(pkey)
         # Support multiple pkey

@@ -15,7 +15,7 @@ module DynamicScaffold
         post(path, { to: "#{controller}#create" }.merge(options).merge(trailing_slash: true))
         get("#{path}/new", { to: "#{controller}#new" }.merge(options))
         get("#{path}/edit", { to: "#{controller}#edit" }.merge(options))
-        patch("#{path}/sort", { to: "#{controller}#sort" }.merge(options))
+        patch("#{path}/sort_or_destroy", { to: "#{controller}#sort_or_destroy" }.merge(options))
         patch("#{path}/update", { to: "#{controller}#update" }.merge(options))
       end
     end

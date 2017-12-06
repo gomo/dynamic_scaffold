@@ -8,3 +8,4 @@ ja:
       back: '戻る'
     messages:
       no_records: '%{model}の登録はありません。'
+      destroy_confirm: '削除します。よろしいですか？'

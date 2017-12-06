@@ -5,3 +5,8 @@
 .dynamicScaffold-error-message{
   color: #dc3545;
 }
+
+.dynamicScaffold-destorying{
+  background-color: #fdd8df !important;
+  opacity: 0.6;
+}
