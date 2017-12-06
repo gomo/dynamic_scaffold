@@ -25,7 +25,7 @@ module DynamicScaffold
     end
 
     def edit
-      @record = @dynamic_scaffold.model.where(key_params).first
+      @record = @dynamic_scaffold.model.find_by(key_params)
     end
 
     def sort_or_destroy
@@ -67,7 +67,7 @@ module DynamicScaffold
 
       def destroy
         pkey_params = pkey_to_hash(params['submit_destroy'])
-        record = @dynamic_scaffold.model.where(pkey_params).first
+        record = @dynamic_scaffold.model.find_by(pkey_params)
         raise ActiveRecord::RecordNotFound if record.nil?
         
         record.destroy
@@ -79,8 +79,8 @@ module DynamicScaffold
         @dynamic_scaffold_util.reset_sequence params['pkeys'].size
         @dynamic_scaffold.model.transaction do
           params['pkeys'].each do |pkeys|
-            pkeys = pkey_to_hash(pkeys)
-            rec = @dynamic_scaffold.model.where(pkeys).first
+            pkey_params = pkey_to_hash(pkeys)
+            rec = @dynamic_scaffold.model.find_by(pkey_params)
             rec.update!(
               @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold_util.next_sequence!
             )
