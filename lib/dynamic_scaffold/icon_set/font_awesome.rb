@@ -17,6 +17,6 @@ Rails.application.config.dynamic_scaffold.icons = proc do |name|
   when :error then
     content_tag :i, '', class: 'fa fa-exclamation-circle', 'aria-hidden' => 'true'
   else
-    raise "Unknown icon type #{name} specified."
+    raise DynamicScaffold::Error::InvalidIcon, "Unknown icon type #{name} specified."
   end
 end
