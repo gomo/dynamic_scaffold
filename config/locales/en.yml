@@ -2,3 +2,4 @@ en:
   dynamic_scaffold:
     messages:
       no_records: '%{model} is not registered.'
+      destroy_confirm: 'Are you sure you want to delete this?'
