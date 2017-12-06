@@ -1,3 +1,8 @@
+<%unless flash[:dynamic_saffold_danger].nil?%>
+  <div class="alert alert-danger" role="alert">
+    <%= flash[:dynamic_saffold_danger] %>
+  </div>
+<%end%>
 <%= form_with method: :patch, url: @dynamic_scaffold_util.path_for(:sort_or_destroy) do%>
 <div class="dynamicScaffold-row">
   <div class="text-left">

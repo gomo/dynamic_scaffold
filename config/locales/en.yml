@@ -3,3 +3,6 @@ en:
     messages:
       no_records: '%{model} is not registered.'
       destroy_confirm: 'Are you sure you want to delete this?'
+    alert:
+      destroy:
+        invalid_foreign_key: 'That item can not be deleted because it has associated record(s).'

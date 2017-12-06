@@ -69,8 +69,11 @@ module DynamicScaffold
         pkey_params = pkey_to_hash(params['submit_destroy'])
         record = @dynamic_scaffold.model.find_by(pkey_params)
         raise ActiveRecord::RecordNotFound if record.nil?
-        
-        record.destroy
+        begin
+          record.destroy
+        rescue ActiveRecord::InvalidForeignKey => error
+          flash[:dynamic_saffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
+        end
 
         redirect_to @dynamic_scaffold_util.path_for(:index)
       end
