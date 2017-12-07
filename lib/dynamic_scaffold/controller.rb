@@ -26,7 +26,10 @@ module DynamicScaffold
     end
 
     def edit
-      @record = @dynamic_scaffold.model.find_by(key_params)
+      target_params = key_params
+      target_params = target_params.merge(scope_params) if @dynamic_scaffold.scope
+      @record = @dynamic_scaffold.model.find_by(target_params)
+      raise ActiveRecord::RecordNotFound if @record.nil?
     end
 
     def sort_or_destroy
@@ -48,15 +51,13 @@ module DynamicScaffold
     end
 
     def update
-      rec_params = record_params
-      ar = @dynamic_scaffold.model.all
-      [*@dynamic_scaffold.model.primary_key].each do |pkey|
-        ar = ar.where(pkey => rec_params[pkey])
-      end
-      @record = ar.first
+      update_params = record_params
+      target_params = extract_pkeys(update_params)
+      target_params = target_params.merge(scope_params) if @dynamic_scaffold.scope
+      @record = @dynamic_scaffold.model.find_by(target_params)
       raise ActiveRecord::RecordNotFound if @record.nil?
 
-      @record.attributes = rec_params
+      @record.attributes = update_params
       if @record.save
         redirect_to @dynamic_scaffold_util.path_for(:index)
       else
@@ -70,6 +71,10 @@ module DynamicScaffold
     end
 
     private
+
+      def extract_pkeys(values)
+        [*@dynamic_scaffold.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col]}
+      end
 
       def destroy
         pkey_params = pkey_to_hash(params['submit_destroy'])
