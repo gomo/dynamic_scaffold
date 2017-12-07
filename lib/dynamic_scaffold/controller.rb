@@ -71,7 +71,7 @@ module DynamicScaffold
         raise ActiveRecord::RecordNotFound if record.nil?
         begin
           record.destroy
-        rescue ActiveRecord::InvalidForeignKey => error
+        rescue ActiveRecord::InvalidForeignKey => _error
           flash[:dynamic_saffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
         end
 
@@ -89,7 +89,7 @@ module DynamicScaffold
             )
           end
         end
-  
+
         redirect_back fallback_location: @dynamic_scaffold_util.path_for(:index), status: 303
       end
 

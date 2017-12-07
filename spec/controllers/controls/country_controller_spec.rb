@@ -16,7 +16,7 @@ RSpec.describe Controls::CountryController, type: :controller do
       pkeys << util.pkey_string(countries[1])
       pkeys << util.pkey_string(countries[0])
       pkeys << util.pkey_string(countries[2])
-      patch :sort_or_destroy, params: { locale: :en, pkeys: pkeys, submit_sort: "" }
+      patch :sort_or_destroy, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'
       expect(countries[1].name).to eq 'Country 3'
@@ -27,7 +27,7 @@ RSpec.describe Controls::CountryController, type: :controller do
       pkeys << util.pkey_string(countries[0])
       pkeys << util.pkey_string(countries[2])
       pkeys << util.pkey_string(countries[1])
-      patch :sort_or_destroy, params: { locale: 'ja', pkeys: pkeys, submit_sort: "" }
+      patch :sort_or_destroy, params: { locale: 'ja', pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'
       expect(countries[1].name).to eq 'Country 1'
@@ -53,9 +53,9 @@ RSpec.describe Controls::CountryController, type: :controller do
 
       state = FactoryBot.create(:state)
       patch :sort_or_destroy, params: { locale: :en, submit_destroy: util.pkey_string(state.country) }
-      
+
       expect(Country.find_by(id: state.country.id)).not_to be_nil
-      expect(flash["dynamic_saffold_danger"]).not_to be_nil
+      expect(flash['dynamic_saffold_danger']).not_to be_nil
       expect(response).to redirect_to controls_master_country_path
     end
   end
@@ -71,4 +71,3 @@ RSpec.describe Controls::CountryController, type: :controller do
     end
   end
 end
-
