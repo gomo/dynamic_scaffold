@@ -42,7 +42,7 @@ module DynamicScaffold
       pkey_params(record).map {|k, v| "#{k}:#{v}" }.join(',')
     end
 
-    def path_for(action, *args)
+    def path_for(action, options = {})
       route = Rails.application.routes.routes.find do |r|
         params = r.required_defaults
         params[:controller] == @controller.params[:controller] && (params[:action] == action.to_s && r.name)
@@ -53,7 +53,7 @@ module DynamicScaffold
           "Missing controller#action #{@controller.params[:controller]}##{action}"
       end
 
-      @controller.send("#{route.name}_path", *args)
+      @controller.send("#{route.name}_path", options)
     end
   end
 end

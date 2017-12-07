@@ -38,9 +38,9 @@
     <% end %>
   <% end %>
   <div>
-    <a href="./" class="btn btn-outline-secondary btn-default">
+    <%= link_to @dynamic_scaffold_util.path_for(:index), class: 'btn btn-outline-secondary btn-default' do%>
       <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.buttons.back') %>
-    </a>
+    <%end%>
     <button type="submit" class="btn btn-outline-warning btn-warning">
       <%= dynamic_scaffold_icon :save %> <%= t('dynamic_scaffold.buttons.save') %>
     </a>

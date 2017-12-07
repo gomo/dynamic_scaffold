@@ -55,7 +55,7 @@ RSpec.describe Controls::CountriesController, type: :controller do
       patch :sort_or_destroy, params: { locale: :en, submit_destroy: util.pkey_string(state.country) }
 
       expect(Country.find_by(id: state.country.id)).not_to be_nil
-      expect(flash['dynamic_saffold_danger']).not_to be_nil
+      expect(flash['dynamic_scaffold_danger']).not_to be_nil
       expect(response).to redirect_to controls_master_countries_path
     end
   end
