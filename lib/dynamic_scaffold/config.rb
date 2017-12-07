@@ -75,7 +75,9 @@ module DynamicScaffold
     def fields
       if @fields.empty?
         @config.model.column_names.each do |column|
-          @fields << Form::Field::Single.new(@config, :text_field, column)
+          type = :text_field
+          type = :hidden_field if @config.scope && @config.scope.include?(column.to_sym)
+          @fields << Form::Field::Single.new(@config, type, column)
         end
       end
       @fields

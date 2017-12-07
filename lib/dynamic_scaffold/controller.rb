@@ -22,7 +22,7 @@ module DynamicScaffold
 
     def new
       @record = @dynamic_scaffold.model.new
-      @record.attribute = scope_params if @dynamic_scaffold.scope
+      @record.attributes = scope_params if @dynamic_scaffold.scope
     end
 
     def edit
