@@ -11,11 +11,11 @@
   <%= render 'dynamic_scaffold/bootstrap/save_order'%>
 </div>
 <div class="dynamicScaffold-row">
-  <% if @dynamic_scaffold.list.records.empty? %>
+  <% if @dynamic_scaffold_util.records.empty? %>
     <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: @dynamic_scaffold.model.model_name.human) %></p>
   <% else %>
     <ul class="resplist resplist-striped">
-      <%@dynamic_scaffold.list.records.each do |record|%>
+      <%@dynamic_scaffold_util.records.each do |record|%>
         <li class="resplist-row js-item-row">
           <div class="resplist-items">
           <%@dynamic_scaffold.list.items.each do |disp|%>

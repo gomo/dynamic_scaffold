@@ -21,11 +21,13 @@ FOREIGN KEY ("state_id")
 );
 CREATE INDEX "index_shop_states_on_shop_id" ON "shop_states" ("shop_id");
 CREATE INDEX "index_shop_states_on_state_id" ON "shop_states" ("state_id");
+CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "encrypted_password" varchar, "role" integer(2), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 INSERT INTO "schema_migrations" (version) VALUES
 ('20171124081557'),
 ('20171124081606'),
 ('20171129083914'),
 ('20171129083921'),
-('20171129083931');
+('20171129083931'),
+('20171207055523');
 
 

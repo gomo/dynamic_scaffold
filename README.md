@@ -79,7 +79,7 @@ class ShopController < ApplicationController
     # The first argument can also be omitted to display item that is not model attribute.
     # The block is executed in the context of view, so you can call the method of view.
     c.list.item do |rec, name|
-      link_to "Show #{rec.name}", controls_master_shop_path
+      link_to "Show #{rec.name}", controls_master_shops_path
     end
   end
 end

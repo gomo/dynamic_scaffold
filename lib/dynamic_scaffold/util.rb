@@ -5,6 +5,17 @@ module DynamicScaffold
       @controller = controller
     end
 
+    def records
+      ar = @config.model.all
+      ar = ar.where scope_params if @config.scope
+      ar = ar.order @config.list.sorter if @config.list.sorter
+      ar
+    end
+
+    def scope_params
+      @config.scope.each_with_object({}) {|attr, res| res[attr] = @controller.params[attr] }
+    end
+
     def reset_sequence(record_count)
       if @config.list.sorter_direction == :asc
         @sequence = 0
