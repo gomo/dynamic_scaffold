@@ -47,10 +47,6 @@ RSpec.describe Controls::CountryController, type: :controller do
       expect(Country.find_by(id: country.id)).to be_nil
       expect(response).to redirect_to controls_master_country_path
     end
-  end
-
-  describe 'Delete Error' do
-    render_views
     it 'should display error if you delete record that can not be deleted with foreign key constraints' do
       get :index, params: { locale: :en, trailing_slash: true }
       util = assigns(:dynamic_scaffold_util)
