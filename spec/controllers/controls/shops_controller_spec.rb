@@ -87,6 +87,7 @@ RSpec.describe Controls::ShopsController, type: :controller do
       expect(util.path_for(:index)).to eq '/en/controls/master/shops'
       expect(util.path_for(:new)).to eq '/en/controls/master/shops/new'
       expect(util.path_for(:sort_or_destroy)).to eq '/en/controls/master/shops/sort_or_destroy'
+      expect(util.path_for(:update)).to eq '/en/controls/master/shops/update'
     end
   end
 end

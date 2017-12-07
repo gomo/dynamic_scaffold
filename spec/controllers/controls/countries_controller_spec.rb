@@ -68,6 +68,7 @@ RSpec.describe Controls::CountriesController, type: :controller do
       expect(util.path_for(:index)).to eq '/en/controls/master/countries'
       expect(util.path_for(:new)).to eq '/en/controls/master/countries/new'
       expect(util.path_for(:sort_or_destroy)).to eq '/en/controls/master/countries/sort_or_destroy'
+      expect(util.path_for(:update)).to eq '/en/controls/master/countries/update'
     end
   end
 end
