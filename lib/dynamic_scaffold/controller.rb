@@ -22,6 +22,7 @@ module DynamicScaffold
 
     def new
       @record = @dynamic_scaffold.model.new
+      @record.attribute = scope_params if @dynamic_scaffold.scope
     end
 
     def edit
@@ -61,6 +62,11 @@ module DynamicScaffold
       else
         render "#{params[:controller]}/edit"
       end
+    end
+
+    # TODO: to private
+    def scope_params
+      @dynamic_scaffold.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
     end
 
     private
