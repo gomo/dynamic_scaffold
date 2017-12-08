@@ -122,6 +122,19 @@ RSpec.describe Controls::UsersController, type: :controller do
     end
   end
 
+  describe 'Delete' do
+    it 'should not let destory user who is not the specified roles.' do
+      get :index, params: { locale: :en, role: :admin }
+      util = assigns(:dynamic_scaffold_util)
+
+      staff = FactoryBot.create(:user, role_value: :staff)
+
+      expect {
+        patch :sort_or_destroy, params: { locale: :en, role: :admin, submit_destroy: util.pkey_string(staff) }
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
   describe '#path_for' do
     it 'should be able to get path.' do
       get :index, params: { locale: :en, role: "admin" }

@@ -81,6 +81,7 @@ module DynamicScaffold
 
       def destroy
         pkey_params = pkey_to_hash(params['submit_destroy'])
+        pkey_params = pkey_params.merge(scope_params) if @dynamic_scaffold.scope
         record = @dynamic_scaffold.model.find_by(pkey_params)
         raise ActiveRecord::RecordNotFound if record.nil?
         begin
