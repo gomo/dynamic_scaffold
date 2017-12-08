@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :email
       t.string :encrypted_password
       t.integer :role, limit: 2
+      t.integer :sequence
 
       t.timestamps
     end

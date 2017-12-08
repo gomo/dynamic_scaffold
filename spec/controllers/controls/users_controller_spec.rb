@@ -104,6 +104,24 @@ RSpec.describe Controls::UsersController, type: :controller do
       }.to raise_error(DynamicScaffold::Error::InvalidParameter)
     end
   end
+
+  describe 'Sort' do
+    it 'should raise an exception if there is even one record other than the specified scope.' do
+      get :index, params: { locale: :en, role: :admin }
+      util = assigns(:dynamic_scaffold_util)
+
+      staffs = FactoryBot.create_list(:user, 3, role_value: :staff)
+
+      pkeys = []
+      pkeys << util.pkey_string(staffs[1])
+      pkeys << util.pkey_string(staffs[0])
+      pkeys << util.pkey_string(staffs[2])
+      expect {
+        patch :sort_or_destroy, params: { locale: :en, role: :admin, pkeys: pkeys, submit_sort: '' }
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
   describe '#path_for' do
     it 'should be able to get path.' do
       get :index, params: { locale: :en, role: "admin" }

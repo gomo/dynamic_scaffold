@@ -31,7 +31,8 @@ end
     User.create!(
       email: Faker::Internet.email,
       encrypted_password: Faker::Crypto.md5,
-      role: role
+      role: role,
+      sequence: n
     )
   end
 end

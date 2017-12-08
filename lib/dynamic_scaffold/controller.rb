@@ -97,7 +97,9 @@ module DynamicScaffold
         @dynamic_scaffold.model.transaction do
           params['pkeys'].each do |pkeys|
             pkey_params = pkey_to_hash(pkeys)
+            pkey_params = pkey_params.merge(scope_params) if @dynamic_scaffold.scope
             rec = @dynamic_scaffold.model.find_by(pkey_params)
+            raise ActiveRecord::RecordNotFound if rec.nil?
             rec.update!(
               @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold_util.next_sequence!
             )
