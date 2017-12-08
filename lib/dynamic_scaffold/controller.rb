@@ -22,12 +22,11 @@ module DynamicScaffold
 
     def new
       @record = @dynamic_scaffold.model.new
-      @record.attributes = scope_params if @dynamic_scaffold.scope
+      @record.attributes = scope_params
     end
 
     def edit
-      target_params = key_params
-      target_params = target_params.merge(scope_params) if @dynamic_scaffold.scope
+      target_params = key_params.merge(scope_params)
       @record = @dynamic_scaffold.model.find_by(target_params)
       raise ActiveRecord::RecordNotFound if @record.nil?
     end
@@ -52,12 +51,11 @@ module DynamicScaffold
 
     def update
       update_params = record_params
-      target_params = extract_pkeys(update_params)
-      target_params = target_params.merge(scope_params) if @dynamic_scaffold.scope
+      target_params = extract_pkeys(update_params).merge(scope_params)
       @record = @dynamic_scaffold.model.find_by(target_params)
       raise ActiveRecord::RecordNotFound if @record.nil?
       if @dynamic_scaffold.scope && !valid_for_scope?(update_params, scope_params)
-        raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params.to_s} on this scope"
+        raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params} on this scope"
       end
 
       @record.attributes = update_params
@@ -70,18 +68,18 @@ module DynamicScaffold
 
     # TODO: to private
     def scope_params
+      return {} if @dynamic_scaffold.scope.nil?
       @dynamic_scaffold.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
     end
 
     private
 
       def extract_pkeys(values)
-        [*@dynamic_scaffold.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col]}
+        [*@dynamic_scaffold.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col] }
       end
 
       def destroy
-        pkey_params = pkey_to_hash(params['submit_destroy'])
-        pkey_params = pkey_params.merge(scope_params) if @dynamic_scaffold.scope
+        pkey_params = pkey_to_hash(params['submit_destroy']).merge(scope_params)
         record = @dynamic_scaffold.model.find_by(pkey_params)
         raise ActiveRecord::RecordNotFound if record.nil?
         begin
@@ -94,11 +92,10 @@ module DynamicScaffold
       end
 
       def sort
-        @dynamic_scaffold_util.reset_sequence params['pkeys'].size
+        @dynamic_scaffold_util.reset_sequence(params['pkeys'].size)
         @dynamic_scaffold.model.transaction do
           params['pkeys'].each do |pkeys|
-            pkey_params = pkey_to_hash(pkeys)
-            pkey_params = pkey_params.merge(scope_params) if @dynamic_scaffold.scope
+            pkey_params = pkey_to_hash(pkeys).merge(scope_params)
             rec = @dynamic_scaffold.model.find_by(pkey_params)
             raise ActiveRecord::RecordNotFound if rec.nil?
             rec.update!(

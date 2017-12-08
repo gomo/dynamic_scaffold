@@ -27,7 +27,7 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
 
 3.times do |n|
-  User.roles.keys.each do |role|
+  User.roles.each_key do |role|
     User.create!(
       email: Faker::Internet.email,
       encrypted_password: Faker::Crypto.md5,

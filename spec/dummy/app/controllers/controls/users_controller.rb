@@ -5,7 +5,7 @@ module Controls
       c.scope [:role]
 
       c.list.sorter sequence: :desc
-      
+
       c.list.item(:id, style: 'width: 80px')
       c.list.item(:role, style: 'width: 80px')
       c.list.item(:email, style: 'width: 190px')
