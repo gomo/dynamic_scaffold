@@ -38,11 +38,8 @@ RSpec.describe Controls::ShopsController, type: :controller do
   describe 'Edit' do
     render_views
     it 'should be able to edit.' do
-      get :index, params: { locale: :en }
-      util = assigns(:dynamic_scaffold_util)
-
       shop = FactoryBot.create(:shop)
-      pkey_params = util.pkey_params(shop)
+      pkey_params = controller.pkey_params(shop)
       get :edit, params: { locale: :en, key: pkey_params }
       expect(response).to render_template(:edit)
       expect(response.body).not_to match(/class="[^"]*dynamicScaffold\-error\-message[^"]*"/)
@@ -82,12 +79,11 @@ RSpec.describe Controls::ShopsController, type: :controller do
   describe '#path_for' do
     it 'should be able to get path.' do
       get :index, params: { locale: :en }
-      util = assigns(:dynamic_scaffold_util)
 
-      expect(util.path_for(:index)).to eq '/en/controls/master/shops'
-      expect(util.path_for(:new)).to eq '/en/controls/master/shops/new'
-      expect(util.path_for(:sort_or_destroy)).to eq '/en/controls/master/shops/sort_or_destroy'
-      expect(util.path_for(:update)).to eq '/en/controls/master/shops/update'
+      expect(controller.path_for(:index)).to eq '/en/controls/master/shops'
+      expect(controller.path_for(:new)).to eq '/en/controls/master/shops/new'
+      expect(controller.path_for(:sort_or_destroy)).to eq '/en/controls/master/shops/sort_or_destroy'
+      expect(controller.path_for(:update)).to eq '/en/controls/master/shops/update'
     end
   end
 end

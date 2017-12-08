@@ -3,21 +3,21 @@
     <%= flash[:dynamic_scaffold_danger] %>
   </div>
 <%end%>
-<%= form_with method: :patch, url: @dynamic_scaffold_util.path_for(:sort_or_destroy) do%>
+<%= form_with method: :patch, url: controller.path_for(:sort_or_destroy) do%>
 <div class="dynamicScaffold-row">
   <div class="text-left">
-    <%= link_to @dynamic_scaffold_util.path_for(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
+    <%= link_to controller.path_for(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
       <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.buttons.add') %>
     <%end%>
   </div>
   <%= render 'dynamic_scaffold/bootstrap/save_order'%>
 </div>
 <div class="dynamicScaffold-row">
-  <% if @dynamic_scaffold_util.records.empty? %>
+  <% if @records.empty? %>
     <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: @dynamic_scaffold.model.model_name.human) %></p>
   <% else %>
     <ul class="resplist resplist-striped">
-      <%@dynamic_scaffold_util.records.each do |record|%>
+      <%@records.each do |record|%>
         <li class="resplist-row js-item-row">
           <div class="resplist-items">
           <%@dynamic_scaffold.list.items.each do |disp|%>
@@ -30,12 +30,12 @@
           <div class="resplist-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
-               <%= link_to @dynamic_scaffold_util.path_for(:edit, key: @dynamic_scaffold_util.pkey_params(record)), class: 'btn btn-primary btn-outline-primary btn-sm' do%>
+               <%= link_to controller.path_for(:edit, key: controller.pkey_params(record)), class: 'btn btn-primary btn-outline-primary btn-sm' do%>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %>
                <%end%>
               </div>
               <% if @dynamic_scaffold.list.sorter %>
-              <input type="hidden" name="pkeys[]" value="<%= @dynamic_scaffold_util.pkey_string(record) %>">
+              <input type="hidden" name="pkeys[]" value="<%= controller.pkey_string(record) %>">
               <div class="btn-group">
                 <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-up">
                   <%= dynamic_scaffold_icon(:up) %>
@@ -46,7 +46,7 @@
               </div>
               <% end %>
               <div class="btn-group">
-                <button data-confirm-message="<%= t('dynamic_scaffold.messages.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm js-destory" name="submit_destroy" value="<%= @dynamic_scaffold_util.pkey_string(record) %>">
+                <button data-confirm-message="<%= t('dynamic_scaffold.messages.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm js-destory" name="submit_destroy" value="<%= controller.pkey_string(record) %>">
                   <%= dynamic_scaffold_icon(:delete) %>
                 </button>
               </div>

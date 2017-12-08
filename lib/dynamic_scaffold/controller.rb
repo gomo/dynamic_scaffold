@@ -14,11 +14,14 @@ module DynamicScaffold
     included do
       before_action do
         @dynamic_scaffold = self.class.dynamic_scaffold_config
-        @dynamic_scaffold_util = Util.new(@dynamic_scaffold, self)
       end
     end
 
-    def index; end
+    def index
+      @records = @dynamic_scaffold.model.all
+      @records = @records.where scope_params
+      @records = @records.order @dynamic_scaffold.list.sorter if @dynamic_scaffold.list.sorter
+    end
 
     def new
       @record = @dynamic_scaffold.model.new
@@ -43,7 +46,7 @@ module DynamicScaffold
       @record = @dynamic_scaffold.model.new
       @record.attributes = record_params
       if @record.save
-        redirect_to @dynamic_scaffold_util.path_for(:index)
+        redirect_to path_for(:index)
       else
         render "#{params[:controller]}/new"
       end
@@ -60,10 +63,35 @@ module DynamicScaffold
 
       @record.attributes = update_params
       if @record.save
-        redirect_to @dynamic_scaffold_util.path_for(:index)
+        redirect_to path_for(:index)
       else
         render "#{params[:controller]}/edit"
       end
+    end
+
+    # This method is public as it is called from view.
+    def path_for(action, options = {})
+      route = Rails.application.routes.routes.find do |r|
+        route_params = r.required_defaults
+        route_params[:controller] == params[:controller] && (route_params[:action] == action.to_s && r.name)
+      end
+
+      if route.nil?
+        raise DynamicScaffold::Error::RouteNotFound,
+          "Missing controller#action #{params[:controller]}##{action}"
+      end
+
+      public_send("#{route.name}_path", options)
+    end
+
+    # This method is public as it is called from view.
+    def pkey_params(record)
+      [*record.class.primary_key].each_with_object({}) {|col, res| res[col] = record[col] }
+    end
+
+    # This method is public as it is called from view.
+    def pkey_string(record)
+      pkey_params(record).map {|k, v| "#{k}:#{v}" }.join(',')
     end
 
     # TODO: to private
@@ -88,23 +116,23 @@ module DynamicScaffold
           flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
         end
 
-        redirect_to @dynamic_scaffold_util.path_for(:index)
+        redirect_to path_for(:index)
       end
 
       def sort
-        @dynamic_scaffold_util.reset_sequence(params['pkeys'].size)
+        reset_sequence(params['pkeys'].size)
         @dynamic_scaffold.model.transaction do
           params['pkeys'].each do |pkeys|
             pkey_params = pkey_to_hash(pkeys).merge(scope_params)
             rec = @dynamic_scaffold.model.find_by(pkey_params)
             raise ActiveRecord::RecordNotFound if rec.nil?
             rec.update!(
-              @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold_util.next_sequence!
+              @dynamic_scaffold.list.sorter_attribute => next_sequence!
             )
           end
         end
 
-        redirect_back fallback_location: @dynamic_scaffold_util.path_for(:index), status: 303
+        redirect_back fallback_location: path_for(:index), status: 303
       end
 
       def pkey_to_hash(pkey)
@@ -134,6 +162,24 @@ module DynamicScaffold
           end
         end
         result
+      end
+
+      def reset_sequence(record_count)
+        if @dynamic_scaffold.list.sorter_direction == :asc
+          @sequence = 0
+        elsif @dynamic_scaffold.list.sorter_direction == :desc
+          @sequence = record_count - 1
+        end
+      end
+
+      def next_sequence!
+        val = @sequence
+        if @dynamic_scaffold.list.sorter_direction == :asc
+          @sequence += 1
+        elsif @dynamic_scaffold.list.sorter_direction == :desc
+          @sequence -= 1
+        end
+        val
       end
   end
 end

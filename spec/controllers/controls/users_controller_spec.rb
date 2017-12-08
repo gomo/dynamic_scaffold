@@ -42,20 +42,17 @@ RSpec.describe Controls::UsersController, type: :controller do
 
   describe 'Edit' do
     it 'should not let edit user who is not the specified roles.' do
-      get :index, params: { locale: :en, role: 'admin' }
-      util = assigns(:dynamic_scaffold_util)
-
       admin = FactoryBot.create(:user, role_value: :admin)
       staff = FactoryBot.create(:user, role_value: :staff)
       member = FactoryBot.create(:user, role_value: :member)
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: util.pkey_params(admin) }
+        get :edit, params: { locale: :en, role: 'admin', key: controller.pkey_params(admin) }
       end.not_to raise_error
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: util.pkey_params(staff) }
+        get :edit, params: { locale: :en, role: 'admin', key: controller.pkey_params(staff) }
       end.to raise_error(ActiveRecord::RecordNotFound)
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: util.pkey_params(member) }
+        get :edit, params: { locale: :en, role: 'admin', key: controller.pkey_params(member) }
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -99,15 +96,12 @@ RSpec.describe Controls::UsersController, type: :controller do
 
   describe 'Sort' do
     it 'should raise an exception if there is even one record other than the specified scope.' do
-      get :index, params: { locale: :en, role: :admin }
-      util = assigns(:dynamic_scaffold_util)
-
       staffs = FactoryBot.create_list(:user, 3, role_value: :staff)
 
       pkeys = []
-      pkeys << util.pkey_string(staffs[1])
-      pkeys << util.pkey_string(staffs[0])
-      pkeys << util.pkey_string(staffs[2])
+      pkeys << controller.pkey_string(staffs[1])
+      pkeys << controller.pkey_string(staffs[0])
+      pkeys << controller.pkey_string(staffs[2])
       expect do
         patch :sort_or_destroy, params: { locale: :en, role: :admin, pkeys: pkeys, submit_sort: '' }
       end.to raise_error(ActiveRecord::RecordNotFound)
@@ -116,13 +110,10 @@ RSpec.describe Controls::UsersController, type: :controller do
 
   describe 'Delete' do
     it 'should not let destory user who is not the specified roles.' do
-      get :index, params: { locale: :en, role: :admin }
-      util = assigns(:dynamic_scaffold_util)
-
       staff = FactoryBot.create(:user, role_value: :staff)
 
       expect do
-        patch :sort_or_destroy, params: { locale: :en, role: :admin, submit_destroy: util.pkey_string(staff) }
+        patch :sort_or_destroy, params: { locale: :en, role: :admin, submit_destroy: controller.pkey_string(staff) }
       end.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
@@ -130,12 +121,11 @@ RSpec.describe Controls::UsersController, type: :controller do
   describe '#path_for' do
     it 'should be able to get path.' do
       get :index, params: { locale: :en, role: 'admin' }
-      util = assigns(:dynamic_scaffold_util)
 
-      expect(util.path_for(:index)).to eq '/en/controls/master/users/admin'
-      expect(util.path_for(:new)).to eq '/en/controls/master/users/admin/new'
-      expect(util.path_for(:sort_or_destroy)).to eq '/en/controls/master/users/admin/sort_or_destroy'
-      expect(util.path_for(:update)).to eq '/en/controls/master/users/admin/update'
+      expect(controller.path_for(:index)).to eq '/en/controls/master/users/admin'
+      expect(controller.path_for(:new)).to eq '/en/controls/master/users/admin/new'
+      expect(controller.path_for(:sort_or_destroy)).to eq '/en/controls/master/users/admin/sort_or_destroy'
+      expect(controller.path_for(:update)).to eq '/en/controls/master/users/admin/update'
     end
   end
 end
