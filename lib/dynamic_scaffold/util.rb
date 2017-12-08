@@ -5,6 +5,13 @@ module DynamicScaffold
       @controller = controller
     end
 
+    def records
+      ar = @config.model.all
+      ar = ar.where @controller.scope_params if @config.scope
+      ar = ar.order @config.list.sorter if @config.list.sorter
+      ar
+    end
+
     def reset_sequence(record_count)
       if @config.list.sorter_direction == :asc
         @sequence = 0
@@ -31,7 +38,7 @@ module DynamicScaffold
       pkey_params(record).map {|k, v| "#{k}:#{v}" }.join(',')
     end
 
-    def path_for(action, *args)
+    def path_for(action, options = {})
       route = Rails.application.routes.routes.find do |r|
         params = r.required_defaults
         params[:controller] == @controller.params[:controller] && (params[:action] == action.to_s && r.name)
@@ -42,7 +49,7 @@ module DynamicScaffold
           "Missing controller#action #{@controller.params[:controller]}##{action}"
       end
 
-      @controller.send("#{route.name}_path", *args)
+      @controller.send("#{route.name}_path", options)
     end
   end
 end

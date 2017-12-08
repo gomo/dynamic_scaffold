@@ -1,5 +1,5 @@
 module Controls
-  class ShopController < ApplicationController
+  class ShopsController < ApplicationController
     include DynamicScaffold::Controller
     dynamic_scaffold Shop do |c|
       c.list.item(:id, style: 'width: 80px').label('Number')
@@ -11,7 +11,7 @@ module Controls
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
       end
       c.list.item do |rec, _name|
-        link_to "Show #{rec.name}", controls_master_shop_path
+        link_to "Show #{rec.name}", controls_master_shops_path
       end
 
       # You can use form helper methods like ...

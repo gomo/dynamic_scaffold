@@ -1,23 +1,23 @@
 require 'rails_helper'
 
-RSpec.describe Controls::ShopController, type: :controller do
+RSpec.describe Controls::ShopsController, type: :controller do
   describe 'Create' do
     render_views
     it 'should be able to create.' do
-      get :new, params: { locale: :en, trailing_slash: true }
+      get :new, params: { locale: :en }
       expect(response).to render_template(:new)
       expect(response.body).not_to match(/class="[^"]*dynamicScaffold\-error\-message[^"]*"/)
 
       # fail
-      post :create, params: { locale: :en, trailing_slash: true, shop: { name: '' } }
+      post :create, params: { locale: :en, shop: { name: '' } }
       expect(response).to render_template(:new)
-      expect(response).not_to redirect_to controls_master_shop_path
+      expect(response).not_to redirect_to controls_master_shops_path
       expect(response.body).to match(/class="[^"]*dynamicScaffold\-error\-message[^"]*"/)
 
       # success
       category = FactoryBot.create(:category)
       states = FactoryBot.create_list(:state, 3)
-      post :create, params: { locale: :en, trailing_slash: true, shop: {
+      post :create, params: { locale: :en, shop: {
         name: 'foobar',
         memo: 'memo memo memo',
         category_id: category.id,
@@ -32,33 +32,33 @@ RSpec.describe Controls::ShopController, type: :controller do
       expect(shop.states.pluck(:id)).to match_array states.pluck(:id)
       expect(shop.status).to eq Shop.statuses.keys.first
 
-      expect(response).to redirect_to controls_master_shop_path
+      expect(response).to redirect_to controls_master_shops_path
     end
   end
   describe 'Edit' do
     render_views
     it 'should be able to edit.' do
-      get :index, params: { locale: :en, trailing_slash: true }
+      get :index, params: { locale: :en }
       util = assigns(:dynamic_scaffold_util)
 
       shop = FactoryBot.create(:shop)
       pkey_params = util.pkey_params(shop)
-      get :edit, params: { locale: :en, trailing_slash: true, key: pkey_params }
+      get :edit, params: { locale: :en, key: pkey_params }
       expect(response).to render_template(:edit)
       expect(response.body).not_to match(/class="[^"]*dynamicScaffold\-error\-message[^"]*"/)
 
       # fail
-      patch :update, params: { locale: :en, trailing_slash: true, shop: {
+      patch :update, params: { locale: :en, shop: {
         id: shop.id,
         name: ''
       } }
       expect(response).to render_template(:edit)
-      expect(response).not_to redirect_to controls_master_shop_path
+      expect(response).not_to redirect_to controls_master_shops_path
       expect(response.body).to match(/class="[^"]*dynamicScaffold\-error\-message[^"]*"/)
 
       category = FactoryBot.create(:category)
       states = FactoryBot.create_list(:state, 2)
-      patch :update, params: { locale: :en, trailing_slash: true, shop: {
+      patch :update, params: { locale: :en, shop: {
         id: shop.id,
         name: 'udpate',
         memo: 'udpate udpate udpate',
@@ -76,17 +76,18 @@ RSpec.describe Controls::ShopController, type: :controller do
       expect(updated_shop.states.pluck(:id)).to match_array states.pluck(:id)
       expect(updated_shop.status).to eq Shop.statuses.keys.second
 
-      expect(response).to redirect_to controls_master_shop_path
+      expect(response).to redirect_to controls_master_shops_path
     end
   end
-  describe 'Path Util' do
+  describe '#path_for' do
     it 'should be able to get path.' do
-      get :index, params: { locale: :en, trailing_slash: true }
+      get :index, params: { locale: :en }
       util = assigns(:dynamic_scaffold_util)
 
-      expect(util.path_for(:index)).to eq '/en/controls/master/shop/'
-      expect(util.path_for(:new)).to eq '/en/controls/master/shop/new'
-      expect(util.path_for(:sort_or_destroy)).to eq '/en/controls/master/shop/sort_or_destroy'
+      expect(util.path_for(:index)).to eq '/en/controls/master/shops'
+      expect(util.path_for(:new)).to eq '/en/controls/master/shops/new'
+      expect(util.path_for(:sort_or_destroy)).to eq '/en/controls/master/shops/sort_or_destroy'
+      expect(util.path_for(:update)).to eq '/en/controls/master/shops/update'
     end
   end
 end

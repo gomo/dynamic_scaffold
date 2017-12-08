@@ -1,21 +1,23 @@
-<%unless flash[:dynamic_saffold_danger].nil?%>
+<%unless flash[:dynamic_scaffold_danger].nil?%>
   <div class="alert alert-danger" role="alert">
-    <%= flash[:dynamic_saffold_danger] %>
+    <%= flash[:dynamic_scaffold_danger] %>
   </div>
 <%end%>
 <%= form_with method: :patch, url: @dynamic_scaffold_util.path_for(:sort_or_destroy) do%>
 <div class="dynamicScaffold-row">
   <div class="text-left">
-    <a href="new" class="btn btn-outline-primary btn-primary btn-sm"><%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.buttons.add') %></a>
+    <%= link_to @dynamic_scaffold_util.path_for(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
+      <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.buttons.add') %>
+    <%end%>
   </div>
   <%= render 'dynamic_scaffold/bootstrap/save_order'%>
 </div>
 <div class="dynamicScaffold-row">
-  <% if @dynamic_scaffold.list.records.empty? %>
+  <% if @dynamic_scaffold_util.records.empty? %>
     <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: @dynamic_scaffold.model.model_name.human) %></p>
   <% else %>
     <ul class="resplist resplist-striped">
-      <%@dynamic_scaffold.list.records.each do |record|%>
+      <%@dynamic_scaffold_util.records.each do |record|%>
         <li class="resplist-row js-item-row">
           <div class="resplist-items">
           <%@dynamic_scaffold.list.items.each do |disp|%>
@@ -28,9 +30,9 @@
           <div class="resplist-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
-                <a href="<%= @dynamic_scaffold_util.path_for(:edit, key: @dynamic_scaffold_util.pkey_params(record)) %>" class="btn btn-primary btn-outline-primary btn-sm">
+               <%= link_to @dynamic_scaffold_util.path_for(:edit, key: @dynamic_scaffold_util.pkey_params(record)), class: 'btn btn-primary btn-outline-primary btn-sm' do%>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %>
-                </a>
+               <%end%>
               </div>
               <% if @dynamic_scaffold.list.sorter %>
               <input type="hidden" name="pkeys[]" value="<%= @dynamic_scaffold_util.pkey_string(record) %>">

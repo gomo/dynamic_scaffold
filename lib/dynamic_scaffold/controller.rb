@@ -22,10 +22,14 @@ module DynamicScaffold
 
     def new
       @record = @dynamic_scaffold.model.new
+      @record.attributes = scope_params if @dynamic_scaffold.scope
     end
 
     def edit
-      @record = @dynamic_scaffold.model.find_by(key_params)
+      target_params = key_params
+      target_params = target_params.merge(scope_params) if @dynamic_scaffold.scope
+      @record = @dynamic_scaffold.model.find_by(target_params)
+      raise ActiveRecord::RecordNotFound if @record.nil?
     end
 
     def sort_or_destroy
@@ -47,15 +51,16 @@ module DynamicScaffold
     end
 
     def update
-      rec_params = record_params
-      ar = @dynamic_scaffold.model.all
-      [*@dynamic_scaffold.model.primary_key].each do |pkey|
-        ar = ar.where(pkey => rec_params[pkey])
-      end
-      @record = ar.first
+      update_params = record_params
+      target_params = extract_pkeys(update_params)
+      target_params = target_params.merge(scope_params) if @dynamic_scaffold.scope
+      @record = @dynamic_scaffold.model.find_by(target_params)
       raise ActiveRecord::RecordNotFound if @record.nil?
+      if @dynamic_scaffold.scope && !valid_for_scope?(update_params, scope_params)
+        raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params.to_s} on this scope"
+      end
 
-      @record.attributes = rec_params
+      @record.attributes = update_params
       if @record.save
         redirect_to @dynamic_scaffold_util.path_for(:index)
       else
@@ -63,16 +68,26 @@ module DynamicScaffold
       end
     end
 
+    # TODO: to private
+    def scope_params
+      @dynamic_scaffold.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
+    end
+
     private
+
+      def extract_pkeys(values)
+        [*@dynamic_scaffold.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col]}
+      end
 
       def destroy
         pkey_params = pkey_to_hash(params['submit_destroy'])
+        pkey_params = pkey_params.merge(scope_params) if @dynamic_scaffold.scope
         record = @dynamic_scaffold.model.find_by(pkey_params)
         raise ActiveRecord::RecordNotFound if record.nil?
         begin
           record.destroy
         rescue ActiveRecord::InvalidForeignKey => _error
-          flash[:dynamic_saffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
+          flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
         end
 
         redirect_to @dynamic_scaffold_util.path_for(:index)
@@ -83,7 +98,9 @@ module DynamicScaffold
         @dynamic_scaffold.model.transaction do
           params['pkeys'].each do |pkeys|
             pkey_params = pkey_to_hash(pkeys)
+            pkey_params = pkey_params.merge(scope_params) if @dynamic_scaffold.scope
             rec = @dynamic_scaffold.model.find_by(pkey_params)
+            raise ActiveRecord::RecordNotFound if rec.nil?
             rec.update!(
               @dynamic_scaffold.list.sorter_attribute => @dynamic_scaffold_util.next_sequence!
             )
@@ -109,6 +126,17 @@ module DynamicScaffold
         params
           .require(@dynamic_scaffold.model.name.underscore)
           .permit(*@dynamic_scaffold.form.fields.map(&:strong_parameter))
+      end
+
+      def valid_for_scope?(update_params, scope_params)
+        result = true
+        scope_params.each do |key, value|
+          if update_params.key?(key) && update_params[key] != value
+            result = false
+            break
+          end
+        end
+        result
       end
   end
 end

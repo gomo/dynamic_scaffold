@@ -6,6 +6,11 @@ module DynamicScaffold
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
     end
+
+    def scope(parameter_names = nil)
+      @scope = parameter_names unless parameter_names.nil?
+      @scope
+    end
   end
 
   class ListBuilder
@@ -33,12 +38,6 @@ module DynamicScaffold
         end
       end
       @items
-    end
-
-    def records
-      ar = @config.model.all
-      ar = ar.order @sorter if @sorter
-      ar
     end
 
     def sorter_attribute
@@ -76,7 +75,9 @@ module DynamicScaffold
     def fields
       if @fields.empty?
         @config.model.column_names.each do |column|
-          @fields << Form::Field::Single.new(@config, :text_field, column)
+          type = :text_field
+          type = :hidden_field if @config.scope && @config.scope.include?(column.to_sym)
+          @fields << Form::Field::Single.new(@config, type, column)
         end
       end
       @fields

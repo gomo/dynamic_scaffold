@@ -21,7 +21,18 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
 
   Shop.create!(
     name: Faker::StarWars.planet,
-    memo: Faker::StarWars.quote,
+    memo: Faker::StarWars.quote.slice(0, 30),
     category: category
   )
+end
+
+3.times do |n|
+  User.roles.keys.each do |role|
+    User.create!(
+      email: Faker::Internet.email,
+      encrypted_password: Faker::Crypto.md5,
+      role: role,
+      sequence: n
+    )
+  end
 end

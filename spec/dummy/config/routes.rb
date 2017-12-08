@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   scope '/:locale' do
     namespace 'controls' do
       scope 'master', as: :master do
-        dynamic_scaffold_for 'country'
-        dynamic_scaffold_for 'state'
-        dynamic_scaffold_for 'shop'
+        dynamic_scaffold_for 'countries'
+        dynamic_scaffold_for 'states'
+        dynamic_scaffold_for 'shops'
+        dynamic_scaffold_for 'users/:role', controller: 'users', role: Regexp.new(User.roles.keys.join('|'))
       end
     end
   end

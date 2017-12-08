@@ -10,13 +10,32 @@ module DynamicScaffold
       def dynamic_scaffold_for(*resources)
         options = resources.extract_options!
         path = resources[0]
-        controller = resources[1] ? resources[1] : resources[0]
-        get(path, { to: "#{controller}#index" }.merge(options).merge(trailing_slash: true))
-        post(path, { to: "#{controller}#create" }.merge(options).merge(trailing_slash: true))
-        get("#{path}/new", { to: "#{controller}#new" }.merge(options))
-        get("#{path}/edit", { to: "#{controller}#edit" }.merge(options))
-        patch("#{path}/sort_or_destroy", { to: "#{controller}#sort_or_destroy" }.merge(options))
-        patch("#{path}/update", { to: "#{controller}#update" }.merge(options))
+        controller = options[:controller] ? options[:controller] : resources[0]
+        as_base = options[:as] ? options[:as] : controller.gsub('/', '_')
+        get(path, options.merge(
+          as: as_base,
+          to: "#{controller}#index"
+        ))
+        post(path, options.merge(
+          as: nil,
+          to: "#{controller}#create"
+        ))
+        get("#{path}/new", options.merge(
+          as: "#{as_base}_new",
+          to: "#{controller}#new"
+        ))
+        get("#{path}/edit", options.merge(
+          as: "#{as_base}_edit",
+          to: "#{controller}#edit"
+        ))
+        patch("#{path}/sort_or_destroy", options.merge(
+          as: "#{as_base}_sort_or_destroy",
+          to: "#{controller}#sort_or_destroy"
+        ))
+        patch("#{path}/update", options.merge(
+          as: "#{as_base}_update",
+          to: "#{controller}#update"
+        ))
       end
     end
   end
