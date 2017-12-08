@@ -23,7 +23,7 @@ module DynamicScaffold
     end
 
     def edit
-      @record = find_record(key_params)
+      @record = find_record(edit_params)
     end
 
     def sort_or_destroy
@@ -36,7 +36,7 @@ module DynamicScaffold
 
     def create
       @record = self.class.dynamic_scaffold_config.model.new
-      @record.attributes = record_params
+      @record.attributes = update_values
       if @record.save
         redirect_to path_for(:index)
       else
@@ -45,14 +45,9 @@ module DynamicScaffold
     end
 
     def update
-      c = self.class.dynamic_scaffold_config
-      update_params = record_params
-      @record = find_record(extract_pkeys(update_params))
-      if c.scope && !valid_for_scope?(update_params, scope_params)
-        raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params} on this scope"
-      end
-
-      @record.attributes = update_params
+      values = update_values
+      @record = find_record(extract_pkeys(values))
+      @record.attributes = values
       if @record.save
         redirect_to path_for(:index)
       else
@@ -60,7 +55,7 @@ module DynamicScaffold
       end
     end
 
-    # This method is public as it is called from view.
+    # Get the path specifying an action.
     def path_for(action, options = {})
       route = Rails.application.routes.routes.find do |r|
         route_params = r.required_defaults
@@ -75,29 +70,21 @@ module DynamicScaffold
       public_send("#{route.name}_path", options)
     end
 
-    # This method is public as it is called from view.
+    # Get the hash of the column name and value of the primary key from the record.
     def pkey_params(record)
       [*record.class.primary_key].each_with_object({}) {|col, res| res[col] = record[col] }
     end
 
-    # This method is public as it is called from view.
+    # Get the column name and value of the primary key as string in the form of `key:value,key:value...`.
     def pkey_string(record)
       pkey_params(record).map {|k, v| "#{k}:#{v}" }.join(',')
     end
 
     private
 
-      def scope_params
-        return {} if self.class.dynamic_scaffold_config.scope.nil?
-        self.class.dynamic_scaffold_config.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
-      end
-
-      def extract_pkeys(values)
-        [*self.class.dynamic_scaffold_config.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col] }
-      end
-
+      # Sub actions.
       def destroy
-        record = find_record(pkey_to_hash(params['submit_destroy']))
+        record = find_record(pkey_string_to_hash(params['submit_destroy']))
         begin
           record.destroy
         rescue ActiveRecord::InvalidForeignKey => _error
@@ -112,29 +99,48 @@ module DynamicScaffold
         reset_sequence(params['pkeys'].size)
         c.model.transaction do
           params['pkeys'].each do |pkeys|
-            rec = find_record(pkey_to_hash(pkeys))
+            rec = find_record(pkey_string_to_hash(pkeys))
             rec.update!(c.list.sorter_attribute => next_sequence!)
           end
         end
         redirect_to path_for(:index)
       end
 
-      def pkey_to_hash(pkey)
+      # Get the hash of the key and value specified for the scope.
+      def scope_params
+        return {} if self.class.dynamic_scaffold_config.scope.nil?
+        self.class.dynamic_scaffold_config.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
+      end
+
+      # Get the primary key hash from the update parameters.
+      def extract_pkeys(values)
+        [*self.class.dynamic_scaffold_config.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col] }
+      end
+
+      # Convert pkey_string value to hash.
+      def pkey_string_to_hash(pkey)
         # Support multiple pkey
         # Convert "key:1,code:foo" to {key: "1", code: "foo"}
         pkey.split(',').map {|v| v.split(':') }.each_with_object({}) {|v, res| res[v.first] = v.last }
       end
 
-      def key_params
+      # Get parameters for edit action. `key[column] => value`
+      def edit_params
         params
           .require('key')
           .permit(*self.class.dynamic_scaffold_config.model.primary_key)
       end
 
-      def record_params
-        params
+      def update_values
+        values = params
           .require(self.class.dynamic_scaffold_config.model.name.underscore)
           .permit(*self.class.dynamic_scaffold_config.form.fields.map(&:strong_parameter))
+
+        if self.class.dynamic_scaffold_config.scope && !valid_for_scope?(values, scope_params)
+          raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params} on this scope"
+        end
+
+        values
       end
 
       def valid_for_scope?(update_params, scope_params)

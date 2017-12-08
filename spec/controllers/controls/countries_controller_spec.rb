@@ -2,8 +2,6 @@ require 'rails_helper'
 RSpec.describe Controls::CountriesController, type: :controller do
   describe 'Sort' do
     it 'should be able to generate sequence number.' do
-      get :index, params: { locale: :en }
-
       original_sorter = controller.class.dynamic_scaffold_config.list.sorter
 
       controller.class.dynamic_scaffold_config.list.sorter(sequence: :desc)
