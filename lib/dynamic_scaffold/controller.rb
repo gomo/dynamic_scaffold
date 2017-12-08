@@ -23,9 +23,7 @@ module DynamicScaffold
     end
 
     def edit
-      target_params = key_params.merge(scope_params)
-      @record = self.class.dynamic_scaffold_config.model.find_by(target_params)
-      raise ActiveRecord::RecordNotFound if @record.nil?
+      @record = find_record(key_params)
     end
 
     def sort_or_destroy
@@ -47,11 +45,10 @@ module DynamicScaffold
     end
 
     def update
+      c = self.class.dynamic_scaffold_config
       update_params = record_params
-      target_params = extract_pkeys(update_params).merge(scope_params)
-      @record = self.class.dynamic_scaffold_config.model.find_by(target_params)
-      raise ActiveRecord::RecordNotFound if @record.nil?
-      if self.class.dynamic_scaffold_config.scope && !valid_for_scope?(update_params, scope_params)
+      @record = find_record(extract_pkeys(update_params))
+      if c.scope && !valid_for_scope?(update_params, scope_params)
         raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params} on this scope"
       end
 
@@ -87,6 +84,7 @@ module DynamicScaffold
     def pkey_string(record)
       pkey_params(record).map {|k, v| "#{k}:#{v}" }.join(',')
     end
+
     private
 
       def scope_params
@@ -99,9 +97,7 @@ module DynamicScaffold
       end
 
       def destroy
-        pkey_params = pkey_to_hash(params['submit_destroy']).merge(scope_params)
-        record = self.class.dynamic_scaffold_config.model.find_by(pkey_params)
-        raise ActiveRecord::RecordNotFound if record.nil?
+        record = find_record(pkey_to_hash(params['submit_destroy']))
         begin
           record.destroy
         rescue ActiveRecord::InvalidForeignKey => _error
@@ -112,19 +108,15 @@ module DynamicScaffold
       end
 
       def sort
+        c = self.class.dynamic_scaffold_config
         reset_sequence(params['pkeys'].size)
-        self.class.dynamic_scaffold_config.model.transaction do
+        c.model.transaction do
           params['pkeys'].each do |pkeys|
-            pkey_params = pkey_to_hash(pkeys).merge(scope_params)
-            rec = self.class.dynamic_scaffold_config.model.find_by(pkey_params)
-            raise ActiveRecord::RecordNotFound if rec.nil?
-            rec.update!(
-              self.class.dynamic_scaffold_config.list.sorter_attribute => next_sequence!
-            )
+            rec = find_record(pkey_to_hash(pkeys))
+            rec.update!(c.list.sorter_attribute => next_sequence!)
           end
         end
-
-        redirect_back fallback_location: path_for(:index), status: 303
+        redirect_to path_for(:index)
       end
 
       def pkey_to_hash(pkey)
@@ -172,6 +164,12 @@ module DynamicScaffold
           @sequence -= 1
         end
         val
+      end
+
+      def find_record(params)
+        rec = self.class.dynamic_scaffold_config.model.find_by(params.merge(scope_params))
+        raise ActiveRecord::RecordNotFound if rec.nil?
+        rec
       end
   end
 end
