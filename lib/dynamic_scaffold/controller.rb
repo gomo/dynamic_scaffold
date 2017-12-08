@@ -11,26 +11,20 @@ module DynamicScaffold
       end
     end
 
-    included do
-      before_action do
-        @dynamic_scaffold = self.class.dynamic_scaffold_config
-      end
-    end
-
     def index
-      @records = @dynamic_scaffold.model.all
+      @records = self.class.dynamic_scaffold_config.model.all
       @records = @records.where scope_params
-      @records = @records.order @dynamic_scaffold.list.sorter if @dynamic_scaffold.list.sorter
+      @records = @records.order self.class.dynamic_scaffold_config.list.sorter if self.class.dynamic_scaffold_config.list.sorter
     end
 
     def new
-      @record = @dynamic_scaffold.model.new
+      @record = self.class.dynamic_scaffold_config.model.new
       @record.attributes = scope_params
     end
 
     def edit
       target_params = key_params.merge(scope_params)
-      @record = @dynamic_scaffold.model.find_by(target_params)
+      @record = self.class.dynamic_scaffold_config.model.find_by(target_params)
       raise ActiveRecord::RecordNotFound if @record.nil?
     end
 
@@ -43,7 +37,7 @@ module DynamicScaffold
     end
 
     def create
-      @record = @dynamic_scaffold.model.new
+      @record = self.class.dynamic_scaffold_config.model.new
       @record.attributes = record_params
       if @record.save
         redirect_to path_for(:index)
@@ -55,9 +49,9 @@ module DynamicScaffold
     def update
       update_params = record_params
       target_params = extract_pkeys(update_params).merge(scope_params)
-      @record = @dynamic_scaffold.model.find_by(target_params)
+      @record = self.class.dynamic_scaffold_config.model.find_by(target_params)
       raise ActiveRecord::RecordNotFound if @record.nil?
-      if @dynamic_scaffold.scope && !valid_for_scope?(update_params, scope_params)
+      if self.class.dynamic_scaffold_config.scope && !valid_for_scope?(update_params, scope_params)
         raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params} on this scope"
       end
 
@@ -93,22 +87,20 @@ module DynamicScaffold
     def pkey_string(record)
       pkey_params(record).map {|k, v| "#{k}:#{v}" }.join(',')
     end
-
-    # TODO: to private
-    def scope_params
-      return {} if @dynamic_scaffold.scope.nil?
-      @dynamic_scaffold.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
-    end
-
     private
 
+      def scope_params
+        return {} if self.class.dynamic_scaffold_config.scope.nil?
+        self.class.dynamic_scaffold_config.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
+      end
+
       def extract_pkeys(values)
-        [*@dynamic_scaffold.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col] }
+        [*self.class.dynamic_scaffold_config.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col] }
       end
 
       def destroy
         pkey_params = pkey_to_hash(params['submit_destroy']).merge(scope_params)
-        record = @dynamic_scaffold.model.find_by(pkey_params)
+        record = self.class.dynamic_scaffold_config.model.find_by(pkey_params)
         raise ActiveRecord::RecordNotFound if record.nil?
         begin
           record.destroy
@@ -121,13 +113,13 @@ module DynamicScaffold
 
       def sort
         reset_sequence(params['pkeys'].size)
-        @dynamic_scaffold.model.transaction do
+        self.class.dynamic_scaffold_config.model.transaction do
           params['pkeys'].each do |pkeys|
             pkey_params = pkey_to_hash(pkeys).merge(scope_params)
-            rec = @dynamic_scaffold.model.find_by(pkey_params)
+            rec = self.class.dynamic_scaffold_config.model.find_by(pkey_params)
             raise ActiveRecord::RecordNotFound if rec.nil?
             rec.update!(
-              @dynamic_scaffold.list.sorter_attribute => next_sequence!
+              self.class.dynamic_scaffold_config.list.sorter_attribute => next_sequence!
             )
           end
         end
@@ -144,13 +136,13 @@ module DynamicScaffold
       def key_params
         params
           .require('key')
-          .permit(*@dynamic_scaffold.model.primary_key)
+          .permit(*self.class.dynamic_scaffold_config.model.primary_key)
       end
 
       def record_params
         params
-          .require(@dynamic_scaffold.model.name.underscore)
-          .permit(*@dynamic_scaffold.form.fields.map(&:strong_parameter))
+          .require(self.class.dynamic_scaffold_config.model.name.underscore)
+          .permit(*self.class.dynamic_scaffold_config.form.fields.map(&:strong_parameter))
       end
 
       def valid_for_scope?(update_params, scope_params)
@@ -165,18 +157,18 @@ module DynamicScaffold
       end
 
       def reset_sequence(record_count)
-        if @dynamic_scaffold.list.sorter_direction == :asc
+        if self.class.dynamic_scaffold_config.list.sorter_direction == :asc
           @sequence = 0
-        elsif @dynamic_scaffold.list.sorter_direction == :desc
+        elsif self.class.dynamic_scaffold_config.list.sorter_direction == :desc
           @sequence = record_count - 1
         end
       end
 
       def next_sequence!
         val = @sequence
-        if @dynamic_scaffold.list.sorter_direction == :asc
+        if self.class.dynamic_scaffold_config.list.sorter_direction == :asc
           @sequence += 1
-        elsif @dynamic_scaffold.list.sorter_direction == :desc
+        elsif self.class.dynamic_scaffold_config.list.sorter_direction == :desc
           @sequence -= 1
         end
         val

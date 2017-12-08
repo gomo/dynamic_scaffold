@@ -14,13 +14,13 @@
 </div>
 <div class="dynamicScaffold-row">
   <% if @records.empty? %>
-    <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: @dynamic_scaffold.model.model_name.human) %></p>
+    <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: controller.class.dynamic_scaffold_config.model.model_name.human) %></p>
   <% else %>
     <ul class="resplist resplist-striped">
       <%@records.each do |record|%>
         <li class="resplist-row js-item-row">
           <div class="resplist-items">
-          <%@dynamic_scaffold.list.items.each do |disp|%>
+          <%controller.class.dynamic_scaffold_config.list.items.each do |disp|%>
             <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
               <div class="resplist-label"><%= disp.label %></div>
               <div class="resplist-value"><%= disp.value record, self %></div>
@@ -34,7 +34,7 @@
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %>
                <%end%>
               </div>
-              <% if @dynamic_scaffold.list.sorter %>
+              <% if controller.class.dynamic_scaffold_config.list.sorter %>
               <input type="hidden" name="pkeys[]" value="<%= controller.pkey_string(record) %>">
               <div class="btn-group">
                 <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-up">
