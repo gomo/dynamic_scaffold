@@ -46,14 +46,14 @@ RSpec.describe Controls::UsersController, type: :controller do
       staff = FactoryBot.create(:user, role_value: :staff)
       member = FactoryBot.create(:user, role_value: :member)
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: controller.pkey_params(admin) }
+        get :edit, params: { locale: :en, role: 'admin', key: admin.primary_key_value }
       end.not_to raise_error
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: controller.pkey_params(staff) }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+        get :edit, params: { locale: :en, role: 'admin', key: staff.primary_key_value }
+      end.to raise_error(::ActiveRecord::RecordNotFound)
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: controller.pkey_params(member) }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+        get :edit, params: { locale: :en, role: 'admin', key: member.primary_key_value }
+      end.to raise_error(::ActiveRecord::RecordNotFound)
     end
   end
 
@@ -73,13 +73,13 @@ RSpec.describe Controls::UsersController, type: :controller do
           id: staff.id,
           email: 'udpate@example.com'
         } }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(::ActiveRecord::RecordNotFound)
       expect do
         patch :update, params: { locale: :en, role: 'admin', user: {
           id: member.id,
           email: 'udpate@example.com'
         } }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(::ActiveRecord::RecordNotFound)
     end
     it 'should raise the exception if update with an unspecified role.' do
       admin = FactoryBot.create(:user, role_value: :admin)
@@ -99,12 +99,12 @@ RSpec.describe Controls::UsersController, type: :controller do
       staffs = FactoryBot.create_list(:user, 3, role_value: :staff)
 
       pkeys = []
-      pkeys << controller.pkey_string(staffs[1])
-      pkeys << controller.pkey_string(staffs[0])
-      pkeys << controller.pkey_string(staffs[2])
+      pkeys << {id: staffs[1].id}
+      pkeys << {id: staffs[0].id}
+      pkeys << {id: staffs[2].id}
       expect do
         patch :sort_or_destroy, params: { locale: :en, role: :admin, pkeys: pkeys, submit_sort: '' }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+      end.to raise_error(::ActiveRecord::RecordNotFound)
     end
   end
 
@@ -113,8 +113,8 @@ RSpec.describe Controls::UsersController, type: :controller do
       staff = FactoryBot.create(:user, role_value: :staff)
 
       expect do
-        patch :sort_or_destroy, params: { locale: :en, role: :admin, submit_destroy: controller.pkey_string(staff) }
-      end.to raise_error(ActiveRecord::RecordNotFound)
+        patch :sort_or_destroy, params: { locale: :en, role: :admin, submit_destroy: staff.primary_key_value.to_json }
+      end.to raise_error(::ActiveRecord::RecordNotFound)
     end
   end
 

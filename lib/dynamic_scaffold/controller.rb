@@ -70,24 +70,14 @@ module DynamicScaffold
       public_send("#{route.name}_path", options)
     end
 
-    # Get the hash of the column name and value of the primary key from the record.
-    def pkey_params(record)
-      [*record.class.primary_key].each_with_object({}) {|col, res| res[col] = record[col] }
-    end
-
-    # Get the column name and value of the primary key as string in the form of `key:value,key:value...`.
-    def pkey_string(record)
-      pkey_params(record).map {|k, v| "#{k}:#{v}" }.join(',')
-    end
-
     private
 
       # Sub actions.
       def destroy
-        record = find_record(pkey_string_to_hash(params['submit_destroy']))
+        record = find_record(JSON.parse(params['submit_destroy']))
         begin
           record.destroy
-        rescue ActiveRecord::InvalidForeignKey => _error
+        rescue ::ActiveRecord::InvalidForeignKey => _error
           flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
         end
 
@@ -96,10 +86,11 @@ module DynamicScaffold
 
       def sort
         c = self.class.dynamic_scaffold_config
-        reset_sequence(params['pkeys'].size)
+        pkeys_list = sort_params
+        reset_sequence(pkeys_list.size)
         c.model.transaction do
-          params['pkeys'].each do |pkeys|
-            rec = find_record(pkey_string_to_hash(pkeys))
+          pkeys_list.each do |pkeys|
+            rec = find_record(pkeys.to_hash)
             rec.update!(c.list.sorter_attribute => next_sequence!)
           end
         end
@@ -129,6 +120,12 @@ module DynamicScaffold
         params
           .require('key')
           .permit(*self.class.dynamic_scaffold_config.model.primary_key)
+      end
+
+      def sort_params
+        params
+          .require('pkeys')
+          .map{|p| p.permit(*self.class.dynamic_scaffold_config.model.primary_key) }
       end
 
       def update_values
@@ -174,7 +171,7 @@ module DynamicScaffold
 
       def find_record(params)
         rec = self.class.dynamic_scaffold_config.model.find_by(params.merge(scope_params))
-        raise ActiveRecord::RecordNotFound if rec.nil?
+        raise ::ActiveRecord::RecordNotFound if rec.nil?
         rec
       end
   end

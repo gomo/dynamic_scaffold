@@ -31,9 +31,9 @@ RSpec.describe Controls::CountriesController, type: :controller do
       expect(countries[2].name).to eq 'Country 1'
 
       pkeys = []
-      pkeys << controller.send(:pkey_string, countries[1])
-      pkeys << controller.send(:pkey_string, countries[0])
-      pkeys << controller.send(:pkey_string, countries[2])
+      pkeys << {id: countries[1].id}
+      pkeys << {id: countries[0].id}
+      pkeys << {id: countries[2].id}
       patch :sort_or_destroy, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'
@@ -42,9 +42,9 @@ RSpec.describe Controls::CountriesController, type: :controller do
       expect(response).to redirect_to controls_master_countries_path
 
       pkeys = []
-      pkeys << controller.send(:pkey_string, countries[0])
-      pkeys << controller.send(:pkey_string, countries[2])
-      pkeys << controller.send(:pkey_string, countries[1])
+      pkeys << {id: countries[0].id}
+      pkeys << {id: countries[2].id}
+      pkeys << {id: countries[1].id}
       patch :sort_or_destroy, params: { locale: 'ja', pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'
@@ -57,14 +57,14 @@ RSpec.describe Controls::CountriesController, type: :controller do
   describe 'Delete' do
     it 'should be able to delete.' do
       country = FactoryBot.create(:country)
-      patch :sort_or_destroy, params: { locale: :en, submit_destroy: controller.send(:pkey_string, country) }
+      patch :sort_or_destroy, params: { locale: :en, submit_destroy: country.primary_key_value.to_json }
 
       expect(Country.find_by(id: country.id)).to be_nil
       expect(response).to redirect_to controls_master_countries_path
     end
     it 'should display error if you delete record that can not be deleted with foreign key constraints' do
       state = FactoryBot.create(:state)
-      patch :sort_or_destroy, params: { locale: :en, submit_destroy: controller.send(:pkey_string, state.country) }
+      patch :sort_or_destroy, params: { locale: :en, submit_destroy: state.country.primary_key_value.to_json }
 
       expect(Country.find_by(id: state.country.id)).not_to be_nil
       expect(flash['dynamic_scaffold_danger']).not_to be_nil
