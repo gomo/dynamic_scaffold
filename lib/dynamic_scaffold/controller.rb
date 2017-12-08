@@ -38,7 +38,7 @@ module DynamicScaffold
       @record = self.class.dynamic_scaffold_config.model.new
       @record.attributes = update_values
       if @record.save
-        redirect_to path_for(:index)
+        redirect_to dynamic_scaffold_path(:index)
       else
         render "#{params[:controller]}/new"
       end
@@ -49,25 +49,10 @@ module DynamicScaffold
       @record = find_record(extract_pkeys(values))
       @record.attributes = values
       if @record.save
-        redirect_to path_for(:index)
+        redirect_to dynamic_scaffold_path(:index)
       else
         render "#{params[:controller]}/edit"
       end
-    end
-
-    # Get the path specifying an action.
-    def path_for(action, options = {})
-      route = Rails.application.routes.routes.find do |r|
-        route_params = r.required_defaults
-        route_params[:controller] == params[:controller] && (route_params[:action] == action.to_s && r.name)
-      end
-
-      if route.nil?
-        raise DynamicScaffold::Error::RouteNotFound,
-          "Missing controller#action #{params[:controller]}##{action}"
-      end
-
-      public_send("#{route.name}_path", options)
     end
 
     private
@@ -81,7 +66,7 @@ module DynamicScaffold
           flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
         end
 
-        redirect_to path_for(:index)
+        redirect_to dynamic_scaffold_path(:index)
       end
 
       def sort
@@ -94,7 +79,7 @@ module DynamicScaffold
             rec.update!(c.list.sorter_attribute => next_sequence!)
           end
         end
-        redirect_to path_for(:index)
+        redirect_to dynamic_scaffold_path(:index)
       end
 
       # Get the hash of the key and value specified for the scope.

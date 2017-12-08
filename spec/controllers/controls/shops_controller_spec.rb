@@ -75,14 +75,14 @@ RSpec.describe Controls::ShopsController, type: :controller do
       expect(response).to redirect_to controls_master_shops_path
     end
   end
-  describe '#path_for' do
+  describe '#dynamic_scaffold_path' do
     it 'should be able to get path.' do
       get :index, params: { locale: :en }
 
-      expect(controller.path_for(:index)).to eq '/en/controls/master/shops'
-      expect(controller.path_for(:new)).to eq '/en/controls/master/shops/new'
-      expect(controller.path_for(:sort_or_destroy)).to eq '/en/controls/master/shops/sort_or_destroy'
-      expect(controller.path_for(:update)).to eq '/en/controls/master/shops/update'
+      expect(controller.dynamic_scaffold_path(:index)).to eq '/en/controls/master/shops'
+      expect(controller.dynamic_scaffold_path(:new)).to eq '/en/controls/master/shops/new'
+      expect(controller.dynamic_scaffold_path(:sort_or_destroy)).to eq '/en/controls/master/shops/sort_or_destroy'
+      expect(controller.dynamic_scaffold_path(:update)).to eq '/en/controls/master/shops/update'
     end
   end
 end

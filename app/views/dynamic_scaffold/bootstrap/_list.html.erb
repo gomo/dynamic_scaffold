@@ -3,10 +3,10 @@
     <%= flash[:dynamic_scaffold_danger] %>
   </div>
 <%end%>
-<%= form_with method: :patch, url: controller.path_for(:sort_or_destroy) do%>
+<%= form_with method: :patch, url: dynamic_scaffold_path(:sort_or_destroy) do%>
 <div class="dynamicScaffold-row">
   <div class="text-left">
-    <%= link_to controller.path_for(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
+    <%= link_to dynamic_scaffold_path(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
       <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.buttons.add') %>
     <%end%>
   </div>
@@ -30,7 +30,7 @@
           <div class="resplist-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
-               <%= link_to controller.path_for(:edit, key: record.primary_key_value), class: 'btn btn-primary btn-outline-primary btn-sm' do%>
+               <%= link_to dynamic_scaffold_path(:edit, key: record.primary_key_value), class: 'btn btn-primary btn-outline-primary btn-sm' do%>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %>
                <%end%>
               </div>
