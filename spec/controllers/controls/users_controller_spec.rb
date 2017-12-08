@@ -89,5 +89,30 @@ RSpec.describe Controls::UsersController, type: :controller do
         }}
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
+    it 'should raise the exception if update with an unspecified role.' do
+      get :index, params: { locale: :en, role: "admin" }
+      util = assigns(:dynamic_scaffold_util)
+
+      admin = FactoryBot.create(:user, role_value: :admin)
+      
+      expect {
+        patch :update, params: { locale: :en, role: "admin", user: {
+          id: admin.id,
+          email: 'udpate@example.com',
+          role: :staff
+        }}
+      }.to raise_error(DynamicScaffold::Error::InvalidParameter)
+    end
+  end
+  describe '#path_for' do
+    it 'should be able to get path.' do
+      get :index, params: { locale: :en, role: "admin" }
+      util = assigns(:dynamic_scaffold_util)
+
+      expect(util.path_for(:index)).to eq '/en/controls/master/users/admin'
+      expect(util.path_for(:new)).to eq '/en/controls/master/users/admin/new'
+      expect(util.path_for(:sort_or_destroy)).to eq '/en/controls/master/users/admin/sort_or_destroy'
+      expect(util.path_for(:update)).to eq '/en/controls/master/users/admin/update'
+    end
   end
 end

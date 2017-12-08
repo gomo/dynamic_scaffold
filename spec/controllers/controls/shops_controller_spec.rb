@@ -79,7 +79,7 @@ RSpec.describe Controls::ShopsController, type: :controller do
       expect(response).to redirect_to controls_master_shops_path
     end
   end
-  describe 'Path Util' do
+  describe '#path_for' do
     it 'should be able to get path.' do
       get :index, params: { locale: :en }
       util = assigns(:dynamic_scaffold_util)

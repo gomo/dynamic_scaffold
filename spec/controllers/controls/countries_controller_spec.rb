@@ -60,7 +60,7 @@ RSpec.describe Controls::CountriesController, type: :controller do
     end
   end
 
-  describe 'Path Util' do
+  describe '#path_for' do
     it 'should be able to get path.' do
       get :index, params: { locale: :en }
       util = assigns(:dynamic_scaffold_util)
