@@ -1,4 +1,5 @@
 require 'dynamic_scaffold/engine'
+require 'dynamic_scaffold/controller_utilities'
 require 'dynamic_scaffold/controller'
 require 'dynamic_scaffold/config'
 

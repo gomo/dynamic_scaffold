@@ -31,9 +31,9 @@ RSpec.describe Controls::CountriesController, type: :controller do
       expect(countries[2].name).to eq 'Country 1'
 
       pkeys = []
-      pkeys << {id: countries[1].id}
-      pkeys << {id: countries[0].id}
-      pkeys << {id: countries[2].id}
+      pkeys << { id: countries[1].id }
+      pkeys << { id: countries[0].id }
+      pkeys << { id: countries[2].id }
       patch :sort_or_destroy, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'
@@ -42,9 +42,9 @@ RSpec.describe Controls::CountriesController, type: :controller do
       expect(response).to redirect_to controls_master_countries_path
 
       pkeys = []
-      pkeys << {id: countries[0].id}
-      pkeys << {id: countries[2].id}
-      pkeys << {id: countries[1].id}
+      pkeys << { id: countries[0].id }
+      pkeys << { id: countries[2].id }
+      pkeys << { id: countries[1].id }
       patch :sort_or_destroy, params: { locale: 'ja', pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'

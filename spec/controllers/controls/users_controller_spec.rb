@@ -99,9 +99,9 @@ RSpec.describe Controls::UsersController, type: :controller do
       staffs = FactoryBot.create_list(:user, 3, role_value: :staff)
 
       pkeys = []
-      pkeys << {id: staffs[1].id}
-      pkeys << {id: staffs[0].id}
-      pkeys << {id: staffs[2].id}
+      pkeys << { id: staffs[1].id }
+      pkeys << { id: staffs[0].id }
+      pkeys << { id: staffs[2].id }
       expect do
         patch :sort_or_destroy, params: { locale: :en, role: :admin, pkeys: pkeys, submit_sort: '' }
       end.to raise_error(::ActiveRecord::RecordNotFound)
