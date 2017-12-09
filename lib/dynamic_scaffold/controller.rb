@@ -90,7 +90,15 @@ module DynamicScaffold
         begin_transaction do
           pkeys_list.each do |pkeys|
             rec = find_record(pkeys.to_hash)
-            rec.update!(self.class.dynamic_scaffold_config.list.sorter_attribute => next_sequence!)
+            next_sec = next_sequence!
+            rec.attributes = { self.class.dynamic_scaffold_config.list.sorter_attribute => next_sec }
+            self.class.dynamic_scaffold_config.call_before_save(
+              :each_sort,
+              self,
+              rec,
+              next_sec
+            )
+            rec.save
           end
         end
         redirect_to dynamic_scaffold_path(:index)

@@ -27,7 +27,7 @@ module DynamicScaffold
       end
     end
 
-    def call_before_save(target, controller, arg)
+    def call_before_save(target, controller, *args)
       if @before_save_callbacks[target].nil?
         msg = "Invalid target `#{target}` is specified. Availables: #{@callback_targets}"
         raise DynamicScaffold::Error::InvalidParameter, msg
@@ -35,9 +35,9 @@ module DynamicScaffold
 
       @before_save_callbacks[target].each do |callback|
         if callback.is_a? Proc
-          controller.instance_exec(arg, &callback)
+          controller.instance_exec(*args, &callback)
         else
-          controller.send(callback, arg)
+          controller.send(callback, *args)
         end
       end
     end
