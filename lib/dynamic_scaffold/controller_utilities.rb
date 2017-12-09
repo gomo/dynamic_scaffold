@@ -82,5 +82,11 @@ module DynamicScaffold
         raise ::ActiveRecord::RecordNotFound if rec.nil?
         rec
       end
+
+      def begin_transaction
+        self.class.dynamic_scaffold_config.model.transaction do
+          yield
+        end
+      end
   end
 end

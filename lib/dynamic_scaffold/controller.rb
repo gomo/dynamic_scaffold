@@ -38,10 +38,17 @@ module DynamicScaffold
     def create
       @record = self.class.dynamic_scaffold_config.model.new
       @record.attributes = update_values
-      if @record.save
-        redirect_to dynamic_scaffold_path(:index)
-      else
-        render "#{params[:controller]}/new"
+      begin_transaction do
+        self.class.dynamic_scaffold_config.call_before_save(
+          :create,
+          self,
+          @record
+        )
+        if @record.save
+          redirect_to dynamic_scaffold_path(:index)
+        else
+          render "#{params[:controller]}/new"
+        end
       end
     end
 
@@ -71,13 +78,12 @@ module DynamicScaffold
       end
 
       def sort
-        c = self.class.dynamic_scaffold_config
         pkeys_list = sort_params
         reset_sequence(pkeys_list.size)
-        c.model.transaction do
+        begin_transaction do
           pkeys_list.each do |pkeys|
             rec = find_record(pkeys.to_hash)
-            rec.update!(c.list.sorter_attribute => next_sequence!)
+            rec.update!(self.class.dynamic_scaffold_config.list.sorter_attribute => next_sequence!)
           end
         end
         redirect_to dynamic_scaffold_path(:index)
