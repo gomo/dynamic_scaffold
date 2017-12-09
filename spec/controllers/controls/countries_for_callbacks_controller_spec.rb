@@ -27,5 +27,11 @@ RSpec.describe Controls::CountriesForCallbacksController, type: :controller do
       expect(countries[1].name).to eq 'executed sort 1 before save!!'
       expect(countries[2].name).to eq 'executed sort 0 before save!!'
     end
+    it ':destroy' do
+      state = FactoryBot.create(:state)
+      patch :sort_or_destroy, params: { locale: :en, submit_destroy: state.country.primary_key_value.to_json }
+      expect(flash['dynamic_scaffold_danger']).to be_nil
+      expect(response).to redirect_to controls_master_countries_for_callbacks_path
+    end
   end
 end

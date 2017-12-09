@@ -75,12 +75,19 @@ module DynamicScaffold
       # Sub actions.
       def destroy
         record = find_record(JSON.parse(params['submit_destroy']))
+        
         begin
-          record.destroy
+          begin_transaction do
+            self.class.dynamic_scaffold_config.call_before_save(
+              :destroy,
+              self,
+              record,
+            )
+            record.destroy
+          end
         rescue ::ActiveRecord::InvalidForeignKey => _error
           flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
         end
-
         redirect_to dynamic_scaffold_path(:index)
       end
 

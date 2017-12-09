@@ -15,7 +15,7 @@ module Controls
       end
 
       c.before_save :destroy do |country|
-        country.states.destroy
+        country.states.map(&:destroy)
       end
     end
   end
