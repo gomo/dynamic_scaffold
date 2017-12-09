@@ -14,7 +14,7 @@ describe 'DynamicScaffold::Config' do
       country = FactoryBot.create(:country)
       country.name = 'block'
 
-      %i[update destroy sort each_sort].each do |target|
+      %i[update destroy sort].each do |target|
         expect do
           config.call_before_save(target, controller, country)
         end.not_to raise_error
@@ -36,7 +36,7 @@ describe 'DynamicScaffold::Config' do
       country = FactoryBot.create(:country)
       country.name = 'block'
 
-      %i[sort each_sort].each do |target|
+      %i[sort].each do |target|
         expect do
           config.call_before_save(target, controller, country)
         end.not_to raise_error
@@ -56,7 +56,7 @@ describe 'DynamicScaffold::Config' do
       country = FactoryBot.create(:country)
       country.name = 'controller'
 
-      %i[update destroy sort each_sort].each do |target|
+      %i[update destroy sort].each do |target|
         expect do
           config.call_before_save(target, controller, country)
         end.not_to raise_error
@@ -70,19 +70,19 @@ describe 'DynamicScaffold::Config' do
     end
     it 'should be able to execute a controller method with muiltiple targets specified.' do
       config = DynamicScaffold::Config.new Country
-      config.before_save :before_save_scaffold, :create, :update, :each_sort
+      config.before_save :before_save_scaffold, :create, :update, :sort
 
       controller = Controls::ShopsController.new
       country = FactoryBot.create(:country)
       country.name = 'controller'
 
-      %i[destroy sort].each do |target|
+      %i[destroy].each do |target|
         expect do
           config.call_before_save(target, controller, country)
         end.not_to raise_error
       end
 
-      %i[create update each_sort].each do |_target|
+      %i[create update sort].each do |_target|
         expect do
           config.call_before_save(:create, controller, country)
         end.to raise_error(DynamicScaffoldSpecError, 'controller')

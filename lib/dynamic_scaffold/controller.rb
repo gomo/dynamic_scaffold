@@ -93,7 +93,7 @@ module DynamicScaffold
             next_sec = next_sequence!
             rec.attributes = { self.class.dynamic_scaffold_config.list.sorter_attribute => next_sec }
             self.class.dynamic_scaffold_config.call_before_save(
-              :each_sort,
+              :sort,
               self,
               rec,
               next_sec

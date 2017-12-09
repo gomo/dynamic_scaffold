@@ -6,7 +6,7 @@ module DynamicScaffold
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
 
-      @callback_targets = %i[create update destroy sort each_sort].freeze
+      @callback_targets = %i[create update destroy sort].freeze
       @before_save_callbacks = {}
       @callback_targets.each do |target|
         @before_save_callbacks[target] = []
