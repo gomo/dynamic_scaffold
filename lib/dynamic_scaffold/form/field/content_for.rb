@@ -2,7 +2,7 @@ module DynamicScaffold
   module Form
     module Field
       class ContentFor < Base
-        def initialize(config, type, name, options = {})
+        def initialize(config, type, name)
           super(config, type, name)
         end
       end
