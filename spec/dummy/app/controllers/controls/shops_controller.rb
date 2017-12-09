@@ -1,5 +1,5 @@
 module Controls
-  class ShopsController < ApplicationController
+  class ShopsController < BaseController
     include DynamicScaffold::Controller
     dynamic_scaffold Shop do |c|
       c.list.item(:id, style: 'width: 80px').label('Number')

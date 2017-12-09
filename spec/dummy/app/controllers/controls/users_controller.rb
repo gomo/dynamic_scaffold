@@ -1,5 +1,5 @@
 module Controls
-  class UsersController < ApplicationController
+  class UsersController < BaseController
     include DynamicScaffold::Controller
     dynamic_scaffold User do |c|
       c.scope [:role]

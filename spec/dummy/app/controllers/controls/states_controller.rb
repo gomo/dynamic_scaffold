@@ -1,5 +1,5 @@
 module Controls
-  class StatesController < ApplicationController
+  class StatesController < BaseController
     include DynamicScaffold::Controller
     dynamic_scaffold State do |c|
     end

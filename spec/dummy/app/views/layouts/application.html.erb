@@ -4,8 +4,8 @@
     <title>Dummy</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= render 'dynamic_scaffold/bootstrap/head'%>
     <%= javascript_include_tag 'application' %>
+    <%= yield :after_head %>
   </head>
 
   <body>

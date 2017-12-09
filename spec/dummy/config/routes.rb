@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  # dynamic_scaffold_for 'foo'
+  root 'root#index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   scope '/:locale' do

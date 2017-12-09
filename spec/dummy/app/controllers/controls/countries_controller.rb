@@ -1,5 +1,5 @@
 module Controls
-  class CountriesController < ApplicationController
+  class CountriesController < BaseController
     include DynamicScaffold::Controller
     dynamic_scaffold Country do |c|
       c.list.sorter sequence: :desc

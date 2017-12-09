@@ -1,0 +1,15 @@
+<section>
+  <h1>Menu</h1>
+  <ul>
+    <li><a href="<%=controls_master_countries_path%>">Country</a></li>
+    <li><a href="<%=controls_master_shops_path%>">Shop</a></li>
+    <li>
+      <h2>User</h2>
+      <ul>
+        <%User.roles.each do |role, _v|%>
+        <li><a href="<%=controls_master_users_path role%>"><%=role.titleize%></a></li>
+        <%end%>
+      </ul>
+    </li>
+  </ul>
+</section>
