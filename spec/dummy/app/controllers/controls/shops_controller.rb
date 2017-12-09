@@ -29,6 +29,7 @@ module Controls
       )
       c.form.collection_check_boxes(:state_ids, State.all, :id, :name)
       c.form.collection_radio_buttons(:status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
+      c.form.content_for(:shop_addition)
     end
   end
 end

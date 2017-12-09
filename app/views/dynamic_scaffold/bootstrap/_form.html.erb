@@ -2,6 +2,17 @@
   <%controller.class.dynamic_scaffold_config.form.fields.each do |elem|%>
     <% if elem.type? :hidden_field %>
       <%= elem.render(form) %>
+    <% elsif elem.type? :content_for %>
+      <% if content_for? elem.content_for_name %>
+        <% if elem.wrapper? %>
+          <div class="<%= classNames('form-group', {'has-error': @record.errors[elem.name].any?}) %>">
+            <label><%= elem.label %></label>
+        <% end %>
+        <%= yield elem.content_for_name %>
+        <% if elem.wrapper? %>
+          </div>
+        <% end %>
+      <% end %>
     <% else %>
       <div class="<%= classNames('form-group', {'has-error': @record.errors[elem.name].any?}) %>">
         <label><%= elem.label %></label>
