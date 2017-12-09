@@ -5,11 +5,41 @@ module DynamicScaffold
       @model = model
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
+
+      @callback_targets = %i[create update destroy sort each_sort].freeze
+      @before_save_callbacks = {}
+      @callback_targets.each do |target|
+        @before_save_callbacks[target] = []
+      end
+      @before_save_callbacks.freeze
     end
 
     def scope(parameter_names = nil)
       @scope = parameter_names unless parameter_names.nil?
       @scope
+    end
+
+    def before_save(*args, &callback)
+      callback = args.shift if callback.nil?
+      targets = args
+      targets.each do |target|
+        @before_save_callbacks[target] << callback
+      end
+    end
+
+    def call_before_save(target, controller, arg)
+      if @before_save_callbacks[target].nil?
+        msg = "Invalid target `#{target}` is specified. Availables: #{@callback_targets}"
+        raise DynamicScaffold::Error::InvalidParameter, msg
+      end
+
+      @before_save_callbacks[target].each do |callback|
+        if callback.is_a? Proc
+          controller.instance_exec(arg, &callback)
+        else
+          controller.send(callback, arg)
+        end
+      end
     end
   end
 

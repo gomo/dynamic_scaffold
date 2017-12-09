@@ -31,5 +31,11 @@ module Controls
       c.form.collection_radio_buttons(:status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
       c.form.content_for(:shop_addition)
     end
+
+    private
+
+      def before_save_scaffold(record)
+        raise DynamicScaffoldSpecError, record.name
+      end
   end
 end

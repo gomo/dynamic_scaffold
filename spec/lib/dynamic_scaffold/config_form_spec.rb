@@ -313,9 +313,9 @@ RSpec.describe ApplicationHelper, type: :helper do
   context 'ContentFor' do
     it 'should be able to handle content_for' do
       config = DynamicScaffold::Config.new Shop
-      
+
       elem = config.form.content_for(:additional_shop1)
-      expect(elem.type? :content_for).to be true 
+      expect(elem.type?(:content_for)).to be true
       expect(elem.name).to eq :additional_shop1
     end
   end
