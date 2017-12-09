@@ -34,7 +34,7 @@ module Controls
 
     private
 
-      def before_save_scaffold(record)
+      def before_save_scaffold(record, _prev)
         raise DynamicScaffoldSpecError, record.name
       end
   end

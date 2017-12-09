@@ -37,13 +37,10 @@ module DynamicScaffold
 
     def create
       @record = self.class.dynamic_scaffold_config.model.new
+      prev_attribute = @record.attributes
       @record.attributes = update_values
       begin_transaction do
-        self.class.dynamic_scaffold_config.call_before_save(
-          :create,
-          self,
-          @record
-        )
+        call_before_save(:create, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -55,13 +52,10 @@ module DynamicScaffold
     def update
       values = update_values
       @record = find_record(extract_pkeys(values))
+      prev_attribute = @record.attributes
       @record.attributes = values
       begin_transaction do
-        self.class.dynamic_scaffold_config.call_before_save(
-          :update,
-          self,
-          @record
-        )
+        call_before_save(:update, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -75,14 +69,10 @@ module DynamicScaffold
       # Sub actions.
       def destroy
         record = find_record(JSON.parse(params['submit_destroy']))
-        
+
         begin
           begin_transaction do
-            self.class.dynamic_scaffold_config.call_before_save(
-              :destroy,
-              self,
-              record,
-            )
+            call_before_save(:destroy, record, {})
             record.destroy
           end
         rescue ::ActiveRecord::InvalidForeignKey => _error
@@ -98,13 +88,10 @@ module DynamicScaffold
           pkeys_list.each do |pkeys|
             rec = find_record(pkeys.to_hash)
             next_sec = next_sequence!
+            prev_attribute = rec.attributes
+            # TODO: Remove self.class.dynamic_scaffold_config.list.sorter_attribute
             rec.attributes = { self.class.dynamic_scaffold_config.list.sorter_attribute => next_sec }
-            self.class.dynamic_scaffold_config.call_before_save(
-              :sort,
-              self,
-              rec,
-              next_sec
-            )
+            call_before_save(:sort, rec, prev_attribute)
             rec.save
           end
         end

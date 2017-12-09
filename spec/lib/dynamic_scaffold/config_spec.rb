@@ -6,7 +6,7 @@ describe 'DynamicScaffold::Config' do
   context '#before_save' do
     it 'should be able to execute a block with a target specified.' do
       config = DynamicScaffold::Config.new Country
-      config.before_save :create do |record|
+      config.before_save :create do |record, _prev|
         raise DynamicScaffoldSpecError, record.name
       end
 
@@ -16,19 +16,19 @@ describe 'DynamicScaffold::Config' do
 
       %i[update destroy sort].each do |target|
         expect do
-          config.call_before_save(target, controller, country)
+          config.call_before_save(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
       [:create].each do |_target|
         expect do
-          config.call_before_save(:create, controller, country)
+          config.call_before_save(:create, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'block')
       end
     end
     it 'should be able to execute a block with multiple targets specified.' do
       config = DynamicScaffold::Config.new Country
-      config.before_save :create, :update, :destroy do |record|
+      config.before_save :create, :update, :destroy do |record, _prev|
         raise DynamicScaffoldSpecError, record.name
       end
 
@@ -38,13 +38,13 @@ describe 'DynamicScaffold::Config' do
 
       %i[sort].each do |target|
         expect do
-          config.call_before_save(target, controller, country)
+          config.call_before_save(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
       %i[create update destroy].each do |_target|
         expect do
-          config.call_before_save(:create, controller, country)
+          config.call_before_save(:create, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'block')
       end
     end
@@ -58,13 +58,13 @@ describe 'DynamicScaffold::Config' do
 
       %i[update destroy sort].each do |target|
         expect do
-          config.call_before_save(target, controller, country)
+          config.call_before_save(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
       [:create].each do |_target|
         expect do
-          config.call_before_save(:create, controller, country)
+          config.call_before_save(:create, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'controller')
       end
     end
@@ -78,13 +78,13 @@ describe 'DynamicScaffold::Config' do
 
       %i[destroy].each do |target|
         expect do
-          config.call_before_save(target, controller, country)
+          config.call_before_save(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
       %i[create update sort].each do |_target|
         expect do
-          config.call_before_save(:create, controller, country)
+          config.call_before_save(:create, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'controller')
       end
     end
