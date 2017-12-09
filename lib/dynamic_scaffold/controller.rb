@@ -56,10 +56,17 @@ module DynamicScaffold
       values = update_values
       @record = find_record(extract_pkeys(values))
       @record.attributes = values
-      if @record.save
-        redirect_to dynamic_scaffold_path(:index)
-      else
-        render "#{params[:controller]}/edit"
+      begin_transaction do
+        self.class.dynamic_scaffold_config.call_before_save(
+          :update,
+          self,
+          @record
+        )
+        if @record.save
+          redirect_to dynamic_scaffold_path(:index)
+        else
+          render "#{params[:controller]}/edit"
+        end
       end
     end
 
