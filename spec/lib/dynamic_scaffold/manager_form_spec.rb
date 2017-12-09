@@ -315,19 +315,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       config = DynamicScaffold::Config.new Shop
       
       elem = config.form.content_for(:additional_shop1)
+      expect(elem.type? :content_for).to be true 
       expect(elem.name).to eq :additional_shop1
-      expect(elem.content_for_name).to eq :additional_shop1
-      expect(elem.wrapper?).to be true
-      expect(elem.label).to eq "Additional shop1"
-
-      elem = config.form.content_for(:additional_shop2, wrapper: false, attribute_name: :name)
-      expect(elem.name).to eq :name
-      expect(elem.content_for_name).to eq :additional_shop2
-      expect(elem.wrapper?).to be false
-      expect(elem.label).to eq "Name"
-
-      elem = config.form.content_for(:additional_shop3).label('FOOBAR')
-      expect(elem.label).to eq "FOOBAR"
     end
   end
 end

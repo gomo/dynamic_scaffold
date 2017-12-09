@@ -75,6 +75,12 @@ RSpec.describe Controls::ShopsController, type: :controller do
       expect(response).to redirect_to controls_master_shops_path
     end
   end
+  describe 'content_for' do
+    it 'should display additional elements on the page.' do
+      get :new, params: { locale: :en }
+      expect(response.body).not_to match(/<div>shop addition content<\/div>/)
+    end
+  end
   describe '#dynamic_scaffold_path' do
     it 'should be able to get path.' do
       get :index, params: { locale: :en }
