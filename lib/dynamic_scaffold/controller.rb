@@ -12,6 +12,8 @@ module DynamicScaffold
       end
     end
 
+    # Actions
+
     def index
       @records = self.class.dynamic_scaffold_config.model.all
       @records = @records.where scope_params
@@ -40,7 +42,7 @@ module DynamicScaffold
       prev_attribute = @record.attributes
       @record.attributes = update_values
       begin_transaction do
-        call_before_save(:create, @record, prev_attribute)
+        callbacks(:form, :before_save_create, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -55,7 +57,7 @@ module DynamicScaffold
       prev_attribute = @record.attributes
       @record.attributes = values
       begin_transaction do
-        call_before_save(:update, @record, prev_attribute)
+        callbacks(:form, :before_save_update, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -72,7 +74,7 @@ module DynamicScaffold
 
         begin
           begin_transaction do
-            call_before_save(:destroy, record, {})
+            callbacks(:form, :before_save_destroy, record, {})
             record.destroy
           end
         rescue ::ActiveRecord::InvalidForeignKey => _error
@@ -91,7 +93,7 @@ module DynamicScaffold
             prev_attribute = rec.attributes
             # TODO: Remove self.class.dynamic_scaffold_config.list.sorter_attribute
             rec.attributes = { self.class.dynamic_scaffold_config.list.sorter_attribute => next_sec }
-            call_before_save(:sort, rec, prev_attribute)
+            callbacks(:list, :before_save_sort, rec, prev_attribute)
             rec.save
           end
         end

@@ -89,8 +89,9 @@ module DynamicScaffold
         end
       end
 
-      def call_before_save(target, record, prev_attributes)
-        self.class.dynamic_scaffold_config.call_before_save(target, self, record, prev_attributes)
+      def callbacks(page, target, record, prev_attributes)
+        self.class.dynamic_scaffold_config.public_send(page)
+          .callbacks(target, self, record, prev_attributes)
       end
   end
 end

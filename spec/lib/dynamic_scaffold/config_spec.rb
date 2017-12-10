@@ -3,10 +3,10 @@ require 'rails_helper'
 class DynamicScaffoldSpecError < StandardError; end
 
 describe 'DynamicScaffold::Config' do
-  context '#before_save' do
+  context '#form.before_save' do
     it 'should be able to execute a block with a target specified.' do
       config = DynamicScaffold::Config.new Country
-      config.before_save :create do |record, _prev|
+      config.form.before_save :create do |record, _prev|
         raise DynamicScaffoldSpecError, record.name
       end
 
@@ -14,21 +14,21 @@ describe 'DynamicScaffold::Config' do
       country = FactoryBot.create(:country)
       country.name = 'block'
 
-      %i[update destroy sort].each do |target|
+      %i[before_save_update before_save_destroy].each do |target|
         expect do
-          config.call_before_save(target, controller, country, country.attributes)
+          config.form.callbacks(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
-      [:create].each do |_target|
+      [:before_save_create].each do |target|
         expect do
-          config.call_before_save(:create, controller, country, country.attributes)
+          config.form.callbacks(target, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'block')
       end
     end
     it 'should be able to execute a block with multiple targets specified.' do
       config = DynamicScaffold::Config.new Country
-      config.before_save :create, :update, :destroy do |record, _prev|
+      config.form.before_save :create, :update do |record, _prev|
         raise DynamicScaffoldSpecError, record.name
       end
 
@@ -36,57 +36,73 @@ describe 'DynamicScaffold::Config' do
       country = FactoryBot.create(:country)
       country.name = 'block'
 
-      %i[sort].each do |target|
+      %i[before_save_destroy].each do |target|
         expect do
-          config.call_before_save(target, controller, country, country.attributes)
+          config.form.callbacks(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
-      %i[create update destroy].each do |_target|
+      %i[before_save_create before_save_update].each do |target|
         expect do
-          config.call_before_save(:create, controller, country, country.attributes)
+          config.form.callbacks(target, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'block')
       end
     end
     it 'should be able to execute a controller method with a target specified.' do
       config = DynamicScaffold::Config.new Country
-      config.before_save :before_save_scaffold, :create
+      config.form.before_save :before_save_scaffold, :create
 
       controller = Controls::ShopsController.new
       country = FactoryBot.create(:country)
       country.name = 'controller'
 
-      %i[update destroy sort].each do |target|
+      %i[before_save_update before_save_destroy].each do |target|
         expect do
-          config.call_before_save(target, controller, country, country.attributes)
+          config.form.callbacks(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
-      [:create].each do |_target|
+      [:before_save_create].each do |target|
         expect do
-          config.call_before_save(:create, controller, country, country.attributes)
+          config.form.callbacks(target, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'controller')
       end
     end
     it 'should be able to execute a controller method with muiltiple targets specified.' do
       config = DynamicScaffold::Config.new Country
-      config.before_save :before_save_scaffold, :create, :update, :sort
+      config.form.before_save :before_save_scaffold, :create, :update
 
       controller = Controls::ShopsController.new
       country = FactoryBot.create(:country)
       country.name = 'controller'
 
-      %i[destroy].each do |target|
+      %i[before_save_destroy].each do |target|
         expect do
-          config.call_before_save(target, controller, country, country.attributes)
+          config.form.callbacks(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
-      %i[create update sort].each do |_target|
+      %i[before_save_create before_save_update].each do |target|
         expect do
-          config.call_before_save(:create, controller, country, country.attributes)
+          config.form.callbacks(target, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'controller')
       end
+    end
+  end
+  context '#list.before_save' do
+    it 'should be able to execute a block with a target specified.' do
+      config = DynamicScaffold::Config.new Country
+      config.list.before_save :sort do |record, _prev|
+        raise DynamicScaffoldSpecError, record.name
+      end
+
+      controller = Controls::ShopsController.new
+      country = FactoryBot.create(:country)
+      country.name = 'block'
+
+      expect do
+        config.list.callbacks(:before_save_sort, controller, country, country.attributes)
+      end.to raise_error(DynamicScaffoldSpecError, 'block')
     end
   end
 end

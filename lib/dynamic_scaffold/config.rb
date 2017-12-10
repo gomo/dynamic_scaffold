@@ -1,39 +1,26 @@
 module DynamicScaffold
-  class Config
-    attr_reader :model, :form, :list
-    def initialize(model)
-      @model = model
-      @form = FormBuilder.new(self)
-      @list = ListBuilder.new(self)
-
-      @callback_targets = %i[create update destroy sort].freeze
-      @before_save_callbacks = {}
-      @callback_targets.each do |target|
-        @before_save_callbacks[target] = []
+  class Callback
+    def initialize(targets)
+      @targets = targets
+      @callbacks = {}
+      @targets.each do |target|
+        @callbacks[target] = []
       end
-      @before_save_callbacks.freeze
     end
 
-    def scope(parameter_names = nil)
-      @scope = parameter_names unless parameter_names.nil?
-      @scope
-    end
-
-    def before_save(*args, &callback)
-      callback = args.shift if callback.nil?
-      targets = args
+    def add(targets, callback)
       targets.each do |target|
-        @before_save_callbacks[target] << callback
+        @callbacks[target] << callback
       end
     end
 
-    def call_before_save(target, controller, record, prev_attribute)
-      if @before_save_callbacks[target].nil?
-        msg = "Invalid target `#{target}` is specified. Availables: #{@callback_targets}"
+    def call(target, controller, record, prev_attribute)
+      if @callbacks[target].nil?
+        msg = "Invalid target `#{target}` is specified. Availables: #{@targets}"
         raise DynamicScaffold::Error::InvalidParameter, msg
       end
 
-      @before_save_callbacks[target].each do |callback|
+      @callbacks[target].each do |callback|
         if callback.is_a? Proc
           controller.instance_exec(record, prev_attribute, &callback)
         else
@@ -42,12 +29,26 @@ module DynamicScaffold
       end
     end
   end
+  class Config
+    attr_reader :model, :form, :list
+    def initialize(model)
+      @model = model
+      @form = FormBuilder.new(self)
+      @list = ListBuilder.new(self)
+    end
+
+    def scope(parameter_names = nil)
+      @scope = parameter_names unless parameter_names.nil?
+      @scope
+    end
+  end
 
   class ListBuilder
     def initialize(config)
       @config = config
       @items = []
       @sorter = nil
+      @callback = Callback.new([:before_save_sort])
     end
 
     def sorter(params = nil)
@@ -77,6 +78,16 @@ module DynamicScaffold
     def sorter_direction
       @sorter.values.first
     end
+
+    def before_save(*args, &callback)
+      callback = args.shift if callback.nil?
+      targets = args.map{|target| "before_save_#{target}".to_sym }
+      @callback.add(targets, callback)
+    end
+
+    def callbacks(target, controller, record, prev_attributes)
+      @callback.call(target, controller, record, prev_attributes)
+    end
   end
 
   class FormBuilder
@@ -100,6 +111,7 @@ module DynamicScaffold
     def initialize(config)
       @config = config
       @fields = []
+      @callback = Callback.new([:before_save_create, :before_save_update, :before_save_destroy])
     end
 
     def fields
@@ -141,6 +153,16 @@ module DynamicScaffold
       field = Form::Field::ContentFor.new(@config, :content_for, *args)
       @fields << field
       field
+    end
+
+    def before_save(*args, &callback)
+      callback = args.shift if callback.nil?
+      targets = args.map{|target| "before_save_#{target}".to_sym }
+      @callback.add(targets, callback)
+    end
+
+    def callbacks(target, controller, record, prev_attributes)
+      @callback.call(target, controller, record, prev_attributes)
     end
   end
 end
