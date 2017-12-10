@@ -48,46 +48,6 @@ describe 'DynamicScaffold::Config' do
         end.to raise_error(DynamicScaffoldSpecError, 'block')
       end
     end
-    it 'should be able to execute a controller method with a target specified.' do
-      config = DynamicScaffold::Config.new Country
-      config.form.before_save :before_save_scaffold, :create
-
-      controller = Controls::ShopsController.new
-      country = FactoryBot.create(:country)
-      country.name = 'controller'
-
-      %i[before_save_update before_save_destroy].each do |target|
-        expect do
-          config.form.callbacks(target, controller, country, country.attributes)
-        end.not_to raise_error
-      end
-
-      [:before_save_create].each do |target|
-        expect do
-          config.form.callbacks(target, controller, country, country.attributes)
-        end.to raise_error(DynamicScaffoldSpecError, 'controller')
-      end
-    end
-    it 'should be able to execute a controller method with muiltiple targets specified.' do
-      config = DynamicScaffold::Config.new Country
-      config.form.before_save :before_save_scaffold, :create, :update
-
-      controller = Controls::ShopsController.new
-      country = FactoryBot.create(:country)
-      country.name = 'controller'
-
-      %i[before_save_destroy].each do |target|
-        expect do
-          config.form.callbacks(target, controller, country, country.attributes)
-        end.not_to raise_error
-      end
-
-      %i[before_save_create before_save_update].each do |target|
-        expect do
-          config.form.callbacks(target, controller, country, country.attributes)
-        end.to raise_error(DynamicScaffoldSpecError, 'controller')
-      end
-    end
   end
   context '#list.before_save' do
     it 'should be able to execute a block with a target specified.' do

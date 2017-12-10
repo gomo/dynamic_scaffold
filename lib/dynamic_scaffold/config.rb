@@ -10,24 +10,26 @@ module DynamicScaffold
 
     def add(targets, callback)
       targets.each do |target|
+        check_target(target)
         @callbacks[target] << callback
       end
     end
 
     def call(target, controller, record, prev_attribute)
-      if @callbacks[target].nil?
+      check_target(target)
+      @callbacks[target].each do |callback|
+        controller.instance_exec(record, prev_attribute, &callback)
+      end
+    end
+
+    private
+
+      def check_target(target)
+        return unless @callbacks[target].nil?
+        
         msg = "Invalid target `#{target}` is specified. Availables: #{@targets}"
         raise DynamicScaffold::Error::InvalidParameter, msg
       end
-
-      @callbacks[target].each do |callback|
-        if callback.is_a? Proc
-          controller.instance_exec(record, prev_attribute, &callback)
-        else
-          controller.send(callback, record, prev_attribute)
-        end
-      end
-    end
   end
   class Config
     attr_reader :model, :form, :list
@@ -80,9 +82,10 @@ module DynamicScaffold
     end
 
     def before_save(*args, &callback)
-      callback = args.shift if callback.nil?
-      targets = args.map{|target| "before_save_#{target}".to_sym }
-      @callback.add(targets, callback)
+      @callback.add(
+        args.map {|target| "before_save_#{target}".to_sym },
+        callback
+      )
     end
 
     def callbacks(target, controller, record, prev_attributes)
@@ -111,7 +114,7 @@ module DynamicScaffold
     def initialize(config)
       @config = config
       @fields = []
-      @callback = Callback.new([:before_save_create, :before_save_update, :before_save_destroy])
+      @callback = Callback.new(%i[before_save_create before_save_update before_save_destroy])
     end
 
     def fields
@@ -156,9 +159,10 @@ module DynamicScaffold
     end
 
     def before_save(*args, &callback)
-      callback = args.shift if callback.nil?
-      targets = args.map{|target| "before_save_#{target}".to_sym }
-      @callback.add(targets, callback)
+      @callback.add(
+        args.map {|target| "before_save_#{target}".to_sym },
+        callback
+      )
     end
 
     def callbacks(target, controller, record, prev_attributes)
