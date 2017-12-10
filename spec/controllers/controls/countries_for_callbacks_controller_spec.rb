@@ -5,27 +5,28 @@ RSpec.describe Controls::CountriesForCallbacksController, type: :controller do
       post :create, params: { locale: :en, country: { name: 'foobar' } }
       country = assigns(:record)
       country.reload
-      expect(country.name).to eq 'executed create before save!!'
+      expect(country.name).to eq 'executed create before save!! [empty:foobar]'
     end
     it ':update' do
       country = FactoryBot.create(:country)
+      prev_name = country.name
       country.name = 'foobar'
       patch :update, params: { locale: :en, country: country.attributes }
       country.reload
-      expect(country.name).to eq 'executed update before save!!'
+      expect(country.name).to eq "executed update before save!! [#{prev_name}:foobar]"
     end
     it ':sort' do
-      countries = FactoryBot.create_list(:country, 3)
+      prev_countries = FactoryBot.create_list(:country, 3)
 
       pkeys = []
-      pkeys << { id: countries[1].id }
-      pkeys << { id: countries[0].id }
-      pkeys << { id: countries[2].id }
+      pkeys << { id: prev_countries[1].id }
+      pkeys << { id: prev_countries[0].id }
+      pkeys << { id: prev_countries[2].id }
       patch :sort_or_destroy, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
-      expect(countries[0].name).to eq 'executed sort 2 before save!!'
-      expect(countries[1].name).to eq 'executed sort 1 before save!!'
-      expect(countries[2].name).to eq 'executed sort 0 before save!!'
+      expect(countries[0].name).to eq "executed sort before save!! [#{prev_countries[1].sequence}:2]"
+      expect(countries[1].name).to eq "executed sort before save!! [#{prev_countries[0].sequence}:1]"
+      expect(countries[2].name).to eq "executed sort before save!! [#{prev_countries[2].sequence}:0]"
     end
     it ':destroy' do
       state = FactoryBot.create(:state)

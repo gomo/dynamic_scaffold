@@ -91,8 +91,7 @@ module DynamicScaffold
             rec = find_record(pkeys.to_hash)
             next_sec = next_sequence!
             prev_attribute = rec.attributes
-            # TODO: Remove self.class.dynamic_scaffold_config.list.sorter_attribute
-            rec.attributes = { self.class.dynamic_scaffold_config.list.sorter_attribute => next_sec }
+            rec[self.class.dynamic_scaffold_config.list.sorter_attribute] = next_sec
             callbacks(:list, :before_save_sort, rec, prev_attribute)
             rec.save
           end
