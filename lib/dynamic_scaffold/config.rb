@@ -48,6 +48,8 @@ module DynamicScaffold
   end
 
   class ListBuilder
+    attr_reader :callback
+
     def initialize(config)
       @config = config
       @items = []
@@ -96,13 +98,11 @@ module DynamicScaffold
         callback
       )
     end
-
-    def callbacks(*args)
-      @callback.call(*args)
-    end
   end
 
   class FormBuilder
+    attr_reader :callback
+    
     %i[
       text_field
       check_box
@@ -172,10 +172,6 @@ module DynamicScaffold
         args.map {|target| "before_save_#{target}".to_sym },
         callback
       )
-    end
-
-    def callbacks(*args)
-      @callback.call(*args)
     end
   end
 end

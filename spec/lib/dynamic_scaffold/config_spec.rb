@@ -16,13 +16,13 @@ describe 'DynamicScaffold::Config' do
 
       %i[before_save_update before_save_destroy].each do |target|
         expect do
-          config.form.callbacks(target, controller, country, country.attributes)
+          config.form.callback.call(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
       [:before_save_create].each do |target|
         expect do
-          config.form.callbacks(target, controller, country, country.attributes)
+          config.form.callback.call(target, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'block')
       end
     end
@@ -38,13 +38,13 @@ describe 'DynamicScaffold::Config' do
 
       %i[before_save_destroy].each do |target|
         expect do
-          config.form.callbacks(target, controller, country, country.attributes)
+          config.form.callback.call(target, controller, country, country.attributes)
         end.not_to raise_error
       end
 
       %i[before_save_create before_save_update].each do |target|
         expect do
-          config.form.callbacks(target, controller, country, country.attributes)
+          config.form.callback.call(target, controller, country, country.attributes)
         end.to raise_error(DynamicScaffoldSpecError, 'block')
       end
     end
@@ -61,7 +61,7 @@ describe 'DynamicScaffold::Config' do
       country.name = 'block'
 
       expect do
-        config.list.callbacks(:before_save_sort, controller, country, country.attributes)
+        config.list.callback.call(:before_save_sort, controller, country, country.attributes)
       end.to raise_error(DynamicScaffoldSpecError, 'block')
     end
   end
@@ -75,7 +75,7 @@ describe 'DynamicScaffold::Config' do
       controller = Controls::ShopsController.new
 
       expect do
-        config.list.callbacks(:before_fetch, controller, Shop.all)
+        config.list.callback.call(:before_fetch, controller, Shop.all)
       end.to raise_error(DynamicScaffoldSpecError, 'SELECT "shops".* FROM "shops"')
     end
   end

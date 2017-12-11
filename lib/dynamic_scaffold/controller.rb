@@ -16,7 +16,7 @@ module DynamicScaffold
 
     def index
       @records = dsconf.model.all
-      callback_result = dsconf.list.callbacks(:before_fetch, self, dsconf.model)
+      callback_result = dsconf.list.callback.call(:before_fetch, self, dsconf.model)
       @records = callback_result if callback_result
       @records = @records.where scope_params
       @records = @records.order dsconf.list.sorter if dsconf.list.sorter
@@ -44,7 +44,7 @@ module DynamicScaffold
       prev_attribute = @record.attributes
       @record.attributes = update_values
       dsconf.model.transaction do
-        dsconf.form.callbacks(:before_save_create, self, @record, prev_attribute)
+        dsconf.form.callback.call(:before_save_create, self, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -59,7 +59,7 @@ module DynamicScaffold
       prev_attribute = @record.attributes
       @record.attributes = values
       dsconf.model.transaction do
-        dsconf.form.callbacks(:before_save_update, self, @record, prev_attribute)
+        dsconf.form.callback.call(:before_save_update, self, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -76,7 +76,7 @@ module DynamicScaffold
 
         begin
           dsconf.model.transaction do
-            dsconf.form.callbacks(:before_save_destroy, self, record, {})
+            dsconf.form.callback.call(:before_save_destroy, self, record, {})
             record.destroy
           end
         rescue ::ActiveRecord::InvalidForeignKey => _error
@@ -94,7 +94,7 @@ module DynamicScaffold
             next_sec = next_sequence!
             prev_attribute = rec.attributes
             rec[dsconf.list.sorter_attribute] = next_sec
-            dsconf.list.callbacks(:before_save_sort, self, rec, prev_attribute)
+            dsconf.list.callback.call(:before_save_sort, self, rec, prev_attribute)
             rec.save
           end
         end
