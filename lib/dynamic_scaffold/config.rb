@@ -24,6 +24,10 @@ module DynamicScaffold
       result
     end
 
+    def exists?(target)
+      !@callbacks[target].empty?
+    end
+
     private
 
       def check_target(target)
@@ -102,7 +106,7 @@ module DynamicScaffold
 
   class FormBuilder
     attr_reader :callback
-    
+
     %i[
       text_field
       check_box

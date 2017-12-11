@@ -16,8 +16,12 @@ module DynamicScaffold
 
     def index
       @records = dsconf.model.all
-      callback_result = dsconf.list.callback.call(:before_fetch, self, dsconf.model)
-      @records = callback_result if callback_result
+      if dsconf.list.callback.exists?(:before_fetch)
+        @records = dsconf.list.callback.call(:before_fetch, self, @records)
+        unless @records.is_a? ::ActiveRecord::Relation
+          raise Error::InvalidParameter, 'You must return ActiveRecord::Relation'
+        end
+      end
       @records = @records.where scope_params
       @records = @records.order dsconf.list.sorter if dsconf.list.sorter
     end
