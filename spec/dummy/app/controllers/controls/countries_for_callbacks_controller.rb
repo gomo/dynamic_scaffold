@@ -4,6 +4,10 @@ module Controls
     dynamic_scaffold Country do |c|
       c.list.sorter sequence: :desc
 
+      c.list.before_fetch do |query|
+        query.where(id: nil)
+      end
+
       %i[create update].each do |target|
         c.form.before_save target do |country, prev|
           country.name = "executed #{target} before save!! [#{prev['name'] || 'empty'}:#{country.name}]"

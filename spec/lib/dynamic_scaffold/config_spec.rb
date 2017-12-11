@@ -65,4 +65,18 @@ describe 'DynamicScaffold::Config' do
       end.to raise_error(DynamicScaffoldSpecError, 'block')
     end
   end
+  context '#list.before_fetch' do
+    it 'should be able to execute a block with a target specified.' do
+      config = DynamicScaffold::Config.new Shop
+      config.list.before_fetch do |query|
+        raise DynamicScaffoldSpecError, query.to_sql
+      end
+
+      controller = Controls::ShopsController.new
+
+      expect do
+        config.list.callbacks(:before_fetch, controller, Shop.all)
+      end.to raise_error(DynamicScaffoldSpecError, 'SELECT "shops".* FROM "shops"')
+    end
+  end
 end

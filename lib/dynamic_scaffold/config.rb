@@ -15,11 +15,13 @@ module DynamicScaffold
       end
     end
 
-    def call(target, controller, record, prev_attribute)
+    def call(target, controller, *args)
       check_target(target)
+      result = nil
       @callbacks[target].each do |callback|
-        controller.instance_exec(record, prev_attribute, &callback)
+        result = controller.instance_exec(*args, &callback)
       end
+      result
     end
 
     private
@@ -50,7 +52,7 @@ module DynamicScaffold
       @config = config
       @items = []
       @sorter = nil
-      @callback = Callback.new([:before_save_sort])
+      @callback = Callback.new([:before_save_sort, :before_fetch])
     end
 
     def sorter(params = nil)
@@ -81,6 +83,13 @@ module DynamicScaffold
       @sorter.values.first
     end
 
+    def before_fetch(&callback)
+      @callback.add(
+        [:before_fetch],
+        callback
+      )
+    end
+
     def before_save(*args, &callback)
       @callback.add(
         args.map {|target| "before_save_#{target}".to_sym },
@@ -88,8 +97,8 @@ module DynamicScaffold
       )
     end
 
-    def callbacks(target, controller, record, prev_attributes)
-      @callback.call(target, controller, record, prev_attributes)
+    def callbacks(*args)
+      @callback.call(*args)
     end
   end
 
@@ -165,8 +174,8 @@ module DynamicScaffold
       )
     end
 
-    def callbacks(target, controller, record, prev_attributes)
-      @callback.call(target, controller, record, prev_attributes)
+    def callbacks(*args)
+      @callback.call(*args)
     end
   end
 end
