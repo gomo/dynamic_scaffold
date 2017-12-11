@@ -15,13 +15,13 @@ module DynamicScaffold
     # Actions
 
     def index
-      @records = self.class.dynamic_scaffold_config.model.all
+      @records = dsconf.model.all
       @records = @records.where scope_params
-      @records = @records.order self.class.dynamic_scaffold_config.list.sorter if self.class.dynamic_scaffold_config.list.sorter
+      @records = @records.order dsconf.list.sorter if dsconf.list.sorter
     end
 
     def new
-      @record = self.class.dynamic_scaffold_config.model.new
+      @record = dsconf.model.new
       @record.attributes = scope_params
     end
 
@@ -38,11 +38,11 @@ module DynamicScaffold
     end
 
     def create
-      @record = self.class.dynamic_scaffold_config.model.new
+      @record = dsconf.model.new
       prev_attribute = @record.attributes
       @record.attributes = update_values
-      begin_transaction do
-        callbacks(:form, :before_save_create, @record, prev_attribute)
+      dsconf.model.transaction do
+        dsconf.form.callbacks(:before_save_create, self, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -56,8 +56,8 @@ module DynamicScaffold
       @record = find_record(extract_pkeys(values))
       prev_attribute = @record.attributes
       @record.attributes = values
-      begin_transaction do
-        callbacks(:form, :before_save_update, @record, prev_attribute)
+      dsconf.model.transaction do
+        dsconf.form.callbacks(:before_save_update, self, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -73,8 +73,8 @@ module DynamicScaffold
         record = find_record(JSON.parse(params['submit_destroy']))
 
         begin
-          begin_transaction do
-            callbacks(:form, :before_save_destroy, record, {})
+          dsconf.model.transaction do
+            dsconf.form.callbacks(:before_save_destroy, self, record, {})
             record.destroy
           end
         rescue ::ActiveRecord::InvalidForeignKey => _error
@@ -86,13 +86,13 @@ module DynamicScaffold
       def sort
         pkeys_list = sort_params
         reset_sequence(pkeys_list.size)
-        begin_transaction do
+        dsconf.model.transaction do
           pkeys_list.each do |pkeys|
             rec = find_record(pkeys.to_hash)
             next_sec = next_sequence!
             prev_attribute = rec.attributes
-            rec[self.class.dynamic_scaffold_config.list.sorter_attribute] = next_sec
-            callbacks(:list, :before_save_sort, rec, prev_attribute)
+            rec[dsconf.list.sorter_attribute] = next_sec
+            dsconf.list.callbacks(:before_save_sort, self, rec, prev_attribute)
             rec.save
           end
         end
