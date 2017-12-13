@@ -10,3 +10,23 @@
   background-color: #fdd8df !important;
   opacity: 0.6;
 }
+
+@media (max-width: 780px) {
+  .pagination .page-item.gap { display:none; }
+}
+
+@media (max-width: 700px) {
+  .pagination .page-item.away-4 { display:none; }
+}
+
+@media (max-width: 590px) {
+  .pagination .page-item.away-3 { display:none; }
+}
+
+@media (max-width: 480px) {
+  .pagination .page-item.away-2 { display:none; }
+}
+
+@media (max-width: 480px) {
+  .pagination .page-item.away-1 { display:none; }
+}

@@ -1,5 +1,9 @@
 module DynamicScaffold
   module ControllerUtilities
+    def dsconf
+      self.class.dynamic_scaffold_config
+    end
+    
     private
 
       # Get the hash of the key and value specified for the scope.
@@ -81,10 +85,6 @@ module DynamicScaffold
         rec = dsconf.model.find_by(params.merge(scope_params))
         raise ::ActiveRecord::RecordNotFound if rec.nil?
         rec
-      end
-
-      def dsconf
-        self.class.dynamic_scaffold_config
       end
   end
 end

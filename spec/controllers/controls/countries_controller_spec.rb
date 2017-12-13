@@ -81,4 +81,14 @@ RSpec.describe Controls::CountriesController, type: :controller do
       expect(controller.send(:dynamic_scaffold_path, :update)).to eq '/en/controls/master/countries/update'
     end
   end
+
+  describe 'No Pagenation' do
+    render_views
+    it 'should display all items.' do
+      FactoryBot.create_list(:country, 8)
+      get :index, params: { locale: :en }
+      expect(response.body.scan(/<li class="resplist-row js-item-row">/).size).to eq 8
+      expect(response.body).not_to match /<ul class="pagination/
+    end
+  end
 end

@@ -2,7 +2,7 @@
 <%= stylesheet_link_tag 'dynamic_scaffold/common', media: 'all' %>
 <%= javascript_include_tag 'dynamic_scaffold/common' %>
 <% if controller.action_name == "index" %>
-  <% if controller.class.dynamic_scaffold_config.list.sorter %>
+  <% if controller.dsconf.list.sorter %>
     <%= javascript_include_tag 'dynamic_scaffold/sorter' %>
   <% end %>
   <%= javascript_include_tag 'dynamic_scaffold/delete' %>

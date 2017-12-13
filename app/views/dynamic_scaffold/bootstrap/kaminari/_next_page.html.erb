@@ -1,0 +1,7 @@
+<li class="<%= classNames 'page-item', disabled: current_page.last? %>">
+  <%if current_page.last?%>
+    <span class="page-link"><%= dynamic_scaffold_icon(:next) %></span>
+  <%else%>
+    <%= link_to dynamic_scaffold_icon(:next), url, remote: remote, class: 'page-link' %>
+  <%end%>
+</li>

@@ -22,6 +22,11 @@ module DynamicScaffold
           raise Error::InvalidParameter, 'You must return ActiveRecord::Relation'
         end
       end
+
+      unless dsconf.list.per_page.nil?
+        @records = @records.page(params[:page]).per(dsconf.list.per_page)
+      end
+
       @records = @records.where scope_params
       @records = @records.order dsconf.list.sorter if dsconf.list.sorter
     end

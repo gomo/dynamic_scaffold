@@ -16,6 +16,14 @@ Rails.application.config.dynamic_scaffold.icons = proc do |name|
     content_tag :i, '', class: 'fa fa-chevron-left', 'aria-hidden' => 'true'
   when :error then
     content_tag :i, '', class: 'fa fa-exclamation-circle', 'aria-hidden' => 'true'
+  when :first then
+    content_tag :i, '', class: 'fa fa-step-backward', 'aria-hidden' => 'true'
+  when :last then
+    content_tag :i, '', class: 'fa fa-step-forward', 'aria-hidden' => 'true'
+  when :next then
+    content_tag :i, '', class: 'fa fa-chevron-right', 'aria-hidden' => 'true'
+  when :prev then
+    content_tag :i, '', class: 'fa fa-chevron-left', 'aria-hidden' => 'true'
   else
     raise DynamicScaffold::Error::InvalidIcon, "Unknown icon type #{name} specified."
   end

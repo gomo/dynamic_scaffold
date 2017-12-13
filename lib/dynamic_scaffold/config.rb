@@ -53,6 +53,7 @@ module DynamicScaffold
 
   class ListBuilder
     attr_reader :callback
+    attr_accessor :per_page
 
     def initialize(config)
       @config = config

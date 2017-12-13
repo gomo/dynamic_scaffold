@@ -26,6 +26,14 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
   )
 end
 
+# for pagenation
+99.times do |n|
+  Country.create!(
+    name: Faker::Address.country,
+    sequence: n
+  )
+end
+
 3.times do |n|
   User.roles.each_key do |role|
     User.create!(

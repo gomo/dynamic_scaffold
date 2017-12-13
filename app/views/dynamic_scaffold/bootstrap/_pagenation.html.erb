@@ -1,0 +1,5 @@
+<%unless controller.dsconf.list.per_page.nil?%>
+  <div class="dynamicScaffold-row">
+    <%= paginate @records, views_prefix: 'dynamic_scaffold/bootstrap', window: 0, right: 1, left: 1 %>
+  </div>
+<%end%>

@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
   s.add_dependency 'classnames-rails-view', '~> 0.1'
+  s.add_dependency 'kaminari', '~> 1.1'
   s.add_dependency 'rails', '~> 5.1.4'
 
   s.add_development_dependency 'bootstrap', '~> 4.0.0.beta2.1'

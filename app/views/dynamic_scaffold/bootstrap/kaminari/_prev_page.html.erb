@@ -1,0 +1,7 @@
+<li class="<%= classNames 'page-item', disabled: current_page.first? %>">
+  <%if current_page.first?%>
+    <span class="page-link"><%= dynamic_scaffold_icon(:prev) %></span>
+  <%else%>
+    <%= link_to dynamic_scaffold_icon(:prev), url, remote: remote, class: 'page-link' %>
+  <%end%>
+</li>

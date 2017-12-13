@@ -1,0 +1,9 @@
+<% if page.current? %>
+  <li class="page-item active">
+    <%= content_tag :a, "#{page} / #{@records.total_pages}", remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'page-link' %>
+  </li>
+<% else %>
+  <li class="page-item away-<%= (@records.current_page - page.to_i).abs %>">
+    <%= link_to page, url, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'page-link' %>
+  </li>
+<% end %>

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         dynamic_scaffold_for 'shops'
         dynamic_scaffold_for 'users/:role', controller: 'users', role: Regexp.new(User.roles.keys.join('|'))
         dynamic_scaffold_for 'countries_for_callbacks'
+        dynamic_scaffold_for 'countries_for_pagenation'
       end
     end
   end

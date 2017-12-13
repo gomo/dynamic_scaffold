@@ -5,22 +5,23 @@
 <%end%>
 <%= form_with method: :patch, url: dynamic_scaffold_path(:sort_or_destroy) do%>
 <div class="dynamicScaffold-row">
-  <div class="text-left">
-    <%= link_to dynamic_scaffold_path(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
-      <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.buttons.add') %>
-    <%end%>
-  </div>
+  <%= link_to dynamic_scaffold_path(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
+    <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.buttons.add') %>
+  <%end%>
+</div>
+<%= render 'dynamic_scaffold/bootstrap/pagenation' %>
+<div class="dynamicScaffold-row">
   <%= render 'dynamic_scaffold/bootstrap/save_order'%>
 </div>
 <div class="dynamicScaffold-row">
   <% if @records.empty? %>
-    <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: controller.class.dynamic_scaffold_config.model.model_name.human) %></p>
+    <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: controller.dsconf.model.model_name.human) %></p>
   <% else %>
     <ul class="resplist resplist-striped">
       <%@records.each do |record|%>
         <li class="resplist-row js-item-row">
           <div class="resplist-items">
-          <%controller.class.dynamic_scaffold_config.list.items.each do |disp|%>
+          <%controller.dsconf.list.items.each do |disp|%>
             <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
               <div class="resplist-label"><%= disp.label %></div>
               <div class="resplist-value"><%= disp.value record, self %></div>
@@ -34,8 +35,8 @@
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %>
                <%end%>
               </div>
-              <% if controller.class.dynamic_scaffold_config.list.sorter %>
-              <%[*controller.class.dynamic_scaffold_config.model.primary_key].each do |pkey|%>
+              <% if controller.dsconf.list.sorter %>
+              <%[*controller.dsconf.model.primary_key].each do |pkey|%>
                 <input type="hidden" name="pkeys[][<%=pkey%>]" value="<%= record[pkey] %>">
               <%end%>
               <div class="btn-group">
@@ -62,4 +63,5 @@
 <div class="dynamicScaffold-row">
   <%= render 'dynamic_scaffold/bootstrap/save_order'%>
 </div>
+<%= render 'dynamic_scaffold/bootstrap/pagenation' %>
 <% end %>
