@@ -32,11 +32,47 @@ module DynamicScaffold
 
       def check_target(target)
         return unless @callbacks[target].nil?
-        
+
         msg = "Invalid target `#{target}` is specified. Availables: #{@targets}"
         raise DynamicScaffold::Error::InvalidParameter, msg
       end
   end
+
+  class Pagenation
+    attr_reader :kaminari_options, :per_page, :total_count, :end_buttons, :neighbor_buttons, :gap_buttons, :highlight_current
+    def initialize(options)
+      options = {
+        per_page: 25,
+        window: 0,                # kaminari options
+        outer_window: 0,          # kaminari options
+        left: 0,                  # kaminari options
+        right: 0,                 # kaminari options
+        total_count: true,        # Whether to display total count on active page like `2 / 102`
+        end_buttons: true,        # Whether to display buttons to the first and last page.
+        neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
+        gap_buttons: false,       # Whether to display gap buttons.
+        highlight_current: false, # Whether to highlight the current page.
+      }.merge(options)
+      @kaminari_options = options.extract!(:window, :outer_window, :left, :right)
+      options.each {|name, value| instance_variable_set("@#{name}", value) }
+    end
+
+    def page_number(page, records)
+      return page unless total_count
+      "#{page} / #{records.total_pages}"
+    end
+
+    def page_class(page, records)
+      if page.inside_window?
+        "away-#{(records.current_page - page.to_i).abs}"
+      elsif page.left_outer?
+        'left-outer'
+      elsif page.right_outer?
+        'right-outer'
+      end
+    end
+  end
+
   class Config
     attr_reader :model, :form, :list
     def initialize(model)
@@ -53,13 +89,22 @@ module DynamicScaffold
 
   class ListBuilder
     attr_reader :callback
-    attr_accessor :per_page
 
     def initialize(config)
       @config = config
       @items = []
       @sorter = nil
-      @callback = Callback.new([:before_save_sort, :before_fetch])
+      @callback = Callback.new(%i[before_save_sort before_fetch])
+    end
+
+    def pagenation(options = nil)
+      @pagenation = Pagenation.new(options) unless options.nil?
+
+      @pagenation
+    end
+
+    def pagenation?
+      !@pagenation.nil?
     end
 
     def sorter(params = nil)

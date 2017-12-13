@@ -37,7 +37,7 @@ RSpec.describe Controls::CountriesForCallbacksController, type: :controller do
   end
   describe '#before_fetch' do
     it '' do
-      countries = FactoryBot.create_list(:country, 3)
+      FactoryBot.create_list(:country, 3)
       get :index, params: { locale: :en }
       records = assigns(:records)
       expect(records.count).to eq 0

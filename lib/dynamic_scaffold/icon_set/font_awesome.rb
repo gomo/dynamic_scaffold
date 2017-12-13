@@ -1,4 +1,4 @@
-Rails.application.config.dynamic_scaffold.icons = proc do |name|
+Rails.application.config.dynamic_scaffold.icons = proc do |name| # rubocop:disable Metrics/BlockLength
   case name
   when :up then
     content_tag :i, '', class: 'fa fa-chevron-up', 'aria-hidden' => 'true'

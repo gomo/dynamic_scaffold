@@ -1,9 +1,9 @@
 <% if page.current? %>
-  <li class="page-item active">
-    <%= content_tag :a, "#{page} / #{@records.total_pages}", remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'page-link' %>
+  <li class="<%= classNames 'page-item', {'active': controller.dsconf.list.pagenation.highlight_current} %>">
+    <%= content_tag :a, controller.dsconf.list.pagenation.page_number(page, @records), remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'page-link' %>
   </li>
 <% else %>
-  <li class="page-item away-<%= (@records.current_page - page.to_i).abs %>">
+  <li class="<%= classNames('page-item', controller.dsconf.list.pagenation.page_class(page, @records)) %>">
     <%= link_to page, url, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'page-link' %>
   </li>
 <% end %>

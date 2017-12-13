@@ -1,5 +1,5 @@
-<%unless controller.dsconf.list.per_page.nil?%>
+<%if controller.dsconf.list.pagenation?%>
   <div class="dynamicScaffold-row">
-    <%= paginate @records, views_prefix: 'dynamic_scaffold/bootstrap', window: 0, right: 1, left: 1 %>
+    <%= paginate @records, {views_prefix: 'dynamic_scaffold/bootstrap'}.merge(controller.dsconf.list.pagenation.kaminari_options) %>
   </div>
 <%end%>

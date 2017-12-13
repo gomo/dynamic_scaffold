@@ -113,4 +113,52 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+  context 'DynamicScaffold::Config#list.pagenation' do
+    it 'should be able to acquire the setting value.' do
+      config = DynamicScaffold::Config.new Country
+
+      expect(config.list.pagenation?).to be false
+
+      config.list.pagenation(
+        per_page: 10,
+        window: 4,
+        outer_window: 1,
+        left: 0,
+        right: 0,
+        total_count: false,
+        end_buttons: false,
+        neighbor_buttons: true,
+        gap_buttons: false
+      )
+
+      expect(config.list.pagenation?).to be true
+
+      expect(config.list.pagenation.kaminari_options).to eq(window: 4,
+                                                            outer_window: 1,
+                                                            left: 0,
+                                                            right: 0
+      )
+
+      expect(config.list.pagenation.per_page).to eq 10
+      expect(config.list.pagenation.total_count).to be false
+      expect(config.list.pagenation.end_buttons).to be false
+      expect(config.list.pagenation.neighbor_buttons).to be true
+      expect(config.list.pagenation.gap_buttons).to be false
+    end
+
+    # it 'should be able to acquire the setting value.' do
+    #   config = DynamicScaffold::Config.new Country
+
+    #   config.list.pagenation(
+    #     per_page: 1,
+    #     total_count: true
+    #   )
+
+    #   FactoryBot.create_list(:country, 3)
+    #   countries = Country.page().per(config.list.pagenation.per_page)
+    #   each_page do |page|
+    #     puts page
+    #   end
+    # end
+  end
 end

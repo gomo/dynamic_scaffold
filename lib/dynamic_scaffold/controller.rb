@@ -14,7 +14,7 @@ module DynamicScaffold
 
     # Actions
 
-    def index
+    def index # rubocop:disable Metrics/AbcSize
       @records = dsconf.model.all
       if dsconf.list.callback.exists?(:before_fetch)
         @records = dsconf.list.callback.call(:before_fetch, self, @records)
@@ -22,11 +22,7 @@ module DynamicScaffold
           raise Error::InvalidParameter, 'You must return ActiveRecord::Relation'
         end
       end
-
-      unless dsconf.list.per_page.nil?
-        @records = @records.page(params[:page]).per(dsconf.list.per_page)
-      end
-
+      @records = @records.page(params[:page]).per(dsconf.list.pagenation.per_page) if dsconf.list.pagenation?
       @records = @records.where scope_params
       @records = @records.order dsconf.list.sorter if dsconf.list.sorter
     end

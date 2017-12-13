@@ -16,7 +16,7 @@ gemspec
 group :development, :test do
   gem 'bootstrap', '~> 4.0.0.beta2.1'
   gem 'font-awesome-rails', '~> 4.7'
+  gem 'kaminari', '~> 1.1'
   gem 'rails-controller-testing'
   gem 'sassc-rails', '~> 1.3'
-  gem 'kaminari', '~> 1.1'
 end

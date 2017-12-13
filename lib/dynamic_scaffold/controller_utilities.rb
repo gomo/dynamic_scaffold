@@ -3,7 +3,7 @@ module DynamicScaffold
     def dsconf
       self.class.dynamic_scaffold_config
     end
-    
+
     private
 
       # Get the hash of the key and value specified for the scope.
