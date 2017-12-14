@@ -1,4 +1,4 @@
-function pageOnLoad(){
+document.addEventListener('dynamic_scaffold:load', function (){
   const buttons = document.querySelectorAll('.js-destory')
   buttons.forEach(function(button){
     const wrapper = button.closest('.js-item-row')
@@ -19,7 +19,4 @@ function pageOnLoad(){
       }
     })
   })
-}
-
-window.addOnload(pageOnLoad)
-document.addEventListener('turbolinks:load', pageOnLoad)
+})

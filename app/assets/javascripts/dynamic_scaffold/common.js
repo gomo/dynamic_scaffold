@@ -13,13 +13,13 @@ if (window.Element && !Element.prototype.closest) {
   };
 }
 
-//window onload
-if (!window.addOnload) {
-  window.addOnload = function(func){
-    var last = window.onload;
-    window.onload = function(){
-      if(last) last();
-      func();
-    }
+(function(){
+  var fireEvent = function(){
+    var event = document.createEvent("HTMLEvents");
+    event.initEvent('dynamic_scaffold:load', false, false)
+    document.dispatchEvent(event)
   }
-}
+
+  window.onload = fireEvent
+  document.addEventListener('turbolinks:load', fireEvent)
+})()

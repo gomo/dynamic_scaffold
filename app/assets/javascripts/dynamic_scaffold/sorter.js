@@ -1,4 +1,4 @@
-function pageOnLoad(){
+document.addEventListener('dynamic_scaffold:load', function(){
   const upButtons = document.querySelectorAll('.js-sorter-up')
   const downButtons = document.querySelectorAll('.js-sorter-down')
 
@@ -48,7 +48,4 @@ function pageOnLoad(){
       source.parentNode.insertBefore(target, source)
     }
   })
-}
-
-window.addOnload(pageOnLoad)
-document.addEventListener('turbolinks:load', pageOnLoad)
+})

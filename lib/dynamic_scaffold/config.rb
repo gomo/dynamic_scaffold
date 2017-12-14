@@ -64,7 +64,7 @@ module DynamicScaffold
 
     def page_class(page, records)
       if page.inside_window?
-        "away-#{(records.current_page - page.to_i).abs}"
+        "inner"
       elsif page.left_outer?
         'left-outer'
       elsif page.right_outer?
