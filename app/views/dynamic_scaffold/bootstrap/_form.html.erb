@@ -42,7 +42,7 @@
     <% end %>
   <% end %>
   <div>
-    <%= link_to dynamic_scaffold_path(:index), class: 'btn btn-outline-secondary btn-default' do%>
+    <%= link_to dynamic_scaffold_path(:index, page: params[:page]), class: 'btn btn-outline-secondary btn-default' do%>
       <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.buttons.back') %>
     <%end%>
     <button type="submit" class="btn btn-outline-warning btn-warning">
