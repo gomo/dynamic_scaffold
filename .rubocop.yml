@@ -81,3 +81,7 @@ Metrics/ModuleLength:
 
 Style/RegexpLiteral:
   Enabled: false
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - spec/dummy/app/controllers/**/*
