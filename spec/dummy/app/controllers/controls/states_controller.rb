@@ -1,4 +1,4 @@
-class Controls::StatesController < ApplicationController
+class Controls::StatesController < Controls::BaseController
   include DynamicScaffold::Controller
   dynamic_scaffold State do |config|
     # To enable sorting, call sorter method specifying the column name and direction.
