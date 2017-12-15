@@ -117,7 +117,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     it 'should be able to acquire the setting value.' do
       config = DynamicScaffold::Config.new Country
 
-      expect(config.list.pagenation?).to be false
+      expect(config.list.pagenation).to be nil
 
       config.list.pagenation(
         per_page: 10,
@@ -132,14 +132,15 @@ RSpec.describe ApplicationHelper, type: :helper do
         gap_buttons: false
       )
 
-      expect(config.list.pagenation?).to be true
+      expect(config.list.pagenation).to be_a DynamicScaffold::Pagenation
 
-      expect(config.list.pagenation.kaminari_options).to eq(window: 4,
-                                                            outer_window: 1,
-                                                            left: 0,
-                                                            right: 0,
-                                                            param_name: :foobar
-      )
+      expect(config.list.pagenation.kaminari_options).to eq(
+                                                              window: 4,
+                                                              outer_window: 1,
+                                                              left: 0,
+                                                              right: 0,
+                                                              param_name: :foobar
+                                                            )
 
       expect(config.list.pagenation.per_page).to eq 10
       expect(config.list.pagenation.total_count).to be false
@@ -148,20 +149,5 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(config.list.pagenation.gap_buttons).to be false
       expect(config.list.pagenation.param_name).to eq :foobar
     end
-
-    # it 'should be able to acquire the setting value.' do
-    #   config = DynamicScaffold::Config.new Country
-
-    #   config.list.pagenation(
-    #     per_page: 1,
-    #     total_count: true
-    #   )
-
-    #   FactoryBot.create_list(:country, 3)
-    #   countries = Country.page().per(config.list.pagenation.per_page)
-    #   each_page do |page|
-    #     puts page
-    #   end
-    # end
   end
 end

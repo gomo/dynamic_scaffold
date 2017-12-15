@@ -114,10 +114,6 @@ module DynamicScaffold
       @pagenation
     end
 
-    def pagenation?
-      !@pagenation.nil?
-    end
-
     def sorter(params = nil)
       @sorter = params if params
       @sorter

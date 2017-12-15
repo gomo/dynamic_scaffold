@@ -1,4 +1,4 @@
-<%if controller.dsconf.list.pagenation?%>
+<%if controller.dsconf.list.pagenation %>
   <div class="dynamicScaffold-row">
     <%= paginate @records, {views_prefix: 'dynamic_scaffold/bootstrap'}.merge(controller.dsconf.list.pagenation.kaminari_options) %>
   </div>

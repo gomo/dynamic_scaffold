@@ -23,7 +23,7 @@ module DynamicScaffold
         end
       end
 
-      if dsconf.list.pagenation?
+      if dsconf.list.pagenation
         @records = @records.page(params[dsconf.list.pagenation.param_name]).per(dsconf.list.pagenation.per_page)
       end
 
