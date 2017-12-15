@@ -1,8 +1,19 @@
 Description:
-    Explain the generator
+    Generate DynamicScaffold's controller and views by specifying a path.
 
 Example:
-    rails generate dynamic_scaffold Thing
+    rails generate dynamic_scaffold shops
 
-    This will create:
-        what/will/it/create
+    This will create for Shop model:
+        app/controllers/shops_controller.rb
+        app/views/shops/edit.html.erb
+        app/views/shops/index.html.erb
+        app/views/shops/new.html.erb
+
+    rails generate dynamic_scaffold controls/county Country
+
+    This will create for Country model:
+        app/controllers/country_controller.rb
+        app/views/country/edit.html.erb
+        app/views/country/index.html.erb
+        app/views/country/new.html.erb
