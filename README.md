@@ -55,7 +55,7 @@ end
 
 #### Customize list
 
-We customize the list through the `DynamicScaffold::Config#list` property.
+You can customize the list through the `DynamicScaffold::Config#list` property.
 
 ```rb
 # app/controllers/shop_controller.rb
@@ -89,7 +89,7 @@ end
 
 #### Customize form
 
-We customize the form through the `DynamicScaffold::Config#form` property.
+You can customize the form through the `DynamicScaffold::Config#form` property.
 
 ```rb
 # app/controllers/shop_controller.rb

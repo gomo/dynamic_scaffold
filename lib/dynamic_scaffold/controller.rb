@@ -77,37 +77,35 @@ module DynamicScaffold
       end
     end
 
-    private
+    # Sub actions.
+    def destroy
+      record = find_record(JSON.parse(params['submit_destroy']))
 
-      # Sub actions.
-      def destroy
-        record = find_record(JSON.parse(params['submit_destroy']))
-
-        begin
-          dsconf.model.transaction do
-            dsconf.form.callback.call(:before_save_destroy, self, record, {})
-            record.destroy
-          end
-        rescue ::ActiveRecord::InvalidForeignKey => _error
-          flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
-        end
-        redirect_to dynamic_scaffold_path(:index)
-      end
-
-      def sort
-        pkeys_list = sort_params
-        reset_sequence(pkeys_list.size)
+      begin
         dsconf.model.transaction do
-          pkeys_list.each do |pkeys|
-            rec = find_record(pkeys.to_hash)
-            next_sec = next_sequence!
-            prev_attribute = rec.attributes
-            rec[dsconf.list.sorter_attribute] = next_sec
-            dsconf.list.callback.call(:before_save_sort, self, rec, prev_attribute)
-            rec.save
-          end
+          dsconf.form.callback.call(:before_save_destroy, self, record, {})
+          record.destroy
         end
-        redirect_to dynamic_scaffold_path(:index)
+      rescue ::ActiveRecord::InvalidForeignKey => _error
+        flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
       end
+      redirect_to dynamic_scaffold_path(:index)
+    end
+
+    def sort
+      pkeys_list = sort_params
+      reset_sequence(pkeys_list.size)
+      dsconf.model.transaction do
+        pkeys_list.each do |pkeys|
+          rec = find_record(pkeys.to_hash)
+          next_sec = next_sequence!
+          prev_attribute = rec.attributes
+          rec[dsconf.list.sorter_attribute] = next_sec
+          dsconf.list.callback.call(:before_save_sort, self, rec, prev_attribute)
+          rec.save
+        end
+      end
+      redirect_to dynamic_scaffold_path(:index)
+    end
   end
 end

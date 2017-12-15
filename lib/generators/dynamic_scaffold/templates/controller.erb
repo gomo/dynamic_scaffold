@@ -1,6 +1,6 @@
-class Controls::StatesController < ApplicationController
+class <%= @class_scope %>::<%= @plural_model_name %>Controller < ApplicationController
   include DynamicScaffold::Controller
-  dynamic_scaffold State do |config|
+  dynamic_scaffold <%= @model_name %> do |config|
     # To enable sorting, call sorter method specifying the column name and direction.
     # config.list.sorter sequence: :desc
 
@@ -19,23 +19,17 @@ class Controls::StatesController < ApplicationController
     #   highlight_current: false, # Whether to highlight the current page.
     # )
 
-    # You can change the display items in the list through the `config.list.item`.
+    # You can change the items displayed in the list through the `config.list.item`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-list for details.
-    config.list.item(:id, style: 'width: 120px;')
-    config.list.item(:name, style: 'width: 120px;')
-    config.list.item(:sequence, style: 'width: 120px;')
-    config.list.item(:country_id, style: 'width: 120px;')
-    config.list.item(:created_at, style: 'width: 120px;')
-    config.list.item(:updated_at, style: 'width: 120px;')
+  <%- @model.column_names.each do |column| -%>
+    config.list.item(:<%= column %>, style: 'width: 120px;')
+  <%- end -%>
 
     # You can customize the form fields through `config.form`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-form for details.
-    config.form.text_field(:id)
-    config.form.text_field(:name)
-    config.form.text_field(:sequence)
-    config.form.text_field(:country_id)
-    config.form.text_field(:created_at)
-    config.form.text_field(:updated_at)
+  <%- @model.column_names.each do |column| -%>
+    config.form.text_field(:<%= column %>)
+  <%- end -%>
   end
   
   # def index
