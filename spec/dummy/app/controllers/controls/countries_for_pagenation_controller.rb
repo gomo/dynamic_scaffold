@@ -9,7 +9,9 @@ module Controls
         outer_window: 1,
         gap_buttons: true,
         total_count: false,
-        end_buttons: false
+        end_buttons: false,
+        highlight_current: true,
+        param_name: :foobar
       )
     end
   end

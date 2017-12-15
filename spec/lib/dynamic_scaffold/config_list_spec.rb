@@ -125,6 +125,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         outer_window: 1,
         left: 0,
         right: 0,
+        param_name: :foobar,
         total_count: false,
         end_buttons: false,
         neighbor_buttons: true,
@@ -136,7 +137,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(config.list.pagenation.kaminari_options).to eq(window: 4,
                                                             outer_window: 1,
                                                             left: 0,
-                                                            right: 0
+                                                            right: 0,
+                                                            param_name: :foobar
       )
 
       expect(config.list.pagenation.per_page).to eq 10
@@ -144,6 +146,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(config.list.pagenation.end_buttons).to be false
       expect(config.list.pagenation.neighbor_buttons).to be true
       expect(config.list.pagenation.gap_buttons).to be false
+      expect(config.list.pagenation.param_name).to eq :foobar
     end
 
     # it 'should be able to acquire the setting value.' do

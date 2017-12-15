@@ -42,7 +42,8 @@
     <% end %>
   <% end %>
   <div>
-    <%= link_to dynamic_scaffold_path(:index, page: params[:page]), class: 'btn btn-outline-secondary btn-default' do%>
+    <% path_options = controller.dsconf.list.pagenation ? {controller.dsconf.list.pagenation.param_name => params[:page]} : {}%>
+    <%= link_to dynamic_scaffold_path(:index, path_options), class: 'btn btn-outline-secondary btn-default' do%>
       <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.buttons.back') %>
     <%end%>
     <button type="submit" class="btn btn-outline-warning btn-warning">
