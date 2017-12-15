@@ -135,12 +135,12 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(config.list.pagenation).to be_a DynamicScaffold::Pagenation
 
       expect(config.list.pagenation.kaminari_options).to eq(
-                                                              window: 4,
-                                                              outer_window: 1,
-                                                              left: 0,
-                                                              right: 0,
-                                                              param_name: :foobar
-                                                            )
+        window: 4,
+        outer_window: 1,
+        left: 0,
+        right: 0,
+        param_name: :foobar
+      )
 
       expect(config.list.pagenation.per_page).to eq 10
       expect(config.list.pagenation.total_count).to be false

@@ -19,7 +19,7 @@ class Controls::StatesController < ApplicationController
     #   highlight_current: false, # Whether to highlight the current page.
     # )
 
-    # You can change the display items in the list through the `config.list.item`.
+    # You can change the items displayed in the list through the `config.list.item`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-list for details.
     config.list.item(:id, style: 'width: 120px;')
     config.list.item(:name, style: 'width: 120px;')
@@ -37,7 +37,7 @@ class Controls::StatesController < ApplicationController
     config.form.text_field(:created_at)
     config.form.text_field(:updated_at)
   end
-  
+
   # def index
   #   super
   # end
