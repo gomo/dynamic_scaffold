@@ -11,7 +11,6 @@ module DynamicScaffold
       require 'dynamic_scaffold/active_record'
       require 'dynamic_scaffold/action_view'
       require 'dynamic_scaffold/routes'
-      require 'dynamic_scaffold/path_helper'
       require "dynamic_scaffold/icon_set/#{config.dynamic_scaffold.icon_set}"
     end
   end

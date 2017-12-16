@@ -3,6 +3,10 @@ module DynamicScaffold
     extend ActiveSupport::Concern
     include ControllerUtilities
 
+    included do
+      helper_method :dynamic_scaffold_path
+    end
+
     class_methods do
       attr_accessor :dynamic_scaffold_config
 
