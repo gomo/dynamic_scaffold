@@ -86,7 +86,7 @@ module DynamicScaffold
         raise ::ActiveRecord::RecordNotFound if rec.nil?
         rec
       end
-      
+
       def dynamic_scaffold_path(action, options = {})
         route = Rails.application.routes.routes.find do |r|
           route_params = r.required_defaults
@@ -99,6 +99,10 @@ module DynamicScaffold
         end
 
         public_send("#{route.name}_path", options)
+      end
+
+      def dynamic_scaffold_icon(name)
+        view_context.instance_exec name, &::Rails.application.config.dynamic_scaffold.icons
       end
   end
 end

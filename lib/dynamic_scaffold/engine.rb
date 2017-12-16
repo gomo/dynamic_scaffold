@@ -9,7 +9,6 @@ module DynamicScaffold
 
     config.after_initialize do |_app|
       require 'dynamic_scaffold/active_record'
-      require 'dynamic_scaffold/action_view'
       require 'dynamic_scaffold/routes'
       require "dynamic_scaffold/icon_set/#{config.dynamic_scaffold.icon_set}"
     end
