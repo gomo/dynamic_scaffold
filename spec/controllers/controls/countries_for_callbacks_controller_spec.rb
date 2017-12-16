@@ -30,7 +30,10 @@ RSpec.describe Controls::CountriesForCallbacksController, type: :controller do
     end
     it ':destroy' do
       state = FactoryBot.create(:state)
-      patch :sort_or_destroy, params: { locale: :en, submit_destroy: state.country.primary_key_value.to_json }
+      patch :sort_or_destroy, params: {
+        locale: :en,
+        submit_destroy: controller.send(:primary_key_value, state.country).to_json
+      }
       expect(flash['dynamic_scaffold_danger']).to be_nil
       expect(response).to redirect_to controls_master_countries_for_callbacks_path
     end

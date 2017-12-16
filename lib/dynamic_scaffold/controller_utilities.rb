@@ -104,5 +104,9 @@ module DynamicScaffold
       def dynamic_scaffold_icon(name)
         view_context.instance_exec name, &::Rails.application.config.dynamic_scaffold.icons
       end
+
+      def primary_key_value(record)
+        [*record.class.primary_key].each_with_object({}) {|col, res| res[col] = record[col] }
+      end
   end
 end

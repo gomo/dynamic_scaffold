@@ -39,7 +39,7 @@ RSpec.describe Controls::ShopsController, type: :controller do
     render_views
     it 'should be able to edit.' do
       shop = FactoryBot.create(:shop)
-      get :edit, params: { locale: :en, key: shop.primary_key_value }
+      get :edit, params: { locale: :en, key: controller.send(:primary_key_value, shop) }
       expect(response).to render_template(:edit)
       expect(response.body).not_to match(/class="[^"]*dynamicScaffold\-error\-message[^"]*"/)
 

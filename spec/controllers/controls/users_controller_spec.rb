@@ -46,13 +46,13 @@ RSpec.describe Controls::UsersController, type: :controller do
       staff = FactoryBot.create(:user, role_value: :staff)
       member = FactoryBot.create(:user, role_value: :member)
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: admin.primary_key_value }
+        get :edit, params: { locale: :en, role: 'admin', key: controller.send(:primary_key_value, admin) }
       end.not_to raise_error
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: staff.primary_key_value }
+        get :edit, params: { locale: :en, role: 'admin', key: controller.send(:primary_key_value, staff) }
       end.to raise_error(::ActiveRecord::RecordNotFound)
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: member.primary_key_value }
+        get :edit, params: { locale: :en, role: 'admin', key: controller.send(:primary_key_value, member) }
       end.to raise_error(::ActiveRecord::RecordNotFound)
     end
   end
@@ -113,7 +113,11 @@ RSpec.describe Controls::UsersController, type: :controller do
       staff = FactoryBot.create(:user, role_value: :staff)
 
       expect do
-        patch :sort_or_destroy, params: { locale: :en, role: :admin, submit_destroy: staff.primary_key_value.to_json }
+        patch :sort_or_destroy, params: {
+          locale: :en,
+          role: :admin,
+          submit_destroy: controller.send(:primary_key_value, staff).to_json
+        }
       end.to raise_error(::ActiveRecord::RecordNotFound)
     end
   end

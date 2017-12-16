@@ -32,7 +32,7 @@
             <div class="float-right pull-right">
               <div class="btn-group">
                 <% page_param_name = dsconf.list.pagenation ? dsconf.list.pagenation.param_name : nil %>
-                <%= link_to dynamic_scaffold_path(:edit, key: record.primary_key_value, page: params[page_param_name]), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
+                <%= link_to dynamic_scaffold_path(:edit, key: primary_key_value(record), page: params[page_param_name]), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %>
                 <%end%>
               </div>
@@ -50,7 +50,7 @@
               </div>
               <% end %>
               <div class="btn-group">
-                <button data-confirm-message="<%= t('dynamic_scaffold.messages.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm js-destory" name="submit_destroy" value="<%= record.primary_key_value.to_json %>">
+                <button data-confirm-message="<%= t('dynamic_scaffold.messages.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm js-destory" name="submit_destroy" value="<%= primary_key_value(record).to_json %>">
                   <%= dynamic_scaffold_icon(:delete) %>
                 </button>
               </div>
