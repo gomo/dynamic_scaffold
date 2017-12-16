@@ -15,13 +15,13 @@
 </div>
 <div class="dynamicScaffold-row">
   <% if @records.empty? %>
-    <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: controller.dsconf.model.model_name.human) %></p>
+    <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: dsconf.model.model_name.human) %></p>
   <% else %>
     <ul class="resplist resplist-striped">
       <%@records.each do |record|%>
         <li class="resplist-row js-item-row">
           <div class="resplist-items">
-          <%controller.dsconf.list.items.each do |disp|%>
+          <%dsconf.list.items.each do |disp|%>
             <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
               <div class="resplist-label"><%= disp.label %></div>
               <div class="resplist-value"><%= disp.value record, self %></div>
@@ -31,13 +31,13 @@
           <div class="resplist-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
-                <% page_param_name = controller.dsconf.list.pagenation ? controller.dsconf.list.pagenation.param_name : nil %>
+                <% page_param_name = dsconf.list.pagenation ? dsconf.list.pagenation.param_name : nil %>
                 <%= link_to dynamic_scaffold_path(:edit, key: record.primary_key_value, page: params[page_param_name]), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %>
                 <%end%>
               </div>
-              <% if controller.dsconf.list.sorter %>
-              <%[*controller.dsconf.model.primary_key].each do |pkey|%>
+              <% if dsconf.list.sorter %>
+              <%[*dsconf.model.primary_key].each do |pkey|%>
                 <input type="hidden" name="pkeys[][<%=pkey%>]" value="<%= record[pkey] %>">
               <%end%>
               <div class="btn-group">

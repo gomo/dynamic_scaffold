@@ -2,8 +2,8 @@
 <%= stylesheet_link_tag 'dynamic_scaffold/common', media: 'all' %>
 <%= javascript_include_tag 'dynamic_scaffold/common' %>
 <% if controller.action_name == "index" %>
-  <%= javascript_include_tag 'dynamic_scaffold/sorter' if controller.dsconf.list.sorter %>
-  <%= javascript_include_tag 'dynamic_scaffold/pagenation' if controller.dsconf.list.pagenation %>
+  <%= javascript_include_tag 'dynamic_scaffold/sorter' if dsconf.list.sorter %>
+  <%= javascript_include_tag 'dynamic_scaffold/pagenation' if dsconf.list.pagenation %>
   <%= javascript_include_tag 'dynamic_scaffold/delete' %>
 <%end%>
 <%= yield :dynamic_scaffold_after_head %>
