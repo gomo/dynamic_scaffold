@@ -11,6 +11,13 @@
   opacity: 0.6;
 }
 
+.dynamicScaffold-svg-icon{
+  width: 15px;
+  height: 15px;
+  vertical-align: baseline;
+  transform: translate(0, 2px);
+}
+
 @media (max-width: 1920px) {
   .pagination .page-item.away-15 { display:none; }
 }
