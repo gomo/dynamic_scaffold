@@ -1,0 +1,19 @@
+.btn-default path{
+  fill: #333;
+}
+
+.btn-primary path{
+  fill: #fff;
+}
+
+.btn-warning path{
+  fill: #fff;
+}
+
+.page-item .page-link path{
+  fill: #337ab7;
+}
+
+.page-item.disabled .page-link path{
+  fill: #777;
+}

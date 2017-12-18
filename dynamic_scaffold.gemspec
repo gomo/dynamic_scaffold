@@ -20,13 +20,11 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari', '~> 1.1'
   s.add_dependency 'rails', '~> 5.1.4'
 
-  s.add_development_dependency 'bootstrap', '~> 4.0.0.beta2.1'
   s.add_development_dependency 'capybara', '~> 2.13'
   s.add_development_dependency 'composite_primary_keys', '~> 10.0'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'factory_bot_rails'
   s.add_development_dependency 'faker'
-  s.add_development_dependency 'font-awesome-rails', '~> 4.7'
   s.add_development_dependency 'listen', '>= 3.0.5', '< 3.2'
   s.add_development_dependency 'pry-byebug', '~> 3.5'
   s.add_development_dependency 'pry-doc', '~> 0.11'

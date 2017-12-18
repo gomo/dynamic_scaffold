@@ -1,0 +1,31 @@
+.btn-outline-primary path{
+  fill: #007bff;
+}
+
+.btn-outline-primary:hover path {
+  fill: #fff;
+}
+
+.btn-outline-secondary path{
+  fill: #868e96;
+}
+
+.btn-outline-secondary:hover path{
+  fill: #fff;
+}
+
+.btn-outline-warning path{
+  fill: #ffc107;
+}
+
+.btn-outline-warning:hover path{
+  fill: #fff;
+}
+
+.page-item .page-link path{
+  fill: #007bff;
+}
+
+.page-item.disabled .page-link path{
+  fill: #868e96;
+}

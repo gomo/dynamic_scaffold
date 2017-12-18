@@ -15,7 +15,7 @@
   width: 15px;
   height: 15px;
   vertical-align: baseline;
-  transform: translate(0, 2px);
+  transform: translate(0, 3px);
 }
 
 @media (max-width: 1920px) {
@@ -77,4 +77,10 @@
 
 @media (max-width: 380px) {
   .pagination .page-item.away-1 { display:none; }
+}
+
+
+
+.btn-danger path{
+  fill: #fff;
 }
