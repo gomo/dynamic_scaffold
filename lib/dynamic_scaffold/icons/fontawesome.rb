@@ -1,15 +1,10 @@
-module DynamicScaffold
-  class << self; attr_accessor :fontawesome_cache; end
-  self.fontawesome_cache = {}
-end
 Rails.application.config.dynamic_scaffold.icons = proc do |name| # rubocop:disable Metrics/BlockLength
   def inline_svg(path)
-    unless DynamicScaffold.fontawesome_cache.key?(path)
+    Rails.cache.fetch "dynamic_scaffold/fontawesome/icons/#{path}" do
       full_path = DynamicScaffold::Engine.root.join('app', 'assets', 'images', 'dynamic_scaffold', 'fontawesome', path)
       file = File.open(full_path)
-      DynamicScaffold.fontawesome_cache[path] = file.read.gsub!('<svg ', '<svg class="dynamicScaffold-svg-icon" ').html_safe
+      file.read.gsub!('<svg ', '<svg class="dynamicScaffold-svg-icon" ').html_safe # rubocop:disable Rails/OutputSafety, Metrics/LineLength
     end
-    DynamicScaffold.fontawesome_cache[path]
   end
 
   case name
