@@ -1,51 +1,71 @@
 document.addEventListener('dynamic_scaffold:load', function(){
-  const upButtons = document.querySelectorAll('.js-sorter-up')
-  const downButtons = document.querySelectorAll('.js-sorter-down')
+  const promises = []
+  const resolvers = []
 
-  function flash(elem){
-    const overlay = document.createElement('div');
-    overlay.style.position = 'absolute'
-    overlay.style.width = '100%'
-    overlay.style.height = elem.offsetHeight + 'px'
-    overlay.style.backgroundColor = '#fff34f'
-    overlay.style.webkitTransition = 'opacity 1s ease-out';
-    overlay.style.MozTransition = 'opacity 1s ease-out';
-    overlay.style.msTransition = 'opacity 1s ease-out';
-    overlay.style.OTransition = 'opacity 1s ease-out';
-    overlay.style.transition = 'opacity 1s ease-out';
-    overlay.style.opacity = 0.5
-    overlay.addEventListener('transitionend', function(){
-      overlay.parentElement.removeChild(overlay)
+  document.querySelectorAll('.js-item-row').forEach(function(row){
+    row.addEventListener('transitionend', function(e){
+      if(e.target == row){
+        resolvers.shift()()
+      }
     })
-    elem.insertBefore(overlay, elem.childNodes[0]);
-    setTimeout(function(){
-      overlay.style.opacity = 0
-    }, 0)
+  })
+
+  function swapAnimation(source, target){
+    sourceRect = source.getBoundingClientRect()
+    targetRect = target.getBoundingClientRect()
+    
+    source.style.transition = 'all 200ms ease'
+    source.style.transform = 'translateY(' + (targetRect.y - sourceRect.y) + 'px)'
   }
 
-  function addSwapEvent(buttons, swapAction){
+  function enableSortToButtons(buttons, getTarget, swapElement){
     buttons.forEach(function(button){
       const source = button.closest('.js-item-row')
       button.addEventListener('click', function(e){
         e.preventDefault()
-        swapAction(source)
-        flash(source)
-        return false
+        
+        // Ignore while animating
+        if(promises.length) return
+        if(resolvers.length) return
+
+        // Top or bottom.
+        const target = getTarget(source)
+        if(!target) return
+
+        // Start animation source to target
+        promises.push(new Promise(function(resolve){
+          resolvers.push(resolve)
+          swapAnimation(source, target)
+        }))
+
+        // Start animation target to source
+        promises.push(new Promise(function(resolve){
+          resolvers.push(resolve)
+          swapAnimation(target, source)
+        }))
+
+        // When both animations are finished
+        Promise.all(promises).then(function(){
+          source.style.transition = 'none'
+          source.style.transform = 'translateY(0px)'
+          target.style.transition = 'none'
+          target.style.transform = 'translateY(0px)'
+          swapElement(source, target)
+          promises.length = 0
+        })
       })
     })
   }
 
-  addSwapEvent(upButtons, function(source){
-    const target = source.previousElementSibling
-    if(target){
-      source.parentNode.insertBefore(source, target)
-    }
+  enableSortToButtons(document.querySelectorAll('.js-sorter-up'), function(source){
+    return source.previousElementSibling
+  }, function(source, target){
+    source.parentNode.insertBefore(source, target)
   })
 
-  addSwapEvent(downButtons, function(source){
-    const target = source.nextElementSibling
-    if(target){
-      source.parentNode.insertBefore(target, source)
-    }
+  enableSortToButtons(document.querySelectorAll('.js-sorter-down'), function(source){
+    return source.nextElementSibling
+  }, function(source, target){
+    source.parentNode.insertBefore(target, source)
   })
 })
