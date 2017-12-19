@@ -41,11 +41,17 @@
                 <input type="hidden" name="pkeys[][<%=pkey%>]" value="<%= record[pkey] %>">
               <%end%>
               <div class="btn-group">
+                <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-top">
+                  <%= dynamic_scaffold_icon(:top) %>
+                </button>
                 <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-up">
                   <%= dynamic_scaffold_icon(:up) %>
                 </button>
                 <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-down">
                   <%= dynamic_scaffold_icon(:down) %>
+                </button>
+                <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-bottom">
+                  <%= dynamic_scaffold_icon(:bottom) %>
                 </button>
               </div>
               <% end %>

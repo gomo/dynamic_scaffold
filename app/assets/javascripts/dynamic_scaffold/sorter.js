@@ -1,12 +1,8 @@
 document.addEventListener('dynamic_scaffold:load', function(){
-  const promises = []
-  const resolvers = []
-
+  // Register the animation end event in all the rows.
   document.querySelectorAll('.js-item-row').forEach(function(row){
     row.addEventListener('transitionend', function(e){
-      if(e.target == row){
-        resolvers.shift()()
-      }
+      if(e.target == row) resolvers.shift()()
     })
   })
 
@@ -17,6 +13,9 @@ document.addEventListener('dynamic_scaffold:load', function(){
     source.style.transition = 'all 200ms ease'
     source.style.transform = 'translateY(' + (targetRect.y - sourceRect.y) + 'px)'
   }
+
+  const promises = []
+  const resolvers = []
 
   function enableSortToButtons(buttons, getTarget, swapElement){
     buttons.forEach(function(button){
@@ -57,6 +56,12 @@ document.addEventListener('dynamic_scaffold:load', function(){
     })
   }
 
+  enableSortToButtons(document.querySelectorAll('.js-sorter-top'), function(source){
+    return document.querySelector('.js-item-row:first-child')
+  }, function(source, target){
+    source.parentNode.insertBefore(source, target)
+  })
+
   enableSortToButtons(document.querySelectorAll('.js-sorter-up'), function(source){
     return source.previousElementSibling
   }, function(source, target){
@@ -65,6 +70,12 @@ document.addEventListener('dynamic_scaffold:load', function(){
 
   enableSortToButtons(document.querySelectorAll('.js-sorter-down'), function(source){
     return source.nextElementSibling
+  }, function(source, target){
+    source.parentNode.insertBefore(target, source)
+  })
+
+  enableSortToButtons(document.querySelectorAll('.js-sorter-bottom'), function(source){
+    return document.querySelector('.js-item-row:last-child')
   }, function(source, target){
     source.parentNode.insertBefore(target, source)
   })

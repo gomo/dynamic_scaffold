@@ -37,6 +37,10 @@ Rails.application.config.dynamic_scaffold.icons = proc do |name| # rubocop:disab
     DynamicScaffold::Fontawesome.inline_svg('chevron-right.svg')
   when :prev then
     DynamicScaffold::Fontawesome.inline_svg('chevron-left.svg')
+  when :top then
+    DynamicScaffold::Fontawesome.inline_svg('angle-double-up.svg')
+  when :bottom then
+    DynamicScaffold::Fontawesome.inline_svg('angle-double-down.svg')
   else
     raise DynamicScaffold::Error::InvalidIcon, "Unknown icon type #{name} specified."
   end
