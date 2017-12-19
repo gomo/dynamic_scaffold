@@ -132,7 +132,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         gap_buttons: false
       )
 
-      expect(config.list.pagination).to be_a DynamicScaffold::Pagenation
+      expect(config.list.pagination).to be_a DynamicScaffold::Pagination
 
       expect(config.list.pagination.kaminari_options).to eq(
         window: 4,

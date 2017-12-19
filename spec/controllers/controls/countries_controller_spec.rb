@@ -85,7 +85,7 @@ RSpec.describe Controls::CountriesController, type: :controller do
     end
   end
 
-  describe 'No Pagenation' do
+  describe 'No Pagination' do
     render_views
     it 'should display all items.' do
       FactoryBot.create_list(:country, 8)

@@ -1,6 +1,6 @@
 require 'rails_helper'
-RSpec.describe Controls::CountriesForPagenationController, type: :controller do
-  describe 'Pagenation' do
+RSpec.describe Controls::CountriesForPaginationController, type: :controller do
+  describe 'Pagination' do
     render_views
     it 'should limit the display count to the value of per_page and display page navi.' do
       FactoryBot.create_list(:country, 3)

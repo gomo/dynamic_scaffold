@@ -233,7 +233,7 @@ class CountriesController < ApplicationController
     ...
 ```
 
-### Pagenation
+### Pagination
 
 You can enable pagination with [kaminari](https://github.com/kaminari/kaminari).
 

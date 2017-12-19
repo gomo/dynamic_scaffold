@@ -38,7 +38,7 @@ module DynamicScaffold
       end
   end
 
-  class Pagenation
+  class Pagination
     attr_reader(
       :kaminari_options,
       :per_page,
@@ -109,7 +109,7 @@ module DynamicScaffold
     end
 
     def pagination(options = nil)
-      @pagination = Pagenation.new(options) unless options.nil?
+      @pagination = Pagination.new(options) unless options.nil?
 
       @pagination
     end
