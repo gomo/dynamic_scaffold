@@ -192,6 +192,59 @@ class ShopController < ApplicationController
 end
 ```
 
+### Sorting
+
+You can sort records having integer column for order in the list page.
+
+```rb
+class CreateCountries < ActiveRecord::Migration[5.1]
+  def change
+    create_table :countries do |t|
+      t.string :name
+      t.integer :sequence
+    end
+  end
+end
+```
+
+```
+rails generate dynamic_scaffold countries
+```
+
+```rb
+# app/controllers/countries_controller.rb
+class CountriesController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Country do |config|
+    config.list.sorter sequence: :desc
+    ...
+```
+
+### Pagenation
+
+You can enable pagination with [kaminari](https://github.com/kaminari/kaminari).
+
+```rb
+# app/controllers/shop_controller.rb
+class ShopController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+    config.list.pagenation(
+      per_page: 20,
+      window: 0,                # kaminari options
+      outer_window: 0,          # kaminari options
+      left: 0,                  # kaminari options
+      right: 0,                 # kaminari options
+      param_name: :page,        # kaminari options
+      total_count: true,        # Whether to display total count on active page like `2 / 102`
+      end_buttons: true,        # Whether to display buttons to the first and last page.
+      neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
+      gap_buttons: false,       # Whether to display gap buttons.
+      highlight_current: false, # Whether to highlight the current page.
+    )
+    ...
+```
+
 ## Contributing
 Contribution directions go here.
 
