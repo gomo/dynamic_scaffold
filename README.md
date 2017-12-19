@@ -233,6 +233,8 @@ class CountriesController < ApplicationController
     ...
 ```
 
+<img src="images/sorter.gif">
+
 ### Pagination
 
 You can enable pagination with [kaminari](https://github.com/kaminari/kaminari).
@@ -242,24 +244,29 @@ You can enable pagination with [kaminari](https://github.com/kaminari/kaminari).
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-    config.list.pagination(
-      per_page: 20,
-      window: 0,                # kaminari options
-      outer_window: 0,          # kaminari options
-      left: 0,                  # kaminari options
-      right: 0,                 # kaminari options
-      param_name: :page,        # kaminari options
-      total_count: true,        # Whether to display total count on active page like `2 / 102`
-      end_buttons: true,        # Whether to display buttons to the first and last page.
-      neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
-      gap_buttons: false,       # Whether to display gap buttons.
-      highlight_current: false, # Whether to highlight the current page.
-    )
+    config.list.pagination per_page: 20
     ...
 ```
 
+The following options are available for the pagination.
+
+```
+window: 0,                # kaminari options
+outer_window: 0,          # kaminari options
+left: 0,                  # kaminari options
+right: 0,                 # kaminari options
+param_name: :page,        # kaminari options
+total_count: true,        # Whether to display total count on active page like `2 / 102`
+end_buttons: true,        # Whether to display buttons to the first and last page.
+neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
+gap_buttons: false,       # Whether to display gap buttons.
+highlight_current: false, # Whether to highlight the current page.
+```
+
 ## Contributing
-Contribution directions go here.
+
+* We use rspec for test.
+* Check code with [rubocop](https://github.com/bbatsov/rubocop).
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
