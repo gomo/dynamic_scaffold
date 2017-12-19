@@ -1,16 +1,12 @@
 <%= form_with method: method, model: @record, url: url do |form| %>
   <%dsconf.form.fields.each do |elem|%>
-    <% if elem.type? :hidden_field %>
-      <%= elem.render(form) %>
-    <% elsif elem.type? :content_for %>
-      <% if content_for? elem.name %>
-        <%= yield elem.name %>
-      <% end %>
+    <% if !elem.label? && elem.type?(:hidden_field) %>
+      <%= elem.render(self, form) %>
     <% else %>
       <div class="<%= classNames('form-group', {'has-error': @record.errors[elem.name].any?}) %>">
         <label><%= elem.label %></label>
         <% if elem.type? :collection_check_boxes %>
-          <%= elem.render(form) do |cb|%>
+          <%= elem.render(self, form) do |cb|%>
             <div class="form-check checkbox">
               <%= cb.label class: 'form-check-label' do%>
                 <%= cb.check_box class: 'form-check-input' %> <%= cb.text %> 
@@ -18,7 +14,7 @@
             </div>
           <%end%>
         <% elsif elem.type? :collection_radio_buttons %>
-          <%= elem.render(form) do |cb|%>
+          <%= elem.render(self, form) do |cb|%>
             <div class="form-check radio">
               <%= cb.label class: 'form-check-label' do%>
                 <%= cb.radio_button class: 'form-check-input' %> <%= cb.text %> 
@@ -26,7 +22,7 @@
             </div>
           <%end%>
         <% else %>
-          <%= elem.render(form, classNames('form-control', {'is-invalid': @record.errors[elem.name].any?})) %>
+          <%= elem.render(self, form, classNames('form-control', {'is-invalid': @record.errors[elem.name].any?})) %>
         <% end %>
         <%if @record.errors[elem.name].any?%>
           <ul class="dynamicScaffold-error-message">

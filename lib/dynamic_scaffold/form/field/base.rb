@@ -35,7 +35,15 @@ module DynamicScaffold
           @type == type
         end
 
-        def label(label = nil)
+        def label?
+          !@label.nil?
+        end
+
+        def label(label = nil, &block)
+          if block_given?
+            raise Error::InvalidParameter, 'Only the block type accepts block.' unless type? :block
+            @block = block
+          end
           if label
             @label = label
             self

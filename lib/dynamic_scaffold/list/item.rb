@@ -11,7 +11,7 @@ module DynamicScaffold
         @block = block
       end
 
-      def value(record, view)
+      def value(view, record)
         if @block
           view.instance_exec(record, @attribute_name, &@block)
         else
