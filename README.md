@@ -1,9 +1,22 @@
 [![Build Status](https://travis-ci.org/gomo/dynamic_scaffold.svg?branch=master)](https://travis-ci.org/gomo/dynamic_scaffold)
 
 # DynamicScaffold
-Scaffold which dynamically generates CRUD using a common view.
+Scaffold which dynamically generates CRUD and sort.
 
-Once the view is built in, it can be used with multiple models. In addition, you can flexibly customize the items displayed by model.
+## Feature
+
+* It is generated dynamically.
+* Responsive design and touch UI.
+* Support sort and pagenation.
+* Has simple view using bootstrap. Support bootstrap3/4.
+* Customizable and flexible.
+
+<img src="images/list_with_pager.png">
+
+
+<img src="images/form.png">
+
+
 
 ## Installation
 Add this line to your application's Gemfile:

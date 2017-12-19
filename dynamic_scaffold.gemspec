@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Masamoto Miyata']
   s.email       = ['miyata@sincere-co.com']
   s.homepage    = 'https://github.com/gomo/dynamic-scaffold-rails'
-  s.summary     = 'Dynamic scuffold to use for production environment.'
-  s.description = 'It is a scaffold for a production environment that is generated using a common HTML template.'
+  s.summary     = 'Scaffold which dynamically generates CRUD and sort.'
+  s.description = 'It is customizable and flexible scaffold who support sort and the pagination.'
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
