@@ -218,8 +218,8 @@ module DynamicScaffold
       field
     end
 
-    def content_for(*args)
-      field = Form::Field::ContentFor.new(@config, :content_for, *args)
+    def block(name, &block)
+      field = Form::Field::Block.new(@config, :block, name, block)
       @fields << field
       field
     end

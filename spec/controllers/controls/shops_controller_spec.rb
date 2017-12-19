@@ -75,10 +75,15 @@ RSpec.describe Controls::ShopsController, type: :controller do
       expect(response).to redirect_to controls_master_shops_path
     end
   end
-  describe 'content_for' do
+  describe 'block' do
+    render_views
     it 'should display additional elements on the page.' do
       get :new, params: { locale: :en }
-      expect(response.body).not_to match(/<div>shop addition content<\/div>/)
+      body = response.body.delete!("\n").gsub!(/> +</, '><')
+      expect(body).to match(/<label>Block<\/label><input class="form-control" type="text" name="shop\[block\]" \/>/)
+      expect(body).to match(
+        /<label>Block with label<\/label><input class="form-control" type="text" name="shop\[block_with_label\]" \/>/
+      )
     end
   end
   describe '#dynamic_scaffold_path' do

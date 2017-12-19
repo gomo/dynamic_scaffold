@@ -310,13 +310,31 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
-  context 'ContentFor' do
-    it 'should be able to handle content_for' do
+  context 'Block' do
+    it 'should execute the block given as an argument.' do
       config = DynamicScaffold::Config.new Shop
 
-      elem = config.form.content_for(:additional_shop1)
-      expect(elem.type?(:content_for)).to be true
-      expect(elem.name).to eq :additional_shop1
+      elem = config.form.block(:additional_shop1) do |_form, _field|
+        'HOHOHOHO'
+      end
+
+      helper.form_with url: './new' do |form|
+        expect(elem.type?(:block)).to be true
+        expect(elem.name).to eq :additional_shop1
+        expect(elem.label).to eq 'Additional shop1'
+        expect(elem.render(form)).to eq 'HOHOHOHO'
+      end
+
+      elem = config.form.block(:with_label).label('FOOOO') do |_form, _field|
+        'HAHAHA'
+      end
+
+      helper.form_with url: './new' do |form|
+        expect(elem.type?(:block)).to be true
+        expect(elem.name).to eq :with_label
+        expect(elem.label).to eq 'FOOOO'
+        expect(elem.render(form)).to eq 'HAHAHA'
+      end
     end
   end
 end

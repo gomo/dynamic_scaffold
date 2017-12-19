@@ -17,7 +17,7 @@ module Controls
       # You can use form helper methods like ...
       # text_field, check_box, radio_button, password_field, hidden_field, file_field, text_area, color_field
       # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select
-      c.form.hidden_field :id
+      c.form.hidden_field(:id)
 
       # `label` method change label from I18n model attribute name.
       c.form.text_field(:name).label 'Shop Name'
@@ -29,7 +29,13 @@ module Controls
       )
       c.form.collection_check_boxes(:state_ids, State.all, :id, :name)
       c.form.collection_radio_buttons(:status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
-      c.form.content_for(:shop_addition)
+
+      c.form.block :block do |form, field|
+        form.text_field field.name, class: 'form-control'
+      end
+      c.form.block(:block_with_label).label 'Block with label' do |form, field|
+        form.text_field field.name, class: 'form-control'
+      end
     end
 
     private
