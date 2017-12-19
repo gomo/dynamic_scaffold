@@ -2,7 +2,7 @@ module DynamicScaffold
   module Form
     module Field
       class CollectionCheckBoxes < CollectionBase
-        def render(view, form, classnames = nil)
+        def render(_view, form, classnames = nil)
           form.collection_check_boxes(
             @name,
             @collection,

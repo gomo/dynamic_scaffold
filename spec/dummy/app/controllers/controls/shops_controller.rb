@@ -1,7 +1,7 @@
 module Controls
   class ShopsController < BaseController
     include DynamicScaffold::Controller
-    dynamic_scaffold Shop do |c|
+    dynamic_scaffold Shop do |c| # rubocop:disable Metrics/BlockLength
       c.list.item(:id, style: 'width: 80px').label('Number')
       c.list.item :name, style: 'width: 120px'
       c.list.item :updated_at, style: 'width: 180px' do |rec, name|
