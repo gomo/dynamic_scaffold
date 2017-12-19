@@ -19,13 +19,14 @@ document.addEventListener('dynamic_scaffold:load', function(){
 
   function enableSortToButtons(buttons, getTarget, swapElement){
     buttons.forEach(function(button){
-      const source = button.closest('.js-item-row')
       button.addEventListener('click', function(e){
         e.preventDefault()
         
         // Ignore while animating
         if(promises.length) return
         if(resolvers.length) return
+
+        const source = button.closest('.js-item-row')
 
         // Top or bottom.
         const target = getTarget(source)
@@ -77,6 +78,6 @@ document.addEventListener('dynamic_scaffold:load', function(){
   enableSortToButtons(document.querySelectorAll('.js-sorter-bottom'), function(source){
     return document.querySelector('.js-item-row:last-child')
   }, function(source, target){
-    source.parentNode.insertBefore(target, source)
+    source.parentNode.insertBefore(source, null)
   })
 })
