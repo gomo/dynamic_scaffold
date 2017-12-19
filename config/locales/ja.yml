@@ -12,3 +12,6 @@ ja:
     alert:
       destroy:
         invalid_foreign_key: '関連づいたレコードがあるので削除できません。'
+  views:
+    pagination:
+      truncate: '…'
