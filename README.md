@@ -139,10 +139,16 @@ class ShopController < ApplicationController
     # You can use form helper methods like ...
     # text_field, check_box, radio_button, password_field, hidden_field, file_field, text_area, color_field
     # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select
-    config.form.hidden_field :id
 
-    # `label` method change label from I18n model attribute name.
+    # Default label is I18n model attribute name.
+    config.form.text_field :name
+    # You can specify `label`. 
     config.form.text_field(:name).label 'Shop Name'
+
+    # If you use hidden_field, the label will also be hidden.
+    config.form.hidden_field :id
+    # but if you specify the label explicitly it will be displayed.
+    config.form.hidden_field(:id).label 'ID'
 
     # Last hash arg is given to HTML attributes.
     config.form.text_area :memo, rows: 8
@@ -154,16 +160,13 @@ class ShopController < ApplicationController
     config.form.collection_check_boxes(:states, State.all, :id, :name)
     config.form.collection_radio_buttons(:status, Shop.statuses.map{|k, v| [v, k.titleize]}, :first, :last)
 
-    config.form do |form|
-
+    # If you want to display more free form field, use block.
+    # The block is executed in the context of view, so you can call the method of view.
+    config.form.block :free do |form, field|
+      content_tag :div, class: 'foobar' do
+        form.text_field field.name, class: 'foobar'
+      end
     end
-
-    # If you want to add complex HTML, you can use `content_for`.
-    config.form.content_for :complex_form
-    # In your view
-    # <%= content_for :complex_form do %>
-    #   <div></div>
-    # <% end %>
   end
 end
 ```
