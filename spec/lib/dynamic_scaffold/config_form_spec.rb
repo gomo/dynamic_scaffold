@@ -11,27 +11,27 @@ RSpec.describe ApplicationHelper, type: :helper do
       country = FactoryBot.create(:country)
       helper.form_with model: country, url: './create' do |form|
         expect(forms[0].label).to eq 'Id'
-        expect(forms[0].render(form)).to(
+        expect(forms[0].render(helper, form)).to(
           eq "<input type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
         )
 
         expect(forms[1].label).to eq 'Name'
-        expect(forms[1].render(form)).to(
+        expect(forms[1].render(helper, form)).to(
           eq "<input type=\"text\" value=\"#{country.name}\" name=\"country[name]\" />"
         )
 
         expect(forms[2].label).to eq 'Sequence'
-        expect(forms[2].render(form)).to(
+        expect(forms[2].render(helper, form)).to(
           eq "<input type=\"text\" value=\"#{country.sequence}\" name=\"country[sequence]\" />"
         )
 
         expect(forms[3].label).to eq 'Created at'
-        expect(forms[3].render(form)).to(
+        expect(forms[3].render(helper, form)).to(
           eq "<input type=\"text\" value=\"#{country.created_at}\" name=\"country[created_at]\" />"
         )
 
         expect(forms[4].label).to eq 'Updated at'
-        expect(forms[4].render(form)).to(
+        expect(forms[4].render(helper, form)).to(
           eq "<input type=\"text\" value=\"#{country.updated_at}\" name=\"country[updated_at]\" />"
         )
       end
@@ -70,7 +70,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         )
         elem = config.form.fields[0]
         helper.form_with model: country, url: './create' do |form|
-          expect(elem.render(form)).to(
+          expect(elem.render(helper, form)).to(
             eq "<input data-foobar=\"foobar value\" style=\"width: 50%;\" class=\"foobar\" type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
           )
         end
@@ -85,7 +85,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         )
         elem = config.form.fields[0]
         helper.form_with model: country, url: './create' do |form|
-          expect(elem.render(form, 'add')).to(
+          expect(elem.render(helper, form, 'add')).to(
             eq "<input class=\"foobar add\" type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
           )
         end
@@ -115,7 +115,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_check_boxes)).to be true
           num = 0
-          elem.render(form) do |b|
+          elem.render(helper, form) do |b|
             state = State.all.offset(num).first
             expect(b.label).to eq "<label for=\"shop_states_#{num + 1}\">#{state.name}</label>"
             expect(b.check_box).to eq "<input type=\"checkbox\" value=\"#{state.id}\" name=\"shop[states][]\" id=\"shop_states_#{num + 1}\" />"
@@ -161,7 +161,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           num = 0
-          elem.render(form) do |b|
+          elem.render(helper, form) do |b|
             state = State.all.offset(num).first
             expect(b.check_box).to eq(
               "<input style=\"font-size: 20px;\" class=\"foobar\" disabled=\"disabled\" type=\"checkbox\" value=\"#{state.id}\" name=\"shop[states][]\" id=\"shop_states_#{num + 1}\" />"
@@ -181,7 +181,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_radio_buttons)).to be true
           num = 0
-          elem.render(form) do |b|
+          elem.render(helper, form) do |b|
             status = statuses[num]
             expect(b.label).to eq "<label for=\"shop_status_#{num + 1}\">#{status.last}</label>"
             expect(b.radio_button).to eq "<input type=\"radio\" value=\"#{status.first}\" name=\"shop[status]\" id=\"shop_status_#{num + 1}\" />"
@@ -207,7 +207,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           num = 0
-          elem.render(form) do |b|
+          elem.render(helper, form) do |b|
             status = statuses[num]
             expect(b.radio_button).to eq(
               "<input style=\"font-size: 20px;\" class=\"foobar\" disabled=\"disabled\" type=\"radio\" value=\"#{status.first}\" name=\"shop[status]\" id=\"shop_status_#{num + 1}\" />"
@@ -226,7 +226,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_select)).to be true
-          result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
+          result = elem.render(helper, form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
           expect(result.shift).to eq '<select name="shop[category_id]">'
           expect(result.pop).to eq '</select>'
           num = 0
@@ -258,7 +258,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         )
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
-          result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
+          result = elem.render(helper, form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
           expect(result.shift).to eq '<select style="width: 200px;" class="foobar" name="shop[category_id]">'
           expect(result.shift).to eq '<option value="">Select Category</option>'
         end
@@ -280,7 +280,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:grouped_collection_select)).to be true
-          result = elem.render(form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
+          result = elem.render(helper, form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
           option_checker = proc do |value, name|
             if shop.category_id == value
               expect(result.shift).to eq "<option selected=\"selected\" value=\"#{value}\">#{name}</option>"
@@ -322,7 +322,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(elem.type?(:block)).to be true
         expect(elem.name).to eq :additional_shop1
         expect(elem.label).to eq 'Additional shop1'
-        expect(elem.render(form)).to eq 'HOHOHOHO'
+        expect(elem.render(helper, form)).to eq 'HOHOHOHO'
       end
 
       elem = config.form.block(:with_label).label('FOOOO') do |_form, _field|
@@ -333,7 +333,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(elem.type?(:block)).to be true
         expect(elem.name).to eq :with_label
         expect(elem.label).to eq 'FOOOO'
-        expect(elem.render(form)).to eq 'HAHAHA'
+        expect(elem.render(helper, form)).to eq 'HAHAHA'
       end
     end
   end

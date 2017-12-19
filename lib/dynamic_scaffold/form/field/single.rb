@@ -6,7 +6,7 @@ module DynamicScaffold
           super(config, type, name, html_attributes)
         end
 
-        def render(form, classnames = nil)
+        def render(view, form, classnames = nil)
           form.public_send(@type, @name, build_html_attributes(classnames))
         end
       end

@@ -31,7 +31,9 @@ module Controls
       c.form.collection_radio_buttons(:status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
 
       c.form.block :block do |form, field|
-        form.text_field field.name, class: 'form-control'
+        content_tag :div do
+          form.text_field field.name, class: 'form-control'
+        end
       end
       c.form.block(:block_with_label).label 'Block with label' do |form, field|
         form.text_field field.name, class: 'form-control'

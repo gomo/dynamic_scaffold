@@ -7,8 +7,8 @@ module DynamicScaffold
           @block = block
         end
 
-        def render(form, _classnames = nil)
-          @block.call(form, self)
+        def render(view, form, classnames = nil)
+          view.instance_exec(form, self, classnames, &@block)
         end
       end
     end
