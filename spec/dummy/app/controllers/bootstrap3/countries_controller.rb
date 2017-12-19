@@ -4,8 +4,8 @@ class Bootstrap3::CountriesController < Bootstrap3::BaseController
     # To enable sorting, call sorter method specifying the column name and direction.
     config.list.sorter sequence: :desc
 
-    # To enable pagenation, call pagenation. All args is not require, defauls is below
-    config.list.pagenation(
+    # To enable pagination, call pagination. All args is not require, defauls is below
+    config.list.pagination(
       per_page: 1,
       window: 3,                # kaminari options
       outer_window: 1,          # kaminari options

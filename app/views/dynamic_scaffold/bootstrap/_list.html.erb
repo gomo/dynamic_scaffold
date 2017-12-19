@@ -9,7 +9,7 @@
     <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.buttons.add') %>
   <%end%>
 </div>
-<%= render 'dynamic_scaffold/bootstrap/pagenation' %>
+<%= render 'dynamic_scaffold/bootstrap/pagination' %>
 <div class="dynamicScaffold-row">
   <%= render 'dynamic_scaffold/bootstrap/save_order'%>
 </div>
@@ -31,7 +31,7 @@
           <div class="resplist-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
-                <% page_param_name = dsconf.list.pagenation ? dsconf.list.pagenation.param_name : nil %>
+                <% page_param_name = dsconf.list.pagination ? dsconf.list.pagination.param_name : nil %>
                 <%= link_to dynamic_scaffold_path(:edit, key: primary_key_value(record), page: params[page_param_name]), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %>
                 <%end%>
@@ -70,5 +70,5 @@
 <div class="dynamicScaffold-row">
   <%= render 'dynamic_scaffold/bootstrap/save_order'%>
 </div>
-<%= render 'dynamic_scaffold/bootstrap/pagenation' %>
+<%= render 'dynamic_scaffold/bootstrap/pagination' %>
 <% end %>

@@ -7,7 +7,7 @@ Scaffold which dynamically generates CRUD and sort.
 
 * It is generated dynamically.
 * Responsive design and touch UI.
-* Support sort and pagenation.
+* Support sort and pagination.
 * Has simple view using bootstrap. Support bootstrap3/4.
 * Customizable and flexible.
 
@@ -242,7 +242,7 @@ You can enable pagination with [kaminari](https://github.com/kaminari/kaminari).
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-    config.list.pagenation(
+    config.list.pagination(
       per_page: 20,
       window: 0,                # kaminari options
       outer_window: 0,          # kaminari options

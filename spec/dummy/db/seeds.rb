@@ -26,7 +26,7 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
   )
 end
 
-# for pagenation
+# for pagination
 99.times do |n|
   Country.create!(
     name: Faker::Address.country,

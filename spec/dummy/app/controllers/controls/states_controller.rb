@@ -4,8 +4,8 @@ class Controls::StatesController < Controls::BaseController
     # To enable sorting, call sorter method specifying the column name and direction.
     # config.list.sorter sequence: :desc
 
-    # To enable pagenation, call pagenation. All args is not require, defauls is below
-    # config.list.pagenation(
+    # To enable pagination, call pagination. All args is not require, defauls is below
+    # config.list.pagination(
     #   per_page: 25,
     #   window: 0,                # kaminari options
     #   outer_window: 0,          # kaminari options

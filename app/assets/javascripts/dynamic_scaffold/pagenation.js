@@ -1,7 +1,7 @@
 document.addEventListener('dynamic_scaffold:load', function(){
-  function handlePagenation(pagenation){
-    const itemCount = pagenation.children.lenth
-    const items = Array.prototype.filter.call(pagenation.children, function(li){
+  function handlePagenation(pagination){
+    const itemCount = pagination.children.lenth
+    const items = Array.prototype.filter.call(pagination.children, function(li){
       return li.classList.contains('js-page-item')
     })
     
@@ -19,7 +19,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
       ++distance
     })
   }
-  document.querySelectorAll('.js-pagenation').forEach(function(pagenation){
-    handlePagenation(pagenation)
+  document.querySelectorAll('.js-pagination').forEach(function(pagination){
+    handlePagenation(pagination)
   })
 })

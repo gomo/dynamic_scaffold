@@ -108,10 +108,10 @@ module DynamicScaffold
       @callback = Callback.new(%i[before_save_sort before_fetch])
     end
 
-    def pagenation(options = nil)
-      @pagenation = Pagenation.new(options) unless options.nil?
+    def pagination(options = nil)
+      @pagination = Pagenation.new(options) unless options.nil?
 
-      @pagenation
+      @pagination
     end
 
     def sorter(params = nil)

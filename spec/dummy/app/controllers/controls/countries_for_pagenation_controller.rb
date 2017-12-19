@@ -3,7 +3,7 @@ module Controls
     include DynamicScaffold::Controller
     dynamic_scaffold Country do |c|
       c.list.sorter sequence: :asc
-      c.list.pagenation(
+      c.list.pagination(
         per_page: 1,
         window: 5,
         outer_window: 1,

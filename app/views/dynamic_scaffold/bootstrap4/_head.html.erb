@@ -4,6 +4,6 @@
 <%= javascript_include_tag 'dynamic_scaffold/common' %>
 <% if controller.action_name == "index" %>
   <%= javascript_include_tag 'dynamic_scaffold/sorter' if dsconf.list.sorter %>
-  <%= javascript_include_tag 'dynamic_scaffold/pagenation' if dsconf.list.pagenation %>
+  <%= javascript_include_tag 'dynamic_scaffold/pagination' if dsconf.list.pagination %>
   <%= javascript_include_tag 'dynamic_scaffold/delete' %>
 <%end%>

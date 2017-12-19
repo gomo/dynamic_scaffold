@@ -1,17 +1,17 @@
 <%= paginator.render do %>
   <nav class="text-center text-xs-center">
-    <ul class="pagination justify-content-center js-pagenation">
-      <%= first_page_tag if dsconf.list.pagenation.end_buttons %>
-      <%= prev_page_tag if dsconf.list.pagenation.neighbor_buttons %>
+    <ul class="pagination justify-content-center js-pagination">
+      <%= first_page_tag if dsconf.list.pagination.end_buttons %>
+      <%= prev_page_tag if dsconf.list.pagination.neighbor_buttons %>
       <% each_page do |page| %>
         <% if page.left_outer? || page.right_outer? || page.inside_window? %>
           <%= page_tag page %>
         <% elsif !page.was_truncated? -%>
-          <%= gap_tag if dsconf.list.pagenation.gap_buttons %>
+          <%= gap_tag if dsconf.list.pagination.gap_buttons %>
         <% end %>
       <% end %>
-      <%= next_page_tag if dsconf.list.pagenation.neighbor_buttons %>
-      <%= last_page_tag if dsconf.list.pagenation.end_buttons %>
+      <%= next_page_tag if dsconf.list.pagination.neighbor_buttons %>
+      <%= last_page_tag if dsconf.list.pagination.end_buttons %>
     </ul>
   </nav>
 <% end %>

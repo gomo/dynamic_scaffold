@@ -38,7 +38,7 @@
     <% end %>
   <% end %>
   <div>
-    <% path_options = dsconf.list.pagenation ? {dsconf.list.pagenation.param_name => params[:page]} : {}%>
+    <% path_options = dsconf.list.pagination ? {dsconf.list.pagination.param_name => params[:page]} : {}%>
     <%= link_to dynamic_scaffold_path(:index, path_options), class: 'btn btn-outline-secondary btn-default' do%>
       <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.buttons.back') %>
     <%end%>

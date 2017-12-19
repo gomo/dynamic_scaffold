@@ -113,13 +113,13 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
-  context 'DynamicScaffold::Config#list.pagenation' do
+  context 'DynamicScaffold::Config#list.pagination' do
     it 'should be able to acquire the setting value.' do
       config = DynamicScaffold::Config.new Country
 
-      expect(config.list.pagenation).to be nil
+      expect(config.list.pagination).to be nil
 
-      config.list.pagenation(
+      config.list.pagination(
         per_page: 10,
         window: 4,
         outer_window: 1,
@@ -132,9 +132,9 @@ RSpec.describe ApplicationHelper, type: :helper do
         gap_buttons: false
       )
 
-      expect(config.list.pagenation).to be_a DynamicScaffold::Pagenation
+      expect(config.list.pagination).to be_a DynamicScaffold::Pagenation
 
-      expect(config.list.pagenation.kaminari_options).to eq(
+      expect(config.list.pagination.kaminari_options).to eq(
         window: 4,
         outer_window: 1,
         left: 0,
@@ -142,12 +142,12 @@ RSpec.describe ApplicationHelper, type: :helper do
         param_name: :foobar
       )
 
-      expect(config.list.pagenation.per_page).to eq 10
-      expect(config.list.pagenation.total_count).to be false
-      expect(config.list.pagenation.end_buttons).to be false
-      expect(config.list.pagenation.neighbor_buttons).to be true
-      expect(config.list.pagenation.gap_buttons).to be false
-      expect(config.list.pagenation.param_name).to eq :foobar
+      expect(config.list.pagination.per_page).to eq 10
+      expect(config.list.pagination.total_count).to be false
+      expect(config.list.pagination.end_buttons).to be false
+      expect(config.list.pagination.neighbor_buttons).to be true
+      expect(config.list.pagination.gap_buttons).to be false
+      expect(config.list.pagination.param_name).to eq :foobar
     end
   end
 end
