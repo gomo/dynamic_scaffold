@@ -17,7 +17,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
   const promises = []
   const resolvers = []
 
-  function enableSortToButtons(buttons, getTarget, swapElement){
+  function enableSortToButtons(buttons, needsTargetAnimation, getTarget, swapElement){
     buttons.forEach(function(button){
       button.addEventListener('click', function(e){
         e.preventDefault()
@@ -38,11 +38,13 @@ document.addEventListener('dynamic_scaffold:load', function(){
           swapAnimation(source, target)
         }))
 
-        // Start animation target to source
-        promises.push(new Promise(function(resolve){
-          resolvers.push(resolve)
-          swapAnimation(target, source)
-        }))
+        if(needsTargetAnimation){
+          // Start animation target to source
+          promises.push(new Promise(function(resolve){
+            resolvers.push(resolve)
+            swapAnimation(target, source)
+          }))
+        }
 
         // When both animations are finished
         Promise.all(promises).then(function(){
@@ -57,25 +59,25 @@ document.addEventListener('dynamic_scaffold:load', function(){
     })
   }
 
-  enableSortToButtons(document.querySelectorAll('.js-sorter-top'), function(source){
+  enableSortToButtons(document.querySelectorAll('.js-sorter-top'), false, function(source){
     return document.querySelector('.js-item-row:first-child')
   }, function(source, target){
     source.parentNode.insertBefore(source, target)
   })
 
-  enableSortToButtons(document.querySelectorAll('.js-sorter-up'), function(source){
+  enableSortToButtons(document.querySelectorAll('.js-sorter-up'), true, function(source){
     return source.previousElementSibling
   }, function(source, target){
     source.parentNode.insertBefore(source, target)
   })
 
-  enableSortToButtons(document.querySelectorAll('.js-sorter-down'), function(source){
+  enableSortToButtons(document.querySelectorAll('.js-sorter-down'), true, function(source){
     return source.nextElementSibling
   }, function(source, target){
     source.parentNode.insertBefore(target, source)
   })
 
-  enableSortToButtons(document.querySelectorAll('.js-sorter-bottom'), function(source){
+  enableSortToButtons(document.querySelectorAll('.js-sorter-bottom'), false, function(source){
     return document.querySelector('.js-item-row:last-child')
   }, function(source, target){
     source.parentNode.insertBefore(source, null)
