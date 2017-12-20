@@ -20,12 +20,8 @@ module DynamicScaffold
 
     def index # rubocop:disable Metrics/AbcSize
       @records = dsconf.model.all
-      if dsconf.list.callback.exists?(:before_fetch)
-        @records = dsconf.list.callback.call(:before_fetch, self, @records)
-        unless @records.is_a? ::ActiveRecord::Relation
-          raise Error::InvalidParameter, 'You must return ActiveRecord::Relation'
-        end
-      end
+      @records = dsconf.list.callback.call(:before_fetch, self, @records) if dsconf.list.callback.exists?(:before_fetch)
+      raise Error::InvalidParameter, 'You must return ActiveRecord::Relation' unless @records.is_a? ::ActiveRecord::Relation
 
       if dsconf.list.pagination
         @records = @records.page(params[dsconf.list.pagination.param_name]).per(dsconf.list.pagination.per_page)
