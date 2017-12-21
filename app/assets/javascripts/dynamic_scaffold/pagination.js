@@ -2,7 +2,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
   function handlePagination(pagination){
     const itemCount = pagination.children.lenth
     const items = Array.prototype.filter.call(pagination.children, function(li){
-      return li.classList.contains('js-page-item')
+      return li.classList.contains('dynamicScaffoldJs-page-item')
     })
     
     const currentIndex = items.findIndex(function(li){
@@ -19,7 +19,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
       ++distance
     })
   }
-  document.querySelectorAll('.js-pagination').forEach(function(pagination){
+  document.querySelectorAll('.dynamicScaffoldJs-pagination').forEach(function(pagination){
     handlePagination(pagination)
   })
 })

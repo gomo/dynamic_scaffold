@@ -1,6 +1,6 @@
 document.addEventListener('dynamic_scaffold:load', function(){
   // Register the animation end event in all the rows.
-  document.querySelectorAll('.js-item-row').forEach(function(row){
+  document.querySelectorAll('.dynamicScaffoldJs-item-row').forEach(function(row){
     row.addEventListener('transitionend', function(e){
       if(e.target == row) resolvers.shift()()
     })
@@ -26,7 +26,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
         if(promises.length) return
         if(resolvers.length) return
 
-        const source = button.closest('.js-item-row')
+        const source = button.closest('.dynamicScaffoldJs-item-row')
 
         // Top or bottom.
         const target = getTarget(source)
@@ -59,26 +59,26 @@ document.addEventListener('dynamic_scaffold:load', function(){
     })
   }
 
-  enableSortToButtons(document.querySelectorAll('.js-sorter-top'), false, function(source){
-    return document.querySelector('.js-item-row:first-child')
+  enableSortToButtons(document.querySelectorAll('.dynamicScaffoldJs-sorter-top'), false, function(source){
+    return document.querySelector('.dynamicScaffoldJs-item-row:first-child')
   }, function(source, target){
     source.parentNode.insertBefore(source, target)
   })
 
-  enableSortToButtons(document.querySelectorAll('.js-sorter-up'), true, function(source){
+  enableSortToButtons(document.querySelectorAll('.dynamicScaffoldJs-sorter-up'), true, function(source){
     return source.previousElementSibling
   }, function(source, target){
     source.parentNode.insertBefore(source, target)
   })
 
-  enableSortToButtons(document.querySelectorAll('.js-sorter-down'), true, function(source){
+  enableSortToButtons(document.querySelectorAll('.dynamicScaffoldJs-sorter-down'), true, function(source){
     return source.nextElementSibling
   }, function(source, target){
     source.parentNode.insertBefore(target, source)
   })
 
-  enableSortToButtons(document.querySelectorAll('.js-sorter-bottom'), false, function(source){
-    return document.querySelector('.js-item-row:last-child')
+  enableSortToButtons(document.querySelectorAll('.dynamicScaffoldJs-sorter-bottom'), false, function(source){
+    return document.querySelector('.dynamicScaffoldJs-item-row:last-child')
   }, function(source, target){
     source.parentNode.insertBefore(source, null)
   })

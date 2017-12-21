@@ -1,7 +1,7 @@
 document.addEventListener('dynamic_scaffold:load', function (){
-  const buttons = document.querySelectorAll('.js-destory')
+  const buttons = document.querySelectorAll('.dynamicScaffoldJs-destory')
   buttons.forEach(function(button){
-    const wrapper = button.closest('.js-item-row')
+    const wrapper = button.closest('.dynamicScaffoldJs-item-row')
     let needsSubmit = false
     button.addEventListener('click', function(e){
       if(!needsSubmit) {

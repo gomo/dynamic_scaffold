@@ -80,7 +80,6 @@ module DynamicScaffold
     # Sub actions.
     def destroy
       record = find_record(JSON.parse(params['submit_destroy']))
-
       begin
         dsconf.model.transaction do
           dsconf.form.callback.call(:before_save_destroy, self, record, {})

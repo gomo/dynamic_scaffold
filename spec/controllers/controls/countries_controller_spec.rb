@@ -90,7 +90,7 @@ RSpec.describe Controls::CountriesController, type: :controller do
     it 'should display all items.' do
       FactoryBot.create_list(:country, 8)
       get :index, params: { locale: :en }
-      expect(response.body.scan(/<li class="resplist-row js-item-row">/).size).to eq 8
+      expect(response.body.scan(/<li class="resplist-row dynamicScaffoldJs-item-row">/).size).to eq 8
       expect(response.body).not_to match(/<ul class="pagination/)
     end
   end

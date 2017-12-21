@@ -19,7 +19,7 @@
   <% else %>
     <ul class="resplist resplist-striped">
       <%@records.each do |record|%>
-        <li class="resplist-row js-item-row">
+        <li class="resplist-row dynamicScaffoldJs-item-row">
           <div class="resplist-items">
           <%dsconf.list.items.each do |disp|%>
             <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
@@ -41,22 +41,22 @@
                 <input type="hidden" name="pkeys[][<%=pkey%>]" value="<%= record[pkey] %>">
               <%end%>
               <div class="btn-group">
-                <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-top">
+                <button class="btn btn-outline-secondary btn-default btn-sm dynamicScaffoldJs-sorter-top">
                   <%= dynamic_scaffold_icon(:top) %>
                 </button>
-                <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-up">
+                <button class="btn btn-outline-secondary btn-default btn-sm dynamicScaffoldJs-sorter-up">
                   <%= dynamic_scaffold_icon(:up) %>
                 </button>
-                <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-down">
+                <button class="btn btn-outline-secondary btn-default btn-sm dynamicScaffoldJs-sorter-down">
                   <%= dynamic_scaffold_icon(:down) %>
                 </button>
-                <button class="btn btn-outline-secondary btn-default btn-sm js-sorter-bottom">
+                <button class="btn btn-outline-secondary btn-default btn-sm dynamicScaffoldJs-sorter-bottom">
                   <%= dynamic_scaffold_icon(:bottom) %>
                 </button>
               </div>
               <% end %>
               <div class="btn-group">
-                <button data-confirm-message="<%= t('dynamic_scaffold.messages.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm js-destory" name="submit_destroy" value="<%= primary_key_value(record).to_json %>">
+                <button data-confirm-message="<%= t('dynamic_scaffold.messages.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm dynamicScaffoldJs-destory" name="submit_destroy" value="<%= primary_key_value(record).to_json %>">
                   <%= dynamic_scaffold_icon(:delete) %>
                 </button>
               </div>

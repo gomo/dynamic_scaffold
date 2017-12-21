@@ -5,7 +5,7 @@ RSpec.describe Controls::CountriesForPaginationController, type: :controller do
     it 'should limit the display count to the value of per_page and display page navi.' do
       FactoryBot.create_list(:country, 3)
       get :index, params: { locale: :en }
-      expect(response.body.scan(/<li class="resplist-row js-item-row">/).size).to eq 1
+      expect(response.body.scan(/<li class="resplist-row dynamicScaffoldJs-item-row">/).size).to eq 1
       expect(response.body).to match(/<ul class="pagination/)
     end
 
