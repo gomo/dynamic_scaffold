@@ -1,5 +1,9 @@
 ja:
   dynamic_scaffold:
+    title:
+      list: '%{model}一覧'
+      edit: '%{model}編集'
+      create: '新規%{model}'
     buttons:
       add: '追加'
       edit: '編集'
