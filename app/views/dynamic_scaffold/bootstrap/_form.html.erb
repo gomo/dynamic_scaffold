@@ -1,5 +1,5 @@
 <%= form_with method: method, model: @record, url: url do |form| %>
-  <%dsconf.form.fields.each do |elem|%>
+  <%dynamic_scaffold.form.fields.each do |elem|%>
     <% if !elem.label? && elem.type?(:hidden_field) %>
       <%= elem.render(self, form) %>
     <% else %>
@@ -38,7 +38,7 @@
     <% end %>
   <% end %>
   <div>
-    <% path_options = dsconf.list.pagination ? {dsconf.list.pagination.param_name => params[:page]} : {}%>
+    <% path_options = dynamic_scaffold.list.pagination ? {dynamic_scaffold.list.pagination.param_name => params[:page]} : {}%>
     <%= link_to dynamic_scaffold_path(:index, path_options), class: 'btn btn-outline-secondary btn-default' do%>
       <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.buttons.back') %>
     <%end%>

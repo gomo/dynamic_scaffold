@@ -1,6 +1,6 @@
 module DynamicScaffold
   module ControllerUtilities
-    def dsconf
+    def dynamic_scaffold
       self.class.dynamic_scaffold_config
     end
 
@@ -8,13 +8,13 @@ module DynamicScaffold
 
       # Get the hash of the key and value specified for the scope.
       def scope_params
-        return {} if dsconf.scope.nil?
-        dsconf.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
+        return {} if dynamic_scaffold.scope.nil?
+        dynamic_scaffold.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
       end
 
       # Get the primary key hash from the update parameters.
       def extract_pkeys(values)
-        [*dsconf.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col] }
+        [*dynamic_scaffold.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col] }
       end
 
       # Convert pkey_string value to hash.
@@ -28,23 +28,23 @@ module DynamicScaffold
       def edit_params
         params
           .require('key')
-          .permit(*dsconf.model.primary_key)
+          .permit(*dynamic_scaffold.model.primary_key)
       end
 
       # Get paramters for sort action. `pkeys[][column] => value`
       def sort_params
         params
           .require('pkeys')
-          .map {|p| p.permit(*dsconf.model.primary_key) }
+          .map {|p| p.permit(*dynamic_scaffold.model.primary_key) }
       end
 
       # Get paramters for update record.
       def update_values
         values = params
-                 .require(dsconf.model.name.underscore)
-                 .permit(*dsconf.form.fields.map(&:strong_parameter))
+                 .require(dynamic_scaffold.model.name.underscore)
+                 .permit(*dynamic_scaffold.form.fields.map(&:strong_parameter))
 
-        if dsconf.scope && !valid_for_scope?(values)
+        if dynamic_scaffold.scope && !valid_for_scope?(values)
           raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params} on this scope"
         end
 
@@ -64,25 +64,25 @@ module DynamicScaffold
       end
 
       def reset_sequence(record_count)
-        if dsconf.list.sorter_direction == :asc
+        if dynamic_scaffold.list.sorter_direction == :asc
           @sequence = 0
-        elsif dsconf.list.sorter_direction == :desc
+        elsif dynamic_scaffold.list.sorter_direction == :desc
           @sequence = record_count - 1
         end
       end
 
       def next_sequence!
         val = @sequence
-        if dsconf.list.sorter_direction == :asc
+        if dynamic_scaffold.list.sorter_direction == :asc
           @sequence += 1
-        elsif dsconf.list.sorter_direction == :desc
+        elsif dynamic_scaffold.list.sorter_direction == :desc
           @sequence -= 1
         end
         val
       end
 
       def find_record(params)
-        rec = dsconf.model.find_by(params.merge(scope_params))
+        rec = dynamic_scaffold.model.find_by(params.merge(scope_params))
         raise ::ActiveRecord::RecordNotFound if rec.nil?
         rec
       end

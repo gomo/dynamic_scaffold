@@ -4,7 +4,7 @@ module DynamicScaffold
     include ControllerUtilities
 
     included do
-      helper_method :dynamic_scaffold_path, :dynamic_scaffold_icon, :dsconf, :primary_key_value
+      helper_method :dynamic_scaffold_path, :dynamic_scaffold_icon, :dynamic_scaffold, :primary_key_value
     end
 
     class_methods do
@@ -19,20 +19,20 @@ module DynamicScaffold
     # Actions
 
     def index # rubocop:disable Metrics/AbcSize
-      @records = dsconf.model.all
-      @records = dsconf.list.callback.call(:before_fetch, self, @records) if dsconf.list.callback.exists?(:before_fetch)
+      @records = dynamic_scaffold.model.all
+      @records = dynamic_scaffold.list.callback.call(:before_fetch, self, @records) if dynamic_scaffold.list.callback.exists?(:before_fetch)
       raise Error::InvalidParameter, 'You must return ActiveRecord::Relation' unless @records.is_a? ::ActiveRecord::Relation
 
-      if dsconf.list.pagination
-        @records = @records.page(params[dsconf.list.pagination.param_name]).per(dsconf.list.pagination.per_page)
+      if dynamic_scaffold.list.pagination
+        @records = @records.page(params[dynamic_scaffold.list.pagination.param_name]).per(dynamic_scaffold.list.pagination.per_page)
       end
 
       @records = @records.where scope_params
-      @records = @records.order dsconf.list.sorter if dsconf.list.sorter
+      @records = @records.order dynamic_scaffold.list.sorter if dynamic_scaffold.list.sorter
     end
 
     def new
-      @record = dsconf.model.new
+      @record = dynamic_scaffold.model.new
       @record.attributes = scope_params
     end
 
@@ -49,11 +49,11 @@ module DynamicScaffold
     end
 
     def create
-      @record = dsconf.model.new
+      @record = dynamic_scaffold.model.new
       prev_attribute = @record.attributes
       @record.attributes = update_values
-      dsconf.model.transaction do
-        dsconf.form.callback.call(:before_save_create, self, @record, prev_attribute)
+      dynamic_scaffold.model.transaction do
+        dynamic_scaffold.form.callback.call(:before_save_create, self, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -67,8 +67,8 @@ module DynamicScaffold
       @record = find_record(extract_pkeys(values))
       prev_attribute = @record.attributes
       @record.attributes = values
-      dsconf.model.transaction do
-        dsconf.form.callback.call(:before_save_update, self, @record, prev_attribute)
+      dynamic_scaffold.model.transaction do
+        dynamic_scaffold.form.callback.call(:before_save_update, self, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -81,8 +81,8 @@ module DynamicScaffold
     def destroy
       record = find_record(JSON.parse(params['submit_destroy']))
       begin
-        dsconf.model.transaction do
-          dsconf.form.callback.call(:before_save_destroy, self, record, {})
+        dynamic_scaffold.model.transaction do
+          dynamic_scaffold.form.callback.call(:before_save_destroy, self, record, {})
           record.destroy
         end
       rescue ::ActiveRecord::InvalidForeignKey => _error
@@ -94,13 +94,13 @@ module DynamicScaffold
     def sort
       pkeys_list = sort_params
       reset_sequence(pkeys_list.size)
-      dsconf.model.transaction do
+      dynamic_scaffold.model.transaction do
         pkeys_list.each do |pkeys|
           rec = find_record(pkeys.to_hash)
           next_sec = next_sequence!
           prev_attribute = rec.attributes
-          rec[dsconf.list.sorter_attribute] = next_sec
-          dsconf.list.callback.call(:before_save_sort, self, rec, prev_attribute)
+          rec[dynamic_scaffold.list.sorter_attribute] = next_sec
+          dynamic_scaffold.list.callback.call(:before_save_sort, self, rec, prev_attribute)
           rec.save
         end
       end
