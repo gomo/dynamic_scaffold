@@ -7,7 +7,7 @@
 <%= form_with method: :patch, url: dynamic_scaffold_path(:sort_or_destroy) do%>
 <div class="dynamicScaffold-row">
   <%= link_to dynamic_scaffold_path(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
-    <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.buttons.add') %>
+    <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.button.add') %>
   <%end%>
 </div>
 <%= render 'dynamic_scaffold/bootstrap/pagination' %>
@@ -16,7 +16,7 @@
 </div>
 <div class="dynamicScaffold-row">
   <% if @records.empty? %>
-    <p class="lead"><%= t('dynamic_scaffold.messages.no_records', model: dynamic_scaffold.model.model_name.human) %></p>
+    <p class="lead"><%= t('dynamic_scaffold.message.no_records', model: dynamic_scaffold.model.model_name.human) %></p>
   <% else %>
     <ul class="resplist resplist-striped">
       <%@records.each do |record|%>
@@ -34,7 +34,7 @@
               <div class="btn-group">
                 <% page_param_name = dynamic_scaffold.list.pagination ? dynamic_scaffold.list.pagination.param_name : nil %>
                 <%= link_to dynamic_scaffold_path(:edit, key: primary_key_value(record), page: params[page_param_name]), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
-                  <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.buttons.edit') %>
+                  <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.button.edit') %>
                 <%end%>
               </div>
               <% if dynamic_scaffold.list.sorter %>
@@ -57,7 +57,7 @@
               </div>
               <% end %>
               <div class="btn-group">
-                <button data-confirm-message="<%= t('dynamic_scaffold.messages.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm dynamicScaffoldJs-destory" name="submit_destroy" value="<%= primary_key_value(record).to_json %>">
+                <button data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm dynamicScaffoldJs-destory" name="submit_destroy" value="<%= primary_key_value(record).to_json %>">
                   <%= dynamic_scaffold_icon(:delete) %>
                 </button>
               </div>

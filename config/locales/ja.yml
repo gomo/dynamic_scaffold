@@ -4,13 +4,13 @@ ja:
       list: '%{model}一覧'
       edit: '%{model}編集'
       create: '新規%{model}'
-    buttons:
+    button:
       add: '追加'
       edit: '編集'
       save_order: '並び順を保存'
       save: '保存'
       back: '戻る'
-    messages:
+    message:
       no_records: '%{model}の登録はありません。'
       destroy_confirm: '削除します。よろしいですか？'
     alert:

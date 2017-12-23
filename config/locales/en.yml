@@ -4,7 +4,7 @@ en:
       list: '%{model} List'
       edit: 'Edit %{model}'
       create: 'Create %{model}'
-    messages:
+    message:
       no_records: '%{model} is not registered.'
       destroy_confirm: 'Are you sure you want to delete this?'
     alert:

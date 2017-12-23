@@ -40,10 +40,10 @@
   <div>
     <% path_options = dynamic_scaffold.list.pagination ? {dynamic_scaffold.list.pagination.param_name => params[:page]} : {}%>
     <%= link_to dynamic_scaffold_path(:index, path_options), class: 'btn btn-outline-secondary btn-default' do%>
-      <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.buttons.back') %>
+      <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.button.back') %>
     <%end%>
     <button type="submit" class="btn btn-outline-warning btn-warning">
-      <%= dynamic_scaffold_icon :save %> <%= t('dynamic_scaffold.buttons.save') %>
+      <%= dynamic_scaffold_icon :save %> <%= t('dynamic_scaffold.button.save') %>
     </a>
   </div>
 <% end %>
