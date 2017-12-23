@@ -1,2 +1,2 @@
-<% provide :dynamic_scaffold_title, t('dynamic_scaffold.title.create', model: dynamic_scaffold.model.model_name.human) -%>
+<% provide :dynamic_scaffold_title, t('dynamic_scaffold.title.create', model: dynamic_scaffold.title) -%>
 <%= render 'dynamic_scaffold/bootstrap/form', method: :post, url: dynamic_scaffold_path(:index) %>

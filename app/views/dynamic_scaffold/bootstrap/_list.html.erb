@@ -1,4 +1,4 @@
-<% provide :dynamic_scaffold_title, t('dynamic_scaffold.title.list', model: dynamic_scaffold.model.model_name.human) -%>
+<% provide :dynamic_scaffold_title, t('dynamic_scaffold.title.list', model: dynamic_scaffold.title) -%>
 <%unless flash[:dynamic_scaffold_danger].nil? -%>
   <div class="alert alert-danger" role="alert">
     <%= flash[:dynamic_scaffold_danger] %>

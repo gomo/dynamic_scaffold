@@ -263,6 +263,26 @@ gap_buttons: false,       # Whether to display gap buttons.
 highlight_current: false, # Whether to highlight the current page.
 ```
 
+### Page title
+
+You can get the page title like `Country List`, `Edit Country` in your view.
+
+```erb
+# app/views/your_view.html.erb
+<h1><%= yield :dynamic_scaffold_title  %></h1>
+```
+
+If you want change from the model name, set title.
+
+```rb
+# app/controllers/shop_controller.rb
+class ShopController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+    config.title = 'Model'
+    ...
+```
+
 ## Contributing
 
 * We use rspec for test.

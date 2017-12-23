@@ -96,6 +96,15 @@ module DynamicScaffold
       @scope = parameter_names unless parameter_names.nil?
       @scope
     end
+
+    def title=(value)
+      @title = value
+    end
+
+    def title
+      return @title unless @title.nil?
+      @model.model_name.human
+    end
   end
 
   class ListBuilder
