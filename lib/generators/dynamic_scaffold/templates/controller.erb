@@ -1,10 +1,11 @@
 class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_name %>Controller < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold <%= @model_name %> do |config|
-    # You can get the page title like `Country List`, `Edit Country` in your view.
-    # <%%= yield :dynamic_scaffold_title  %>
-    # If you want change from the model name, set title.
-    # config.title = 'Model'
+    # You can get the current page title like `Country List`, `Edit Country` in your view.
+    # <%%= current_title %>
+    # If you want change from the model name, set config.title.name.
+    # Please see https://github.com/gomo/dynamic_scaffold#view-helper for details.
+    # config.title.name = 'Model'
 
     # To enable sorting, call sorter method specifying the column name and direction.
     # config.list.sorter sequence: :desc

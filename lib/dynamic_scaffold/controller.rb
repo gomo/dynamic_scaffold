@@ -4,7 +4,7 @@ module DynamicScaffold
     include ControllerUtilities
 
     included do
-      helper_method :dynamic_scaffold_path, :dynamic_scaffold_icon, :dynamic_scaffold, :primary_key_value
+      helper_method :dynamic_scaffold_path, :dynamic_scaffold_icon, :dynamic_scaffold, :primary_key_value, :current_title
     end
 
     class_methods do

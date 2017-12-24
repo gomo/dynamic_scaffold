@@ -108,5 +108,9 @@ module DynamicScaffold
       def primary_key_value(record)
         [*record.class.primary_key].each_with_object({}) {|col, res| res[col] = record[col] }
       end
+
+      def current_title
+        dynamic_scaffold.title.public_send(params[:action])
+      end
   end
 end

@@ -1,9 +1,9 @@
 ja:
   dynamic_scaffold:
     title:
-      list: '%{model}一覧'
+      index: '%{model}一覧'
       edit: '%{model}編集'
-      create: '新規%{model}'
+      new: '新規%{model}'
     button:
       add: '追加'
       edit: '編集'

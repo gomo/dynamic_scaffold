@@ -84,26 +84,46 @@ module DynamicScaffold
     end
   end
 
+  class Title
+    attr_accessor :name
+
+    def initialize(name)
+      @name = name
+    end
+
+    def index
+      I18n.t('dynamic_scaffold.title.index', model: @name)
+    end
+
+    def edit
+      I18n.t('dynamic_scaffold.title.edit', model: @name)
+    end
+
+    def update
+      I18n.t('dynamic_scaffold.title.edit', model: @name)
+    end
+
+    def new
+      I18n.t('dynamic_scaffold.title.new', model: @name)
+    end
+
+    def create
+      I18n.t('dynamic_scaffold.title.new', model: @name)
+    end
+  end
+
   class Config
-    attr_reader :model, :form, :list
+    attr_reader :model, :form, :list, :title
     def initialize(model)
       @model = model
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
+      @title = Title.new(@model.model_name.human)
     end
 
     def scope(parameter_names = nil)
       @scope = parameter_names unless parameter_names.nil?
       @scope
-    end
-
-    def title=(value)
-      @title = value
-    end
-
-    def title
-      return @title unless @title.nil?
-      @model.model_name.human
     end
   end
 

@@ -79,4 +79,22 @@ describe 'DynamicScaffold::Config' do
       end.to raise_error(DynamicScaffoldSpecError, 'SELECT "shops".* FROM "shops"')
     end
   end
+  context '#title' do
+    it 'should get according to the action.' do
+      config = DynamicScaffold::Config.new Shop
+      expect(config.title.index).to eq 'Shop List'
+      expect(config.title.edit).to eq 'Edit Shop'
+      expect(config.title.update).to eq 'Edit Shop'
+      expect(config.title.new).to eq 'Create Shop'
+      expect(config.title.create).to eq 'Create Shop'
+
+      config = DynamicScaffold::Config.new Shop
+      config.title.name = 'foobar'
+      expect(config.title.index).to eq 'foobar List'
+      expect(config.title.edit).to eq 'Edit foobar'
+      expect(config.title.update).to eq 'Edit foobar'
+      expect(config.title.new).to eq 'Create foobar'
+      expect(config.title.create).to eq 'Create foobar'
+    end
+  end
 end

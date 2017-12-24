@@ -263,13 +263,13 @@ gap_buttons: false,       # Whether to display gap buttons.
 highlight_current: false, # Whether to highlight the current page.
 ```
 
-### Page title
+### View helper
 
-You can get the page title like `Country List`, `Edit Country` in your view.
+You can get the current page title like `Country List`, `Edit Country` in your view.
 
 ```erb
 # app/views/your_view.html.erb
-<h1><%= yield :dynamic_scaffold_title  %></h1>
+<h1><%= current_page  %></h1>
 ```
 
 If you want change from the model name, set title.
@@ -279,8 +279,21 @@ If you want change from the model name, set title.
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-    config.title = 'Model'
+    config.title.name = 'Model'
     ...
+```
+
+You can get the title and link of each action.
+
+```erb
+<ol class="breadcrumb">
+  <% if params['action'] == 'index' %>
+    <li class="active"><%= dynamic_scaffold.title.index %></li>
+  <% else %>
+    <li><%= link_to dynamic_scaffold.title.index, dynamic_scaffold_path(:index) %></li>
+    <li class="active"><%= current_title %></li>
+  <% end %>
+</ol>
 ```
 
 ## Contributing
