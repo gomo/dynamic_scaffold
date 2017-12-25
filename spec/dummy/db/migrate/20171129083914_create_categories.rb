@@ -1,8 +1,8 @@
 class CreateCategories < ActiveRecord::Migration[5.1]
   def change
     create_table :categories do |t|
-      t.string :name
-      t.integer :sequence
+      t.string :name, null: false
+      t.integer :sequence, null: false
       
       t.timestamps
     end

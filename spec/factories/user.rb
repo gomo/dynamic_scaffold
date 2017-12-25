@@ -6,6 +6,7 @@ FactoryBot.define do
 
     sequence(:email) {|n| "#{n}@example.com" }
     sequence(:encrypted_password) {|n| "#{n}encrypted_password" }
+    sequence(:sequence)
     role { role_value }
   end
 end

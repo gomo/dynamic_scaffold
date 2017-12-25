@@ -52,6 +52,11 @@ module DynamicScaffold
       @record = dynamic_scaffold.model.new
       prev_attribute = @record.attributes
       @record.attributes = update_values
+      if dynamic_scaffold.list.sorter
+        attr = dynamic_scaffold.list.sorter_attribute
+        value = dynamic_scaffold.model.maximum(attr)
+        @record[attr] = value ? value + 1 : 0
+      end
       dynamic_scaffold.model.transaction do
         dynamic_scaffold.form.callback.call(:before_save_create, self, @record, prev_attribute)
         if @record.save
