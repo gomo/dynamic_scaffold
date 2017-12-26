@@ -96,7 +96,7 @@ You need to load dynamic_scaffold files for CSS and Javascript.　Currently, vie
 Customize each item in the block of dynamic_scaffold method.
 
 ```rb
-# app/controllers/shop_controller.rb
+# app/controllers/shops_controller.rb
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
@@ -111,7 +111,7 @@ end
 You can customize the list through the `DynamicScaffold::Config#list` property.
 
 ```rb
-# app/controllers/shop_controller.rb
+# app/controllers/shops_controller.rb
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
@@ -145,7 +145,7 @@ end
 You can customize the form through the `DynamicScaffold::Config#form` property.
 
 ```rb
-# app/controllers/shop_controller.rb
+# app/controllers/shops_controller.rb
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
@@ -240,7 +240,7 @@ class CountriesController < ApplicationController
 You can enable pagination with [kaminari](https://github.com/kaminari/kaminari).
 
 ```rb
-# app/controllers/shop_controller.rb
+# app/controllers/shops_controller.rb
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
@@ -263,6 +263,53 @@ gap_buttons: false,       # Whether to display gap buttons.
 highlight_current: false, # Whether to highlight the current page.
 ```
 
+### Scoping
+
+You can scoping by url param.
+
+For example, you create a scaffold for a user table with a roll column on a separate page for each role.
+
+```rb
+create_table :users do |t|
+  t.string :email, null: false
+  t.string :encrypted_password, null: false
+  t.integer :role, limit: 2, null: false
+end
+
+class User < ApplicationRecord
+  enum role: { admin: 1, staff: 2, member: 3 }
+end
+```
+
+Set the route as follows.
+
+```rb
+Rails.application.routes.draw do
+  dynamic_scaffold_for 'users/:role', controller: 'users', role: Regexp.new(User.roles.keys.join('|'))
+end
+```
+
+```
+                users GET   /users/:role(.:format)                    users#index {:role=>/admin|staff|member/}
+                      POST  /users/:role(.:format)                    users#create {:role=>/admin|staff|member/}
+            users_new GET   /users/:role/new(.:format)                users#new {:role=>/admin|staff|member/}
+           users_edit GET   /users/:role/edit(.:format)               users#edit {:role=>/admin|staff|member/}
+users_sort_or_destroy PATCH /users/:role/sort_or_destroy(.:format)    users#sort_or_destroy {:role=>/admin|staff|member/}
+         users_update PATCH /users/:role/update(.:format)             users#update {:role=>/admin|staff|member/}
+```
+
+For the controller, as follows.
+
+```rb
+# app/controllers/users_controller.rb
+class UsersController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold User do |c|
+    c.scope [:role]
+    ...
+```
+
+
 ### View helper
 
 You can get the current page title like `Country List`, `Edit Country` in your view.
@@ -275,7 +322,7 @@ You can get the current page title like `Country List`, `Edit Country` in your v
 If you want change from the model name, set title.
 
 ```rb
-# app/controllers/shop_controller.rb
+# app/controllers/shops_controller.rb
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
