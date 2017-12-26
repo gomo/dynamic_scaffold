@@ -41,8 +41,8 @@ module DynamicScaffold
       # Get paramters for update record.
       def update_values
         values = params
-                 .require(dynamic_scaffold.model.name.underscore)
-                 .permit(*dynamic_scaffold.form.fields.map(&:strong_parameter))
+                   .require(dynamic_scaffold.model.name.underscore)
+                   .permit(*dynamic_scaffold.form.fields.map(&:strong_parameter))
 
         if dynamic_scaffold.scope && !valid_for_scope?(values)
           raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params} on this scope"
@@ -111,6 +111,12 @@ module DynamicScaffold
 
       def current_title
         dynamic_scaffold.title.public_send(params[:action])
+      end
+
+      def bind_sorter_value(record)
+        attr = dynamic_scaffold.list.sorter_attribute
+        value = dynamic_scaffold.model.maximum(attr)
+        record[attr] = value ? value + 1 : 0
       end
   end
 end

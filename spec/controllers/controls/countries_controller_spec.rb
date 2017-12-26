@@ -98,13 +98,13 @@ RSpec.describe Controls::CountriesController, type: :controller do
   describe 'Create with sorter' do
     it 'should set max value for sorter column.' do
       post :create, params: { locale: :en, country: {
-        name: 'foobar',
+        name: 'foobar'
       } }
       country = assigns(:record)
       expect(country.sequence).to eq 0
 
       post :create, params: { locale: :en, country: {
-        name: 'foobar',
+        name: 'foobar'
       } }
       country = assigns(:record)
       expect(country.sequence).to eq 1
