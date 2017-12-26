@@ -20,8 +20,11 @@ if (window.Element && !Element.prototype.closest) {
     document.dispatchEvent(event)
   }
 
-  window.onload = fireEvent
-  document.addEventListener('turbolinks:load', fireEvent)
+  document.addEventListener('DOMContentLoaded', fireEvent)
+  document.addEventListener('turbolinks:load', function(e){
+    // Not fire after the initial page load
+    if (e.data.timing.visitEnd) fireEvent()
+  })
 })()
 
 // promise polyfill
