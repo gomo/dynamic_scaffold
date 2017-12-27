@@ -80,10 +80,10 @@ RSpec.describe Controls::ShopsController, type: :controller do
     it 'should display additional elements on the page.' do
       get :new, params: { locale: :en }
       body = response.body.delete!("\n").gsub!(/> +</, '><')
-      expect(body).to match(/<label>Block<\/label><div><input class="form-control" type="text" name="shop\[block\]" \/><\/div>/)
-      expect(body).to match(
-        /<label>Block with label<\/label><input class="form-control" type="text" name="shop\[block_with_label\]" \/>/
-      )
+      expect(body).to match(/<label>Block<\/label>/)
+      expect(body).to match(/<div><input class="form-control" type="text" name="shop\[block\]" \/><\/div>/)
+      expect(body).to match(/<label>Block with label<\/label>/)
+      expect(body).to match(/<input class="form-control" type="text" name="shop\[block_with_label\]" \/>/)
     end
   end
   describe '#dynamic_scaffold_path' do
