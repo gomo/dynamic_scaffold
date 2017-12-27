@@ -259,6 +259,12 @@ module DynamicScaffold
       field
     end
 
+    def datetime_select(*args)
+      field = Form::Field::DatetimeSelect.new(@config, :datetime_select, *args)
+      @fields << field
+      field
+    end
+
     def block(name, &block)
       field = Form::Field::Block.new(@config, :block, name, block)
       @fields << field
