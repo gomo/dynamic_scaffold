@@ -247,6 +247,12 @@ module DynamicScaffold
       field
     end
 
+    def time_select(*args)
+      field = Form::Field::TimeSelect.new(@config, :time_select, *args)
+      @fields << field
+      field
+    end
+
     def block(name, &block)
       field = Form::Field::Block.new(@config, :block, name, block)
       @fields << field
