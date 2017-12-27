@@ -253,6 +253,12 @@ module DynamicScaffold
       field
     end
 
+    def date_select(*args)
+      field = Form::Field::DateSelect.new(@config, :date_select, *args)
+      @fields << field
+      field
+    end
+
     def block(name, &block)
       field = Form::Field::Block.new(@config, :block, name, block)
       @fields << field
