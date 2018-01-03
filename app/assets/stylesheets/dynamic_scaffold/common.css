@@ -4,6 +4,11 @@
 
 .dynamicScaffold-error-message{
   color: #dc3545;
+  
+}
+
+.dynamicScaffold-error-message path{
+  fill: #dc3545;
 }
 
 .dynamicScaffold-destorying{
