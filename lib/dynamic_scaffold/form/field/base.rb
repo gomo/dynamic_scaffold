@@ -58,6 +58,32 @@ module DynamicScaffold
           @name
         end
 
+        def if(&block)
+          @if_block = block
+          self
+        end
+
+        def unless(&block)
+          @unless_block = block
+          self
+        end
+
+        def needs_rendering?(view)
+          return true unless @if_block || @unless_block
+          return view.instance_exec(&@if_block) if @if_block
+          return !view.instance_exec(&@unless_block) if @unless_block
+        end
+
+        def error_proxy(attribute_name)
+          @error_proxy = attribute_name
+          self
+        end
+
+        def error_name
+          return @error_proxy if @error_proxy
+          @name
+        end
+
         protected
 
           def build_html_attributes(classnames)
