@@ -4,8 +4,8 @@
       <% if !elem.label? && elem.type?(:hidden_field) %>
         <%= elem.render(self, form) %>
       <% else %>
-        <div class="<%= classNames('form-group', {'has-error': @record.errors[elem.name].any?}) %>">
-          <label><%= elem.label %></label>
+        <div class="<%= classNames('form-group', {'has-error': @record.errors[elem.proxy_field.name].any?}) %>">
+          <label><%= elem.proxy_field.label %></label>
           <div class="clearfix">
             <% if elem.type? :collection_check_boxes %>
               <%= elem.render(self, form) do |cb|%>
@@ -24,12 +24,12 @@
                 </div>
               <%end%>
             <% else %>
-              <%= elem.render(self, form, classNames('form-control', {'is-invalid': @record.errors[elem.name].any?})) %>
+              <%= elem.render(self, form, classNames('form-control', {'is-invalid': @record.errors[elem.proxy_field.name].any?})) %>
             <% end %>
           </div>
-          <%if @record.errors[elem.error_name].any?%>
+          <%if @record.errors[elem.proxy_field.name].any?%>
             <ul class="dynamicScaffold-error-message">
-              <%@record.errors.full_messages_for(elem.error_name).each do |err|%>
+              <%@record.errors.full_messages_for(elem.proxy_field.name).each do |err|%>
               <li><%= dynamic_scaffold_icon :error %> <%= err %></li>
               <%end%>
             </ul>

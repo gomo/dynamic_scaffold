@@ -70,18 +70,18 @@ module DynamicScaffold
 
         def needs_rendering?(view)
           return true unless @if_block || @unless_block
-          return view.instance_exec(&@if_block) if @if_block
-          return !view.instance_exec(&@unless_block) if @unless_block
+          return view.instance_exec(view.controller.params, &@if_block) if @if_block
+          return !view.instance_exec(view.controller.params, &@unless_block) if @unless_block
         end
 
-        def error_proxy(attribute_name)
-          @error_proxy = attribute_name
+        def proxy(attribute_name)
+          @proxy = attribute_name
           self
         end
 
-        def error_name
-          return @error_proxy if @error_proxy
-          @name
+        def proxy_field
+          return self unless @proxy
+          @config.form.fields.select{|f| f.name == @proxy}.first
         end
 
         protected
