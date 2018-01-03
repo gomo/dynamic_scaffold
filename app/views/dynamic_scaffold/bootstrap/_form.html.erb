@@ -1,4 +1,4 @@
-<%= form_with method: method, model: @record, url: url do |form| %>
+<%= form_with method: method, model: @record, url: url, local: true do |form| %>
   <%dynamic_scaffold.form.fields.each do |elem|%>
     <% if !elem.label? && elem.type?(:hidden_field) %>
       <%= elem.render(self, form) %>
