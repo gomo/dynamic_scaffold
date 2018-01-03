@@ -85,30 +85,40 @@ module DynamicScaffold
   end
 
   class Title
-    attr_accessor :name
-
     def initialize(name)
       @name = name
     end
 
-    def index
-      I18n.t('dynamic_scaffold.title.index', model: @name)
+    def name=(val)
+      @name = val
     end
 
-    def edit
-      I18n.t('dynamic_scaffold.title.edit', model: @name)
+    def name(view = nil, &block)
+      @block = block if block_given?
+      if view
+        return view.instance_exec(view.controller.params, &@block) unless @block.nil?
+        @name
+      end
     end
 
-    def update
-      I18n.t('dynamic_scaffold.title.edit', model: @name)
+    def index(view)
+      I18n.t('dynamic_scaffold.title.index', model: name(view))
     end
 
-    def new
-      I18n.t('dynamic_scaffold.title.new', model: @name)
+    def edit(view)
+      I18n.t('dynamic_scaffold.title.edit', model: name(view))
     end
 
-    def create
-      I18n.t('dynamic_scaffold.title.new', model: @name)
+    def update(view)
+      I18n.t('dynamic_scaffold.title.edit', model: name(view))
+    end
+
+    def new(view)
+      I18n.t('dynamic_scaffold.title.new', model: name(view))
+    end
+
+    def create(view)
+      I18n.t('dynamic_scaffold.title.new', model: name(view))
     end
   end
 

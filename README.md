@@ -318,7 +318,7 @@ You can get the current page title like `Country List`, `Edit Country` in your v
 
 ```erb
 # app/views/your_view.html.erb
-<h1><%= current_page  %></h1>
+<h1><%= current_page %></h1>
 ```
 
 If you want change from the model name, set title.
@@ -343,6 +343,18 @@ You can get the title and link of each action.
     <li class="active"><%= current_title %></li>
   <% end %>
 </ol>
+```
+
+If you want to dynamically set according to parameters, you can also use block.
+
+```rb
+# app/controllers/shops_controller.rb
+class ShopController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+    config.title.name do |params|
+      I18n.t "enum.user.role.#{params[role]}", default: params[role].titleize
+    end
 ```
 
 ## Contributing

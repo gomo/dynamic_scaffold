@@ -110,7 +110,7 @@ module DynamicScaffold
       end
 
       def current_title
-        dynamic_scaffold.title.public_send(params[:action])
+        dynamic_scaffold.title.public_send(params[:action], view_context)
       end
 
       def bind_sorter_value(record)
