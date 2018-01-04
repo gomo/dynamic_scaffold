@@ -24,11 +24,12 @@ RSpec.describe Controls::UsersController, type: :controller do
       expect(response.body).to match(/<div class="resplist-value">member<\/div>/)
     end
   end
+
   describe 'New' do
     render_views
     it 'should bind the specified value to the role field.' do
       get :new, params: { locale: :en, role: 'admin' }
-      # Check whether non scpope column is hidden.
+      # Check whether scope column is hidden.
       expect(response.body).to match(/<input class="form-control" type="text" name="user\[email\]" \/>/)
       expect(response.body).to match(/<input type="hidden" value="admin" name="user\[role\]" \/>/)
 
