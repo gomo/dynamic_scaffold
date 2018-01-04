@@ -6,10 +6,10 @@ module Controls
       c.form.text_field :email
       c.form.text_field(:encrypted_password)
         .label('FooBar')
-        .if {|p| ['new', 'create'].include? p[:action]}
+        .if {|p| %w[new create].include? p[:action] }
       c.form.text_field(:password)
         .proxy(:encrypted_password)
-        .if {|p| ['edit', 'update'].include? p[:action]}
+        .if {|p| %w[edit update].include? p[:action] }
     end
   end
 end

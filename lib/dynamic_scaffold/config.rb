@@ -89,16 +89,15 @@ module DynamicScaffold
       @name = name
     end
 
-    def name=(val)
-      @name = val
-    end
+    attr_writer :name
 
     def name(view = nil, &block)
       @block = block if block_given?
-      if view
-        return view.instance_exec(view.controller.params, &@block) unless @block.nil?
-        @name
-      end
+      return self unless view
+
+      # getter
+      return view.instance_exec(view.controller.params, &@block) unless @block.nil?
+      @name
     end
 
     def index(view)

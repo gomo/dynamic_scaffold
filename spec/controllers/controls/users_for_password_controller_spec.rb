@@ -35,7 +35,7 @@ RSpec.describe Controls::UsersForPasswordController, type: :controller do
         user: {
           id: user.id,
           encrypted_password: ''
-        } 
+        }
       }
       body = response.body.delete!("\n").gsub!(/> +</, '><')
       expect(body).to match(

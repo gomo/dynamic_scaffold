@@ -97,9 +97,8 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(config.title.new(helper)).to eq 'Create foobar'
         expect(config.title.create(helper)).to eq 'Create foobar'
 
-
         config = DynamicScaffold::Config.new Shop
-        config.title.name do |params|
+        config.title.name do |_params|
           'Block'
         end
         expect(config.title.index(helper)).to eq 'Block List'
