@@ -12,11 +12,10 @@ module DynamicScaffold
         path = resources[0]
         controller = options[:controller] ? options[:controller] : resources[0]
         as_base = options[:as] ? options[:as] : controller.tr('/', '_')
-
         get(
           path,
           options.merge(
-            as: as_base,
+            as: "#{as_base}_index",
             to: "#{controller}#index"
           )
         )
@@ -30,29 +29,29 @@ module DynamicScaffold
         get(
           "#{path}/new",
           options.merge(
-            as: "#{as_base}_new",
+            as: "new_#{as_base}",
             to: "#{controller}#new"
           )
         )
         get(
           "#{path}/edit",
           options.merge(
-            as: "#{as_base}_edit",
-            to: "#{controller}#edit"
+            as: "edit_#{as_base}",
+            to: "#{controller}#edit",
+          )
+        )
+        patch(
+          path,
+          options.merge(
+            as: as_base,
+            to: "#{controller}#update"
           )
         )
         patch(
           "#{path}/sort_or_destroy",
           options.merge(
-            as: "#{as_base}_sort_or_destroy",
+            as: "sort_or_destroy_#{as_base}",
             to: "#{controller}#sort_or_destroy"
-          )
-        )
-        patch(
-          "#{path}/update",
-          options.merge(
-            as: "#{as_base}_update",
-            to: "#{controller}#update"
           )
         )
       end

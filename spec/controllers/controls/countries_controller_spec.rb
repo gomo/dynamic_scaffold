@@ -80,8 +80,8 @@ RSpec.describe Controls::CountriesController, type: :controller do
       get :index, params: { locale: :en }
       expect(controller.send(:dynamic_scaffold_path, :index)).to eq '/en/controls/master/countries'
       expect(controller.send(:dynamic_scaffold_path, :new)).to eq '/en/controls/master/countries/new'
+      expect(controller.send(:dynamic_scaffold_path, :edit)).to eq '/en/controls/master/countries/edit'
       expect(controller.send(:dynamic_scaffold_path, :sort_or_destroy)).to eq '/en/controls/master/countries/sort_or_destroy'
-      expect(controller.send(:dynamic_scaffold_path, :update)).to eq '/en/controls/master/countries/update'
     end
   end
 
