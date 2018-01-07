@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'root#index'
+  # root 'root#index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   scope '/:locale' do
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
         dynamic_scaffold_for 'countries'
         dynamic_scaffold_for 'states'
         dynamic_scaffold_for 'shops'
-        dynamic_scaffold_for 'users/:role', controller: 'users', role: Regexp.new(User.roles.keys.join('|'))
+        dynamic_scaffold_for 'users/:role', controller: 'users', role: Regexp.new(User.roles.keys.join('|')), as: :users
         dynamic_scaffold_for 'users_for_password'
         dynamic_scaffold_for 'countries_for_callbacks'
         dynamic_scaffold_for 'countries_for_pagination'

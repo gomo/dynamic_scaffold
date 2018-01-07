@@ -9,7 +9,7 @@ module DynamicScaffold
         def render(_view, form, classnames = nil)
           html_attributes = build_html_attributes(classnames)
           # Retain the value of the password field on error.
-          html_attributes.merge!(value: form.object.public_send(@name)) if @type == :password_field
+          html_attributes[:value] = form.object.public_send(@name) if @type == :password_field
           form.public_send(@type, @name, html_attributes)
         end
       end

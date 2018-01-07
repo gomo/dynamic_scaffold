@@ -22,9 +22,9 @@ RSpec.describe Controls::CountriesForPaginationController, type: :controller do
       countries = FactoryBot.create_list(:country, 3)
       get :index, params: { locale: :en, foobar: 3 }
       # The parameter name of the edit page is fixed as `page`.
-      expect(response.body).to match(/href="\/en\/controls\/master\/countries_for_pagination\/edit\?key%5Bid%5D=1&amp;page=3"/)
+      expect(response.body).to match(/href="\/en\/controls\/master\/countries_for_pagination\/1\/edit\?page=3"/)
       # The page ID is assigned to the back button with the specified parameter name.
-      get :edit, params: { locale: :en, key: controller.send(:primary_key_value, countries[2]), page: 3 }
+      get :edit, params: { locale: :en, id: countries[2].id, page: 3 }
       expect(response.body).to match(/href="\/en\/controls\/master\/countries_for_pagination\?foobar=3"/)
     end
   end

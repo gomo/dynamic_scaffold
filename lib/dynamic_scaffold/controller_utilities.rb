@@ -26,9 +26,7 @@ module DynamicScaffold
 
       # Get parameters for edit action. `key[column] => value`
       def edit_params
-        params
-          .require('key')
-          .permit(*dynamic_scaffold.model.primary_key)
+        params.permit(*dynamic_scaffold.model.primary_key)
       end
 
       # Get paramters for sort action. `pkeys[][column] => value`

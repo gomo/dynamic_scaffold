@@ -11,7 +11,7 @@ RSpec.describe Controls::CountriesForCallbacksController, type: :controller do
       country = FactoryBot.create(:country)
       prev_name = country.name
       country.name = 'foobar'
-      patch :update, params: { locale: :en, country: country.attributes }
+      patch :update, params: { locale: :en, id: country.id, country: country.attributes }
       country.reload
       expect(country.name).to eq "executed update before save!! [#{prev_name}:foobar]"
     end

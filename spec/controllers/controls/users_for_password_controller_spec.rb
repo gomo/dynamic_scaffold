@@ -12,7 +12,7 @@ RSpec.describe Controls::UsersForPasswordController, type: :controller do
       expect(body).not_to match(/name="user\[password\]"/)
 
       user = FactoryBot.create(:user)
-      get :edit, params: { locale: :en, key: controller.send(:primary_key_value, user) }
+      get :edit, params: { locale: :en, id: user.id }
       body = response.body.delete!("\n").gsub!(/> +</, '><')
       expect(body).to match(
         /<input[^>]+name="user\[password\]"/
@@ -24,7 +24,7 @@ RSpec.describe Controls::UsersForPasswordController, type: :controller do
     render_views
     it 'should display the values of the attribute specifying the label and error message.' do
       user = FactoryBot.create(:user)
-      get :edit, params: { locale: :en, key: controller.send(:primary_key_value, user) }
+      get :edit, params: { locale: :en, id: user.id }
       body = response.body.delete!("\n").gsub!(/> +</, '><')
       expect(body).to match(
         /<label>FooBar<\/label><div class="clearfix"><input class="form-control" type="text" name="user\[password\]"/
@@ -32,6 +32,7 @@ RSpec.describe Controls::UsersForPasswordController, type: :controller do
 
       patch :update, params: {
         locale: :en,
+        id: user.id,
         user: {
           id: user.id,
           encrypted_password: ''

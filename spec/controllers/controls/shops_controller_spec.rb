@@ -39,12 +39,12 @@ RSpec.describe Controls::ShopsController, type: :controller do
     render_views
     it 'should be able to edit.' do
       shop = FactoryBot.create(:shop)
-      get :edit, params: { locale: :en, key: controller.send(:primary_key_value, shop) }
+      get :edit, params: { locale: :en, id: shop.id }
       expect(response).to render_template(:edit)
       expect(response.body).not_to match(/class="[^"]*dynamicScaffold\-error\-message[^"]*"/)
 
       # fail
-      patch :update, params: { locale: :en, shop: {
+      patch :update, params: { locale: :en, id: shop.id, shop: {
         id: shop.id,
         name: ''
       } }
@@ -54,7 +54,7 @@ RSpec.describe Controls::ShopsController, type: :controller do
 
       category = FactoryBot.create(:category)
       states = FactoryBot.create_list(:state, 2)
-      patch :update, params: { locale: :en, shop: {
+      patch :update, params: { locale: :en, id: shop.id, shop: {
         id: shop.id,
         name: 'udpate',
         memo: 'udpate udpate udpate',
@@ -93,7 +93,7 @@ RSpec.describe Controls::ShopsController, type: :controller do
       expect(controller.send(:dynamic_scaffold_path, :index)).to eq '/en/controls/master/shops'
       expect(controller.send(:dynamic_scaffold_path, :new)).to eq '/en/controls/master/shops/new'
       expect(controller.send(:dynamic_scaffold_path, :sort_or_destroy)).to eq '/en/controls/master/shops/sort_or_destroy'
-      expect(controller.send(:dynamic_scaffold_path, :edit)).to eq '/en/controls/master/shops/edit'
+      expect(controller.send(:dynamic_scaffold_path, :edit, id: 1)).to eq '/en/controls/master/shops/1/edit'
     end
   end
 end

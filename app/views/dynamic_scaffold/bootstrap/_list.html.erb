@@ -32,7 +32,7 @@
             <div class="float-right pull-right">
               <div class="btn-group">
                 <% page_param_name = dynamic_scaffold.list.pagination ? dynamic_scaffold.list.pagination.param_name : nil %>
-                <%= link_to dynamic_scaffold_path(:edit, key: primary_key_value(record), page: params[page_param_name]), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
+                <%= link_to dynamic_scaffold_path(:edit, id: record[record.class.primary_key], page: params[page_param_name]), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.button.edit') %>
                 <%end%>
               </div>

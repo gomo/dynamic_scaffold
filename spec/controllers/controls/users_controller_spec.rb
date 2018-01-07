@@ -47,13 +47,13 @@ RSpec.describe Controls::UsersController, type: :controller do
       staff = FactoryBot.create(:user, role_value: :staff)
       member = FactoryBot.create(:user, role_value: :member)
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: controller.send(:primary_key_value, admin) }
+        get :edit, params: { locale: :en, role: 'admin', id: admin.id }
       end.not_to raise_error
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: controller.send(:primary_key_value, staff) }
+        get :edit, params: { locale: :en, role: 'admin', id: staff.id }
       end.to raise_error(::ActiveRecord::RecordNotFound)
       expect do
-        get :edit, params: { locale: :en, role: 'admin', key: controller.send(:primary_key_value, member) }
+        get :edit, params: { locale: :en, role: 'admin', id: member.id }
       end.to raise_error(::ActiveRecord::RecordNotFound)
     end
   end
@@ -64,19 +64,19 @@ RSpec.describe Controls::UsersController, type: :controller do
       staff = FactoryBot.create(:user, role_value: :staff)
       member = FactoryBot.create(:user, role_value: :member)
       expect do
-        patch :update, params: { locale: :en, role: 'admin', user: {
+        patch :update, params: { id: admin.id, locale: :en, role: 'admin', user: {
           id: admin.id,
           email: 'udpate@example.com'
         } }
       end.not_to raise_error
       expect do
-        patch :update, params: { locale: :en, role: 'admin', user: {
+        patch :update, params: { id: staff.id, locale: :en, role: 'admin', user: {
           id: staff.id,
           email: 'udpate@example.com'
         } }
       end.to raise_error(::ActiveRecord::RecordNotFound)
       expect do
-        patch :update, params: { locale: :en, role: 'admin', user: {
+        patch :update, params: { id: member.id, locale: :en, role: 'admin', user: {
           id: member.id,
           email: 'udpate@example.com'
         } }
@@ -86,7 +86,7 @@ RSpec.describe Controls::UsersController, type: :controller do
       admin = FactoryBot.create(:user, role_value: :admin)
 
       expect do
-        patch :update, params: { locale: :en, role: 'admin', user: {
+        patch :update, params: { id: admin.id, locale: :en, role: 'admin', user: {
           id: admin.id,
           email: 'udpate@example.com',
           role: :staff
@@ -130,7 +130,7 @@ RSpec.describe Controls::UsersController, type: :controller do
       expect(controller.send(:dynamic_scaffold_path, :index)).to eq '/en/controls/master/users/admin'
       expect(controller.send(:dynamic_scaffold_path, :new)).to eq '/en/controls/master/users/admin/new'
       expect(controller.send(:dynamic_scaffold_path, :sort_or_destroy)).to eq '/en/controls/master/users/admin/sort_or_destroy'
-      expect(controller.send(:dynamic_scaffold_path, :edit)).to eq '/en/controls/master/users/admin/edit'
+      expect(controller.send(:dynamic_scaffold_path, :edit, id: 1)).to eq '/en/controls/master/users/admin/1/edit'
     end
   end
 end
