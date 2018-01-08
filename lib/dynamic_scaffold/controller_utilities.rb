@@ -19,7 +19,8 @@ module DynamicScaffold
 
       # Convert pkey_string value to hash.
       def pkey_string_to_hash(pkey)
-        # Support multiple pkey
+        # https://github.com/gomo/dynamic_scaffold/pull/9/commits/ff5de0e38b3544347e82539c45ffd2efaf3410da
+        # Stop support multiple pkey, on this commit.
         # Convert "key:1,code:foo" to {key: "1", code: "foo"}
         pkey.split(',').map {|v| v.split(':') }.each_with_object({}) {|v, res| res[v.first] = v.last }
       end
