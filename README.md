@@ -46,14 +46,13 @@ end
 This will generate the following routes.
 
 ```
-              Prefix Verb  URI Pattern                                                                 Controller#Action
-                 root GET   /                                                                          root#index
-                shops GET   /shops(.:format)                                                           shops#index
-                      POST  /shops(.:format)                                                           shops#create
-            shops_new GET   /shops/new(.:format)                                                       shops#new
-           shops_edit GET   /shops/edit(.:format)                                                      shops#edit
-shops_sort_or_destroy PATCH /shops/sort_or_destroy(.:format)                                           shops#sort_or_destroy
-         shops_update PATCH /shops/update(.:format)                                                    shops#update
+sort_or_destroy_controls_master_shops PATCH /:locale/controls/master/shops/sort_or_destroy(.:format)     controls/shops#sort_or_destroy
+                controls_master_shops GET   /:locale/controls/master/shops(.:format)                     controls/shops#index
+                                      POST  /:locale/controls/master/shops(.:format)                     controls/shops#create
+             new_controls_master_shop GET   /:locale/controls/master/shops/new(.:format)                 controls/shops#new
+            edit_controls_master_shop GET   /:locale/controls/master/shops/:id/edit(.:format)            controls/shops#edit
+                 controls_master_shop PATCH /:locale/controls/master/shops/:id(.:format)                 controls/shops#update
+                                      PUT   /:locale/controls/master/shops/:id(.:format)                 controls/shops#update
 ```
 
 ### Generate controller and views
@@ -287,17 +286,18 @@ Set the route as follows.
 
 ```rb
 Rails.application.routes.draw do
-  dynamic_scaffold_for 'users/:role', controller: 'users', role: Regexp.new(User.roles.keys.join('|'))
+  dynamic_scaffold_for 'users/:role', controller: 'users', as: 'users', role: Regexp.new(User.roles.keys.join('|'))
 end
 ```
 
 ```
-                users GET   /users/:role(.:format)                    users#index {:role=>/admin|staff|member/}
-                      POST  /users/:role(.:format)                    users#create {:role=>/admin|staff|member/}
-            users_new GET   /users/:role/new(.:format)                users#new {:role=>/admin|staff|member/}
-           users_edit GET   /users/:role/edit(.:format)               users#edit {:role=>/admin|staff|member/}
-users_sort_or_destroy PATCH /users/:role/sort_or_destroy(.:format)    users#sort_or_destroy {:role=>/admin|staff|member/}
-         users_update PATCH /users/:role/update(.:format)             users#update {:role=>/admin|staff|member/}
+sort_or_destroy_controls_master_users PATCH /:locale/controls/master/users/:role/sort_or_destroy(.:format)  controls/users#sort_or_destroy {:role=>/admin|staff|member/}
+                controls_master_users GET   /:locale/controls/master/users/:role(.:format)                  controls/users#index {:role=>/admin|staff|member/}
+                                      POST  /:locale/controls/master/users/:role(.:format)                  controls/users#create {:role=>/admin|staff|member/}
+             new_controls_master_user GET   /:locale/controls/master/users/:role/new(.:format)              controls/users#new {:role=>/admin|staff|member/}
+            edit_controls_master_user GET   /:locale/controls/master/users/:role/:id/edit(.:format)         controls/users#edit {:role=>/admin|staff|member/}
+                 controls_master_user PATCH /:locale/controls/master/users/:role/:id(.:format)              controls/users#update {:role=>/admin|staff|member/}
+                                      PUT   /:locale/controls/master/users/:role/:id(.:format)              controls/users#update {:role=>/admin|staff|member/}
 ```
 
 For the controller, as follows.
