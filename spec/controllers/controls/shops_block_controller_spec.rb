@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Controls::ShopsController, type: :controller do
+RSpec.describe Controls::ShopsBlockController, type: :controller do
   describe 'Create' do
     render_views
     it 'should be able to create.' do
@@ -11,7 +11,7 @@ RSpec.describe Controls::ShopsController, type: :controller do
       # fail
       post :create, params: { locale: :en, shop: { name: '' } }
       expect(response).to render_template(:new)
-      expect(response).not_to redirect_to controls_master_shops_path
+      expect(response).not_to redirect_to new_controls_master_shops_block_path
       expect(response.body).to match(/class="[^"]*dynamicScaffold\-error\-message[^"]*"/)
 
       # success
@@ -32,7 +32,7 @@ RSpec.describe Controls::ShopsController, type: :controller do
       expect(shop.states.pluck(:id)).to match_array states.pluck(:id)
       expect(shop.status).to eq Shop.statuses.keys.first
 
-      expect(response).to redirect_to controls_master_shops_path
+      expect(response).to redirect_to controls_master_shops_block_index_path
     end
   end
   describe 'Edit' do
@@ -49,7 +49,7 @@ RSpec.describe Controls::ShopsController, type: :controller do
         name: ''
       } }
       expect(response).to render_template(:edit)
-      expect(response).not_to redirect_to controls_master_shops_path
+      expect(response).not_to redirect_to edit_controls_master_shops_block_path
       expect(response.body).to match(/class="[^"]*dynamicScaffold\-error\-message[^"]*"/)
 
       category = FactoryBot.create(:category)
@@ -72,7 +72,7 @@ RSpec.describe Controls::ShopsController, type: :controller do
       expect(updated_shop.states.pluck(:id)).to match_array states.pluck(:id)
       expect(updated_shop.status).to eq Shop.statuses.keys.second
 
-      expect(response).to redirect_to controls_master_shops_path
+      expect(response).to redirect_to controls_master_shops_block_index_path
     end
   end
   describe 'block' do
@@ -90,10 +90,10 @@ RSpec.describe Controls::ShopsController, type: :controller do
     it 'should be able to get path.' do
       get :index, params: { locale: :en }
 
-      expect(controller.send(:dynamic_scaffold_path, :index)).to eq '/en/controls/master/shops'
-      expect(controller.send(:dynamic_scaffold_path, :new)).to eq '/en/controls/master/shops/new'
-      expect(controller.send(:dynamic_scaffold_path, :sort_or_destroy)).to eq '/en/controls/master/shops/sort_or_destroy'
-      expect(controller.send(:dynamic_scaffold_path, :edit, id: 1)).to eq '/en/controls/master/shops/1/edit'
+      expect(controller.send(:dynamic_scaffold_path, :index)).to eq '/en/controls/master/shops_block'
+      expect(controller.send(:dynamic_scaffold_path, :new)).to eq '/en/controls/master/shops_block/new'
+      expect(controller.send(:dynamic_scaffold_path, :sort_or_destroy)).to eq '/en/controls/master/shops_block/sort_or_destroy'
+      expect(controller.send(:dynamic_scaffold_path, :edit, id: 1)).to eq '/en/controls/master/shops_block/1/edit'
     end
   end
 end
