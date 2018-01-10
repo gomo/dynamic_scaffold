@@ -12,7 +12,7 @@ FOREIGN KEY ("category_id")
   REFERENCES "categories" ("id")
 );
 CREATE INDEX "index_shops_on_category_id" ON "shops" ("category_id");
-CREATE TABLE "shop_states" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "shop_id" integer NOT NULL, "state_id" integer NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_0437f3dc16"
+CREATE TABLE "shop_states" ("shop_id" integer NOT NULL, "state_id" integer NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, PRIMARY KEY (shop_id, state_id), CONSTRAINT "fk_rails_0437f3dc16"
 FOREIGN KEY ("shop_id")
   REFERENCES "shops" ("id")
 , CONSTRAINT "fk_rails_04949e66a6"
