@@ -15,7 +15,7 @@
 </div>
 <div class="dynamicScaffold-row">
   <% if @records.empty? %>
-    <p class="lead"><%= t('dynamic_scaffold.message.no_records', model: dynamic_scaffold.model.model_name.human) %></p>
+    <p class="lead"><%= t('dynamic_scaffold.message.no_records', model: dynamic_scaffold.title.name(self) || dynamic_scaffold.model.model_name.human) %></p>
   <% else %>
     <ul class="resplist resplist-striped">
       <%@records.each do |record|%>
