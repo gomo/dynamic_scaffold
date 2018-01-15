@@ -58,7 +58,13 @@ shops_sort_or_destroy PATCH /shops/sort_or_destroy(.:format)                    
 
 ### Generate controller and views
 
-Execute the following command.
+First, you need a model of the target table. If you have not generate it yet, please generate the model.
+
+```
+rails generate model Shop
+```
+
+Next, execute the following command for generate the controller and views.
 
 ```
 rails generate dynamic_scaffold shops
