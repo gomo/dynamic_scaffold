@@ -34,7 +34,7 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
     # You can customize the form fields through `config.form`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-form for details.
   <%- @model.column_names.each do |column| -%>
-    config.form.text_field(:<%= column %>)
+    config.form.field(:text, :<%= column %>)
   <%- end -%>
   end
   

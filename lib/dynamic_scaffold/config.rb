@@ -199,20 +199,33 @@ module DynamicScaffold
     attr_reader :callback
 
     %i[
-      text_field
+      text
+      password
+      hidden
+      file
+      color
+    ].each do |name|
+      define_method(name) do |*args|
+        field = Form::Field::Single.new(@config, "#{name}_field".to_sym, *args)
+        @fields << field
+        field
+      end
+
+      private name
+    end
+
+    %i[
       check_box
       radio_button
-      password_field
-      hidden_field
-      file_field
       text_area
-      color_field
     ].each do |name|
       define_method(name) do |*args|
         field = Form::Field::Single.new(@config, name, *args)
         @fields << field
         field
       end
+
+      private name
     end
 
     def initialize(config)
@@ -232,52 +245,8 @@ module DynamicScaffold
       @fields
     end
 
-    def collection_check_boxes(*args)
-      field = Form::Field::CollectionCheckBoxes.new(@config, :collection_check_boxes, *args)
-      @fields << field
-      field
-    end
-
-    def collection_radio_buttons(*args)
-      field = Form::Field::CollectionRadioButtons.new(@config, :collection_radio_buttons, *args)
-      @fields << field
-      field
-    end
-
-    def collection_select(*args)
-      field = Form::Field::CollectionSelect.new(@config, :collection_select, *args)
-      @fields << field
-      field
-    end
-
-    def grouped_collection_select(*args)
-      field = Form::Field::GroupedCollectionSelect.new(@config, :grouped_collection_select, *args)
-      @fields << field
-      field
-    end
-
-    def time_select(*args)
-      field = Form::Field::TimeSelect.new(@config, :time_select, *args)
-      @fields << field
-      field
-    end
-
-    def date_select(*args)
-      field = Form::Field::DateSelect.new(@config, :date_select, *args)
-      @fields << field
-      field
-    end
-
-    def datetime_select(*args)
-      field = Form::Field::DatetimeSelect.new(@config, :datetime_select, *args)
-      @fields << field
-      field
-    end
-
-    def block(name, &block)
-      field = Form::Field::Block.new(@config, :block, name, block)
-      @fields << field
-      field
+    def field(type, *args, &block)
+      send(type, *args, &block)
     end
 
     def before_save(*args, &callback)
@@ -286,5 +255,55 @@ module DynamicScaffold
         callback
       )
     end
+
+    private
+
+      def collection_check_boxes(*args)
+        field = Form::Field::CollectionCheckBoxes.new(@config, :collection_check_boxes, *args)
+        @fields << field
+        field
+      end
+
+      def collection_radio_buttons(*args)
+        field = Form::Field::CollectionRadioButtons.new(@config, :collection_radio_buttons, *args)
+        @fields << field
+        field
+      end
+
+      def collection_select(*args)
+        field = Form::Field::CollectionSelect.new(@config, :collection_select, *args)
+        @fields << field
+        field
+      end
+
+      def grouped_collection_select(*args)
+        field = Form::Field::GroupedCollectionSelect.new(@config, :grouped_collection_select, *args)
+        @fields << field
+        field
+      end
+
+      def time_select(*args)
+        field = Form::Field::TimeSelect.new(@config, :time_select, *args)
+        @fields << field
+        field
+      end
+
+      def date_select(*args)
+        field = Form::Field::DateSelect.new(@config, :date_select, *args)
+        @fields << field
+        field
+      end
+
+      def datetime_select(*args)
+        field = Form::Field::DatetimeSelect.new(@config, :datetime_select, *args)
+        @fields << field
+        field
+      end
+
+      def block(name, &block)
+        field = Form::Field::Block.new(@config, :block, name, block)
+        @fields << field
+        field
+      end
   end
 end

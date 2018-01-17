@@ -155,42 +155,42 @@ class ShopController < ApplicationController
 
 
     # Default label is I18n model attribute name.
-    config.form.text_field :name
+    config.form.field :text, :name
     # You can specify `label`. 
-    config.form.text_field(:name).label 'Shop Name'
+    config.form.field(:text, :name).label 'Shop Name'
 
     # If you use hidden_field, the label will also be hidden.
-    config.form.hidden_field :id
+    config.form.field :hidden, :id
     # but if you specify the label explicitly it will be displayed.
-    config.form.hidden_field(:id).label 'ID'
+    config.form.field(:hidden, :id).label 'ID'
 
     # Last hash arg is given to HTML attributes.
-    config.form.text_area :memo, rows: 8
+    config.form.field :text_area, :memo, rows: 8
 
     # Methods of the collection conform to the [ActionView::Helpers::FormBuilder](https://apidock.com/rails/ActionView/Helpers/FormBuilder) method.
-    config.form.collection_select(
+    config.form.field(:collection_select, 
       :category_id, Category.all, :id, :name, include_blank: 'Select Category'
     )
-    config.form.collection_check_boxes(:states, State.all, :id, :name)
-    config.form.collection_radio_buttons(:status, Shop.statuses.map{|k, v| [v, k.titleize]}, :first, :last)
+    config.form.field(:collection_check_boxes, :states, State.all, :id, :name)
+    config.form.field(:collection_radio_buttons, :status, Shop.statuses.map{|k, v| [v, k.titleize]}, :first, :last)
 
     # If you want to display more free form field, use block.
     # The block is executed in the context of view, so you can call the method of view.
-    config.form.block :free do |form, field|
+    config.form.field :block, :free do |form, field|
       content_tag :div, class: 'foobar' do
         form.text_field field.name, class: 'foobar'
       end
     end
 
     # The label of block method also accepts block.
-    config.form.block(:free).label 'Free Value' do |form, field|
+    config.form.field(:block, :free).label 'Free Value' do |form, field|
       content_tag :div, class: 'foobar' do
         form.text_field field.name, class: 'foobar'
       end
     end
 
     # You can also add a note to the form field.
-    config.form.text_field(:name).note do
+    config.form.field(:text, :name).note do
       content_tag :p do
         out = []
         out << 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '

@@ -42,7 +42,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.text_field(:id).label('FOOBAR')
+        config.form.field(:text, :id).label('FOOBAR')
         elem = config.form.fields[0]
         helper.form_with model: country, url: './create' do |_form|
           expect(elem.label).to eq 'FOOBAR'
@@ -52,7 +52,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should use the column name for the label if you omit it.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.text_field(:id)
+        config.form.field(:text, :id)
         elem = config.form.fields[0]
         helper.form_with model: country, url: './create' do |_form|
           expect(elem.label).to eq 'Id'
@@ -62,7 +62,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to generate HTML attributes with the last hash argument.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.text_field(
+        config.form.field(:text,
           :id,
           class: 'foobar',
           'data-foobar' => 'foobar value',
@@ -79,7 +79,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to add class attributes with the last argument of render.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.text_field(
+        config.form.field(:text,
           :id,
           class: 'foobar'
         )
@@ -94,7 +94,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to add notes in the note method.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.text_field(:id).note do
+        config.form.field(:text, :id).note do
           content_tag(:p, 'foo')
         end.note do
           content_tag(:p, 'bar')
@@ -110,7 +110,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.collection_check_boxes(:states, State.all, :id, :name)
+        config.form.field(:collection_check_boxes, :states, State.all, :id, :name)
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_check_boxes)).to be true
@@ -127,7 +127,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.collection_check_boxes(:states, State.all, :id, :name).label('State')
+        config.form.field(:collection_check_boxes, :states, State.all, :id, :name).label('State')
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |_form|
           expect(elem.label).to eq 'State'
@@ -137,7 +137,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.collection_check_boxes(:states, State.all, :id, :name)
+        config.form.field(:collection_check_boxes, :states, State.all, :id, :name)
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |_form|
           expect(elem.label).to eq 'States'
@@ -147,7 +147,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.collection_check_boxes(
+        config.form.field(:collection_check_boxes,
           :states,
           State.all,
           :id,
@@ -176,7 +176,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.collection_radio_buttons(:status, statuses, :first, :last)
+        config.form.field(:collection_radio_buttons, :status, statuses, :first, :last)
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_radio_buttons)).to be true
@@ -193,7 +193,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.collection_radio_buttons(
+        config.form.field(:collection_radio_buttons,
           :status,
           statuses,
           :first,
@@ -222,7 +222,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.collection_select(:category_id, Category.all, :id, :name)
+        config.form.field(:collection_select, :category_id, Category.all, :id, :name)
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_select)).to be true
@@ -245,7 +245,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.collection_select(
+        config.form.field(:collection_select,
           :category_id,
           Category.all,
           :id,
@@ -276,7 +276,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.grouped_collection_select(:category_id, grouped_options, :last, :first, :first, :last)
+        config.form.field(:grouped_collection_select, :category_id, grouped_options, :last, :first, :first, :last)
         elem = config.form.fields[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:grouped_collection_select)).to be true
@@ -314,7 +314,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     it 'should execute the block given as an argument.' do
       config = DynamicScaffold::Config.new Shop
 
-      elem = config.form.block(:additional_shop1) do |_form, _field|
+      elem = config.form.field(:block, :additional_shop1) do |_form, _field|
         'HOHOHOHO'
       end
 
@@ -325,7 +325,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(elem.render(helper, form)).to eq 'HOHOHOHO'
       end
 
-      elem = config.form.block(:with_label).label('FOOOO') do |_form, _field|
+      elem = config.form.field(:block, :with_label).label('FOOOO') do |_form, _field|
         'HAHAHA'
       end
 

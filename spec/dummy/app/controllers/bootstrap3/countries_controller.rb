@@ -29,11 +29,11 @@ class Bootstrap3::CountriesController < Bootstrap3::BaseController
 
     # You can customize the form fields through `config.form`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-form for details.
-    config.form.text_field(:id)
-    config.form.text_field(:name)
-    config.form.text_field(:sequence)
-    config.form.text_field(:created_at)
-    config.form.text_field(:updated_at)
+    config.form.field(:text, :id)
+    config.form.field(:text, :name)
+    config.form.field(:text, :sequence)
+    config.form.field(:text, :created_at)
+    config.form.field(:text, :updated_at)
   end
 
   # def index
