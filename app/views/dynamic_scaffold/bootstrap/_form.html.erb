@@ -1,5 +1,5 @@
 <%= form_with method: method, model: @record, url: url, local: true do |form| %>
-  <%dynamic_scaffold.form.fields.each do |elem|%>
+  <%dynamic_scaffold.form.items.each do |elem|%>
     <% if elem.needs_rendering?(self)%>
       <% if !elem.label? && elem.type?(:hidden_field) %>
         <%= elem.render(self, form) %>

@@ -207,7 +207,7 @@ module DynamicScaffold
     ].each do |name|
       define_method(name) do |*args|
         field = Form::Field::Single.new(@config, "#{name}_field".to_sym, *args)
-        @fields << field
+        @items << field
         field
       end
 
@@ -221,7 +221,7 @@ module DynamicScaffold
     ].each do |name|
       define_method(name) do |*args|
         field = Form::Field::Single.new(@config, name, *args)
-        @fields << field
+        @items << field
         field
       end
 
@@ -230,22 +230,22 @@ module DynamicScaffold
 
     def initialize(config)
       @config = config
-      @fields = []
+      @items = []
       @callback = Callback.new(%i[before_save_create before_save_update before_save_destroy])
     end
 
-    def fields
-      if @fields.empty?
+    def items
+      if @items.empty?
         @config.model.column_names.each do |column|
           type = :text_field
           type = :hidden_field if @config.scope && @config.scope.include?(column.to_sym)
-          @fields << Form::Field::Single.new(@config, type, column)
+          @items << Form::Field::Single.new(@config, type, column)
         end
       end
-      @fields
+      @items
     end
 
-    def field(type, *args, &block)
+    def item(type, *args, &block)
       send(type, *args, &block)
     end
 
@@ -260,49 +260,49 @@ module DynamicScaffold
 
       def collection_check_boxes(*args)
         field = Form::Field::CollectionCheckBoxes.new(@config, :collection_check_boxes, *args)
-        @fields << field
+        @items << field
         field
       end
 
       def collection_radio_buttons(*args)
         field = Form::Field::CollectionRadioButtons.new(@config, :collection_radio_buttons, *args)
-        @fields << field
+        @items << field
         field
       end
 
       def collection_select(*args)
         field = Form::Field::CollectionSelect.new(@config, :collection_select, *args)
-        @fields << field
+        @items << field
         field
       end
 
       def grouped_collection_select(*args)
         field = Form::Field::GroupedCollectionSelect.new(@config, :grouped_collection_select, *args)
-        @fields << field
+        @items << field
         field
       end
 
       def time_select(*args)
         field = Form::Field::TimeSelect.new(@config, :time_select, *args)
-        @fields << field
+        @items << field
         field
       end
 
       def date_select(*args)
         field = Form::Field::DateSelect.new(@config, :date_select, *args)
-        @fields << field
+        @items << field
         field
       end
 
       def datetime_select(*args)
         field = Form::Field::DatetimeSelect.new(@config, :datetime_select, *args)
-        @fields << field
+        @items << field
         field
       end
 
       def block(name, &block)
         field = Form::Field::Block.new(@config, :block, name, block)
-        @fields << field
+        @items << field
         field
       end
   end

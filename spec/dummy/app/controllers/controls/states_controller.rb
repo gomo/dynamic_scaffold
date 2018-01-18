@@ -30,12 +30,12 @@ class Controls::StatesController < Controls::BaseController
 
     # You can customize the form fields through `config.form`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-form for details.
-    config.form.field(:text, :id)
-    config.form.field(:text, :name)
-    config.form.field(:text, :sequence)
-    config.form.field(:text, :country_id)
-    config.form.field(:text, :created_at)
-    config.form.field(:text, :updated_at)
+    config.form.item(:text, :id)
+    config.form.item(:text, :name)
+    config.form.item(:text, :sequence)
+    config.form.item(:text, :country_id)
+    config.form.item(:text, :created_at)
+    config.form.item(:text, :updated_at)
   end
 
   # def index

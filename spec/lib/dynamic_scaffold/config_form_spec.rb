@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
-  context 'DynamicScaffold::Config#form.fields' do
+  context 'DynamicScaffold::Config#form.items' do
     it 'should output all columns by default.' do
       config = DynamicScaffold::Config.new Country
 
-      forms = config.form.fields
+      forms = config.form.items
       expect(forms.size).to eq Country.column_names.size
 
       country = FactoryBot.create(:country)
@@ -42,8 +42,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.field(:text, :id).label('FOOBAR')
-        elem = config.form.fields[0]
+        config.form.item(:text, :id).label('FOOBAR')
+        elem = config.form.items[0]
         helper.form_with model: country, url: './create' do |_form|
           expect(elem.label).to eq 'FOOBAR'
         end
@@ -52,8 +52,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should use the column name for the label if you omit it.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.field(:text, :id)
-        elem = config.form.fields[0]
+        config.form.item(:text, :id)
+        elem = config.form.items[0]
         helper.form_with model: country, url: './create' do |_form|
           expect(elem.label).to eq 'Id'
         end
@@ -62,13 +62,13 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to generate HTML attributes with the last hash argument.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.field(:text,
+        config.form.item(:text,
           :id,
           class: 'foobar',
           'data-foobar' => 'foobar value',
           style: 'width: 50%;'
         )
-        elem = config.form.fields[0]
+        elem = config.form.items[0]
         helper.form_with model: country, url: './create' do |form|
           expect(elem.render(helper, form)).to(
             eq "<input data-foobar=\"foobar value\" style=\"width: 50%;\" class=\"foobar\" type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
@@ -79,11 +79,11 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to add class attributes with the last argument of render.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.field(:text,
+        config.form.item(:text,
           :id,
           class: 'foobar'
         )
-        elem = config.form.fields[0]
+        elem = config.form.items[0]
         helper.form_with model: country, url: './create' do |form|
           expect(elem.render(helper, form, 'add')).to(
             eq "<input class=\"foobar add\" type=\"text\" value=\"#{country.id}\" name=\"country[id]\" />"
@@ -94,12 +94,12 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to add notes in the note method.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.field(:text, :id).note do
+        config.form.item(:text, :id).note do
           content_tag(:p, 'foo')
         end.note do
           content_tag(:p, 'bar')
         end
-        elem = config.form.fields[0]
+        elem = config.form.items[0]
         helper.form_with model: country, url: './create' do |_form|
           expect(elem.render_notes(country, helper)).to eq '<p>foo</p><p>bar</p>'
         end
@@ -110,8 +110,8 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.field(:collection_check_boxes, :states, State.all, :id, :name)
-        elem = config.form.fields[0]
+        config.form.item(:collection_check_boxes, :states, State.all, :id, :name)
+        elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_check_boxes)).to be true
           num = 0
@@ -127,8 +127,8 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.field(:collection_check_boxes, :states, State.all, :id, :name).label('State')
-        elem = config.form.fields[0]
+        config.form.item(:collection_check_boxes, :states, State.all, :id, :name).label('State')
+        elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |_form|
           expect(elem.label).to eq 'State'
         end
@@ -137,8 +137,8 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.field(:collection_check_boxes, :states, State.all, :id, :name)
-        elem = config.form.fields[0]
+        config.form.item(:collection_check_boxes, :states, State.all, :id, :name)
+        elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |_form|
           expect(elem.label).to eq 'States'
         end
@@ -147,7 +147,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:state, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.field(:collection_check_boxes,
+        config.form.item(:collection_check_boxes,
           :states,
           State.all,
           :id,
@@ -158,7 +158,7 @@ RSpec.describe ApplicationHelper, type: :helper do
             style: 'font-size: 20px;'
           }
         )
-        elem = config.form.fields[0]
+        elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
           num = 0
           elem.render(helper, form) do |b|
@@ -176,8 +176,8 @@ RSpec.describe ApplicationHelper, type: :helper do
         statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.field(:collection_radio_buttons, :status, statuses, :first, :last)
-        elem = config.form.fields[0]
+        config.form.item(:collection_radio_buttons, :status, statuses, :first, :last)
+        elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_radio_buttons)).to be true
           num = 0
@@ -193,7 +193,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         statuses = [[1, 'Released'], [2, 'Pre Released'], [3, 'Closed']]
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.field(:collection_radio_buttons,
+        config.form.item(:collection_radio_buttons,
           :status,
           statuses,
           :first,
@@ -204,7 +204,7 @@ RSpec.describe ApplicationHelper, type: :helper do
             style: 'font-size: 20px;'
           }
         )
-        elem = config.form.fields[0]
+        elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
           num = 0
           elem.render(helper, form) do |b|
@@ -222,8 +222,8 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.field(:collection_select, :category_id, Category.all, :id, :name)
-        elem = config.form.fields[0]
+        config.form.item(:collection_select, :category_id, Category.all, :id, :name)
+        elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_select)).to be true
           result = elem.render(helper, form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
@@ -245,7 +245,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.field(:collection_select,
+        config.form.item(:collection_select,
           :category_id,
           Category.all,
           :id,
@@ -256,7 +256,7 @@ RSpec.describe ApplicationHelper, type: :helper do
             style: 'width: 200px;'
           }
         )
-        elem = config.form.fields[0]
+        elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
           result = elem.render(helper, form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
           expect(result.shift).to eq '<select style="width: 200px;" class="foobar" name="shop[category_id]">'
@@ -276,8 +276,8 @@ RSpec.describe ApplicationHelper, type: :helper do
         FactoryBot.create_list(:category, 3)
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new Shop
-        config.form.field(:grouped_collection_select, :category_id, grouped_options, :last, :first, :first, :last)
-        elem = config.form.fields[0]
+        config.form.item(:grouped_collection_select, :category_id, grouped_options, :last, :first, :first, :last)
+        elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:grouped_collection_select)).to be true
           result = elem.render(helper, form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
@@ -314,7 +314,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     it 'should execute the block given as an argument.' do
       config = DynamicScaffold::Config.new Shop
 
-      elem = config.form.field(:block, :additional_shop1) do |_form, _field|
+      elem = config.form.item(:block, :additional_shop1) do |_form, _field|
         'HOHOHOHO'
       end
 
@@ -325,7 +325,7 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(elem.render(helper, form)).to eq 'HOHOHOHO'
       end
 
-      elem = config.form.field(:block, :with_label).label('FOOOO') do |_form, _field|
+      elem = config.form.item(:block, :with_label).label('FOOOO') do |_form, _field|
         'HAHAHA'
       end
 

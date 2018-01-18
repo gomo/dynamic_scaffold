@@ -17,25 +17,25 @@ module Controls
       # You can use form helper methods like ...
       # text_field, check_box, radio_button, password_field, hidden_field, file_field, text_area, color_field
       # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select
-      c.form.field(:hidden, :id)
+      c.form.item(:hidden, :id)
 
       # `label` method change label from I18n model attribute name.
-      c.form.field(:text, :name).label 'Shop Name'
+      c.form.item(:text, :name).label 'Shop Name'
 
       # Last hash arg is given to HTML attributes.
-      c.form.field(:text_area, :memo, rows: 8)
-      c.form.field(:collection_select,
+      c.form.item(:text_area, :memo, rows: 8)
+      c.form.item(:collection_select,
         :category_id, Category.all, :id, :name, include_blank: 'Select Category'
       )
-      c.form.field(:collection_check_boxes, :state_ids, State.all, :id, :name)
-      c.form.field(:collection_radio_buttons, :status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
+      c.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
+      c.form.item(:collection_radio_buttons, :status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
 
-      c.form.field :block, :block do |form, field|
+      c.form.item :block, :block do |form, field|
         content_tag :div do
           form.text_field field.name, class: 'form-control'
         end
       end
-      c.form.field(:block, :block_with_label).label 'Block with label' do |form, field|
+      c.form.item(:block, :block_with_label).label 'Block with label' do |form, field|
         form.text_field field.name, class: 'form-control'
       end.note do
         content_tag :p do

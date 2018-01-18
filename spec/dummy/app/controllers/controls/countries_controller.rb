@@ -16,8 +16,8 @@ module Controls
         content_tag :a, "To state of #{rec.name}", href: 'foobar'
       end
 
-      c.form.field(:hidden, :id)
-      c.form.field(:text, :name).note do
+      c.form.item(:hidden, :id)
+      c.form.item(:text, :name).note do
         content_tag :p do
           out = []
           out << 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '

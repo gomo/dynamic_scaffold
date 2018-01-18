@@ -41,7 +41,7 @@ module DynamicScaffold
       def update_values
         values = params
                    .require(dynamic_scaffold.model.name.underscore)
-                   .permit(*dynamic_scaffold.form.fields.map(&:strong_parameter))
+                   .permit(*dynamic_scaffold.form.items.map(&:strong_parameter))
 
         if dynamic_scaffold.scope && !valid_for_scope?(values)
           raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params} on this scope"

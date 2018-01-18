@@ -81,7 +81,7 @@ module DynamicScaffold
 
         def proxy_field
           return self unless @proxy
-          @config.form.fields.select {|f| f.name == @proxy }.first
+          @config.form.items.select {|f| f.name == @proxy }.first
         end
 
         protected
