@@ -148,8 +148,12 @@ You can customize the form through the `DynamicScaffold::Config#form` property.
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-    # You can use form helper methods,
-    # text_field, check_box, radio_button, password_field, hidden_field, file_field, text_area, color_field,
+    # config.form.item(type, name, html_attributes)
+    # or
+    # config.form.item(type, name, options, html_attributes)
+    #
+    # You can use form helper methods for type,
+    # text, check_box, radio_button, password, hidden, file, text_area, color,
     # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select,
     # time_select, date_select, datetime_select
 
@@ -158,6 +162,8 @@ class ShopController < ApplicationController
     config.form.item :text, :name
     # You can specify `label`. 
     config.form.item(:text, :name).label 'Shop Name'
+    # You can set default value for new action.
+    config.form.item(:text, :name).default('Foo Bar')
 
     # If you use hidden_field, the label will also be hidden.
     config.form.item :hidden, :id

@@ -84,6 +84,11 @@ module DynamicScaffold
           @config.form.items.select {|f| f.name == @proxy }.first
         end
 
+        def default(value = nil)
+          return @default if value.nil?
+          @default = value
+        end
+
         protected
 
           def build_html_attributes(classnames)

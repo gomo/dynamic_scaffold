@@ -37,7 +37,11 @@ module DynamicScaffold
 
     def new
       @record = dynamic_scaffold.model.new
-      @record.attributes = scope_params
+
+      defaults = dynamic_scaffold.form.items.each_with_object({}) do |item, memo|
+        memo[item.name] = item.default if dynamic_scaffold.model.column_names.include?(item.name)
+      end
+      @record.attributes = defaults.merge(scope_params)
     end
 
     def edit
