@@ -1,16 +1,17 @@
 module DynamicScaffold
   module Form
-    module Field
-      class CollectionSelect < CollectionBase
+    module Item
+      class TwoOptionsWithBlock < TwoOptions
         def render(_view, form, classnames = nil)
-          form.collection_select(
+          form.public_send(
+            @type,
             @name,
-            @collection,
-            @value_method,
-            @text_method,
+            *@args,
             @options,
             build_html_attributes(classnames)
-          )
+          ) do |builder|
+            yield builder
+          end
         end
       end
     end

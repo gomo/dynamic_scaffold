@@ -1,6 +1,6 @@
 module DynamicScaffold
   module Form
-    module Field
+    module Item
       class Block < Base
         def initialize(config, type, name, block)
           super(config, type, name, {})

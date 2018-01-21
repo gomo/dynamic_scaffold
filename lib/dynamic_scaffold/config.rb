@@ -198,25 +198,6 @@ module DynamicScaffold
   class FormBuilder
     attr_reader :callback
 
-    %i[
-      check_box
-      radio_button
-      text_area
-      text_field
-      password_field
-      hidden_field
-      file_field
-      color_field
-    ].each do |name|
-      define_method(name) do |*args|
-        field = Form::Field::Single.new(@config, name, *args)
-        @items << field
-        field
-      end
-
-      private name
-    end
-
     def initialize(config)
       @config = config
       @items = []
@@ -228,14 +209,43 @@ module DynamicScaffold
         @config.model.column_names.each do |column|
           type = :text_field
           type = :hidden_field if @config.scope && @config.scope.include?(column.to_sym)
-          @items << Form::Field::Single.new(@config, type, column)
+          @items << Form::Item::SingleOption.new(@config, type, column)
         end
       end
       @items
     end
 
     def item(type, *args, &block)
-      send(type, *args, &block)
+      case type
+      when
+        :check_box,
+        :radio_button,
+        :text_area,
+        :text_field,
+        :password_field,
+        :hidden_field,
+        :file_field,
+        :color_field then
+        item = Form::Item::SingleOption.new(@config, type, *args)
+      when
+        :time_select,
+        :date_select,
+        :datetime_select,
+        :collection_select,
+        :grouped_collection_select then
+        item = Form::Item::TwoOptions.new(@config, type, *args)
+      when
+        :collection_check_boxes,
+        :collection_radio_buttons then
+        item = Form::Item::TwoOptionsWithBlock.new(@config, type, *args)
+      when
+        :block then
+        item = Form::Item::Block.new(@config, type, *args, block)
+      else
+        raise DynamicScaffold::Error::InvalidParameter, "Unknown form item type #{type}"
+      end
+      @items << item
+      item
     end
 
     def before_save(*args, &callback)
@@ -244,55 +254,5 @@ module DynamicScaffold
         callback
       )
     end
-
-    private
-
-      def collection_check_boxes(*args)
-        field = Form::Field::CollectionCheckBoxes.new(@config, :collection_check_boxes, *args)
-        @items << field
-        field
-      end
-
-      def collection_radio_buttons(*args)
-        field = Form::Field::CollectionRadioButtons.new(@config, :collection_radio_buttons, *args)
-        @items << field
-        field
-      end
-
-      def collection_select(*args)
-        field = Form::Field::CollectionSelect.new(@config, :collection_select, *args)
-        @items << field
-        field
-      end
-
-      def grouped_collection_select(*args)
-        field = Form::Field::GroupedCollectionSelect.new(@config, :grouped_collection_select, *args)
-        @items << field
-        field
-      end
-
-      def time_select(*args)
-        field = Form::Field::TimeSelect.new(@config, :time_select, *args)
-        @items << field
-        field
-      end
-
-      def date_select(*args)
-        field = Form::Field::DateSelect.new(@config, :date_select, *args)
-        @items << field
-        field
-      end
-
-      def datetime_select(*args)
-        field = Form::Field::DatetimeSelect.new(@config, :datetime_select, *args)
-        @items << field
-        field
-      end
-
-      def block(name, &block)
-        field = Form::Field::Block.new(@config, :block, name, block)
-        @items << field
-        field
-      end
   end
 end

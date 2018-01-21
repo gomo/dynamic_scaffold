@@ -1,6 +1,6 @@
 module DynamicScaffold
   module Form
-    module Field
+    module Item
       class Base
         attr_reader :name
         def initialize(config, type, name, html_attributes = {})
@@ -12,7 +12,7 @@ module DynamicScaffold
           @classnames_list = []
           @classnames_list.push(classnames) if classnames
           @notes = []
-          @multiple = false
+          @multiple = type == :collection_check_boxes || html_attributes[:multiple]
         end
 
         def notes?
