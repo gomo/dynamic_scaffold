@@ -4,6 +4,7 @@ module DynamicScaffold
       class TwoOptions < Base
         def initialize(config, type, *args)
           name = args.shift
+          # rubocop:disable Style/IdenticalConditionalBranches
           if args[args.length - 2].is_a?(Hash)
             html_attributes = args.extract_options!
             @options = args.extract_options!
@@ -11,6 +12,7 @@ module DynamicScaffold
             html_attributes = {}
             @options = args.extract_options!
           end
+          # rubocop:enable Style/IdenticalConditionalBranches
 
           @args = args
           super(config, type, name, html_attributes)

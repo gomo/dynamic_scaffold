@@ -215,7 +215,7 @@ module DynamicScaffold
       @items
     end
 
-    def item(type, *args, &block)
+    def item(type, *args, &block) # rubocop:disable Metrics/MethodLength
       case type
       when
         :check_box,
