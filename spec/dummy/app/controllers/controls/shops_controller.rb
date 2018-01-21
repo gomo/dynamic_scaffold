@@ -17,10 +17,10 @@ module Controls
       # You can use form helper methods like ...
       # text_field, check_box, radio_button, password_field, hidden_field, file_field, text_area, color_field
       # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select
-      c.form.item(:hidden, :id)
+      c.form.item(:hidden_field, :id)
 
       # `label` method change label from I18n model attribute name.
-      c.form.item(:text, :name).label 'Shop Name'
+      c.form.item(:text_field, :name).label 'Shop Name'
 
       # Last hash arg is given to HTML attributes.
       c.form.item :text_area, :memo, rows: 8

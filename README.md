@@ -153,22 +153,22 @@ class ShopController < ApplicationController
     # config.form.item(type, name, options, html_attributes)
     #
     # You can use form helper methods for type,
-    # text, check_box, radio_button, password, hidden, file, text_area, color,
+    # text_field, check_box, radio_button, password_field, hidden_field, file_field, text_area, color_field,
     # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select,
     # time_select, date_select, datetime_select
 
 
     # Default label is I18n model attribute name.
-    config.form.item :text, :name
+    config.form.item :text_field, :name
     # You can specify `label`. 
-    config.form.item(:text, :name).label 'Shop Name'
+    config.form.item(:text_field, :name).label 'Shop Name'
     # You can set default value for new action.
-    config.form.item(:text, :name).default('Foo Bar')
+    config.form.item(:text_field, :name).default('Foo Bar')
 
     # If you use hidden_field, the label will also be hidden.
-    config.form.item :hidden, :id
+    config.form.item :hidden_field, :id
     # but if you specify the label explicitly it will be displayed.
-    config.form.item(:hidden, :id).label 'ID'
+    config.form.item(:hidden_field, :id).label 'ID'
 
     # Last hash arg is given to HTML attributes.
     config.form.item :text_area, :memo, rows: 8
@@ -196,7 +196,7 @@ class ShopController < ApplicationController
     end
 
     # You can also add a note to the form field.
-    config.form.item(:text, :name).note do
+    config.form.item(:text_field, :name).note do
       content_tag :p do
         out = []
         out << 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '

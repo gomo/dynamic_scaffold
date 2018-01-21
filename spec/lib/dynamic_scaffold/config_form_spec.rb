@@ -42,7 +42,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to specify a label.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.item(:text, :id).label('FOOBAR')
+        config.form.item(:text_field, :id).label('FOOBAR')
         elem = config.form.items[0]
         helper.form_with model: country, url: './create' do |_form|
           expect(elem.label).to eq 'FOOBAR'
@@ -52,7 +52,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should use the column name for the label if you omit it.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.item(:text, :id)
+        config.form.item(:text_field, :id)
         elem = config.form.items[0]
         helper.form_with model: country, url: './create' do |_form|
           expect(elem.label).to eq 'Id'
@@ -62,7 +62,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to generate HTML attributes with the last hash argument.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.item(:text,
+        config.form.item(:text_field,
           :id,
           class: 'foobar',
           'data-foobar' => 'foobar value',
@@ -79,7 +79,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to add class attributes with the last argument of render.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.item(:text,
+        config.form.item(:text_field,
           :id,
           class: 'foobar'
         )
@@ -94,7 +94,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       it 'should be able to add notes in the note method.' do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new Country
-        config.form.item(:text, :id).note do
+        config.form.item(:text_field, :id).note do
           content_tag(:p, 'foo')
         end.note do
           content_tag(:p, 'bar')

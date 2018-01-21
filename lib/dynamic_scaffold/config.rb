@@ -199,25 +199,14 @@ module DynamicScaffold
     attr_reader :callback
 
     %i[
-      text
-      password
-      hidden
-      file
-      color
-    ].each do |name|
-      define_method(name) do |*args|
-        field = Form::Field::Single.new(@config, "#{name}_field".to_sym, *args)
-        @items << field
-        field
-      end
-
-      private name
-    end
-
-    %i[
       check_box
       radio_button
       text_area
+      text_field
+      password_field
+      hidden_field
+      file_field
+      color_field
     ].each do |name|
       define_method(name) do |*args|
         field = Form::Field::Single.new(@config, name, *args)
