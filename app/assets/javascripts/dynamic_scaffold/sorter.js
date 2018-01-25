@@ -1,5 +1,6 @@
 document.addEventListener('dynamic_scaffold:load', function(){
   const promises = []
+  const allButtons = []
 
   function swapAnimation(promises, source, target){
     promises.push(new Promise(function(resolve){
@@ -27,8 +28,11 @@ document.addEventListener('dynamic_scaffold:load', function(){
    */
   function addClickEvent(buttons, getTarget, otherSideAnimation, swapElement){
     Array.prototype.forEach.call(buttons, function(button){
+      allButtons.push(button)
       button.addEventListener('click', function(e){
         e.preventDefault()
+
+        allButtons.forEach(function(btn){ btn.disabled = true })
         
         // Ignore while animating
         if(promises.length) return
@@ -58,6 +62,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
           })
           swapElement(source, target)
           promises.length = 0
+          allButtons.forEach(function(btn){ btn.disabled = false })
         })
       })
     })
