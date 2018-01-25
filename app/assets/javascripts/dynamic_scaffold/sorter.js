@@ -13,7 +13,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
       const durationFactor = Math.abs(distance) * 0.03
       const duration = Math.min(durationBase + durationFactor, 600)
 
-      source.style.transition = 'all ' + duration + 'ms cubic-bezier(1.0, 0, 1.0, 1.0)'
+      source.style.transition = 'all ' + duration + 'ms cubic-bezier(1.0, 0, 0.25, 1.0)'
       source.style.transform = 'translateY(' + distance + 'px)'
     }))
   }
