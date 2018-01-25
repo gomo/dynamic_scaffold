@@ -6,9 +6,15 @@ document.addEventListener('dynamic_scaffold:load', function(){
       source.sorting_animation_resolver = resolve
       sourceRect = source.getBoundingClientRect()
       targetRect = target.getBoundingClientRect()
-      
-      source.style.transition = 'all 200ms ease'
-      source.style.transform = 'translateY(' + (targetRect.top - sourceRect.top) + 'px)'      
+
+      //Calculate the duration according to the moving distance.
+      const distance = targetRect.top - sourceRect.top
+      const durationBase = 200
+      const durationFactor = Math.abs(distance) * 0.03
+      const duration = Math.min(durationBase + durationFactor, 600)
+
+      source.style.transition = 'all ' + duration + 'ms cubic-bezier(1.0, 0, 1.0, 1.0)'
+      source.style.transform = 'translateY(' + distance + 'px)'
     }))
   }
 
