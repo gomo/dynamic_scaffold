@@ -3,7 +3,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
 
   function swapAnimation(promises, source, target){
     promises.push(new Promise(function(resolve){
-      source.sorting_animation_resolver = resolve
+      source.dynamicScaffoldSortingResolver = resolve
       sourceRect = source.getBoundingClientRect()
       targetRect = target.getBoundingClientRect()
 
@@ -82,7 +82,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
   // Register `transitionend` event in all the rows.
   Array.prototype.forEach.call(document.querySelectorAll('.dynamicScaffoldJs-item-row'), function(row){
     row.addEventListener('transitionend', function(e){
-      if(e.target == row) row.sorting_animation_resolver(row)
+      if(e.target == row) row.dynamicScaffoldSortingResolver(row)
     })
   })
 
