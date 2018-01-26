@@ -31,8 +31,6 @@ document.addEventListener('dynamic_scaffold:load', function(){
       allButtons.push(button)
       button.addEventListener('click', function(e){
         e.preventDefault()
-
-        allButtons.forEach(function(btn){ btn.disabled = true })
         
         // Ignore while animating
         if(promises.length) return
@@ -51,6 +49,10 @@ document.addEventListener('dynamic_scaffold:load', function(){
         }
         
         otherSideAnimation(promises, source, target)
+
+        if(promises.length){
+          allButtons.forEach(function(btn){ btn.disabled = true })
+        }
 
         // When both animations are finished
         Promise.all(promises).then(function(values){
