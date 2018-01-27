@@ -97,6 +97,8 @@ module DynamicScaffold
             "Missing controller#action #{params[:controller]}##{action}"
         end
 
+        options.merge!(scope_params)
+
         public_send("#{route.name}_path", options)
       end
 

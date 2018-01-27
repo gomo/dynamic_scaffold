@@ -25,6 +25,10 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
     #   highlight_current: false, # Whether to highlight the current page.
     # )
 
+    # To enable scoping, call scope with parameter names you want.
+    # Please see https://github.com/gomo/dynamic_scaffold#scoping for details.
+    # config.list.scope([role])
+
     # You can change the items displayed in the list through the `config.list.item`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-list for details.
   <%- @model.column_names.each do |column| -%>
