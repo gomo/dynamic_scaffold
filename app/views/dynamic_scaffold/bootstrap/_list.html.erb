@@ -57,7 +57,7 @@
               </div>
               <% end %>
               <div class="btn-group">
-                <button data-action="<%= dynamic_scaffold_path(:update, id: record[record.class.primary_key]) %>" data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm dynamicScaffoldJs-destory">
+                <button data-action="<%= dynamic_scaffold_path(:update, id: record[record.class.primary_key]) %>" data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>" class="btn btn-danger btn-sm dynamicScaffoldJs-destory">
                   <%= dynamic_scaffold_icon(:delete) %>
                 </button>
               </div>
