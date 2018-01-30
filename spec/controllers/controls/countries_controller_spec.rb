@@ -34,7 +34,7 @@ RSpec.describe Controls::CountriesController, type: :controller do
       pkeys << { id: countries[1].id }
       pkeys << { id: countries[0].id }
       pkeys << { id: countries[2].id }
-      patch :sort_or_destroy, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
+      patch :sort, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'
       expect(countries[1].name).to eq 'Country 3'
@@ -45,7 +45,7 @@ RSpec.describe Controls::CountriesController, type: :controller do
       pkeys << { id: countries[0].id }
       pkeys << { id: countries[2].id }
       pkeys << { id: countries[1].id }
-      patch :sort_or_destroy, params: { locale: 'ja', pkeys: pkeys, submit_sort: '' }
+      patch :sort, params: { locale: 'ja', pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq 'Country 2'
       expect(countries[1].name).to eq 'Country 1'
@@ -57,16 +57,16 @@ RSpec.describe Controls::CountriesController, type: :controller do
   describe 'Delete' do
     it 'should be able to delete.' do
       country = FactoryBot.create(:country)
-      patch :sort_or_destroy, params: { locale: :en, submit_destroy: controller.send(:primary_key_value, country).to_json }
+      delete :destroy, params: { locale: :en, id: country.id }
 
       expect(Country.find_by(id: country.id)).to be_nil
       expect(response).to redirect_to controls_master_countries_path
     end
     it 'should display error if you delete record that can not be deleted with foreign key constraints' do
       state = FactoryBot.create(:state)
-      patch :sort_or_destroy, params: {
+      delete :destroy, params: {
         locale: :en,
-        submit_destroy: controller.send(:primary_key_value, state.country).to_json
+        id: state.country.id
       }
 
       expect(Country.find_by(id: state.country.id)).not_to be_nil
@@ -81,7 +81,8 @@ RSpec.describe Controls::CountriesController, type: :controller do
       expect(controller.send(:dynamic_scaffold_path, :index)).to eq '/en/controls/master/countries'
       expect(controller.send(:dynamic_scaffold_path, :new)).to eq '/en/controls/master/countries/new'
       expect(controller.send(:dynamic_scaffold_path, :edit, id: 1)).to eq '/en/controls/master/countries/1/edit'
-      expect(controller.send(:dynamic_scaffold_path, :sort_or_destroy)).to eq '/en/controls/master/countries/sort_or_destroy'
+      expect(controller.send(:dynamic_scaffold_path, :update, id: 1)).to eq '/en/controls/master/countries/1'
+      expect(controller.send(:dynamic_scaffold_path, :sort)).to eq '/en/controls/master/countries/sort'
     end
   end
 

@@ -104,7 +104,7 @@ RSpec.describe Controls::UsersController, type: :controller do
       pkeys << { id: staffs[0].id }
       pkeys << { id: staffs[2].id }
       expect do
-        patch :sort_or_destroy, params: { locale: :en, role: :admin, pkeys: pkeys, submit_sort: '' }
+        patch :sort, params: { locale: :en, role: :admin, pkeys: pkeys, submit_sort: '' }
       end.to raise_error(::ActiveRecord::RecordNotFound)
     end
   end
@@ -114,23 +114,12 @@ RSpec.describe Controls::UsersController, type: :controller do
       staff = FactoryBot.create(:user, role_value: :staff)
 
       expect do
-        patch :sort_or_destroy, params: {
+        delete :destroy, params: {
           locale: :en,
           role: :admin,
-          submit_destroy: controller.send(:primary_key_value, staff).to_json
+          id: staff.id
         }
       end.to raise_error(::ActiveRecord::RecordNotFound)
-    end
-  end
-
-  describe '#dynamic_scaffold_path' do
-    it 'should be able to get path.' do
-      get :index, params: { locale: :en, role: 'admin' }
-
-      expect(controller.send(:dynamic_scaffold_path, :index)).to eq '/en/controls/master/users/admin'
-      expect(controller.send(:dynamic_scaffold_path, :new)).to eq '/en/controls/master/users/admin/new'
-      expect(controller.send(:dynamic_scaffold_path, :sort_or_destroy)).to eq '/en/controls/master/users/admin/sort_or_destroy'
-      expect(controller.send(:dynamic_scaffold_path, :edit, id: 1)).to eq '/en/controls/master/users/admin/1/edit'
     end
   end
 end

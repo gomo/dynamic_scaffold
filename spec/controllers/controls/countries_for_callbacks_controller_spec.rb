@@ -22,7 +22,7 @@ RSpec.describe Controls::CountriesForCallbacksController, type: :controller do
       pkeys << { id: prev_countries[1].id }
       pkeys << { id: prev_countries[0].id }
       pkeys << { id: prev_countries[2].id }
-      patch :sort_or_destroy, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
+      patch :sort, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
       countries = Country.all.order sequence: :desc
       expect(countries[0].name).to eq "executed sort before save!! [#{prev_countries[1].sequence}:2]"
       expect(countries[1].name).to eq "executed sort before save!! [#{prev_countries[0].sequence}:1]"
@@ -30,9 +30,9 @@ RSpec.describe Controls::CountriesForCallbacksController, type: :controller do
     end
     it ':destroy' do
       state = FactoryBot.create(:state)
-      patch :sort_or_destroy, params: {
+      delete :destroy, params: {
         locale: :en,
-        submit_destroy: controller.send(:primary_key_value, state.country).to_json
+        id: state.country.id
       }
       expect(flash['dynamic_scaffold_danger']).to be_nil
       expect(response).to redirect_to controls_master_countries_for_callbacks_path

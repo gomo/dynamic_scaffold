@@ -49,14 +49,6 @@ module DynamicScaffold
       @record = find_record(edit_params)
     end
 
-    def sort_or_destroy
-      if !params['submit_sort'].nil?
-        sort
-      elsif !params['submit_destroy'].nil?
-        destroy
-      end
-    end
-
     def create
       @record = dynamic_scaffold.model.new
       prev_attribute = @record.attributes
@@ -87,9 +79,9 @@ module DynamicScaffold
       end
     end
 
-    # Sub actions.
     def destroy
-      record = find_record(JSON.parse(params['submit_destroy']))
+      # `Destroy` also does not support multiple primary keys too.
+      record = find_record(dynamic_scaffold.model.primary_key => params['id'])
       begin
         dynamic_scaffold.model.transaction do
           dynamic_scaffold.form.callback.call(:before_save_destroy, self, record, {})

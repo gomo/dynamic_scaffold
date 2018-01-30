@@ -3,7 +3,8 @@
     <%= flash[:dynamic_scaffold_danger] %>
   </div>
 <%end%>
-<%= form_with method: :patch, url: dynamic_scaffold_path(:sort_or_destroy) do%>
+<input type="hidden" class="authenticity_param_name" value="<%= request_forgery_protection_token %>">
+<%= form_with method: :patch, url: dynamic_scaffold_path(:sort) do%>
 <div class="dynamicScaffold-row">
   <%= link_to dynamic_scaffold_path(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
     <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.button.add') %>
@@ -56,7 +57,7 @@
               </div>
               <% end %>
               <div class="btn-group">
-                <button data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm dynamicScaffoldJs-destory" name="submit_destroy" value="<%= primary_key_value(record).to_json %>">
+                <button data-action="<%= dynamic_scaffold_path(:update, id: record[record.class.primary_key]) %>" data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>" type="submit" class="btn btn-danger btn-sm dynamicScaffoldJs-destory">
                   <%= dynamic_scaffold_icon(:delete) %>
                 </button>
               </div>
