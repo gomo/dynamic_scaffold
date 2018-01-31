@@ -13,6 +13,8 @@ ja:
     message:
       no_records: '%{model}の登録はありません。'
       destroy_confirm: '削除します。よろしいですか？'
+      confirm_cancel: 'キャンセル'
+      confirm_ok: 'OK'
     alert:
       destroy:
         invalid_foreign_key: '関連づいたレコードがあるので削除できません。'

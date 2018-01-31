@@ -1,28 +1,19 @@
 document.addEventListener('dynamic_scaffold:load', function (){
-  function createElement(tagName, attributes){
-    const elem = document.createElement(tagName)
-    for(var key in attributes){
-      elem.setAttribute(key, attributes[key])
-    }
-  
-    return elem
-  }
-
   const csrfParamName = document.querySelector('.authenticity_param_name').value
   function submit(button){
-    const form = createElement('form', {
+    const form = DynamicScaffold.createElement('form', {
       method: 'post',
       action: button.getAttribute('data-action'),
       style: 'display: none;'
     })
 
-    form.appendChild(createElement('input', {
+    form.appendChild(DynamicScaffold.createElement('input', {
       type: 'hidden',
       name: csrfParamName,
       value: document.querySelector('input[name=' + csrfParamName + ']').value
     }))
 
-    form.appendChild(createElement('input', {
+    form.appendChild(DynamicScaffold.createElement('input', {
       type: 'hidden',
       name: '_method',
       value: 'delete'
@@ -33,28 +24,32 @@ document.addEventListener('dynamic_scaffold:load', function (){
     form.submit()
   }
 
-
-
   const buttons = document.querySelectorAll('.dynamicScaffoldJs-destory')
+  if(buttons.length === 0) return
+  
+  const wrapper = buttons[0].closest('.dynamicScaffoldJs-item-wrapper')
   buttons.forEach(function(button){
-    const wrapper = button.closest('.dynamicScaffoldJs-item-row')
-    let needsSubmit = false
+    const row = button.closest('.dynamicScaffoldJs-item-row')
     button.addEventListener('click', function(e){
       e.preventDefault()
-      
-      if(!needsSubmit) {
-        e.preventDefault()
-        const message = button.getAttribute('data-confirm-message')
-        wrapper.classList.add('dynamicScaffold-destorying')
-        setTimeout(function(){
-          if(!confirm(message)){
-            wrapper.classList.remove("dynamicScaffold-destorying");
-          } else {
-            needsSubmit = true
+      row.classList.add('dynamicScaffold-destorying')
+      DynamicScaffold.confirm({
+        message: button.getAttribute('data-confirm-message'),
+        ok: {
+          text: wrapper.getAttribute('data-confirm-ok'),
+          class: wrapper.getAttribute('data-confirm-ok-class'),
+          action: function(){
             submit(button)
           }
-        }, 30)
-      }
+        },
+        cancel: {
+          text: wrapper.getAttribute('data-confirm-cancel'),
+          class: wrapper.getAttribute('data-confirm-cancel-class'),
+          action: function(){
+            row.classList.remove("dynamicScaffold-destorying")
+          }
+        }
+      })
     })
   })
 })

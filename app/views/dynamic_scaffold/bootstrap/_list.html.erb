@@ -18,7 +18,13 @@
   <% if @records.empty? %>
     <p class="lead"><%= t('dynamic_scaffold.message.no_records', model: dynamic_scaffold.title.name(self) || dynamic_scaffold.model.model_name.human) %></p>
   <% else %>
-    <ul class="resplist resplist-striped">
+    <ul
+      class="resplist resplist-striped dynamicScaffoldJs-item-wrapper"
+      data-confirm-ok="<%= t('dynamic_scaffold.message.confirm_ok') %>"
+      data-confirm-ok-class="btn btn-danger btn-sm"
+      data-confirm-cancel="<%= t('dynamic_scaffold.message.confirm_cancel') %>"
+      data-confirm-cancel-class="btn btn-outline-secondary btn-default btn-sm"
+    >
       <%@records.each do |record|%>
         <li class="resplist-row dynamicScaffoldJs-item-row">
           <div class="resplist-items">
@@ -57,7 +63,11 @@
               </div>
               <% end %>
               <div class="btn-group">
-                <button data-action="<%= dynamic_scaffold_path(:update, id: record[record.class.primary_key]) %>" data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>" class="btn btn-danger btn-sm dynamicScaffoldJs-destory">
+                <button
+                  data-action="<%= dynamic_scaffold_path(:update, id: record[record.class.primary_key]) %>"
+                  data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>"
+                  class="btn btn-danger btn-sm dynamicScaffoldJs-destory"
+                >
                   <%= dynamic_scaffold_icon(:delete) %>
                 </button>
               </div>
