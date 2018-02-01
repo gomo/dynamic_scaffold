@@ -19,7 +19,7 @@ document.addEventListener('dynamic_scaffold:load', function (){
       value: 'delete'
     }))
 
-    document.body.append(form)
+    document.body.appendChild(form)
 
     form.submit()
   }
@@ -28,7 +28,7 @@ document.addEventListener('dynamic_scaffold:load', function (){
   if(buttons.length === 0) return
   
   const wrapper = buttons[0].closest('.dynamicScaffoldJs-item-wrapper')
-  buttons.forEach(function(button){
+  Array.prototype.forEach.call(buttons, function(button){
     const row = button.closest('.dynamicScaffoldJs-item-row')
     button.addEventListener('click', function(e){
       e.preventDefault()
