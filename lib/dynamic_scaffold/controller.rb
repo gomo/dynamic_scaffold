@@ -5,14 +5,19 @@ module DynamicScaffold
 
     included do
       helper_method :dynamic_scaffold_path, :dynamic_scaffold_icon, :dynamic_scaffold, :primary_key_value, :current_title
+      attr_reader :dynamic_scaffold
+      before_action lambda {
+        @dynamic_scaffold = Config.new(self.class.dynamic_scaffold_model)
+        self.class.dynamic_scaffold_initializer.call(@dynamic_scaffold)
+      }
     end
 
     class_methods do
-      attr_accessor :dynamic_scaffold_config
+      attr_accessor :dynamic_scaffold_model, :dynamic_scaffold_initializer
 
-      def dynamic_scaffold(model)
-        self.dynamic_scaffold_config = Config.new(model)
-        yield dynamic_scaffold_config if block_given?
+      def dynamic_scaffold(model, &block)
+        self.dynamic_scaffold_model = model
+        self.dynamic_scaffold_initializer = block
       end
     end
 

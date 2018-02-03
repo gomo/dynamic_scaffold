@@ -2,9 +2,10 @@ require 'rails_helper'
 RSpec.describe Controls::CountriesController, type: :controller do
   describe 'Sort' do
     it 'should be able to generate sequence number.' do
-      original_sorter = controller.class.dynamic_scaffold_config.list.sorter
+      get :index, params: { locale: :en }
+      original_sorter = controller.dynamic_scaffold.list.sorter
 
-      controller.class.dynamic_scaffold_config.list.sorter(sequence: :desc)
+      controller.dynamic_scaffold.list.sorter(sequence: :desc)
       controller.send(:reset_sequence, (1..5).to_a.size)
       expect(controller.send(:next_sequence!)).to eq 4
       expect(controller.send(:next_sequence!)).to eq 3
@@ -12,7 +13,7 @@ RSpec.describe Controls::CountriesController, type: :controller do
       expect(controller.send(:next_sequence!)).to eq 1
       expect(controller.send(:next_sequence!)).to eq 0
 
-      controller.class.dynamic_scaffold_config.list.sorter(sequence: :asc)
+      controller.dynamic_scaffold.list.sorter(sequence: :asc)
       controller.send(:reset_sequence, (1..5).to_a.size)
       expect(controller.send(:next_sequence!)).to eq 0
       expect(controller.send(:next_sequence!)).to eq 1
@@ -20,7 +21,7 @@ RSpec.describe Controls::CountriesController, type: :controller do
       expect(controller.send(:next_sequence!)).to eq 3
       expect(controller.send(:next_sequence!)).to eq 4
 
-      controller.class.dynamic_scaffold_config.list.sorter(original_sorter)
+      controller.dynamic_scaffold.list.sorter(original_sorter)
     end
     it 'should be able to sort.' do
       FactoryBot.create_list(:country, 3)

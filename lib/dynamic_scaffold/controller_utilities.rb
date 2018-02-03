@@ -1,9 +1,5 @@
 module DynamicScaffold
   module ControllerUtilities
-    def dynamic_scaffold
-      self.class.dynamic_scaffold_config
-    end
-
     private
 
       # Get the hash of the key and value specified for the scope.
