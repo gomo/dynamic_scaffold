@@ -1,5 +1,7 @@
 document.addEventListener('dynamic_scaffold:load', function (){
-  const csrfParamName = document.querySelector('.authenticity_param_name').value
+  const csrfParam = document.querySelector('.authenticity_param_name')
+  if(!csrfParam) return
+  const csrfParamName = csrfParam.value
   function submit(button){
     const form = DynamicScaffold.createElement('form', {
       method: 'post',

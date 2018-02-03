@@ -19,7 +19,8 @@ document.addEventListener('dynamic_scaffold:load', function(){
       ++distance
     })
   }
-  document.querySelectorAll('.dynamicScaffoldJs-pagination').forEach(function(pagination){
+
+  Array.prototype.forEach.call(document.querySelectorAll('.dynamicScaffoldJs-pagination'), function(pagination){
     handlePagination(pagination)
   })
 })
