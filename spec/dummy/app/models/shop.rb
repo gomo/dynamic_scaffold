@@ -1,7 +1,7 @@
 class Shop < ApplicationRecord
   belongs_to :category
   has_many :shop_states
-  has_many :states, through: :shop_states
+  has_many :states, inverse_of: :shops, through: :shop_states
   enum status: { draft: 0, published: 1, hidden: 2 }
 
   validates :name, presence: true, length: { in: 3..20 }
