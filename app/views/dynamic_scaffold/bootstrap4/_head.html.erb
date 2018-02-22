@@ -1,9 +1,0 @@
-<%= stylesheet_link_tag 'dynamic_scaffold/resplist', media: 'all' %>
-<%= stylesheet_link_tag 'dynamic_scaffold/common', media: 'all' %>
-<%= stylesheet_link_tag 'dynamic_scaffold/bootstrap4', media: 'all' %>
-<%= javascript_include_tag 'dynamic_scaffold/common' %>
-<% if controller.action_name == "index" %>
-  <%= javascript_include_tag 'dynamic_scaffold/sorter' if dynamic_scaffold.list.sorter %>
-  <%= javascript_include_tag 'dynamic_scaffold/pagination' if dynamic_scaffold.list.pagination %>
-  <%= javascript_include_tag 'dynamic_scaffold/delete' %>
-<%end%>

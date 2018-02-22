@@ -6,7 +6,7 @@ class Bootstrap3::CountriesController < Bootstrap3::BaseController
 
     # To enable pagination, call pagination. All args is not require, defauls is below
     config.list.pagination(
-      per_page: 1,
+      per_page: 3,
       window: 3,                # kaminari options
       outer_window: 1,          # kaminari options
       # left: 0,                  # kaminari options

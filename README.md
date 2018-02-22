@@ -76,18 +76,18 @@ rails generate dynamic_scaffold namespace/controller Model
 
 ### Prepare CSS and Javascript
 
-You need to load dynamic_scaffold files for CSS and Javascript.　Currently, view corresponds to Bootstrap 3 and Bootstrap 4.　Please read one.
+You need to load dynamic_scaffold files for CSS and Javascript.　Currently, css corresponds to Bootstrap 3 and Bootstrap 4.　Please read one.
 
-```erb
-# application.html.erb
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Dummy</title>
-    <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-    <%= render 'dynamic_scaffold/bootstrap3/head'%> # or <%= render 'dynamic_scaffold/bootstrap4/head'%>
+```sass
+# app/assets/stylesheets/application.scss
+@import 'dynamic_scaffold/bootstrap3'
+# or
+@import 'dynamic_scaffold/bootstrap4'
+```
+
+```js
+// app/assets/javascripts/application.js
+//= require dynamic_scaffold
 ```
 
 ### Customization
