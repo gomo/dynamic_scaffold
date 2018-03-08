@@ -25,9 +25,6 @@ module DynamicScaffold
 
     def index # rubocop:disable Metrics/AbcSize
       @records = dynamic_scaffold.model.all
-      if dynamic_scaffold.list.callback.exists?(:before_fetch)
-        @records = dynamic_scaffold.list.callback.call(:before_fetch, self, @records)
-      end
       raise Error::InvalidParameter, 'You must return ActiveRecord::Relation' unless @records.is_a? ::ActiveRecord::Relation
 
       if dynamic_scaffold.list.pagination
@@ -56,11 +53,9 @@ module DynamicScaffold
 
     def create
       @record = dynamic_scaffold.model.new
-      prev_attribute = @record.attributes
       @record.attributes = update_values
       bind_sorter_value(@record) if dynamic_scaffold.list.sorter
       dynamic_scaffold.model.transaction do
-        dynamic_scaffold.form.callback.call(:before_save_create, self, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -72,10 +67,8 @@ module DynamicScaffold
     def update
       values = update_values
       @record = find_record(extract_pkeys(values))
-      prev_attribute = @record.attributes
       @record.attributes = values
       dynamic_scaffold.model.transaction do
-        dynamic_scaffold.form.callback.call(:before_save_update, self, @record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -89,7 +82,6 @@ module DynamicScaffold
       record = find_record(dynamic_scaffold.model.primary_key => params['id'])
       begin
         dynamic_scaffold.model.transaction do
-          dynamic_scaffold.form.callback.call(:before_save_destroy, self, record, {})
           record.destroy
         end
       rescue ::ActiveRecord::InvalidForeignKey => _error
@@ -105,9 +97,7 @@ module DynamicScaffold
         pkeys_list.each do |pkeys|
           rec = find_record(pkeys.to_hash)
           next_sec = next_sequence!
-          prev_attribute = rec.attributes
           rec[dynamic_scaffold.list.sorter_attribute] = next_sec
-          dynamic_scaffold.list.callback.call(:before_save_sort, self, rec, prev_attribute)
           rec.save
         end
       end
