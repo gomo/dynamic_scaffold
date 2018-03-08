@@ -57,7 +57,13 @@ sort_or_destroy_controls_master_shops PATCH /:locale/controls/master/shops/sort_
 
 ### Generate controller and views
 
-Execute the following command.
+First, you need a model of the target table. If you have not generate it yet, please generate the model.
+
+```
+rails generate model Shop
+```
+
+Next, execute the following command for generate the controller and views.
 
 ```
 rails generate dynamic_scaffold shops
