@@ -53,8 +53,10 @@ Metrics/LineLength:
     - spec/dummy/config/**/*
     - spec/dummy/Rakefile
     - spec/lib/**/*
+  
 
 Metrics/BlockLength:
+  Max: 35
   Exclude:
     - spec/lib/**/*
     - spec/controllers/**/*

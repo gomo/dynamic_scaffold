@@ -9,7 +9,7 @@ module DynamicScaffold
     end
   end
 end
-Rails.application.config.dynamic_scaffold.icons = proc do |name| # rubocop:disable Metrics/BlockLength
+Rails.application.config.dynamic_scaffold.icons = proc do |name|
   # This function is called in view scope.
   # https://github.com/gomo/dynamic_scaffold/blob/b4066bbd40cd6e7307ce283d5a9bd526ae124e00/lib/dynamic_scaffold/controller_utilities.rb#L104-L106
   case name
