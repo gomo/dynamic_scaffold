@@ -53,9 +53,11 @@ module DynamicScaffold
 
     def create
       @record = dynamic_scaffold.model.new
+      prev_attribute = @record.attributes
       @record.attributes = update_values
       bind_sorter_value(@record) if dynamic_scaffold.list.sorter
       dynamic_scaffold.model.transaction do
+        before_create_save(@record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -67,8 +69,10 @@ module DynamicScaffold
     def update
       values = update_values
       @record = find_record(extract_pkeys(values))
+      prev_attribute = @record.attributes
       @record.attributes = values
       dynamic_scaffold.model.transaction do
+        before_update_save(@record, prev_attribute)
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -103,5 +107,8 @@ module DynamicScaffold
       end
       redirect_to dynamic_scaffold_path(:index)
     end
+
+    def before_update_save(record, prev_attribute); end
+    def before_create_save(record, prev_attribute); end
   end
 end
