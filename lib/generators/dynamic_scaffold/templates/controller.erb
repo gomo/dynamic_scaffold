@@ -1,6 +1,15 @@
 class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_name %>Controller < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold <%= @model_name %> do |config|
+    # If you want to use all views common variables, please call `vars`.
+    # Please see https://github.com/gomo/dynamic_scaffold#view-helper for details.
+    # In your view:
+    # <%%= dynamic_scaffold.scope_target.name %>
+    # here:
+    # config.vars :scope_target do
+    #   SomeRecord.find(params['some_record_id'])
+    # end
+
     # You can get the current page title like `Country List`, `Edit Country` in your view.
     # <%%= current_title %>
     # If you want change from the model name, set config.title.name.

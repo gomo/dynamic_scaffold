@@ -326,6 +326,28 @@ class UsersController < ApplicationController
 
 ### View helper
 
+#### vars
+If you want to use all views common variables, please call `vars`. For example, you can use it when you want to display the name of URL scope in view.
+
+```rb
+# app/controllers/shops_controller.rb
+class ShopController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+    config.vars :scope_target do
+      SomeRecord.find(params['some_record_id'])
+    end
+```
+
+```erb
+# app/views/your_view.html.erb
+<%= scope_target.name %>
+```
+
+This block will only be executed once per request,  even if you repeatedly call scope_target on view.
+
+
+#### title
 You can get the current page title like `Country List`, `Edit Country` in your view.
 
 ```erb
