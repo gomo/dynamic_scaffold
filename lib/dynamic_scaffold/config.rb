@@ -82,13 +82,37 @@ module DynamicScaffold
     end
   end
 
+  class Vars
+    def initialize(controller)
+      @controller = controller
+      @values = {}
+    end
+
+    def _register(name, block)
+      define_singleton_method(name) do
+        @values[name] ||= @controller.instance_exec(&block)
+        @values[name]
+      end
+    end
+  end
+
   class Config
     attr_reader :model, :form, :list, :title
-    def initialize(model)
+    def initialize(model, controller)
       @model = model
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
       @title = Title.new(@model.model_name.human)
+      @vars = Vars.new(controller)
+    end
+
+    def vars(name = nil, &block)
+      if block_given?
+        raise ArgumentError, 'Missing var name.' if name.nil?
+        @vars._register(name, block)
+      else
+        @vars
+      end
     end
 
     def scope(parameter_names = nil)

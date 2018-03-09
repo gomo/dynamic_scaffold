@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         dynamic_scaffold_for 'users/:role', controller: 'users', role: Regexp.new(User.roles.keys.join('|')), as: :users
         dynamic_scaffold_for 'users_for_password'
         dynamic_scaffold_for 'countries_for_pagination'
+        dynamic_scaffold_for 'countries_for_vars'
       end
     end
   end

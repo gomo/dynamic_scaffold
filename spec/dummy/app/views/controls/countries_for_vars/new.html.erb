@@ -1,0 +1,7 @@
+<ul class="vars_check">
+  <li><%= dynamic_scaffold.vars.request_time.usec %></li>
+  <%- sleep(0.1) -%>
+  <li><%= dynamic_scaffold.vars.request_time.usec %></li>
+  <li><%= dynamic_scaffold.vars.controller_name %></li>
+</ul>
+<%= render 'dynamic_scaffold/bootstrap/new' %>
