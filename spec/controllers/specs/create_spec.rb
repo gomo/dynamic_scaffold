@@ -16,12 +16,13 @@ RSpec.describe SpecsController, type: :controller do
       expect do
         post :create, params: { locale: :en, shop: { name: '' } }
       end.to change(Shop, :count).by(0)
-      
+
+      expect(assigns(:record).errors[:name].length).to eq 2
       expect(response).to render_template(:new)
-      expect(response).not_to redirect_to new_controls_master_shops_block_path
+      expect(response).not_to redirect_to specs_path
     end
 
-    it 'should be success' do
+    it 'should success' do
       controller.class.send(:dynamic_scaffold, Shop) do |c|
         c.form.item(:text_field, :id)
         c.form.item(:text_field, :name).label 'Shop Name'
@@ -33,7 +34,7 @@ RSpec.describe SpecsController, type: :controller do
 
       category = FactoryBot.create(:category)
       states = FactoryBot.create_list(:state, 3)
-      
+
       expect do
         post :create, params: { locale: :en, shop: {
           name: 'foobar',
