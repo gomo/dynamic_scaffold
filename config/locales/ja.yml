@@ -1,9 +1,14 @@
 ja:
   dynamic_scaffold:
     title:
-      index: '%{model}一覧'
-      edit: '%{model}編集'
-      new: '新規%{model}'
+      full:
+        index: '%{name}一覧'
+        edit: '%{name}編集'
+        new: '新規%{name}'
+      action:
+        index: '一覧'
+        edit: '編集'
+        new: '新規'
     button:
       add: '追加'
       edit: '編集'

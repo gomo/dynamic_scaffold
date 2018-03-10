@@ -46,40 +46,62 @@ module DynamicScaffold
   end
 
   class Title
-    def initialize(name)
+    def initialize(name, controller)
       @name = name
+      @controller = controller
+      @titles_cache = {}
     end
 
     attr_writer :name
 
-    def name(view = nil, &block)
-      @block = block if block_given?
-      return self unless view
-
-      # getter
-      return view.instance_exec(view.controller.params, &@block) unless @block.nil?
-      @name
+    def name(&block)
+      if block_given?
+        @block = block
+      elsif !@block.nil?
+        @controller.view_context.instance_exec(&@block)
+      else
+        @name
+      end
     end
 
-    def index(view)
-      I18n.t('dynamic_scaffold.title.index', model: name(view))
+    def current
+      public_send(@controller.params[:action])
     end
 
-    def edit(view)
-      I18n.t('dynamic_scaffold.title.edit', model: name(view))
+    def index
+      titles(:index)
     end
 
-    def update(view)
-      I18n.t('dynamic_scaffold.title.edit', model: name(view))
+    def edit
+      titles(:edit)
+    end
+    
+    def new
+      titles(:new)
     end
 
-    def new(view)
-      I18n.t('dynamic_scaffold.title.new', model: name(view))
-    end
+    # def update
+    #   edit
+    # end
 
-    def create(view)
-      I18n.t('dynamic_scaffold.title.new', model: name(view))
-    end
+    # def create
+    #   create
+    # end
+
+    private
+
+      def titles(action)
+        unless @titles_cache[action]
+          titles = OpenStruct.new
+          titles.name = name
+          titles.full = I18n.t("dynamic_scaffold.title.full.#{action}", name: titles.name)
+          titles.action = I18n.t("dynamic_scaffold.title.action.#{action}")
+          titles.freeze
+          @titles_cache[action] = titles
+        end
+
+        @titles_cache[action]
+      end
   end
 
   class Vars
@@ -102,7 +124,7 @@ module DynamicScaffold
       @model = model
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
-      @title = Title.new(@model.model_name.human)
+      @title = Title.new(@model.model_name.human, controller)
       @vars = Vars.new(controller)
     end
 

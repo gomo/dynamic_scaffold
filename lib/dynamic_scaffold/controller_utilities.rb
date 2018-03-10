@@ -106,10 +106,6 @@ module DynamicScaffold
         [*record.class.primary_key].each_with_object({}) {|col, res| res[col] = record[col] }
       end
 
-      def current_title
-        dynamic_scaffold.title.public_send(params[:action], view_context)
-      end
-
       def bind_sorter_value(record)
         attr = dynamic_scaffold.list.sorter_attribute
         value = dynamic_scaffold.model.maximum(attr)

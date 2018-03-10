@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     end
     namespace 'controls' do
       scope 'master', as: :master do
+        dynamic_scaffold_for 'specs'
         dynamic_scaffold_for 'countries'
         dynamic_scaffold_for 'states'
         dynamic_scaffold_for 'shops'
