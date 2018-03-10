@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe Controls::SpecsController, type: :controller do
+RSpec.describe SpecsController, type: :controller do
   let :shop do
     FactoryBot.create(:shop)
   end
