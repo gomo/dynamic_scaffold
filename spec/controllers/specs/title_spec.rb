@@ -4,13 +4,11 @@ RSpec.describe Controls::SpecsController, type: :controller do
     FactoryBot.create(:shop)
   end
 
-  def dynamic_scaffold
-    self.controller.dynamic_scaffold
-  end
+  delegate :dynamic_scaffold, to: :controller
   describe 'Title' do
     context 'Default' do
       it 'should get the title with the model name.' do
-        self.controller.class.send(:dynamic_scaffold, Shop) {}
+        controller.class.send(:dynamic_scaffold, Shop) {}
         get :index, params: { locale: :en }
         expect(dynamic_scaffold.title.current.name).to eq 'Shop'
         expect(dynamic_scaffold.title.current.action).to eq 'List'
@@ -30,7 +28,7 @@ RSpec.describe Controls::SpecsController, type: :controller do
 
     context 'String' do
       it 'should get the title with the assigned name.' do
-        self.controller.class.send(:dynamic_scaffold, Shop) do |config|
+        controller.class.send(:dynamic_scaffold, Shop) do |config|
           config.title.name = 'FooBar'
         end
         get :index, params: { locale: :en }
@@ -52,7 +50,7 @@ RSpec.describe Controls::SpecsController, type: :controller do
 
     context 'Block' do
       it 'should get the title with the return value of block.' do
-        self.controller.class.send(:dynamic_scaffold, Shop) do |config|
+        controller.class.send(:dynamic_scaffold, Shop) do |config|
           config.title.name { 'Block' }
         end
         get :index, params: { locale: :en }

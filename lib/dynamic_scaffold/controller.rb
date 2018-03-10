@@ -109,6 +109,7 @@ module DynamicScaffold
     end
 
     def before_update_save(record, prev_attribute); end
+
     def before_create_save(record, prev_attribute); end
   end
 end

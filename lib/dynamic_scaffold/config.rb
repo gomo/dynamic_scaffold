@@ -75,7 +75,7 @@ module DynamicScaffold
     def edit
       titles(:edit)
     end
-    
+
     def new
       titles(:new)
     end
