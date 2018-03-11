@@ -49,7 +49,7 @@ RSpec.describe SpecsController, type: :controller do
       expect(countries[0].name).to eq 'Country 2'
       expect(countries[1].name).to eq 'Country 3'
       expect(countries[2].name).to eq 'Country 1'
-      expect(response).to redirect_to controls_master_countries_path
+      expect(response).to redirect_to specs_path
 
       pkeys = []
       pkeys << { id: countries[0].id }
@@ -60,7 +60,7 @@ RSpec.describe SpecsController, type: :controller do
       expect(countries[0].name).to eq 'Country 2'
       expect(countries[1].name).to eq 'Country 1'
       expect(countries[2].name).to eq 'Country 3'
-      expect(response).to redirect_to controls_master_countries_path
+      expect(response).to redirect_to specs_path
     end
   end
 end
