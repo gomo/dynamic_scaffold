@@ -58,5 +58,23 @@ RSpec.describe SpecsController, type: :controller do
       expect(sorted_countries[2].id).to eq countries[1].id
       expect(response).to redirect_to specs_path
     end
+
+    it 'should set max value for sorter column.' do
+      controller.class.send(:dynamic_scaffold, Country) do |c|
+        c.list.sorter sequence: :desc
+      end
+      
+      post :create, params: { locale: :en, country: {
+        name: 'foobar'
+      } }
+      country = assigns(:record)
+      expect(country.sequence).to eq 0
+
+      post :create, params: { locale: :en, country: {
+        name: 'foobar'
+      } }
+      country = assigns(:record)
+      expect(country.sequence).to eq 1
+    end
   end
 end

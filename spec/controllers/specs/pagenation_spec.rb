@@ -3,6 +3,15 @@ RSpec.describe SpecsController, type: :controller do
   delegate :dynamic_scaffold, to: :controller
   describe 'Pagination' do
     render_views
+
+    it 'should display all items when no pagenation.' do
+      controller.class.send(:dynamic_scaffold, Country) {}
+      FactoryBot.create_list(:country, 8)
+      get :index, params: { locale: :en }
+      expect(response.body.scan(/<li class="resplist-row dynamicScaffoldJs-item-row">/).size).to eq 8
+      expect(response.body).not_to match(/<ul class="pagination/)
+    end
+
     it 'should limit the display count to the value of per_page and display page navi.' do
       controller.class.send(:dynamic_scaffold, Country) do |c|
         c.list.pagination(
