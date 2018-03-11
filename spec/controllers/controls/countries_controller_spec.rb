@@ -55,27 +55,6 @@ RSpec.describe Controls::CountriesController, type: :controller do
     end
   end
 
-  describe 'Delete' do
-    it 'should be able to delete.' do
-      country = FactoryBot.create(:country)
-      delete :destroy, params: { locale: :en, id: country.id }
-
-      expect(Country.find_by(id: country.id)).to be_nil
-      expect(response).to redirect_to controls_master_countries_path
-    end
-    it 'should display error if you delete record that can not be deleted with foreign key constraints' do
-      state = FactoryBot.create(:state)
-      delete :destroy, params: {
-        locale: :en,
-        id: state.country.id
-      }
-
-      expect(Country.find_by(id: state.country.id)).not_to be_nil
-      expect(flash['dynamic_scaffold_danger']).not_to be_nil
-      expect(response).to redirect_to controls_master_countries_path
-    end
-  end
-
   describe '#dynamic_scaffold_path' do
     it 'should be able to get path.' do
       get :index, params: { locale: :en }
