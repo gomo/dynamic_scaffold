@@ -36,19 +36,15 @@ RSpec.describe SpecsController, type: :controller do
       FactoryBot.create_list(:country, 3)
       countries = Country.all.order sequence: :desc
 
-      expect(countries[0].name).to eq 'Country 3'
-      expect(countries[1].name).to eq 'Country 2'
-      expect(countries[2].name).to eq 'Country 1'
-
       pkeys = []
       pkeys << { id: countries[1].id }
       pkeys << { id: countries[0].id }
       pkeys << { id: countries[2].id }
       patch :sort, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
-      countries = Country.all.order sequence: :desc
-      expect(countries[0].name).to eq 'Country 2'
-      expect(countries[1].name).to eq 'Country 3'
-      expect(countries[2].name).to eq 'Country 1'
+      sorted_countries = Country.all.order sequence: :desc
+      expect(sorted_countries[0].id).to eq countries[1].id
+      expect(sorted_countries[1].id).to eq countries[0].id
+      expect(sorted_countries[2].id).to eq countries[2].id
       expect(response).to redirect_to specs_path
 
       pkeys = []
@@ -56,10 +52,10 @@ RSpec.describe SpecsController, type: :controller do
       pkeys << { id: countries[2].id }
       pkeys << { id: countries[1].id }
       patch :sort, params: { locale: 'ja', pkeys: pkeys, submit_sort: '' }
-      countries = Country.all.order sequence: :desc
-      expect(countries[0].name).to eq 'Country 2'
-      expect(countries[1].name).to eq 'Country 1'
-      expect(countries[2].name).to eq 'Country 3'
+      sorted_countries = Country.all.order sequence: :desc
+      expect(sorted_countries[0].id).to eq countries[0].id
+      expect(sorted_countries[1].id).to eq countries[2].id
+      expect(sorted_countries[2].id).to eq countries[1].id
       expect(response).to redirect_to specs_path
     end
   end
