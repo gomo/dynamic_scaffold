@@ -35,6 +35,9 @@ module DynamicScaffold
 
       @records = @records.where scope_params
       @records = @records.order dynamic_scaffold.list.sorter if dynamic_scaffold.list.sorter
+      @records = @records.order(*dynamic_scaffold.list.order) unless dynamic_scaffold.list.order.empty?
+
+      append_optional_queries(@records)
     end
 
     def new
@@ -111,5 +114,7 @@ module DynamicScaffold
     def before_update_save(record, prev_attribute); end
 
     def before_create_save(record, prev_attribute); end
+
+    def append_optional_queries(records); end
   end
 end

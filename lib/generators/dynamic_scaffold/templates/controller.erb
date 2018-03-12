@@ -88,4 +88,9 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
   # def before_create_save(record, prev_attribute)
   #  
   # end
+
+  # If you want append database queries, please override.
+  # def append_optional_queries(records)
+  #
+  # end
 end

@@ -148,6 +148,7 @@ module DynamicScaffold
       @config = config
       @items = []
       @sorter = nil
+      @order = []
     end
 
     def pagination(options = nil)
@@ -182,6 +183,11 @@ module DynamicScaffold
 
     def sorter_direction
       @sorter.values.first
+    end
+
+    def order(*args)
+      @order = args unless args.empty?
+      @order
     end
   end
 
