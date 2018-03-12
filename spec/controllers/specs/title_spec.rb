@@ -51,22 +51,22 @@ RSpec.describe SpecsController, type: :controller do
     context 'Block' do
       it 'should get the title with the return value of block.' do
         controller.class.send(:dynamic_scaffold, Shop) do |config|
-          config.title.name { 'Block' }
+          config.title.name { "#{params['action']} Block" }
         end
         get :index, params: { locale: :en }
-        expect(dynamic_scaffold.title.current.name).to eq 'Block'
+        expect(dynamic_scaffold.title.current.name).to eq 'index Block'
         expect(dynamic_scaffold.title.current.action).to eq 'List'
-        expect(dynamic_scaffold.title.current.full).to eq 'Block List'
+        expect(dynamic_scaffold.title.current.full).to eq 'index Block List'
 
         get :new, params: { locale: :en }
-        expect(dynamic_scaffold.title.current.name).to eq 'Block'
+        expect(dynamic_scaffold.title.current.name).to eq 'new Block'
         expect(dynamic_scaffold.title.current.action).to eq 'Create'
-        expect(dynamic_scaffold.title.current.full).to eq 'Create Block'
+        expect(dynamic_scaffold.title.current.full).to eq 'Create new Block'
 
         get :edit, params: { locale: :en, id: shop.id }
-        expect(dynamic_scaffold.title.current.name).to eq 'Block'
+        expect(dynamic_scaffold.title.current.name).to eq 'edit Block'
         expect(dynamic_scaffold.title.current.action).to eq 'Edit'
-        expect(dynamic_scaffold.title.current.full).to eq 'Edit Block'
+        expect(dynamic_scaffold.title.current.full).to eq 'Edit edit Block'
       end
     end
   end
