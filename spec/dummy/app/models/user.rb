@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   enum role: { admin: 1, staff: 2, member: 3 }
   validates :email, presence: true, uniqueness: true
-  validates :password, presence: {if: :new_record?}, length: {minimum: 6, allow_blank: true}
-  attr_accessor :password, :password_for_edit
+  validates :password, presence: { if: :new_record? }, length: { minimum: 6, allow_blank: true }
+  attr_reader :password, :password_for_edit
 
   def password=(value)
     @password = value

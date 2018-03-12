@@ -7,7 +7,7 @@ RSpec.describe SpecsController, type: :controller do
         c.vars :request_time do
           Time.zone.now
         end
-  
+
         c.vars :controller_name do
           params['controller']
         end

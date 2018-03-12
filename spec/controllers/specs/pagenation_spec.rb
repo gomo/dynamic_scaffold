@@ -35,7 +35,6 @@ RSpec.describe SpecsController, type: :controller do
       end
 
       FactoryBot.create_list(:country, 3)
-      countries = Country.all
       get :index, params: { locale: :en, foobar: 2 }
       expect(response.body).to match(/"\/en\/specs\?foobar=3"/)
     end

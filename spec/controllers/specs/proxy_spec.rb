@@ -6,7 +6,7 @@ RSpec.describe SpecsController, type: :controller do
     it 'should display the values of the attribute specifying the label and error message.' do
       controller.class.send(:dynamic_scaffold, User) do |c|
         c.form.item(:hidden_field, :id)
-        c.form.item(:text_field, :password).label('FooBar').if {false}
+        c.form.item(:text_field, :password).label('FooBar').if { false }
         c.form.item(:text_field, :password_for_edit).proxy(:password)
       end
 

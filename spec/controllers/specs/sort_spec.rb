@@ -6,7 +6,7 @@ RSpec.describe SpecsController, type: :controller do
       controller.class.send(:dynamic_scaffold, Country) do |c|
         c.list.sorter sequence: :desc
       end
-      
+
       get :index, params: { locale: :en }
       original_sorter = controller.dynamic_scaffold.list.sorter
 
@@ -63,7 +63,7 @@ RSpec.describe SpecsController, type: :controller do
       controller.class.send(:dynamic_scaffold, Country) do |c|
         c.list.sorter sequence: :desc
       end
-      
+
       post :create, params: { locale: :en, country: {
         name: 'foobar'
       } }

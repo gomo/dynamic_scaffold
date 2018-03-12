@@ -10,17 +10,17 @@ RSpec.describe SpecsController, type: :controller do
         FactoryBot.create_list(:user, 3, role_value: :admin)
         FactoryBot.create_list(:user, 3, role_value: :staff)
         FactoryBot.create_list(:user, 3, role_value: :member)
-  
+
         get :index, params: { locale: :en, role: 'admin' }
         records = assigns(:records)
         expect(records.length).to eq 3
         expect(records.map(&:role)).to all(eq 'admin')
-  
+
         get :index, params: { locale: :en, role: 'staff' }
         records = assigns(:records)
         expect(records.length).to eq 3
         expect(records.map(&:role)).to all(eq 'staff')
-  
+
         get :index, params: { locale: :en, role: 'member' }
         records = assigns(:records)
         expect(records.length).to eq 3
@@ -39,10 +39,10 @@ RSpec.describe SpecsController, type: :controller do
         # Check whether scope column is hidden.
         expect(response.body).to match(/<input class="form-control" type="text" name="user\[email\]" \/>/)
         expect(response.body).to match(/<input type="hidden" value="admin" name="user\[role\]" \/>/)
-  
+
         get :new, params: { locale: :en, role: 'staff' }
         expect(response.body).to match(/<input type="hidden" value="staff" name="user\[role\]" \/>/)
-  
+
         get :new, params: { locale: :en, role: 'member' }
         expect(response.body).to match(/<input type="hidden" value="member" name="user\[role\]" \/>/)
       end
@@ -99,7 +99,7 @@ RSpec.describe SpecsController, type: :controller do
       end
       it 'should raise the exception if update with an unspecified role.' do
         admin = FactoryBot.create(:user, role_value: :admin)
-  
+
         expect do
           patch :update, params: { id: admin.id, locale: :en, role: 'admin', user: {
             id: admin.id,
@@ -118,7 +118,7 @@ RSpec.describe SpecsController, type: :controller do
         end
 
         staffs = FactoryBot.create_list(:user, 3, role_value: :staff)
-  
+
         pkeys = []
         pkeys << { id: staffs[1].id }
         pkeys << { id: staffs[0].id }
@@ -128,7 +128,7 @@ RSpec.describe SpecsController, type: :controller do
         end.to raise_error(::ActiveRecord::RecordNotFound)
       end
     end
-  
+
     describe 'Delete' do
       it 'should not let destory user who is not the specified roles.' do
         controller.class.send(:dynamic_scaffold, User) do |c|
@@ -136,7 +136,7 @@ RSpec.describe SpecsController, type: :controller do
         end
 
         staff = FactoryBot.create(:user, role_value: :staff)
-  
+
         expect do
           delete :destroy, params: {
             locale: :en,
