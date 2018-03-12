@@ -81,7 +81,9 @@ module DynamicScaffold
 
         def proxy_field
           return self unless @proxy
-          @config.form.items.select {|f| f.name == @proxy }.first
+          proxy_target = @config.form.items.select {|f| f.name == @proxy }
+          raise DynamicScaffold::Error::InvalidParameter, "Missing proxy target element: #{@proxy}" if proxy_target.empty?
+          proxy_target.first
         end
 
         def default(value = nil)
