@@ -352,10 +352,12 @@ You can get the current page title like `Country List`, `Edit Country` in your v
 
 ```erb
 # app/views/your_view.html.erb
-<h1><%= current_page %></h1>
+<h1><%= dynamic_scaffold.title.current.full %></h1>
 ```
 
-If you want change from the model name, set title.
+You can get the model name only (like `Country`) with `dynamic_scaffold.title.current.name`, and you can get the action name only (lik `List`/`Edit`/`Create`) with `dynamic_scaffold.title.current.action`.
+
+If you want change the name, set `configtitle.name`.
 
 ```rb
 # app/controllers/shops_controller.rb
@@ -371,22 +373,22 @@ You can get the title and link of each action.
 ```erb
 <ol class="breadcrumb">
   <% if params['action'] == 'index' %>
-    <li class="active"><%= dynamic_scaffold.title.index %></li>
+    <li class="active"><%= dynamic_scaffold.title.index.name %></li>
   <% else %>
-    <li><%= link_to dynamic_scaffold.title.index, dynamic_scaffold_path(:index) %></li>
-    <li class="active"><%= current_title %></li>
+    <li><%= link_to dynamic_scaffold.title.index.name, dynamic_scaffold_path(:index) %></li>
+    <li class="active"><%= dynamic_scaffold.title.current.action %></li>
   <% end %>
 </ol>
 ```
 
-If you want to dynamically set according to parameters, you can also use block.
+If you want to dynamically set according to parameters, you can also use block. This block execute in the controller scope.
 
 ```rb
 # app/controllers/shops_controller.rb
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-    config.title.name do |params|
+    config.title.name do
       I18n.t "enum.user.role.#{params[role]}", default: params[role].titleize
     end
 ```
