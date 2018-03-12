@@ -15,6 +15,16 @@ module Controls
       c.list.item(:created_at, style: 'width: 180px').label 'Create Date' do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
       end
+
+      c.form.item(:hidden_field, :id)
+      c.form.item(:hidden_field, :role)
+      c.form.item(:hidden_field, :sequence)
+      c.form.item(:text_field, :email)
+      c.form.item(:text_field, :password)
+        .if {|p| %w[new create].include? p[:action] }
+      c.form.item(:text_field, :password_for_edit)
+        .proxy(:password)
+        .if {|p| %w[edit update].include? p[:action] }
     end
   end
 end
