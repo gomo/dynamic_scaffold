@@ -105,14 +105,14 @@ module DynamicScaffold
   end
 
   class Vars
-    def initialize(controller)
-      @controller = controller
+    def initialize(config)
+      @config = config
       @values = {}
     end
 
     def _register(name, block)
       define_singleton_method(name) do
-        @values[name] ||= @controller.instance_exec(&block)
+        @values[name] ||= @config.controller.instance_exec(&block)
         @values[name]
       end
     end
@@ -126,8 +126,7 @@ module DynamicScaffold
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
       @title = Title.new(self)
-      # TODO: change to pass self
-      @vars = Vars.new(controller)
+      @vars = Vars.new(self)
     end
 
     def vars(name = nil, &block)
