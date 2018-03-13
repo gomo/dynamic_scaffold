@@ -46,26 +46,26 @@ module DynamicScaffold
   end
 
   class Title
-    def initialize(name, controller)
-      @name = name
-      @controller = controller
-      @titles_cache = {}
-    end
-
     attr_writer :name
+
+    def initialize(config)
+      @config = config
+      @titles_cache = {}
+      @name = @config.model.model_name.human
+    end
 
     def name(&block)
       if block_given?
         @block = block
       elsif !@block.nil?
-        @controller.view_context.instance_exec(&@block)
+        @config.controller.view_context.instance_exec(&@block)
       else
         @name
       end
     end
 
     def current
-      public_send(@controller.params[:action])
+      public_send(@config.controller.params[:action])
     end
 
     def index
@@ -125,8 +125,7 @@ module DynamicScaffold
       @controller = controller
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
-      # TODO: change to pass self
-      @title = Title.new(@model.model_name.human, controller)
+      @title = Title.new(self)
       # TODO: change to pass self
       @vars = Vars.new(controller)
     end
