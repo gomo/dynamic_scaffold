@@ -125,9 +125,9 @@ module DynamicScaffold
       @controller = controller
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
-      # TODO change to pass self
+      # TODO: change to pass self
       @title = Title.new(@model.model_name.human, controller)
-      # TODO change to pass self
+      # TODO: change to pass self
       @vars = Vars.new(controller)
     end
 
@@ -202,7 +202,7 @@ module DynamicScaffold
         }
       else
         record = args[0]
-        return @config.controller.view_context.instance_exec(record, @title[:column_name], &@title[:block]) if @title[:block]
+        return @config.controller.view_context.instance_exec(record, &@title[:block]) if @title[:block]
         record.public_send(@title[:column_name])
       end
     end

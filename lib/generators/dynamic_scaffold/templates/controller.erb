@@ -41,6 +41,9 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
     # Please see https://github.com/gomo/dynamic_scaffold#scoping for details.
     # config.scope([role])
 
+    # You can set each title in the list here.
+    # config.list.title(:name)
+
     # You can change the items displayed in the list through the `config.list.item`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-list for details.
   <%- @model.column_names.each do |column| -%>

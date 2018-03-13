@@ -5,7 +5,7 @@ RSpec.describe SpecsController, type: :controller do
     it 'should display nothing when don\'t call.' do
       controller.class.send(:dynamic_scaffold, Country) {}
 
-      countries = FactoryBot.create_list(:country, 3)
+      FactoryBot.create_list(:country, 3)
       get :index, params: { locale: :en }
 
       expect(dynamic_scaffold.list.title?).to be false

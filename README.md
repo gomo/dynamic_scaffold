@@ -120,7 +120,15 @@ You can customize the list through the `DynamicScaffold::Config#list` property.
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-    # First arg is attribute name of model.
+
+    # You can set each title in the list with column name.
+    config.list.title(:name)
+    # Alternatively, you can pass block and dynamically display it.
+    config.list.title do |record|
+      record.name
+    end
+
+    # First arg of config.list.item is attribute name of model.
     # Last hash arg is given to HTML attributes.
     # `label` method change label (I18n model attribute name is default).
     config.list.item(:id, style: 'width: 80px').label('Number')
