@@ -2,8 +2,8 @@ module Controls
   class ShopsController < BaseController
     include DynamicScaffold::Controller
     dynamic_scaffold Shop do |c|
+      c.list.title(:name)
       c.list.item(:id, style: 'width: 80px').label('Number')
-      c.list.item :name, style: 'width: 120px'
       c.list.item :updated_at, style: 'width: 180px' do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
       end

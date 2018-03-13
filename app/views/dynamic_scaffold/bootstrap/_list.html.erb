@@ -27,6 +27,9 @@
     >
       <%@records.each do |record|%>
         <li class="resplist-row dynamicScaffoldJs-item-row">
+          <% if dynamic_scaffold.list.title? %>
+            <div class="resplist-heading"><%= dynamic_scaffold.list.title(record) %></div>
+          <% end %>
           <div class="resplist-items">
           <%dynamic_scaffold.list.items.each do |disp|%>
             <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>

@@ -119,12 +119,15 @@ module DynamicScaffold
   end
 
   class Config
-    attr_reader :model, :form, :list, :title
+    attr_reader :model, :form, :list, :title, :controller
     def initialize(model, controller)
       @model = model
+      @controller = controller
       @form = FormBuilder.new(self)
       @list = ListBuilder.new(self)
+      # TODO change to pass self
       @title = Title.new(@model.model_name.human, controller)
+      # TODO change to pass self
       @vars = Vars.new(controller)
     end
 
@@ -149,6 +152,7 @@ module DynamicScaffold
       @items = []
       @sorter = nil
       @order = []
+      @title = nil
     end
 
     def pagination(options = nil)
@@ -188,6 +192,23 @@ module DynamicScaffold
     def order(*args)
       @order = args unless args.empty?
       @order
+    end
+
+    def title(*args, &block)
+      if args[0].is_a?(Symbol) || args[0].is_a?(String) || block_given?
+        @title = {
+          column_name: args[0],
+          block: block
+        }
+      else
+        record = args[0]
+        return @config.controller.view_context.instance_exec(record, @title[:column_name], &@title[:block]) if @title[:block]
+        record.public_send(@title[:column_name])
+      end
+    end
+
+    def title?
+      @title.present?
     end
   end
 
