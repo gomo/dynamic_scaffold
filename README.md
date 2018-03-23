@@ -1,14 +1,12 @@
-[![Build Status](https://travis-ci.org/gomo/dynamic_scaffold.svg?branch=master)](https://travis-ci.org/gomo/dynamic_scaffold)
-
 # DynamicScaffold
-Scaffold which dynamically generates CRUD and sort.
+The Scaffold system which dynamically generates CRUD and sort functions.
 
 ## Feature
 
-* It is generated dynamically.
-* Responsive design and touch UI.
+* This is generate the pages using same views dynamically.
+* Support the responsive design and touch UI.
 * Support sort and pagination.
-* Has simple view using bootstrap. Support bootstrap3/4.
+* This has the views with the Twitter Bootstrap. Support bootstrap3/4.
 * Customizable and flexible.
 
 <img src="images/list_with_pager.png">
@@ -19,6 +17,7 @@ Scaffold which dynamically generates CRUD and sort.
 
 
 ## Installation
+
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -120,15 +119,7 @@ You can customize the list through the `DynamicScaffold::Config#list` property.
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-
-    # You can set each title in the list with column name.
-    config.list.title(:name)
-    # Alternatively, you can pass block and dynamically display it.
-    config.list.title do |record|
-      record.name
-    end
-
-    # First arg of config.list.item is attribute name of model.
+    # First arg is attribute name of model.
     # Last hash arg is given to HTML attributes.
     # `label` method change label (I18n model attribute name is default).
     config.list.item(:id, style: 'width: 80px').label('Number')
@@ -334,38 +325,14 @@ class UsersController < ApplicationController
 
 ### View helper
 
-#### vars
-If you want to use all views common variables, please call `vars`. For example, you can use it when you want to display the name of URL scope in view.
-
-```rb
-# app/controllers/shops_controller.rb
-class ShopController < ApplicationController
-  include DynamicScaffold::Controller
-  dynamic_scaffold Shop do |config|
-    config.vars :scope_target do
-      SomeRecord.find(params['some_record_id'])
-    end
-```
-
-```erb
-# app/views/your_view.html.erb
-<%= scope_target.name %>
-```
-
-This block will only be executed once per request,  even if you repeatedly call scope_target on view.
-
-
-#### title
 You can get the current page title like `Country List`, `Edit Country` in your view.
 
 ```erb
 # app/views/your_view.html.erb
-<h1><%= dynamic_scaffold.title.current.full %></h1>
+<h1><%= current_page %></h1>
 ```
 
-You can get the model name only (like `Country`) with `dynamic_scaffold.title.current.name`, and you can get the action name only (lik `List`/`Edit`/`Create`) with `dynamic_scaffold.title.current.action`.
-
-If you want change the name, set `configtitle.name`.
+If you want change from the model name, set title.
 
 ```rb
 # app/controllers/shops_controller.rb
@@ -381,22 +348,22 @@ You can get the title and link of each action.
 ```erb
 <ol class="breadcrumb">
   <% if params['action'] == 'index' %>
-    <li class="active"><%= dynamic_scaffold.title.index.name %></li>
+    <li class="active"><%= dynamic_scaffold.title.index %></li>
   <% else %>
-    <li><%= link_to dynamic_scaffold.title.index.name, dynamic_scaffold_path(:index) %></li>
-    <li class="active"><%= dynamic_scaffold.title.current.action %></li>
+    <li><%= link_to dynamic_scaffold.title.index, dynamic_scaffold_path(:index) %></li>
+    <li class="active"><%= current_title %></li>
   <% end %>
 </ol>
 ```
 
-If you want to dynamically set according to parameters, you can also use block. This block execute in the controller scope.
+If you want to dynamically set according to parameters, you can also use block.
 
 ```rb
 # app/controllers/shops_controller.rb
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-    config.title.name do
+    config.title.name do |params|
       I18n.t "enum.user.role.#{params[role]}", default: params[role].titleize
     end
 ```
