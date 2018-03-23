@@ -16,7 +16,7 @@ ja:
       save: '保存'
       back: '戻る'
     message:
-      no_records: '%{model}の登録はありません。'
+      no_records: '%{model}は見つかりませんでした。'
       destroy_confirm: '削除します。よろしいですか？'
       confirm_cancel: 'キャンセル'
       confirm_ok: 'OK'

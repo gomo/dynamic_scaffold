@@ -10,7 +10,7 @@ en:
         edit: 'Edit'
         new: 'Create'
     message:
-      no_records: '%{model} is not registered.'
+      no_records: '%{model} was not found.'
       destroy_confirm: 'Are you sure you want to delete this?'
       confirm_cancel: 'Cancel'
       confirm_ok: 'OK'
