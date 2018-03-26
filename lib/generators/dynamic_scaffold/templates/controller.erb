@@ -4,14 +4,14 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
     # If you want to use all views common variables, please call `vars`.
     # Please see https://github.com/gomo/dynamic_scaffold#view-helper for details.
     # In your view:
-    # <%%= dynamic_scaffold.scope_target.name %>
+    # <%%= dynamic_scaffold.vars.scope_target.name %>
     # here:
     # config.vars :scope_target do
     #   SomeRecord.find(params['some_record_id'])
     # end
 
     # You can get the current page title like `Country List`, `Edit Country` in your view.
-    # <%%= current_title %>
+    # <%%= dynamic_scaffold.title.current.full %>
     # If you want change from the model name, set config.title.name.
     # Please see https://github.com/gomo/dynamic_scaffold#view-helper for details.
     # config.title.name = 'Model'
@@ -41,11 +41,17 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
     # Please see https://github.com/gomo/dynamic_scaffold#scoping for details.
     # config.scope([role])
 
-    # You can set each title in the list here.
-    # config.list.title(:name)
-
     # You can change the items displayed in the list through the `config.list.item`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-list for details.
+
+    # You can set each title in the list through title method.
+    # Pass the attribute name,
+    # config.list.title(:name)
+    # or
+    # config.list.title do |record|
+    #   record.name
+    # end
+
   <%- @model.column_names.each do |column| -%>
     config.list.item(:<%= column %>, style: 'width: 120px;')
   <%- end -%>

@@ -33,7 +33,7 @@ $ bundle
 
 ### Routes
 
-Please specify the path you want to the `dynamic_scaffold_for` method.
+Please call `dynamic_scaffold_for` method with the resource name.
 
 ```rb
 # config/routes.rb
@@ -72,7 +72,7 @@ rails generate dynamic_scaffold shops
       create  app/views/shops/new.html.erb
 ```
 
-You can also specify namespaces and the model name.
+You can also specify namespaces and the model name if you want.
 
 ```
 rails generate dynamic_scaffold namespace/plural_model
@@ -81,7 +81,7 @@ rails generate dynamic_scaffold namespace/controller Model
 
 ### Prepare CSS and Javascript
 
-You need to load dynamic_scaffold files for CSS and Javascript.　Currently, css corresponds to Bootstrap 3 and Bootstrap 4.　Please read one.
+You need to load the files for CSS and Javascript.　Currently, we support the Bootstrap 3 and Bootstrap 4.
 
 ```sass
 # app/assets/stylesheets/application.scss
@@ -97,7 +97,7 @@ You need to load dynamic_scaffold files for CSS and Javascript.　Currently, css
 
 ### Customization
 
-Customize each item in the block of dynamic_scaffold method.
+You can customize each items in the block passed as dynamic_scaffold method argument.
 
 ```rb
 # app/controllers/shops_controller.rb
@@ -112,6 +112,7 @@ end
 
 #### Customize list
 
+
 You can customize the list through the `DynamicScaffold::Config#list` property.
 
 ```rb
@@ -119,9 +120,17 @@ You can customize the list through the `DynamicScaffold::Config#list` property.
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
+    # You can set each title in the list through title method.
+    # Pass the attribute name,
+    # config.list.title(:name)
+    # or
+    # config.list.title do |record|
+    #   record.name
+    # end
+  
     # First arg is attribute name of model.
-    # Last hash arg is given to HTML attributes.
-    # `label` method change label (I18n model attribute name is default).
+    # Last hash arg is given to HTML attributes options.
+    # `label` method change the label (I18n model attribute name is default).
     config.list.item(:id, style: 'width: 80px').label('Number')
     config.list.item :name, style: 'width: 120px'
 
@@ -268,7 +277,7 @@ outer_window: 0,          # kaminari options
 left: 0,                  # kaminari options
 right: 0,                 # kaminari options
 param_name: :page,        # kaminari options
-total_count: true,        # Whether to display total count on active page like `2 / 102`
+total_count: true,        # Whether to display total count and active page, like `2/102`.
 end_buttons: true,        # Whether to display buttons to the first and last page.
 neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
 gap_buttons: false,       # Whether to display gap buttons.
@@ -277,10 +286,9 @@ highlight_current: false, # Whether to highlight the current page.
 
 ### Scoping
 
-You can scoping by url param.
+You can scoping for target items by url param.
 
-For example, you create a scaffold for a user table with a roll column on a separate page for each role.
-
+For example, you create the Scaffold of users for each role.
 ```rb
 create_table :users do |t|
   t.string :email, null: false
@@ -325,14 +333,33 @@ class UsersController < ApplicationController
 
 ### View helper
 
-You can get the current page title like `Country List`, `Edit Country` in your view.
+#### dynamic_scaffold.title
+
+
+You can set and get the title of the pages.
+
 
 ```erb
-# app/views/your_view.html.erb
-<h1><%= current_page %></h1>
+# app/views/your_resources/list.html.erb
+<%= dynamic_scaffold.title.current.name %>
+<!-- Shop -->
+
+<%= dynamic_scaffold.title.current.action %>
+<!-- List -->
+
+<%= dynamic_scaffold.title.current.full %>
+<!-- Shop List -->
 ```
 
-If you want change from the model name, set title.
+You can get another action title through the action name method too.
+
+```erb
+# app/views/your_resources/list.html.erb
+<%= dynamic_scaffold.title.new.full %>
+<!-- Create Shop -->
+```
+
+If you want change from the model name, set `config.title.name`.
 
 ```rb
 # app/controllers/shops_controller.rb
@@ -343,20 +370,7 @@ class ShopController < ApplicationController
     ...
 ```
 
-You can get the title and link of each action.
-
-```erb
-<ol class="breadcrumb">
-  <% if params['action'] == 'index' %>
-    <li class="active"><%= dynamic_scaffold.title.index %></li>
-  <% else %>
-    <li><%= link_to dynamic_scaffold.title.index, dynamic_scaffold_path(:index) %></li>
-    <li class="active"><%= current_title %></li>
-  <% end %>
-</ol>
-```
-
-If you want to dynamically set according to parameters, you can also use block.
+If you want to dynamically set according to url parameters, you can also use block.
 
 ```rb
 # app/controllers/shops_controller.rb
@@ -367,6 +381,80 @@ class ShopController < ApplicationController
       I18n.t "enum.user.role.#{params[role]}", default: params[role].titleize
     end
 ```
+
+#### dynamic_scaffold_path
+
+You can get the path by specifying the action name. Below is an example of displaying breadcrumbs.
+
+```erb
+<ol class="breadcrumb">
+  <%= yield :breadcrumb_before %>
+  <% if params['action'] == 'index' %>
+    <li class="active"><%= dynamic_scaffold.title.current.name %></li>
+  <% else %>
+    <li><%= link_to dynamic_scaffold.title.index.name, dynamic_scaffold_path(:index) %></li>
+    <li class="active"><%= dynamic_scaffold.title.current.action %></li>
+  <% end %>
+</ol>
+```
+
+#### dynamic_scaffold.vars
+
+You can cache, such as data to be displayed multiple times in a view using `dynamic_scaffold.vars`.
+
+```rb
+# app/controllers/shops_controller.rb
+class ShopController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+    config.title.vars :shop_type do
+      ShopType.find(params['shop_type_id'])
+    end
+    ...
+```
+
+```rb
+# in your view
+<%= dynamic_scaffold.vars.shop_type.name %>
+```
+
+### Password Handling Tips
+
+Passwords are not displayed on the editing screen and should be skipped　validation when sent with empty.
+
+You can do it by preparing virtual attributes for the edit action, and switching between edit and new action.
+
+```rb
+class User < ApplicationRecord
+  validates :password, presence: true
+
+  attr_reader :password_edit
+
+  def password_edit=(value)
+    @password_edit = value
+    self.password = value if value.present?
+  end
+end
+```
+
+```rb
+class UsersController < ScaffoldController
+  include DynamicScaffold::Controller
+  dynamic_scaffold User do |config|
+
+    # If the block given to the `if` method returns false, the element is ignored.
+    # The block argument is `params` in controller.
+    config.form.item(:password_field, :password)
+      .if {|p| %w[new create].include? p[:action] }
+
+    # When you call the `proxy` method, the element's error messages and label will be used for the specified attribute.
+    config.form.item(:password_field, :password_edit)
+      .proxy(:password)
+      .if {|p| %w[edit update].include? p[:action] }
+  end
+end
+```
+
 
 ## Contributing
 

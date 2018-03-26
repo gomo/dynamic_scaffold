@@ -4,7 +4,7 @@ module DynamicScaffold
     include ControllerUtilities
 
     included do
-      helper_method :dynamic_scaffold_path, :dynamic_scaffold_icon, :dynamic_scaffold, :primary_key_value, :current_title
+      helper_method :dynamic_scaffold_path, :dynamic_scaffold_icon, :dynamic_scaffold, :primary_key_value
       attr_reader :dynamic_scaffold
       before_action lambda {
         @dynamic_scaffold = Config.new(self.class.dynamic_scaffold_model, self)
