@@ -69,5 +69,20 @@ RSpec.describe SpecsController, type: :controller do
         expect(dynamic_scaffold.title.current.full).to eq 'Edit edit Block'
       end
     end
+
+    context 'Another actions' do
+      it 'should can get the title by specifying action.' do
+        controller.class.send(:dynamic_scaffold, Shop) {}
+        get :index, params: { locale: :en }
+        expect(dynamic_scaffold.title.index.action).to eq 'List'
+        expect(dynamic_scaffold.title.index.full).to eq 'Shop List'
+
+        expect(dynamic_scaffold.title.edit.action).to eq 'Edit'
+        expect(dynamic_scaffold.title.edit.full).to eq 'Edit Shop'
+
+        expect(dynamic_scaffold.title.new.action).to eq 'Create'
+        expect(dynamic_scaffold.title.new.full).to eq 'Create Shop'
+      end
+    end
   end
 end
