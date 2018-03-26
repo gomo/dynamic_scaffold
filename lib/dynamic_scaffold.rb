@@ -1,3 +1,4 @@
+require 'dynamic_scaffold/version'
 require 'dynamic_scaffold/engine'
 require 'dynamic_scaffold/controller_utilities'
 require 'dynamic_scaffold/controller'
