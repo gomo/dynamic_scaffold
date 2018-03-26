@@ -21,7 +21,7 @@ The Scaffold system which dynamically generates CRUD and sort functions.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'dynamic_scaffold'
+gem 'dynamic_scaffold', '~> 0.1'
 ```
 
 And then execute:
