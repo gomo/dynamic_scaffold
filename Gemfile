@@ -15,6 +15,6 @@ gemspec
 
 group :development, :test do
   gem 'kaminari', '~> 1.1'
-  gem 'rails-controller-testing'
+  gem 'rails-controller-testing', '~> 1.0.2'
   gem 'sassc-rails', '~> 1.3'
 end
