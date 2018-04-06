@@ -1,6 +1,6 @@
 module DynamicScaffold
   module Error
-    class RouteNotFound < Base
+    class Controller < Base
     end
   end
 end

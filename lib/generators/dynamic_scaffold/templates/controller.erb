@@ -64,7 +64,10 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
   end
   
   # def index
-  #   super
+  #   super do |query|
+  #     # If you want append database queries, Write here.
+  #     # Do not forget to return query.
+  #   end
   # end
 
   # def new
@@ -76,11 +79,15 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
   # end
 
   # def create
-  #   super
+  #   super do |record, prev_attribute|
+  #      # If you want to modify the attributes of the record before saving, Write here.
+  #   end
   # end
 
   # def update
-  #   super
+  #   super do |record, prev_attribute|
+  #      # If you want to modify the attributes of the record before saving, Write here.
+  #   end
   # end
 
   # def destroy
@@ -89,20 +96,5 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
 
   # def sort
   #   super
-  # end
-
-  # If you want to modify the attributes of the record before saving, please override.
-  # def before_update_save(record, prev_attribute)
-  #  
-  # end
-
-  # If you want to modify the attributes of the record before saving, please override.
-  # def before_create_save(record, prev_attribute)
-  #  
-  # end
-
-  # If you want append database queries, please override.
-  # def append_optional_queries(records)
-  #
   # end
 end

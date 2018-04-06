@@ -25,7 +25,7 @@ module DynamicScaffold
 
     def index # rubocop:disable Metrics/AbcSize
       @records = dynamic_scaffold.model.all
-      raise Error::InvalidParameter, 'You must return ActiveRecord::Relation' unless @records.is_a? ::ActiveRecord::Relation
+      raise Error::Controller, 'You must return ActiveRecord::Relation' unless @records.is_a? ::ActiveRecord::Relation
 
       if dynamic_scaffold.list.pagination
         @records = @records
@@ -37,7 +37,9 @@ module DynamicScaffold
       @records = @records.order dynamic_scaffold.list.sorter if dynamic_scaffold.list.sorter
       @records = @records.order(*dynamic_scaffold.list.order) unless dynamic_scaffold.list.order.empty?
 
-      @records = append_optional_queries(@records)
+      @records = yield(@records) if block_given?
+      raise Error::Controller, 'You must return ActiveRecord::Relation' if @records.nil?
+      @records
     end
 
     def new
@@ -60,7 +62,7 @@ module DynamicScaffold
       @record.attributes = update_values
       bind_sorter_value(@record) if dynamic_scaffold.list.sorter
       dynamic_scaffold.model.transaction do
-        before_create_save(@record, prev_attribute)
+        yield(@record, prev_attribute) if block_given?
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -75,7 +77,7 @@ module DynamicScaffold
       prev_attribute = @record.attributes
       @record.attributes = values
       dynamic_scaffold.model.transaction do
-        before_update_save(@record, prev_attribute)
+        yield(@record, prev_attribute) if block_given?
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
@@ -109,14 +111,6 @@ module DynamicScaffold
         end
       end
       redirect_to dynamic_scaffold_path(:index)
-    end
-
-    def before_update_save(record, prev_attribute); end
-
-    def before_create_save(record, prev_attribute); end
-
-    def append_optional_queries(records)
-      records
     end
   end
 end

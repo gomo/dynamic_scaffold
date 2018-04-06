@@ -40,7 +40,7 @@ module DynamicScaffold
                    .permit(*dynamic_scaffold.form.items.map(&:strong_parameter))
 
         if dynamic_scaffold.scope && !valid_for_scope?(values)
-          raise DynamicScaffold::Error::InvalidParameter, "You can update only to #{scope_params} on this scope"
+          raise DynamicScaffold::Error::Controller, "You can update only to #{scope_params} on this scope"
         end
 
         values

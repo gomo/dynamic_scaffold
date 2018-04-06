@@ -106,7 +106,7 @@ RSpec.describe SpecsController, type: :controller do
             email: 'udpate@example.com',
             role: :staff
           } }
-        end.to raise_error(DynamicScaffold::Error::InvalidParameter)
+        end.to raise_error(DynamicScaffold::Error::Controller)
       end
     end
 

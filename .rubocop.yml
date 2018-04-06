@@ -90,3 +90,6 @@ Style/ClassAndModuleChildren:
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
+
+Metrics/CyclomaticComplexity:
+  Max: 7
