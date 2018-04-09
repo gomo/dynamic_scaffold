@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.version     = DynamicScaffold::VERSION
   s.authors     = ['Masamoto Miyata']
   s.email       = ['miyata@sincere-co.com']
-  s.homepage    = 'https://github.com/gomo/dynamic-scaffold-rails'
-  s.summary     = 'Scaffold which dynamically generates CRUD and sort.'
+  s.homepage    = 'https://github.com/gomo/dynamic_scaffold'
+  s.summary     = 'The Scaffold system which dynamically generates CRUD and sort functions.'
   s.description = 'It is customizable and flexible scaffold who support sort and the pagination.'
   s.license     = 'MIT'
 
