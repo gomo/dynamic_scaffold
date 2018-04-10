@@ -73,7 +73,7 @@ module DynamicScaffold
 
     def update
       values = update_values
-      @record = find_record(extract_pkeys(values))
+      @record = find_record(dynamic_scaffold.model.primary_key => params['id'])
       prev_attribute = @record.attributes
       @record.attributes = values
       dynamic_scaffold.model.transaction do

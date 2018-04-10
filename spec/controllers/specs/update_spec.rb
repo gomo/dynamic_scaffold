@@ -28,7 +28,6 @@ RSpec.describe SpecsController, type: :controller do
 
     it 'should success' do
       controller.class.send(:dynamic_scaffold, Shop) do |c|
-        c.form.item(:text_field, :id)
         c.form.item(:text_field, :name).label 'Shop Name'
         c.form.item(:text_field, :memo)
         c.form.item(:text_field, :category_id)

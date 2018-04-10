@@ -8,11 +8,6 @@ module DynamicScaffold
         dynamic_scaffold.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
       end
 
-      # Get the primary key hash from the update parameters.
-      def extract_pkeys(values)
-        [*dynamic_scaffold.model.primary_key].each_with_object({}) {|col, res| res[col] = values[col] }
-      end
-
       # Convert pkey_string value to hash.
       def pkey_string_to_hash(pkey)
         # https://github.com/gomo/dynamic_scaffold/pull/9/commits/ff5de0e38b3544347e82539c45ffd2efaf3410da
