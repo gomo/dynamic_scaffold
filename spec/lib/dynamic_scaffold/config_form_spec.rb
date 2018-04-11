@@ -227,7 +227,9 @@ RSpec.describe ApplicationHelper, type: :helper do
         helper.form_with model: shop, url: './create' do |form|
           expect(elem.type?(:collection_select)).to be true
           result = elem.render(helper, form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
-          expect(result.shift).to eq '<select name="shop[category_id]">'
+          start_tag = result.shift
+          expect(start_tag).to start_with '<select '
+          expect(start_tag).to include 'name="shop[category_id]"'
           expect(result.pop).to eq '</select>'
           num = 0
           result.each do |option|
@@ -259,7 +261,10 @@ RSpec.describe ApplicationHelper, type: :helper do
         elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
           result = elem.render(helper, form).gsub!(/\R+/, '').gsub!(/></, ">\n<").split("\n")
-          expect(result.shift).to eq '<select style="width: 200px;" class="foobar" name="shop[category_id]">'
+          start_tag = result.shift
+          expect(start_tag).to start_with '<select '
+          expect(start_tag).to include 'style="width: 200px;"'
+          expect(start_tag).to include 'name="shop[category_id]"'
           expect(result.shift).to eq '<option value="">Select Category</option>'
         end
       end
@@ -289,7 +294,10 @@ RSpec.describe ApplicationHelper, type: :helper do
             end
           end
 
-          expect(result.shift).to eq '<select name="shop[category_id]">'
+          start_tag = result.shift
+          expect(start_tag).to start_with '<select '
+          expect(start_tag).to include 'name="shop[category_id]"'
+
           expect(result.shift).to eq '<optgroup label="Group 1">'
           grouped_options.first.last.each do |op|
             value = op.first
