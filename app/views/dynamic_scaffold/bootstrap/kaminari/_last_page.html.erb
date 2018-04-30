@@ -1,4 +1,4 @@
-<li class="<%= classNames 'page-item last', disabled: current_page.last? %>">
+<li class="<%= class_names 'page-item last', disabled: current_page.last? %>">
   <%if current_page.last?%>
     <span class="page-link"><%= dynamic_scaffold_icon(:last) %></span>
   <%else%>

@@ -4,7 +4,7 @@
       <% if !elem.label? && elem.type?(:hidden_field) %>
         <%= elem.render(self, form) %>
       <% else %>
-        <div class="<%= classNames('form-group', {'has-error': @record.errors[elem.proxy_field.name].any?}) %>">
+        <div class="<%= class_names('form-group', {'has-error': @record.errors[elem.proxy_field.name].any?}) %>">
           <label><%= elem.proxy_field.label %></label>
           <div class="clearfix">
             <% if elem.type? :collection_check_boxes %>
@@ -24,7 +24,7 @@
                 </div>
               <%end%>
             <% else %>
-              <%= elem.render(self, form, classNames('form-control', {'is-invalid': @record.errors[elem.proxy_field.name].any?})) %>
+              <%= elem.render(self, form, class_names('form-control', {'is-invalid': @record.errors[elem.proxy_field.name].any?})) %>
             <% end %>
           </div>
           <%if @record.errors[elem.proxy_field.name].any?%>

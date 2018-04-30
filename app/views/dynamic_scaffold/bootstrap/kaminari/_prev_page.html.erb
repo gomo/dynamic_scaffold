@@ -1,4 +1,4 @@
-<li class="<%= classNames 'page-item prev', disabled: current_page.first? %>">
+<li class="<%= class_names 'page-item prev', disabled: current_page.first? %>">
   <%if current_page.first?%>
     <span class="page-link"><%= dynamic_scaffold_icon(:prev) %></span>
   <%else%>

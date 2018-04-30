@@ -32,7 +32,7 @@
           <% end %>
           <div class="resplist-items">
           <%dynamic_scaffold.list.items.each do |disp|%>
-            <%= content_tag :div, class: classNames('resplist-item', disp.classnames), **disp.html_attributes do%>
+            <%= content_tag :div, class: class_names('resplist-item', disp.classnames), **disp.html_attributes do%>
               <div class="resplist-label"><%= disp.label %></div>
               <div class="resplist-value"><%= disp.value self, record %></div>
             <%end%>
