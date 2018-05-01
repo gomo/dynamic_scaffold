@@ -1,8 +1,11 @@
 @import 'common';
 @import 'resplist';
 
+$dynamic_scaffold_primary: #337ab7 !default;
+$dynamic_scaffold_default: #868e96 !default;
+
 .btn-default path{
-  fill: #333;
+  fill: $dynamic_scaffold_default;
 }
 
 .btn-primary path{
@@ -14,7 +17,7 @@
 }
 
 .page-item .page-link path{
-  fill: #337ab7;
+  fill: $dynamic_scaffold_primary;
 }
 
 .page-item.disabled .page-link path{

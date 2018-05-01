@@ -1,8 +1,16 @@
 @import 'common';
 @import 'resplist';
 
+$dynamic_scaffold_primary: #007bff !default;
+$dynamic_scaffold_secondary: #868e96 !default;
+$dynamic_scaffold_warning: #ffc107 !default;
+
+.btn-outline-primary, .btn-outline-secondary, .btn-outline-warning{
+  background-color: #fff;
+}
+
 .btn-outline-primary path{
-  fill: #007bff;
+  fill: $dynamic_scaffold_primary;
 }
 
 .btn-outline-primary:hover path {
@@ -10,7 +18,7 @@
 }
 
 .btn-outline-secondary path{
-  fill: #868e96;
+  fill: $dynamic_scaffold_secondary;
 }
 
 .btn-outline-secondary:hover path{
@@ -18,17 +26,21 @@
 }
 
 .btn-outline-warning path{
-  fill: #ffc107;
+  fill: $dynamic_scaffold_warning;
 }
 
-.btn-outline-warning:hover path{
-  fill: #fff;
+.btn-outline-warning:hover{
+  path{
+    fill: #fff;
+  }
+
+  color: #fff;
 }
 
 .page-item .page-link path{
-  fill: #007bff;
+  fill: $dynamic_scaffold_primary;
 }
 
 .page-item.disabled .page-link path{
-  fill: #868e96;
+  fill: $dynamic_scaffold_secondary;
 }
