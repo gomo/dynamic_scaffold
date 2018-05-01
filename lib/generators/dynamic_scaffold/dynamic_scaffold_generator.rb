@@ -3,6 +3,8 @@ class DynamicScaffoldGenerator < Rails::Generators::Base
 
   argument :path, type: 'string', required: true
   argument :model, type: 'string', required: false
+  class_option :content_for, type: :string
+  class_option :controller_base, type: :string, default: 'ApplicationController'
 
   def init
     @namespases = path.split('/')
@@ -11,6 +13,8 @@ class DynamicScaffoldGenerator < Rails::Generators::Base
     @model_name = model ? model : @plural_model_name.singularize
     @model_name = @model_name.camelize
     @model = @model_name.constantize
+    @content_for = options['content_for']
+    @controller_base = options['controller_base']
   end
 
   def create_controllers

@@ -1,4 +1,4 @@
-class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_name %>Controller < ApplicationController
+class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_name %>Controller < <%= @controller_base %>
   include DynamicScaffold::Controller
   dynamic_scaffold <%= @model_name %> do |config|
     # If you want to use all views common variables, please call `vars`.

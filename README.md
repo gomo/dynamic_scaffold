@@ -79,6 +79,39 @@ rails generate dynamic_scaffold namespace/plural_model
 rails generate dynamic_scaffold namespace/controller Model
 ```
 
+#### Options
+
+##### content_for
+
+Enclose the `render` of view in `content_for`.
+
+```
+rails generate dynamic_scaffold admin/shops --content_for admin_body
+```
+
+```erb
+# views/admin/shops/edit.html.erb
+<% content_for :admin_body do%>
+  <%= render 'dynamic_scaffold/bootstrap/edit' %>
+<%end%>
+```
+
+##### controller_base
+
+Change the base class of controller.
+
+```
+rails generate dynamic_scaffold admin/shops --controller_base Admin::BaseController
+```
+
+```erb
+# controllers/admin/shops_controller.rb
+class Admin::ShopsController < Admin::BaseController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+```
+
+
 ### Prepare CSS and Javascript
 
 You need to load the files for CSS and Javascript.　Currently, we support the Bootstrap 3 and Bootstrap 4.

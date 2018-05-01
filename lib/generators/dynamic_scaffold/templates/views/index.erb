@@ -1,1 +1,4 @@
-<%%= render 'dynamic_scaffold/bootstrap/list' %>
+<% if @content_for %><%% content_for :<%= @content_for %> do%>
+<%end -%>
+<% if @content_for %>  <%end%><%%= render 'dynamic_scaffold/bootstrap/list' %>
+<% if @content_for %><%% end %><%end -%>
