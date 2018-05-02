@@ -58,11 +58,10 @@ module DynamicScaffold
 
     def create
       @record = dynamic_scaffold.model.new
-      prev_attribute = @record.attributes
       @record.attributes = update_values
       bind_sorter_value(@record) if dynamic_scaffold.list.sorter
       dynamic_scaffold.model.transaction do
-        yield(@record, prev_attribute) if block_given?
+        yield(@record) if block_given?
         if @record.save
           redirect_to dynamic_scaffold_path(:index)
         else
