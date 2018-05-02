@@ -16,4 +16,21 @@ RSpec.describe SpecsController, type: :controller do
       )
     end
   end
+
+  describe 'Insert Before' do
+    render_views
+    it 'should insert a tag before the specified element.' do
+      controller.class.send(:dynamic_scaffold, Country) do |c|
+        c.form.item(:text_field, :id).insert(:before) do |rec|
+          tag.div 'foobar'
+        end
+      end
+
+      get :new, params: { locale: :en }
+
+      expect(response.body).to match(
+        /<div>foobar<\/div>[\s\S]*?<input class="form-control" type="text" name="country\[id\]" \/>/
+      )
+    end
+  end
 end

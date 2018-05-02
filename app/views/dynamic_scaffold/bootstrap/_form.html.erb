@@ -7,6 +7,9 @@
         <div class="<%= class_names('form-group', {'has-error': @record.errors[elem.proxy_field.name].any?}) %>">
           <label><%= elem.proxy_field.label %></label>
           <div class="clearfix">
+            <%- elem.insert(:before).each do |block| -%>
+              <%= self.instance_exec(@record, &block) %>
+            <%-end-%>
             <% if elem.type? :collection_check_boxes %>
               <%= elem.render(self, form) do |cb|%>
                 <div class="form-check checkbox">
