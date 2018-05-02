@@ -1,5 +1,7 @@
 require 'rails_helper'
 RSpec.describe SpecsController, type: :controller do
+  delegate :dynamic_scaffold, to: :controller
+  
   describe 'Insert After' do
     render_views
     it 'should insert a tag after the specified element.' do
