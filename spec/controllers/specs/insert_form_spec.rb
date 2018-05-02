@@ -33,4 +33,16 @@ RSpec.describe SpecsController, type: :controller do
       )
     end
   end
+
+  describe 'form.permit_params' do
+    it 'should be able to add permit parameters.' do
+      controller.class.send(:dynamic_scaffold, Shop) do |c|
+        c.form.permit_params(:foobar)
+      end
+
+      post :create, params: { locale: :en, shop: {foobar: 'foobar'}}
+      record = assigns(:record)
+      expect(record.foobar).to eq 'foobar'
+    end
+  end
 end

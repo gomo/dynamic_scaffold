@@ -214,6 +214,7 @@ module DynamicScaffold
     def initialize(config)
       @config = config
       @items = []
+      @permit_params = []
     end
 
     def items
@@ -225,6 +226,15 @@ module DynamicScaffold
         end
       end
       @items
+    end
+
+    def permit_params(*params)
+      if params.length > 0
+        @permit_params = params 
+        self
+      else
+        @permit_params
+      end
     end
 
     def item(type, *args, &block) # rubocop:disable Metrics/MethodLength

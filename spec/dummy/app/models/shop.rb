@@ -4,6 +4,8 @@ class Shop < ApplicationRecord
   has_many :states, inverse_of: :shops, through: :shop_states
   enum status: { draft: 0, published: 1, hidden: 2 }
 
+  attr_accessor :foobar
+
   validates :name, presence: true, length: { in: 3..20 }
   validates :category_id, presence: true
   validates :status, presence: true, inclusion: { in: Shop.statuses.keys, allow_blank: true }

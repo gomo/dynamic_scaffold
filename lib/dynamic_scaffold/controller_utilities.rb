@@ -30,9 +30,10 @@ module DynamicScaffold
 
       # Get paramters for update record.
       def update_values
+        permitting = dynamic_scaffold.form.items.map(&:strong_parameter).concat(dynamic_scaffold.form.permit_params)
         values = params
                    .require(dynamic_scaffold.model.name.underscore)
-                   .permit(*dynamic_scaffold.form.items.map(&:strong_parameter))
+                   .permit(*permitting)
 
         if dynamic_scaffold.scope && !valid_for_scope?(values)
           raise DynamicScaffold::Error::Controller, "You can update only to #{scope_params} on this scope"
