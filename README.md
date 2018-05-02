@@ -242,6 +242,18 @@ class ShopController < ApplicationController
       end
     end
 
+    # You can insert HTML before/after the element.
+    config.form.item(:file_field, :image).label('Image').insert(:after) do |rec|
+      tag.label for: :delete_image do
+        concat tag.input type: :checkbox, id: :delete_image, name: 'shop[delete_image]'
+        concat 'Delete image'
+      end
+    end
+
+    # You need to permit the new form parameters you inserted.
+    # And if necessary, add virtual attributes to the model.
+    config.form.permit_params(:delete_image)
+
     # You can also add a note to the form field.
     config.form.item(:text_field, :name).note do
       content_tag :p do
