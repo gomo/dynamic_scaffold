@@ -1,5 +1,5 @@
 <%= form_with method: method, model: @record, url: url, local: true do |form| %>
-  <%dynamic_scaffold.form.items.each do |elem|%>
+  <%-dynamic_scaffold.form.items.each do |elem|-%>
     <% if elem.needs_rendering?(self)%>
       <% if !elem.label? && elem.type?(:hidden_field) %>
         <%= elem.render(self, form) %>
@@ -26,6 +26,9 @@
             <% else %>
               <%= elem.render(self, form, class_names('form-control', {'is-invalid': @record.errors[elem.proxy_field.name].any?})) %>
             <% end %>
+            <%- elem.insert(:after).each do |block| -%>
+              <%= self.instance_exec(@record, &block) %>
+            <%-end-%>
           </div>
           <%if @record.errors[elem.proxy_field.name].any?%>
             <ul class="dynamicScaffold-error-message">

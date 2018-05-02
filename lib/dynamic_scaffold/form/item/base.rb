@@ -13,6 +13,10 @@ module DynamicScaffold
           @classnames_list.push(classnames) if classnames
           @notes = []
           @multiple = type == :collection_check_boxes || html_attributes[:multiple]
+          @inserts = {
+            before: [],
+            after: []
+          }
         end
 
         def notes?
@@ -89,6 +93,15 @@ module DynamicScaffold
         def default(value = nil)
           return @default if value.nil?
           @default = value
+        end
+
+        def insert(position, &block)
+          if block_given?
+            @inserts[position] << block
+            self
+          else
+            @inserts[position]
+          end
         end
 
         protected
