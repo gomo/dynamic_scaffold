@@ -225,7 +225,7 @@ class ShopController < ApplicationController
       :category_id, Category.all, :id, :name, include_blank: 'Select Category'
     )
     config.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
-    config.form.item(:collection_radio_buttons, :status, Shop.statuses.map{|k, v| [v, k.titleize]}, :first, :last)
+    config.form.item(:collection_radio_buttons, :status, Shop.statuses.map{|k, _v| [k, k.titleize]}, :first, :last)
 
     # If you want to display more free form field, use block.
     # The block is executed in the context of view, so you can call the method of view.
