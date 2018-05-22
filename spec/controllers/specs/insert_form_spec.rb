@@ -1,12 +1,12 @@
 require 'rails_helper'
 RSpec.describe SpecsController, type: :controller do
   delegate :dynamic_scaffold, to: :controller
-  
+
   describe 'Insert After' do
     render_views
     it 'should insert a tag after the specified element.' do
       controller.class.send(:dynamic_scaffold, Country) do |c|
-        c.form.item(:text_field, :id).insert(:after) do |rec|
+        c.form.item(:text_field, :id).insert(:after) do |_rec|
           tag.div 'foobar'
         end
       end
@@ -23,7 +23,7 @@ RSpec.describe SpecsController, type: :controller do
     render_views
     it 'should insert a tag before the specified element.' do
       controller.class.send(:dynamic_scaffold, Country) do |c|
-        c.form.item(:text_field, :id).insert(:before) do |rec|
+        c.form.item(:text_field, :id).insert(:before) do |_rec|
           tag.div 'foobar'
         end
       end
@@ -42,7 +42,7 @@ RSpec.describe SpecsController, type: :controller do
         c.form.permit_params(:foobar)
       end
 
-      post :create, params: { locale: :en, shop: {foobar: 'foobar'}}
+      post :create, params: { locale: :en, shop: { foobar: 'foobar' } }
       record = assigns(:record)
       expect(record.foobar).to eq 'foobar'
     end

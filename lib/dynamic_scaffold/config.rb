@@ -229,8 +229,8 @@ module DynamicScaffold
     end
 
     def permit_params(*params)
-      if params.length > 0
-        @permit_params.concat(params) 
+      if !params.empty?
+        @permit_params.concat(params)
         self
       else
         @permit_params
