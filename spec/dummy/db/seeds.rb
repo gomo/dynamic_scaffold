@@ -38,7 +38,7 @@ end
   User.roles.each_key do |role|
     User.create!(
       email: Faker::Internet.email,
-      encrypted_password: Faker::Crypto.md5,
+      password: 'password',
       role: role,
       sequence: n
     )

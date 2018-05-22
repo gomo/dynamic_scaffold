@@ -4,6 +4,7 @@
 $dynamic_scaffold_primary: #007bff !default;
 $dynamic_scaffold_secondary: #868e96 !default;
 $dynamic_scaffold_warning: #ffc107 !default;
+$dynamic_scaffold_danger: #dc3545 !default;
 
 .btn-outline-primary, .btn-outline-secondary, .btn-outline-warning{
   background-color: #fff;
@@ -29,7 +30,11 @@ $dynamic_scaffold_warning: #ffc107 !default;
   fill: $dynamic_scaffold_warning;
 }
 
-.btn-outline-warning:hover{
+.btn-outline-danger path{
+  fill: $dynamic_scaffold_danger;
+}
+
+.btn-outline-warning:hover, .btn-outline-danger:hover{
   path{
     fill: #fff;
   }

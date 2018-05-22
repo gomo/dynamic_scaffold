@@ -10,4 +10,6 @@ class Shop < ApplicationRecord
   validates :category_id, presence: true
   validates :status, presence: true, inclusion: { in: Shop.statuses.keys, allow_blank: true }
   validates :memo, length: { maximum: 30 }
+
+  mount_uploader :image, ShopImageUploader
 end

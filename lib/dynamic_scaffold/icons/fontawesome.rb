@@ -41,6 +41,8 @@ Rails.application.config.dynamic_scaffold.icons = proc do |name|
     DynamicScaffold::Fontawesome.inline_svg('angle-double-up.svg')
   when :bottom then
     DynamicScaffold::Fontawesome.inline_svg('angle-double-down.svg')
+  when :times then
+    DynamicScaffold::Fontawesome.inline_svg('times.svg')
   else
     raise DynamicScaffold::Error::InvalidIcon, "Unknown icon type #{name} specified."
   end

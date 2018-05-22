@@ -7,7 +7,7 @@ FOREIGN KEY ("country_id")
 );
 CREATE INDEX "index_states_on_country_id" ON "states" ("country_id");
 CREATE TABLE "categories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "sequence" integer NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
-CREATE TABLE "shops" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "memo" text, "category_id" integer, "status" integer(1) DEFAULT 0 NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_7c2349e03e"
+CREATE TABLE "shops" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar NOT NULL, "memo" text, "category_id" integer, "status" integer(1) DEFAULT 0 NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "image" varchar, CONSTRAINT "fk_rails_7c2349e03e"
 FOREIGN KEY ("category_id")
   REFERENCES "categories" ("id")
 );
@@ -28,6 +28,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171129083914'),
 ('20171129083921'),
 ('20171129083931'),
-('20171207055523');
+('20171207055523'),
+('20180522060727');
 
 
