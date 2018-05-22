@@ -264,7 +264,7 @@ module DynamicScaffold
         :block then
         item = Form::Item::Block.new(@config, type, *args, block)
       else
-        raise DynamicScaffold::Error::InvalidParameter, "Unknown form item type #{type}"
+        raise DynamicScaffold::Error::Config, "Unknown form item type #{type}"
       end
       @items << item
       item
