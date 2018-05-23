@@ -233,6 +233,7 @@ DEPENDENCIES
   factory_bot_rails (~> 4.8)
   faker (~> 1.8)
   kaminari (~> 1.1)
+  nokogiri (~> 1.8)
   pry-byebug (~> 3.5)
   pry-doc (~> 0.11)
   pry-rails (~> 0.3)

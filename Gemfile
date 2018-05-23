@@ -19,3 +19,7 @@ group :development, :test do
   gem 'rails-controller-testing', '~> 1.0'
   gem 'sassc-rails', '~> 1.3'
 end
+
+group :test do
+  gem 'nokogiri', '~> 1.8'
+end
