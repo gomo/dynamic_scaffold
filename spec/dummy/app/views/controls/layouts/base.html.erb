@@ -6,6 +6,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <%= stylesheet_link_tag 'controllers/bootstrap4/base', media: 'all' %>
   <%end%>
+  <%=yield :base_head %>
 <%end%>
 
 <%= render template: "layouts/application" %>

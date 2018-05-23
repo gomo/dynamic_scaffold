@@ -1,1 +1,15 @@
+<%content_for :base_head do%>
+  <style>
+    @media (min-width: 770px) {
+      .resplist-row{
+        width: 50%;
+      }
+    }
+    @media (min-width: 1200px) {
+      .resplist-row{
+        width: 33.333333%;
+      }
+    }
+  </style>
+<%end%>
 <%= render 'dynamic_scaffold/bootstrap/list' %>

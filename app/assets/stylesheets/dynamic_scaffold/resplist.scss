@@ -49,10 +49,12 @@
   clear: both;
 }
 
-ul.resplist {
+.resplist {
   list-style: none;
   padding: 0;
   border-collapse: separate;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .resplist-striped .resplist-row:nth-child(odd) {
@@ -114,6 +116,7 @@ ul.resplist {
   background-color: #fff;
   border-top: 1px solid #dddddd;
   padding: 0;
+  width: 100%;
 }
 
 .resplist-item-xs {
