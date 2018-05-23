@@ -8,14 +8,20 @@ document.addEventListener('dynamic_scaffold:load', function(){
       sourceRect = source.getBoundingClientRect()
       targetRect = target.getBoundingClientRect()
 
-      //Calculate the duration according to the moving distance.
-      const distance = targetRect.top - sourceRect.top
+
+      // Find the distance between two points and calculate the animation duration.
       const durationBase = 200
+      const distance = Math.sqrt(
+        Math.pow(targetRect.left - sourceRect.left, 2 ) + Math.pow( targetRect.top - sourceRect.top, 2 )
+      )
       const durationFactor = Math.abs(distance) * 0.03
       const duration = Math.min(durationBase + durationFactor, 600)
-
       source.style.transition = 'all ' + duration + 'ms cubic-bezier(1.0, 0, 0.25, 1.0)'
-      source.style.transform = 'translateY(' + distance + 'px)'
+
+      //Calculate the duration according to the moving distance.
+      const y = targetRect.top - sourceRect.top
+      const x = targetRect.left - sourceRect.left
+      source.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
     }))
   }
 
