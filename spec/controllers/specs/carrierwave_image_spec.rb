@@ -44,7 +44,9 @@ RSpec.describe SpecsController, type: :controller do
       category = FactoryBot.create(:category)
 
       expect do
-        image = Rack::Test::UploadedFile.new(File.open(Rails.root.join('../../spec/fixtures/images/150x150.png')))
+        image = Rack::Test::UploadedFile.new(
+          Rails.root.join('..', '..', 'spec', 'fixtures', 'images', '150x150.png')
+        )
         post :create, params: { locale: :en, shop: {
           image: image,
           name: 'foobar',
