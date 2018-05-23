@@ -227,6 +227,14 @@ class ShopController < ApplicationController
     config.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
     config.form.item(:collection_radio_buttons, :status, Shop.statuses.map{|k, _v| [k, k.titleize]}, :first, :last)
 
+    # You can add an image uploader with preview to the form. The save and remove part to the model corresponds to [carrierwave](https://github.com/carrierwaveuploader/carrierwave).
+    # In the example below, you need to mount the carrierwave uploader on the thumb column of the model.
+    #
+    # class Shop < ApplicationRecord
+    #   mount_uploader :thumb, ShopThumbUploader
+    #
+    config.form.item(:carrierwave_image, :thumb, preview_max_size: {width: '300px', height: '300px'})
+
     # If you want to display more free form field, use block.
     # The block is executed in the context of view, so you can call the method of view.
     config.form.item :block, :free do |form, field|
