@@ -264,8 +264,8 @@ module DynamicScaffold
         :block then
         item = Form::Item::Block.new(@config, type, *args, block)
       when
-        :image then
-        item = Form::Item::Image.new(@config, type, *args)
+        :carrierwave_image then
+        item = Form::Item::CarrierWaveImage.new(@config, type, *args)
       else
         raise DynamicScaffold::Error::Config, "Unknown form item type #{type}"
       end

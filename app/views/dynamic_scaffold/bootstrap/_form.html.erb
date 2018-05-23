@@ -26,7 +26,7 @@
                   <%end%>
                 </div>
               <%end%>
-            <% elsif elem.type? :image %>
+            <% elsif elem.type? :carrierwave_image %>
               <%- image = form.object.public_send(elem.name) -%>
               <div class="dynamicScaffoldJs-image-wrapper">
                 <div class="dynamicScaffoldJs-image-preview panel panel-default card mb-1" style="<%= elem.preview_image_style %>">

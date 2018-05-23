@@ -1,7 +1,7 @@
 module DynamicScaffold
   module Form
     module Item
-      class Image < Base
+      class CarrierWaveImage < Base
         def initialize(config, type, name, options)
           super(config, type, name, {})
           @options = options
