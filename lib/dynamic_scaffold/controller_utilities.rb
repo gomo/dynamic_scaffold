@@ -31,9 +31,9 @@ module DynamicScaffold
       # Get paramters for update record.
       def update_values
         permitting = dynamic_scaffold.form.items
-          .map(&:strong_parameter)
-          .concat(dynamic_scaffold.form.permit_params)
-          .flatten
+                       .map(&:strong_parameter)
+                       .concat(dynamic_scaffold.form.permit_params)
+                       .flatten
         values = params
                    .require(dynamic_scaffold.model.name.underscore)
                    .permit(*permitting)

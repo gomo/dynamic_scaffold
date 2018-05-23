@@ -17,7 +17,7 @@ module DynamicScaffold
           end
         end
 
-        def render(view, form, classnames = nil)
+        def render(_view, _form, classnames = nil)
           html_attributes = build_html_attributes(classnames)
           yield(html_attributes)
         end

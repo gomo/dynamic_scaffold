@@ -19,7 +19,7 @@ module Controls
       # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select
       c.form.item(:hidden_field, :id)
 
-      c.form.item(:carrierwave_image, :image, preview_max_size: {width: '300px'})
+      c.form.item(:carrierwave_image, :image, preview_max_size: { width: '300px' })
 
       # `label` method change label from I18n model attribute name.
       c.form.item(:text_field, :name).label 'Shop Name'
