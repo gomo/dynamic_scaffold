@@ -513,7 +513,10 @@ end
 
 * We use rspec for test.
 * Check code with [rubocop](https://github.com/bbatsov/rubocop).
-* You can change CSS to Bootstrap3 by registering `bootstrap=3` in cookie in the sample page.
+
+### Development hints.
+
+Please support both Bootstrap 3/4. You can change CSS to Bootstrap3 by registering `bootstrap=3` in cookie in the sample page.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
