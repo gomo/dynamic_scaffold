@@ -17,6 +17,7 @@ document.addEventListener('dynamic_scaffold:load', function (){
     button.addEventListener('click', function(e){
       preview.style.display = 'none'
       flag.disabled = false
+      input.value = ''
     })
 
     // change event
