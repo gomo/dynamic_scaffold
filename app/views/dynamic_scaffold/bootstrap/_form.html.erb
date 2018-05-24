@@ -29,13 +29,15 @@
             <% elsif elem.type? :carrierwave_image %>
               <%- image = form.object.public_send(elem.name) -%>
               <div class="dynamicScaffoldJs-image-wrapper">
-                <div class="dynamicScaffoldJs-image-preview panel panel-default card mb-1" style="<%= elem.preview_image_style %>">
+                <div class="dynamicScaffoldJs-image-preview panel panel-default card mb-1">
                   <div class="text-right panel-heading card-header">
                     <button type="button" class="btn btn-outline-danger btn-danger btn-sm dynamicScaffoldJs-image-remove">
                       <%= dynamic_scaffold_icon :times %>
                     </button>
                   </div>
-                  <img src="<%= image.url if image.file.present? %>" alt="" class="img-responsive img-fluid">
+                  <div style="<%= elem.preview_image_style %>">
+                    <img src="<%= image.url if image.file.present? %>" alt="" class="img-responsive img-fluid">
+                  </div>
                 </div>
                 <%= form.hidden_field "remove_#{elem.name}", value: "1", disabled:"disabled", class: 'dynamicScaffoldJs-image-remove-flag'%>
                 <%= elem.render(self, form, 'form-control-file dynamicScaffoldJs-image') do |attr|%>

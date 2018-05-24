@@ -6,6 +6,9 @@ document.addEventListener('dynamic_scaffold:load', function (){
     const preview = wrapper.querySelector('.dynamicScaffoldJs-image-preview')
     const img = preview.querySelector('img')
 
+    // init preview display
+    preview.style.display = 'inline-block'
+
     // hide on non image
     if(!img.getAttribute('src')){
       preview.style.display = 'none'
@@ -25,7 +28,7 @@ document.addEventListener('dynamic_scaffold:load', function (){
       const reader = new FileReader();
       reader.onload = function (e) {
         img.src = e.target.result
-        preview.style.display = 'block'
+        preview.style.display = 'inline-block'
         flag.disabled = true
       }
 
