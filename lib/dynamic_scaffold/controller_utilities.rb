@@ -39,7 +39,7 @@ module DynamicScaffold
                    .permit(*permitting)
 
         if dynamic_scaffold.scope && !valid_for_scope?(values)
-          raise DynamicScaffold::Error::Controller, "You can update only to #{scope_params} on this scope"
+          raise DynamicScaffold::Error::InvalidOperation, "You can update only to #{scope_params} on this scope"
         end
 
         values

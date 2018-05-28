@@ -25,7 +25,7 @@ module DynamicScaffold
 
     def index # rubocop:disable Metrics/AbcSize
       @records = dynamic_scaffold.model.all
-      raise Error::Controller, 'You must return ActiveRecord::Relation' unless @records.is_a? ::ActiveRecord::Relation
+      raise Error::InvalidOperation, 'You must return ActiveRecord::Relation' unless @records.is_a? ::ActiveRecord::Relation
 
       if dynamic_scaffold.list.pagination
         @records = @records
@@ -38,7 +38,7 @@ module DynamicScaffold
       @records = @records.order(*dynamic_scaffold.list.order) unless dynamic_scaffold.list.order.empty?
 
       @records = yield(@records) if block_given?
-      raise Error::Controller, 'You must return ActiveRecord::Relation' if @records.nil?
+      raise Error::InvalidOperation, 'You must return ActiveRecord::Relation' if @records.nil?
       @records
     end
 

@@ -4,7 +4,8 @@
       <% if !elem.label? && elem.type?(:hidden_field) %>
         <%= elem.render(self, form) %>
       <% else %>
-        <div class="<%= class_names('form-group', {'has-error': @record.errors[elem.proxy_field.name].any?}) %>">
+        <%- errors = elem.errors(@record) -%>
+        <div class="<%= class_names('form-group', 'has-error': errors.present?) %>">
           <label><%= elem.proxy_field.label %></label>
           <div class="clearfix">
             <%- elem.insert(:before).each do |block| -%>
@@ -45,19 +46,19 @@
                 <%end%>
               </div>
             <% else %>
-              <%= elem.render(self, form, class_names('form-control', {'is-invalid': @record.errors[elem.proxy_field.name].any?})) %>
+              <%= elem.render(self, form, class_names('form-control', {'is-invalid': errors.present?})) %>
             <% end %>
             <%- elem.insert(:after).each do |block| -%>
               <%= self.instance_exec(@record, &block) %>
             <%-end-%>
           </div>
-          <%if @record.errors[elem.proxy_field.name].any?%>
-            <ul class="dynamicScaffold-error-message">
-              <%@record.errors.full_messages_for(elem.proxy_field.name).each do |err|%>
+          <%- if errors.present? -%>
+            <ul class="list-unstyled dynamicScaffold-error-message">
+              <% errors.each do |err|%>
               <li><%= dynamic_scaffold_icon :error %> <%= err %></li>
               <%end%>
             </ul>
-          <%end%>
+          <%- end -%>
           <%if elem.notes?%>
             <div class="form-text text-muted"><%= elem.render_notes(form.object, self) %></div>
           <%end%>

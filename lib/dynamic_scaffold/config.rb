@@ -271,7 +271,7 @@ module DynamicScaffold
         :carrierwave_image then
         item = Form::Item::CarrierWaveImage.new(@config, type, *args)
       else
-        raise DynamicScaffold::Error::Config, "Unknown form item type #{type}"
+        raise DynamicScaffold::Error::InvalidParameter, "Unknown form item type #{type}"
       end
       @items << item
       item

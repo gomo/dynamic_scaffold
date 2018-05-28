@@ -7,10 +7,10 @@ require 'dynamic_scaffold/config'
 
 module DynamicScaffold
   module Error
-    autoload :Base,           'dynamic_scaffold/error/base'
-    autoload :InvalidIcon,    'dynamic_scaffold/error/invalid_icon'
-    autoload :Controller,     'dynamic_scaffold/error/controller'
-    autoload :Config,         'dynamic_scaffold/error/config'
+    autoload :Base,             'dynamic_scaffold/error/base'
+    autoload :InvalidIcon,      'dynamic_scaffold/error/invalid_icon'
+    autoload :InvalidParameter, 'dynamic_scaffold/error/invalid_parameter'
+    autoload :InvalidOperation, 'dynamic_scaffold/error/invalid_operation'
   end
 
   module List

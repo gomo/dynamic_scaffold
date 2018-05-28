@@ -1,6 +1,6 @@
 module DynamicScaffold
   module Error
-    class Controller < Base
+    class InvalidOperation < Base
     end
   end
 end

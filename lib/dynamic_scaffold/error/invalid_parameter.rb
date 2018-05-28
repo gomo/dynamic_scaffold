@@ -1,6 +1,6 @@
 module DynamicScaffold
   module Error
-    class Config < Base
+    class InvalidParameter < Base
     end
   end
 end
