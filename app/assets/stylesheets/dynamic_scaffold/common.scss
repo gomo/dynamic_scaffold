@@ -128,3 +128,8 @@
 .dynamicScaffold-confirm-buttons .btn{
   margin-left: 10px;
 }
+
+// Fixed a problem that font-awesome icon and text link do not match in height.
+.page-link{
+  line-height: 1.6;
+}
