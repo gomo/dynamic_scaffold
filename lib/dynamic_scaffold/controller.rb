@@ -94,6 +94,9 @@ module DynamicScaffold
         end
       rescue ::ActiveRecord::InvalidForeignKey => _error
         flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
+      rescue => error
+        flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.failed')
+        logger.error(error)
       end
       redirect_to dynamic_scaffold_path(:index)
     end

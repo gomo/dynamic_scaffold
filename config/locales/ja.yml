@@ -23,6 +23,7 @@ ja:
     alert:
       destroy:
         invalid_foreign_key: '関連づいたレコードがあるので削除できません。'
+        failed: '削除に失敗しました。'
   views:
     pagination:
       truncate: '…'

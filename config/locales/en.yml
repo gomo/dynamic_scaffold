@@ -17,3 +17,4 @@ en:
     alert:
       destroy:
         invalid_foreign_key: 'That item can not be deleted because it has associated record(s).'
+        failed: 'That item can not be deleted'
