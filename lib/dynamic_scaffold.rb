@@ -1,13 +1,30 @@
 require 'dynamic_scaffold/version'
 require 'dynamic_scaffold/engine'
+require 'dynamic_scaffold/routes'
 require 'dynamic_scaffold/controller_utilities'
 require 'dynamic_scaffold/controller'
 require 'dynamic_scaffold/config'
 
-require 'dynamic_scaffold/error/base'
-require 'dynamic_scaffold/error/invalid_icon'
-require 'dynamic_scaffold/error/controller'
-require 'dynamic_scaffold/error/config'
-
 module DynamicScaffold
+  module Error
+    autoload :Base,           'dynamic_scaffold/error/base'
+    autoload :InvalidIcon,    'dynamic_scaffold/error/invalid_icon'
+    autoload :Controller,     'dynamic_scaffold/error/controller'
+    autoload :Config,         'dynamic_scaffold/error/config'
+  end
+
+  module List
+    autoload :Item,           'dynamic_scaffold/list/item'
+  end
+
+  module Form
+    module Item
+      autoload :Base,                 'dynamic_scaffold/form/item/base'
+      autoload :Block,                'dynamic_scaffold/form/item/block'
+      autoload :CarrierWaveImage,     'dynamic_scaffold/form/item/carrier_wave_image'
+      autoload :SingleOption,         'dynamic_scaffold/form/item/single_option'
+      autoload :TwoOptionsWithBlock,  'dynamic_scaffold/form/item/two_options_with_block'
+      autoload :TwoOptions,           'dynamic_scaffold/form/item/two_options'
+    end
+  end
 end
