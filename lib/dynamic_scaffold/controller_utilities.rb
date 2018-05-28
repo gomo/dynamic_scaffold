@@ -110,5 +110,9 @@ module DynamicScaffold
         value = dynamic_scaffold.model.maximum(attr)
         record[attr] = value ? value + 1 : 0
       end
+
+      def request_queries(*except)
+        request.query_parameters.to_hash
+      end
   end
 end

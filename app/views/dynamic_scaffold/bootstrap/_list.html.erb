@@ -4,9 +4,9 @@
   </div>
 <%end%>
 <input type="hidden" class="authenticity_param_name" value="<%= request_forgery_protection_token %>">
-<%= form_with method: :patch, url: dynamic_scaffold_path(:sort) do%>
+<%= form_with method: :patch, url: dynamic_scaffold_path(:sort, request_queries(dynamic_scaffold.list.page_param_name), local: true do%>
 <div class="dynamicScaffold-row">
-  <%= link_to dynamic_scaffold_path(:new), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
+  <%= link_to dynamic_scaffold_path(:new, request_queries), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
     <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.button.add') %>
   <%end%>
 </div>
@@ -41,8 +41,7 @@
           <div class="resplist-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
-                <% page_param_name = dynamic_scaffold.list.pagination ? dynamic_scaffold.list.pagination.param_name : nil %>
-                <%= link_to dynamic_scaffold_path(:edit, id: record[record.class.primary_key], page: params[page_param_name]), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
+                <%= link_to dynamic_scaffold_path(:edit, request_queries.merge(id: record[record.class.primary_key])), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.button.edit') %>
                 <%end%>
               </div>
@@ -67,7 +66,7 @@
               <% end %>
               <div class="btn-group">
                 <button
-                  data-action="<%= dynamic_scaffold_path(:update, id: record[record.class.primary_key]) %>"
+                  data-action="<%= dynamic_scaffold_path(:update, request_queries(dynamic_scaffold.list.page_param_name).merge(id: record[record.class.primary_key])) %>"
                   data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>"
                   class="btn btn-danger btn-sm dynamicScaffoldJs-destory"
                 >

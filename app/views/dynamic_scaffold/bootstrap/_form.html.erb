@@ -1,4 +1,5 @@
 <%= form_with method: method, model: @record, url: url, local: true do |form| %>
+  <%binding.pry%>
   <%-dynamic_scaffold.form.items.each do |elem|-%>
     <% if elem.needs_rendering?(self)%>
       <% if !elem.label? && elem.type?(:hidden_field) %>
@@ -66,8 +67,7 @@
     <% end %>
   <% end %>
   <div>
-    <% path_options = dynamic_scaffold.list.pagination ? {dynamic_scaffold.list.pagination.param_name => params[:page]} : {}%>
-    <%= link_to dynamic_scaffold_path(:index, path_options), class: 'btn btn-outline-secondary btn-default' do%>
+    <%= link_to dynamic_scaffold_path(:index, request_queries), class: 'btn btn-outline-secondary btn-default' do%>
       <%= dynamic_scaffold_icon :back %> <%= t('dynamic_scaffold.button.back') %>
     <%end%>
     <button type="submit" class="btn btn-outline-warning btn-warning">

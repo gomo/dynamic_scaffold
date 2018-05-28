@@ -63,7 +63,7 @@ module DynamicScaffold
       dynamic_scaffold.model.transaction do
         yield(@record) if block_given?
         if @record.save
-          redirect_to dynamic_scaffold_path(:index)
+          redirect_to dynamic_scaffold_path(:index, request_queries)
         else
           render "#{params[:controller]}/new"
         end
@@ -78,7 +78,7 @@ module DynamicScaffold
       dynamic_scaffold.model.transaction do
         yield(@record, prev_attribute) if block_given?
         if @record.save
-          redirect_to dynamic_scaffold_path(:index)
+          redirect_to dynamic_scaffold_path(:index, request_queries)
         else
           render "#{params[:controller]}/edit"
         end
@@ -98,7 +98,7 @@ module DynamicScaffold
         flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.failed')
         logger.error(error)
       end
-      redirect_to dynamic_scaffold_path(:index)
+      redirect_to dynamic_scaffold_path(:index, request_queries)
     end
 
     def sort
@@ -112,7 +112,7 @@ module DynamicScaffold
           rec.save
         end
       end
-      redirect_to dynamic_scaffold_path(:index)
+      redirect_to dynamic_scaffold_path(:index, request_queries)
     end
   end
 end

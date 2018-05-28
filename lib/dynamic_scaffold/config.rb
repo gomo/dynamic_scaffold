@@ -159,6 +159,10 @@ module DynamicScaffold
       @pagination
     end
 
+    def page_param_name
+      pagination ? pagination.param_name : nil
+    end
+
     def sorter(params = nil)
       @sorter = params if params
       @sorter
