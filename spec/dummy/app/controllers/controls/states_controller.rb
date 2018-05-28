@@ -5,19 +5,19 @@ class Controls::StatesController < Controls::BaseController
     # config.list.sorter sequence: :desc
 
     # To enable pagination, call pagination. All args is not require, defauls is below
-    # config.list.pagination(
-    #   per_page: 25,
-    #   window: 0,                # kaminari options
-    #   outer_window: 0,          # kaminari options
-    #   left: 0,                  # kaminari options
-    #   right: 0,                 # kaminari options
-    #   param_name: :page,        # kaminari options
-    #   total_count: true,        # Whether to display total count on active page like `2 / 102`
-    #   end_buttons: true,        # Whether to display buttons to the first and last page.
-    #   neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
-    #   gap_buttons: false,       # Whether to display gap buttons.
-    #   highlight_current: false, # Whether to highlight the current page.
-    # )
+    config.list.pagination(
+      per_page: 1,
+      window: 0,                # kaminari options
+      outer_window: 0,          # kaminari options
+      left: 0,                  # kaminari options
+      right: 0,                 # kaminari options
+      param_name: :page,        # kaminari options
+      total_count: true,        # Whether to display total count on active page like `2 / 102`
+      end_buttons: true,        # Whether to display buttons to the first and last page.
+      neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
+      gap_buttons: false,       # Whether to display gap buttons.
+      highlight_current: false, # Whether to highlight the current page.
+    )
 
     # You can change the items displayed in the list through the `config.list.item`.
     # Please see https://github.com/gomo/dynamic_scaffold#customize-list for details.

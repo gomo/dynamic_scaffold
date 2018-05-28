@@ -1,5 +1,4 @@
 <%= form_with method: method, model: @record, url: url, local: true do |form| %>
-  <%binding.pry%>
   <%-dynamic_scaffold.form.items.each do |elem|-%>
     <% if elem.needs_rendering?(self)%>
       <% if !elem.label? && elem.type?(:hidden_field) %>
