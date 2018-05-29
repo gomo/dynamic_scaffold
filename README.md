@@ -233,7 +233,12 @@ class ShopController < ApplicationController
     # class Shop < ApplicationRecord
     #   mount_uploader :thumb, ShopThumbUploader
     #
-    config.form.item(:carrierwave_image, :thumb, preview_max_size: {width: '300px', height: '300px'})
+    config.form.item(
+      :carrierwave_image,
+      :thumb,
+      preview_max_size: {width: '300px', height: '300px'},
+      removable: false #　If you want to require image, please set removable to false. the default is true.
+    )
 
     # If you want to display more free form field, use block.
     # The block is executed in the context of view, so you can call the method of view.
