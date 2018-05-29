@@ -16,12 +16,16 @@ document.addEventListener('dynamic_scaffold:load', function (){
 
     // delete event
     const button = preview.querySelector('.dynamicScaffoldJs-image-remove')
-    const flag = wrapper.querySelector('.dynamicScaffoldJs-image-remove-flag')
-    button.addEventListener('click', function(e){
-      preview.style.display = 'none'
-      flag.disabled = false
-      input.value = ''
-    })
+    let flag
+    if(button)
+    {
+      flag = wrapper.querySelector('.dynamicScaffoldJs-image-remove-flag')
+      button.addEventListener('click', function(e){
+        preview.style.display = 'none'
+        flag.disabled = false
+        input.value = ''
+      })
+    }
 
     // change event
     input.addEventListener('change', function(e){
@@ -29,7 +33,7 @@ document.addEventListener('dynamic_scaffold:load', function (){
       reader.onload = function (e) {
         img.src = e.target.result
         preview.style.display = 'inline-block'
-        flag.disabled = true
+        if(flag) flag.disabled = true
       }
 
       if(input.files.length){

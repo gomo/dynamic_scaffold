@@ -2,9 +2,11 @@ module DynamicScaffold
   module Form
     module Item
       class CarrierWaveImage < Base
+        attr_reader :options
         def initialize(config, type, name, options = {})
           super(config, type, name, {})
           @options = options
+          @options[:removable] = true if @options[:removable].nil?
         end
 
         def preview_image_style
@@ -23,7 +25,7 @@ module DynamicScaffold
         end
 
         def strong_parameter
-          [@name, "remove_#{@name}"]
+          @options[:removable] ? [@name, "remove_#{@name}"]  : @name
         end
       end
     end

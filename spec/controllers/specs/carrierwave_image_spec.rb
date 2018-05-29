@@ -13,20 +13,20 @@ RSpec.describe SpecsController, type: :controller do
       # wrapper
       wrappers = doc.css('.dynamicScaffoldJs-image-wrapper')
       expect(wrappers.length).to eq 1
-      wapper = wrappers.first
+      wrapper = wrappers.first
 
       # preview
-      expect(wapper.css('.dynamicScaffoldJs-image-preview').length).to eq 1
+      expect(wrapper.css('.dynamicScaffoldJs-image-preview').length).to eq 1
 
       # file input
-      expect(wapper.css('.dynamicScaffoldJs-image').length).to eq 1
-      file = wapper.css('.dynamicScaffoldJs-image').first
+      expect(wrapper.css('.dynamicScaffoldJs-image').length).to eq 1
+      file = wrapper.css('.dynamicScaffoldJs-image').first
       expect(file.name).to eq 'input'
       expect(file.attribute('type').value).to eq 'file'
 
       # remove_flag
-      expect(wapper.css('.dynamicScaffoldJs-image-remove-flag').length).to eq 1
-      flag = wapper.css('.dynamicScaffoldJs-image-remove-flag').first
+      expect(wrapper.css('.dynamicScaffoldJs-image-remove-flag').length).to eq 1
+      flag = wrapper.css('.dynamicScaffoldJs-image-remove-flag').first
       expect(flag.name).to eq 'input'
       expect(flag.attribute('type').value).to eq 'hidden'
       expect(flag.attribute('value').value).to eq '1'
@@ -55,7 +55,42 @@ RSpec.describe SpecsController, type: :controller do
         } }
       end.to change(Shop, :count).by(1)
       shop = assigns(:record)
+      expect(shop.image.file).not_to be nil
 
+      # removable
+      patch :update, params: { locale: :en, id: shop.id, shop: {
+        id: shop.id,
+        remove_image: "1",
+      } }
+      shop = assigns(:record)
+      expect(shop.image.file).to be nil
+    end
+
+    it 'should be able to dispable remove.' do
+      controller.class.send(:dynamic_scaffold, Shop) do |c|
+        c.form.item :carrierwave_image, :image, removable: false
+        c.form.item(:text_field, :name)
+        c.form.item(:text_field, :memo)
+        c.form.item(:text_field, :category_id)
+        c.form.item(:text_field, :status)
+      end
+      get :new, params: { locale: :en }
+      doc = Nokogiri::HTML(response.body)
+
+      wrapper = doc.css('.dynamicScaffoldJs-image-wrapper').first
+      # remove_flag
+      expect(wrapper.css('.dynamicScaffoldJs-image-remove').length).to eq 0
+      expect(wrapper.css('.dynamicScaffoldJs-image-remove-flag').length).to eq 0
+
+      shop = FactoryBot.create(:shop)
+      shop.image = Rails.root.join('..', '..', 'spec', 'fixtures', 'images', '150x150.png').open
+      shop.save!
+
+      patch :update, params: { locale: :en, id: shop.id, shop: {
+        id: shop.id,
+        remove_image: "1",
+      } }
+      shop = assigns(:record)
       expect(shop.image.file).not_to be nil
     end
   end
