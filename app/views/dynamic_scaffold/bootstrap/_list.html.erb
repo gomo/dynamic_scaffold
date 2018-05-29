@@ -41,7 +41,7 @@
           <div class="resplist-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
-                <%= link_to dynamic_scaffold_path(:edit, request_queries.merge(id: record[record.class.primary_key])), class: 'btn btn-primary btn-outline-primary btn-sm' do %>
+                <%= link_to dynamic_scaffold_path(:edit, request_queries.merge(id: record[record.class.primary_key])), class: 'btn btn-primary btn-outline-primary btn-sm edit' do %>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.button.edit') %>
                 <%end%>
               </div>

@@ -9,7 +9,7 @@ RSpec.describe SpecsController, type: :controller do
       controller.class.send(:dynamic_scaffold, Shop) {}
 
       get :edit, params: { locale: :en, id: shop.id }
-      expect(response).to have_http_status(:success)
+      expect(response).to be_successful
       expect(response).to render_template(:edit)
     end
 
