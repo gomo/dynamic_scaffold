@@ -11,22 +11,22 @@ RSpec.describe SpecsController, type: :controller do
       doc = Nokogiri::HTML(response.body)
 
       # wrapper
-      wrappers = doc.css('.dynamicScaffoldJs-image-wrapper')
+      wrappers = doc.css('.js-ds-image-wrapper')
       expect(wrappers.length).to eq 1
       wrapper = wrappers.first
 
       # preview
-      expect(wrapper.css('.dynamicScaffoldJs-image-preview').length).to eq 1
+      expect(wrapper.css('.js-ds-image-preview').length).to eq 1
 
       # file input
-      expect(wrapper.css('.dynamicScaffoldJs-image').length).to eq 1
-      file = wrapper.css('.dynamicScaffoldJs-image').first
+      expect(wrapper.css('.js-ds-image').length).to eq 1
+      file = wrapper.css('.js-ds-image').first
       expect(file.name).to eq 'input'
       expect(file.attribute('type').value).to eq 'file'
 
       # remove_flag
-      expect(wrapper.css('.dynamicScaffoldJs-image-remove-flag').length).to eq 1
-      flag = wrapper.css('.dynamicScaffoldJs-image-remove-flag').first
+      expect(wrapper.css('.js-ds-image-remove-flag').length).to eq 1
+      flag = wrapper.css('.js-ds-image-remove-flag').first
       expect(flag.name).to eq 'input'
       expect(flag.attribute('type').value).to eq 'hidden'
       expect(flag.attribute('value').value).to eq '1'
@@ -77,10 +77,10 @@ RSpec.describe SpecsController, type: :controller do
       get :new, params: { locale: :en }
       doc = Nokogiri::HTML(response.body)
 
-      wrapper = doc.css('.dynamicScaffoldJs-image-wrapper').first
+      wrapper = doc.css('.js-ds-image-wrapper').first
       # remove_flag
-      expect(wrapper.css('.dynamicScaffoldJs-image-remove').length).to eq 0
-      expect(wrapper.css('.dynamicScaffoldJs-image-remove-flag').length).to eq 0
+      expect(wrapper.css('.js-ds-image-remove').length).to eq 0
+      expect(wrapper.css('.js-ds-image-remove-flag').length).to eq 0
 
       shop = FactoryBot.create(:shop)
       shop.image = Rails.root.join('..', '..', 'spec', 'fixtures', 'images', '150x150.png').open

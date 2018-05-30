@@ -1,9 +1,9 @@
 document.addEventListener('dynamic_scaffold:load', function (){
-  const inputs = document.querySelectorAll('.dynamicScaffoldJs-image')
+  const inputs = document.querySelectorAll('.js-ds-image')
   Array.prototype.forEach.call(inputs, function(input){
     // initialize
-    const wrapper = input.closest('.dynamicScaffoldJs-image-wrapper')
-    const preview = wrapper.querySelector('.dynamicScaffoldJs-image-preview')
+    const wrapper = input.closest('.js-ds-image-wrapper')
+    const preview = wrapper.querySelector('.js-ds-image-preview')
     const img = preview.querySelector('img')
 
     // init preview display
@@ -15,11 +15,11 @@ document.addEventListener('dynamic_scaffold:load', function (){
     }
 
     // delete event
-    const button = preview.querySelector('.dynamicScaffoldJs-image-remove')
+    const button = preview.querySelector('.js-ds-image-remove')
     let flag
     if(button)
     {
-      flag = wrapper.querySelector('.dynamicScaffoldJs-image-remove-flag')
+      flag = wrapper.querySelector('.js-ds-image-remove-flag')
       button.addEventListener('click', function(e){
         preview.style.display = 'none'
         flag.disabled = false

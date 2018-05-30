@@ -19,26 +19,26 @@
     <p class="lead"><%= t('dynamic_scaffold.message.no_records', model: dynamic_scaffold.title.name) %></p>
   <% else %>
     <ul
-      class="resplist resplist-striped dynamicScaffoldJs-item-wrapper"
+      class="ds-list ds-list-striped js-ds-item-wrapper"
       data-confirm-ok="<%= t('dynamic_scaffold.message.confirm_ok') %>"
       data-confirm-ok-class="btn btn-danger btn-sm"
       data-confirm-cancel="<%= t('dynamic_scaffold.message.confirm_cancel') %>"
       data-confirm-cancel-class="btn btn-outline-secondary btn-default btn-sm"
     >
       <%@records.each do |record|%>
-        <li class="resplist-row dynamicScaffoldJs-item-row">
+        <li class="ds-list-row js-ds-list-row">
           <% if dynamic_scaffold.list.title? %>
-            <div class="resplist-heading"><%= dynamic_scaffold.list.title(record) %></div>
+            <div class="ds-list-heading"><%= dynamic_scaffold.list.title(record) %></div>
           <% end %>
-          <div class="resplist-items">
+          <div class="ds-list-items">
           <%dynamic_scaffold.list.items.each do |disp|%>
-            <%= content_tag :div, class: class_names('resplist-item', disp.classnames), **disp.html_attributes do%>
-              <div class="resplist-label"><%= disp.label %></div>
-              <div class="resplist-value"><%= disp.value self, record %></div>
+            <%= content_tag :div, class: class_names('ds-list-item', disp.classnames), **disp.html_attributes do%>
+              <div class="ds-list-label"><%= disp.label %></div>
+              <div class="ds-list-value"><%= disp.value self, record %></div>
             <%end%>
           <%end%>
           </div>
-          <div class="resplist-footer clearfix">
+          <div class="ds-list-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
                 <%= link_to dynamic_scaffold_path(:edit, request_queries.merge(id: record[record.class.primary_key])), class: 'btn btn-primary btn-outline-primary btn-sm edit' do %>
@@ -50,16 +50,16 @@
                 <input type="hidden" name="pkeys[][<%=pkey%>]" value="<%= record[pkey] %>">
               <%end%>
               <div class="btn-group">
-                <button class="btn btn-outline-secondary btn-default btn-sm dynamicScaffoldJs-sorter-top">
+                <button class="btn btn-outline-secondary btn-default btn-sm js-ds-sorter-top">
                   <%= dynamic_scaffold_icon(:top) %>
                 </button>
-                <button class="btn btn-outline-secondary btn-default btn-sm dynamicScaffoldJs-sorter-up">
+                <button class="btn btn-outline-secondary btn-default btn-sm js-ds-sorter-up">
                   <%= dynamic_scaffold_icon(:up) %>
                 </button>
-                <button class="btn btn-outline-secondary btn-default btn-sm dynamicScaffoldJs-sorter-down">
+                <button class="btn btn-outline-secondary btn-default btn-sm js-ds-sorter-down">
                   <%= dynamic_scaffold_icon(:down) %>
                 </button>
-                <button class="btn btn-outline-secondary btn-default btn-sm dynamicScaffoldJs-sorter-bottom">
+                <button class="btn btn-outline-secondary btn-default btn-sm js-ds-sorter-bottom">
                   <%= dynamic_scaffold_icon(:bottom) %>
                 </button>
               </div>
@@ -68,7 +68,7 @@
                 <button
                   data-action="<%= dynamic_scaffold_path(:update, request_queries(dynamic_scaffold.list.page_param_name).merge(id: record[record.class.primary_key])) %>"
                   data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>"
-                  class="btn btn-danger btn-sm dynamicScaffoldJs-destory"
+                  class="btn btn-danger btn-sm js-ds-destory"
                 >
                   <%= dynamic_scaffold_icon(:delete) %>
                 </button>

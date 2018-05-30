@@ -26,12 +26,12 @@ document.addEventListener('dynamic_scaffold:load', function (){
     form.submit()
   }
 
-  const buttons = document.querySelectorAll('.dynamicScaffoldJs-destory')
+  const buttons = document.querySelectorAll('.js-ds-destory')
   if(buttons.length === 0) return
   
-  const wrapper = buttons[0].closest('.dynamicScaffoldJs-item-wrapper')
+  const wrapper = buttons[0].closest('.js-ds-item-wrapper')
   Array.prototype.forEach.call(buttons, function(button){
-    const row = button.closest('.dynamicScaffoldJs-item-row')
+    const row = button.closest('.js-ds-list-row')
     button.addEventListener('click', function(e){
       e.preventDefault()
       row.classList.add('dynamicScaffold-destorying')

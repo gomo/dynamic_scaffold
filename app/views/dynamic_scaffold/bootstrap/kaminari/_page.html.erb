@@ -1,9 +1,9 @@
 <% if page.current? %>
-  <li class="<%= class_names 'page-item current dynamicScaffoldJs-page-item', {'active': dynamic_scaffold.list.pagination.highlight_current} %>">
+  <li class="<%= class_names 'page-item current js-ds-page-item', {'active': dynamic_scaffold.list.pagination.highlight_current} %>">
     <%= content_tag :a, dynamic_scaffold.list.pagination.page_number(page, @records), remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'page-link' %>
   </li>
 <% else %>
-  <li class="<%= class_names('page-item dynamicScaffoldJs-page-item', dynamic_scaffold.list.pagination.page_class(page, @records)) %>">
+  <li class="<%= class_names('page-item js-ds-page-item', dynamic_scaffold.list.pagination.page_class(page, @records)) %>">
     <%= link_to page, url, remote: remote, rel: (page.next? ? 'next' : (page.prev? ? 'prev' : nil)), class: 'page-link' %>
   </li>
 <% end %>

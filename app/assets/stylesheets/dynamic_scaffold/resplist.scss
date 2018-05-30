@@ -1,30 +1,30 @@
 @charset "UTF-8";
-/*<ul id="access-list" class="resplist resplist-striped">
-  <li class="resplist-row">
-    <div class="resplist-heading">Some Title</div>
-    <div class="resplist-items">
-      <div class="resplist-item resplist-item-xs">
-        <div class="resplist-label">ID</div>
-        <div class="resplist-value">1</div>
+/*<ul id="access-list" class="ds-list ds-list-striped">
+  <li class="ds-list-row">
+    <div class="ds-list-heading">Some Title</div>
+    <div class="ds-list-items">
+      <div class="ds-list-item ds-list-item-xs">
+        <div class="ds-list-label">ID</div>
+        <div class="ds-list-value">1</div>
       </div>
-      <div class="resplist-item resplist-item-md">
-        <div class="resplist-label">Name</div>
-        <div class="resplist-value">Micheal Jackson</div>
+      <div class="ds-list-item ds-list-item-md">
+        <div class="ds-list-label">Name</div>
+        <div class="ds-list-value">Micheal Jackson</div>
       </div>
-      <div class="resplist-item resplist-item-md">
-        <div class="resplist-label">Born</div>
-        <div class="resplist-value">1958/8/29</div>
+      <div class="ds-list-item ds-list-item-md">
+        <div class="ds-list-label">Born</div>
+        <div class="ds-list-value">1958/8/29</div>
       </div>
-      <div class="resplist-item resplist-item-md">
-        <div class="resplist-label">Died</div>
-        <div class="resplist-value">2009/6/25</div>
+      <div class="ds-list-item ds-list-item-md">
+        <div class="ds-list-label">Died</div>
+        <div class="ds-list-value">2009/6/25</div>
       </div>
-      <div class="resplist-item resplist-item-md">
-        <div class="resplist-label">Occupations</div>
-        <div class="resplist-value">Musician, singer-songwriter, arranger, dancer, entertainer, choreographer, actor, businessman, philanthropist</div>
+      <div class="ds-list-item ds-list-item-md">
+        <div class="ds-list-label">Occupations</div>
+        <div class="ds-list-value">Musician, singer-songwriter, arranger, dancer, entertainer, choreographer, actor, businessman, philanthropist</div>
       </div>
-      <div class="resplist-item pull-right">
-        <div class="resplist-value">
+      <div class="ds-list-item pull-right">
+        <div class="ds-list-value">
           <div class="btn-group">
             <a href="#" class="btn btn-primary">編集</a>
           </div>
@@ -38,18 +38,18 @@
         </div>
       </div>
     </div>
-    <div class="resplist-footer">Some Footer</div>
+    <div class="ds-list-footer">Some Footer</div>
   </li>
 </ul>*/
-.resplist-items:before, .resplist-item:before, .resplist-row:before, .resplist-items:after, .resplist-item:after, .resplist-row:after {
+.ds-list-items:before, .ds-list-item:before, .ds-list-row:before, .ds-list-items:after, .ds-list-item:after, .ds-list-row:after {
   content: " ";
   display: table;
 }
-.resplist-items:after, .resplist-item:after, .resplist-row:after {
+.ds-list-items:after, .ds-list-item:after, .ds-list-row:after {
   clear: both;
 }
 
-.resplist {
+.ds-list {
   list-style: none;
   padding: 0;
   border-collapse: separate;
@@ -57,11 +57,11 @@
   flex-wrap: wrap;
 }
 
-.resplist-striped .resplist-row:nth-child(odd) {
+.ds-list-striped .ds-list-row:nth-child(odd) {
   background-color: #f9f9f9;
 }
 
-.resplist-heading {
+.ds-list-heading {
   font-weight: bold;
   padding: 8px 20px;
   overflow: hidden;
@@ -70,11 +70,11 @@
   max-width: 100%;
 }
 
-.resplist-footer {
+.ds-list-footer {
   padding: 8px 20px;
 }
 
-.resplist-label {
+.ds-list-label {
   overflow: hidden;
   white-space: nowrap;
   font-size: 11px;
@@ -85,11 +85,11 @@
   line-height: 15px;
 }
 
-.resplist-label-hidden {
+.ds-list-label-hidden {
   background-color: transparent;
 }
 
-.resplist-value {
+.ds-list-value {
   overflow: hidden;
   white-space: nowrap;
   font-size: 14px;
@@ -99,12 +99,12 @@
   vertical-align: middle;
 }
 
-.resplist-label + .resplist-value {
+.ds-list-label + .ds-list-value {
   height: 22px;
   line-height: 22px;
 }
 
-.resplist-item {
+.ds-list-item {
   float: left;
   max-width: 100%;
   margin: 8px 0;
@@ -112,47 +112,47 @@
   overflow: hidden;
 }
 
-.resplist-row {
+.ds-list-row {
   background-color: #fff;
   border-top: 1px solid #dddddd;
   padding: 0;
   width: 100%;
 }
 
-.resplist-item-xs {
+.ds-list-item-xs {
   width: 60px;
 }
 
-.resplist-item-sm {
+.ds-list-item-sm {
   width: 120px;
 }
 
-.resplist-item-md {
+.ds-list-item-md {
   width: 180px;
 }
 
-.resplist-item-lg {
+.ds-list-item-lg {
   width: 240px;
 }
 
 @media (max-width: 768px) {
-  .resplist-heading {
+  .ds-list-heading {
     padding: 8px 12px;
   }
 
-  .resplist-footer {
+  .ds-list-footer {
     padding: 8px 12px;
   }
 
-  .resplist-item {
+  .ds-list-item {
     margin: 4px 0;
   }
 
-  .resplist-label {
+  .ds-list-label {
     padding: 0 12px;
   }
 
-  .resplist-value {
+  .ds-list-value {
     padding: 0 12px;
   }
 }

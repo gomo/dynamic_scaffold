@@ -27,10 +27,10 @@ RSpec.describe "Take over queries", :type => :request do
     expect(doc.css('form').first.attribute('action').value).to eq('/en/request/countries/sort?foo=bar')
 
     # edit link
-    expect(doc.css('.resplist-row .edit').first.attribute('href').value).to eq('/en/request/countries/1/edit?foo=bar&page=1')
+    expect(doc.css('.ds-list-row .edit').first.attribute('href').value).to eq('/en/request/countries/1/edit?foo=bar&page=1')
 
     # delete button
-    expect(doc.css('.resplist-row .dynamicScaffoldJs-destory').first.attribute('data-action').value).to eq('/en/request/countries/1?foo=bar')
+    expect(doc.css('.ds-list-row .js-ds-destory').first.attribute('data-action').value).to eq('/en/request/countries/1?foo=bar')
   end
 
   example "edit page" do

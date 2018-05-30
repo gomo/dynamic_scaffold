@@ -29,11 +29,11 @@
               <%end%>
             <% elsif elem.type? :carrierwave_image %>
               <%- image = form.object.public_send(elem.name) -%>
-              <div class="dynamicScaffoldJs-image-wrapper">
-                <div class="dynamicScaffoldJs-image-preview panel panel-default card mb-1">
+              <div class="js-ds-image-wrapper">
+                <div class="js-ds-image-preview panel panel-default card mb-1">
                   <% if elem.options[:removable] %>
                   <div class="text-right panel-heading card-header">
-                    <button type="button" class="btn btn-outline-danger btn-danger btn-sm dynamicScaffoldJs-image-remove">
+                    <button type="button" class="btn btn-outline-danger btn-danger btn-sm js-ds-image-remove">
                       <%= dynamic_scaffold_icon :times %>
                     </button>
                   </div>
@@ -44,8 +44,8 @@
                     </div>
                   </div>
                 </div>
-                <%= form.hidden_field "remove_#{elem.name}", value: "1", disabled:"disabled", class: 'dynamicScaffoldJs-image-remove-flag' if elem.options[:removable]%>
-                <%= elem.render(self, form, 'form-control-file dynamicScaffoldJs-image') do |attr|%>
+                <%= form.hidden_field "remove_#{elem.name}", value: "1", disabled:"disabled", class: 'js-ds-image-remove-flag' if elem.options[:removable]%>
+                <%= elem.render(self, form, 'form-control-file js-ds-image') do |attr|%>
                   <%= form.file_field(elem.name, attr) %>
                 <%end%>
               </div>

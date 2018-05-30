@@ -1,6 +1,6 @@
 <%= paginator.render do %>
   <nav class="text-center text-xs-center">
-    <ul class="pagination justify-content-center dynamicScaffoldJs-pagination">
+    <ul class="pagination justify-content-center js-ds-pagination">
       <%= first_page_tag if dynamic_scaffold.list.pagination.end_buttons %>
       <%= prev_page_tag if dynamic_scaffold.list.pagination.neighbor_buttons %>
       <% each_page do |page| %>

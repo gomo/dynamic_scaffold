@@ -41,7 +41,7 @@ document.addEventListener('dynamic_scaffold:load', function(){
         // Ignore while animating
         if(promises.length) return
 
-        const source = button.closest('.dynamicScaffoldJs-item-row')
+        const source = button.closest('.js-ds-list-row')
         source.style.position = 'relative'
         source.style.zIndex = 1000
 
@@ -93,33 +93,33 @@ document.addEventListener('dynamic_scaffold:load', function(){
   }
 
   // Register `transitionend` event in all the rows.
-  Array.prototype.forEach.call(document.querySelectorAll('.dynamicScaffoldJs-item-row'), function(row){
+  Array.prototype.forEach.call(document.querySelectorAll('.js-ds-list-row'), function(row){
     row.addEventListener('transitionend', function(e){
       if(e.target == row) row.dynamicScaffoldSortingResolver(row)
     })
   })
 
   // Register events on each button.
-  addClickEvent(document.querySelectorAll('.dynamicScaffoldJs-sorter-top'), function(source){
-    return document.querySelector('.dynamicScaffoldJs-item-row:first-child')
+  addClickEvent(document.querySelectorAll('.js-ds-sorter-top'), function(source){
+    return document.querySelector('.js-ds-list-row:first-child')
   }, otherSideAnimationForUp, function(source, target){
     source.parentNode.insertBefore(source, target)
   })
 
-  addClickEvent(document.querySelectorAll('.dynamicScaffoldJs-sorter-up'), function(source){
+  addClickEvent(document.querySelectorAll('.js-ds-sorter-up'), function(source){
     return source.previousElementSibling
   }, otherSideAnimationForUp, function(source, target){
     source.parentNode.insertBefore(source, target)
   })
 
-  addClickEvent(document.querySelectorAll('.dynamicScaffoldJs-sorter-down'), function(source){
+  addClickEvent(document.querySelectorAll('.js-ds-sorter-down'), function(source){
     return source.nextElementSibling
   }, otherSideAnimationForDown, function(source, target){
     source.parentNode.insertBefore(target, source)
   })
 
-  addClickEvent(document.querySelectorAll('.dynamicScaffoldJs-sorter-bottom'), function(source){
-    return document.querySelector('.dynamicScaffoldJs-item-row:last-child')
+  addClickEvent(document.querySelectorAll('.js-ds-sorter-bottom'), function(source){
+    return document.querySelector('.js-ds-list-row:last-child')
   }, otherSideAnimationForDown, function(source, target){
     source.parentNode.insertBefore(source, null)
   })
