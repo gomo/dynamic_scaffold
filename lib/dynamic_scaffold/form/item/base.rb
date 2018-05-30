@@ -13,10 +13,7 @@ module DynamicScaffold
           @classnames_list.push(classnames) if classnames
           @notes = []
           @multiple = type == :collection_check_boxes || html_attributes[:multiple]
-          @inserts = {
-            before: [],
-            after: []
-          }
+          @inserts = { before: [], after: [] }
         end
 
         def notes?
@@ -106,7 +103,7 @@ module DynamicScaffold
 
         def errors(record)
           msg = record.errors.full_messages_for(proxy_field.name)
-          rel = @config.model.reflect_on_all_associations.find{|r| r.foreign_key.to_s == name.to_s}
+          rel = @config.model.reflect_on_all_associations.find {|r| r.foreign_key.to_s == name.to_s }
           msg.concat(record.errors.full_messages_for(rel.name)) if rel.present?
           msg
         end

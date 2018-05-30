@@ -112,7 +112,7 @@ module DynamicScaffold
       end
 
       def request_queries(*except)
-        request.query_parameters.to_hash.delete_if{|k, v| except.select(&:present?).include?(k.to_sym)}
+        request.query_parameters.to_hash.delete_if {|k, _v| except.select(&:present?).include?(k.to_sym) }
       end
   end
 end

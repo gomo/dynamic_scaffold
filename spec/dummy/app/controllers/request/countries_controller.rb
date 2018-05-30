@@ -65,7 +65,7 @@ class Request::CountriesController < ApplicationController
     config.form.item(:text_field, :created_at)
     config.form.item(:text_field, :updated_at)
   end
-  
+
   # def index
   #   super do |query|
   #     # If you want append database queries, Write here.

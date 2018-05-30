@@ -60,7 +60,7 @@ RSpec.describe SpecsController, type: :controller do
       # removable
       patch :update, params: { locale: :en, id: shop.id, shop: {
         id: shop.id,
-        remove_image: "1",
+        remove_image: '1'
       } }
       shop = assigns(:record)
       expect(shop.image.file).to be nil
@@ -88,7 +88,7 @@ RSpec.describe SpecsController, type: :controller do
 
       patch :update, params: { locale: :en, id: shop.id, shop: {
         id: shop.id,
-        remove_image: "1",
+        remove_image: '1'
       } }
       shop = assigns(:record)
       expect(shop.image.file).not_to be nil

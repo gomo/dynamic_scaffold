@@ -22,7 +22,7 @@ RSpec.describe SpecsController, type: :controller do
       expect do
         post :create, params: { locale: :en, country: {
           name: 'foobar',
-          sequence: 1,
+          sequence: 1
         } }
       end.to change(Country, :count).by(1)
 
@@ -38,10 +38,10 @@ RSpec.describe SpecsController, type: :controller do
       expect do
         post :create, params: { locale: :en, country: {
           name: 'foobar',
-          sequence: 1,
+          sequence: 1
         } }
       end.to raise_error(DynamicScaffold::Error::InvalidOperation)
-         .and change(Country, :count).by(0)
+               .and change(Country, :count).by(0)
     end
   end
 end

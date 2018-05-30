@@ -39,7 +39,7 @@ module DynamicScaffold
       @records
     end
 
-    def new
+    def new # rubocop:disable Metrics/AbcSize
       unless dynamic_scaffold.max_count.nil?
         count = dynamic_scaffold.list.build_sql(scope_params).count
         raise Error::InvalidOperation, 'You can not add any more.' if dynamic_scaffold.max_count?(count)
@@ -58,7 +58,7 @@ module DynamicScaffold
       @record = find_record(edit_params)
     end
 
-    def create
+    def create # rubocop:disable Metrics/AbcSize
       @record = dynamic_scaffold.model.new
       @record.attributes = update_values
       bind_sorter_value(@record) if dynamic_scaffold.list.sorter
@@ -100,7 +100,7 @@ module DynamicScaffold
         end
       rescue ::ActiveRecord::InvalidForeignKey => _error
         flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
-      rescue => error
+      rescue StandardError => error
         flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.failed')
         logger.error(error)
       end

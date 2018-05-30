@@ -14,7 +14,7 @@ module DynamicScaffold
   end
 
   module List
-    autoload :Item,           'dynamic_scaffold/list/item'
+    autoload :Item, 'dynamic_scaffold/list/item'
   end
 
   module Form

@@ -25,7 +25,7 @@ module DynamicScaffold
         end
 
         def strong_parameter
-          @options[:removable] ? [@name, "remove_#{@name}"]  : @name
+          @options[:removable] ? [@name, "remove_#{@name}"] : @name
         end
       end
     end
