@@ -263,7 +263,9 @@ module DynamicScaffold
         :password_field,
         :hidden_field,
         :file_field,
-        :color_field then
+        :color_field,
+        :number_field,
+        :telephone_field then
         item = Form::Item::SingleOption.new(@config, type, *args)
       when
         :time_select,
