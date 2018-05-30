@@ -24,8 +24,8 @@ module DynamicScaffold
     # Actions
 
     def index # rubocop:disable Metrics/AbcSize
-      @records = dynamic_scaffold.model.all
-      raise Error::InvalidOperation, 'You must return ActiveRecord::Relation' unless @records.is_a? ::ActiveRecord::Relation
+      @records = dynamic_scaffold.list.build_sql(scope_params)
+      @count = @records.count unless dynamic_scaffold.max_count.nil?
 
       if dynamic_scaffold.list.pagination
         @records = @records
@@ -33,16 +33,18 @@ module DynamicScaffold
                      .per(dynamic_scaffold.list.pagination.per_page)
       end
 
-      @records = @records.where scope_params
       @records = @records.order dynamic_scaffold.list.sorter if dynamic_scaffold.list.sorter
       @records = @records.order(*dynamic_scaffold.list.order) unless dynamic_scaffold.list.order.empty?
 
-      @records = yield(@records) if block_given?
-      raise Error::InvalidOperation, 'You must return ActiveRecord::Relation' if @records.nil?
       @records
     end
 
     def new
+      unless dynamic_scaffold.max_count.nil?
+        count = dynamic_scaffold.list.build_sql(scope_params).count
+        raise Error::InvalidOperation, 'You can not add any more.' if dynamic_scaffold.max_count?(count)
+      end
+
       @record = dynamic_scaffold.model.new
 
       defaults = dynamic_scaffold.form.items.each_with_object({}) do |item, memo|
@@ -61,6 +63,10 @@ module DynamicScaffold
       @record.attributes = update_values
       bind_sorter_value(@record) if dynamic_scaffold.list.sorter
       dynamic_scaffold.model.transaction do
+        unless dynamic_scaffold.max_count.nil?
+          count = dynamic_scaffold.list.build_sql(scope_params).count
+          raise Error::InvalidOperation, 'You can not add any more.' if dynamic_scaffold.max_count?(count)
+        end
         yield(@record) if block_given?
         if @record.save
           redirect_to dynamic_scaffold_path(:index, request_queries)

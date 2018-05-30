@@ -6,7 +6,7 @@
 <input type="hidden" class="authenticity_param_name" value="<%= request_forgery_protection_token %>">
 <%= form_with method: :patch, url: dynamic_scaffold_path(:sort, request_queries(dynamic_scaffold.list.page_param_name)), local: true do%>
 <div class="dynamicScaffold-row">
-  <%= link_to dynamic_scaffold_path(:new, request_queries), class: 'btn btn-outline-primary btn-primary btn-sm' do%>
+  <%= link_to dynamic_scaffold_path(:new, request_queries), class: 'btn btn-outline-primary btn-primary btn-sm spec-ds-add', disabled: dynamic_scaffold.max_count?(@count) do%>
     <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.button.add') %>
   <%end%>
 </div>
@@ -41,7 +41,7 @@
           <div class="ds-list-footer clearfix">
             <div class="float-right pull-right">
               <div class="btn-group">
-                <%= link_to dynamic_scaffold_path(:edit, request_queries.merge(id: record[record.class.primary_key])), class: 'btn btn-primary btn-outline-primary btn-sm edit' do %>
+                <%= link_to dynamic_scaffold_path(:edit, request_queries.merge(id: record[record.class.primary_key])), class: 'btn btn-primary btn-outline-primary btn-sm spec-ds-edit' do %>
                   <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.button.edit') %>
                 <%end%>
               </div>

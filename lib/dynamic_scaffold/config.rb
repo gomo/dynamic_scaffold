@@ -120,6 +120,7 @@ module DynamicScaffold
 
   class Config
     attr_reader :model, :form, :list, :title, :controller
+    attr_accessor :max_count
     def initialize(model, controller)
       @model = model
       @controller = controller
@@ -141,6 +142,11 @@ module DynamicScaffold
     def scope(parameter_names = nil)
       @scope = parameter_names unless parameter_names.nil?
       @scope
+    end
+
+    def max_count?(count)
+      return false if max_count.nil?
+      count >= max_count
     end
   end
 
@@ -211,6 +217,12 @@ module DynamicScaffold
 
     def title?
       @title.present?
+    end
+
+    def build_sql(scope_params)
+      sql = @config.model.all
+      sql = sql.where scope_params
+      sql
     end
   end
 
