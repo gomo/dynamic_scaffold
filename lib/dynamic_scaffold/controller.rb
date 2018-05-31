@@ -58,7 +58,7 @@ module DynamicScaffold
       @record = find_record(edit_params)
     end
 
-    def create # rubocop:disable Metrics/AbcSize
+    def create
       @record = dynamic_scaffold.model.new
       @record.attributes = update_values
       bind_sorter_value(@record) if dynamic_scaffold.list.sorter

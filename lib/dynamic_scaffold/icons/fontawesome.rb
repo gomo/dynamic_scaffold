@@ -4,7 +4,7 @@ module DynamicScaffold
       Rails.cache.fetch "dynamic_scaffold/fontawesome/icons/#{path}" do
         full_path = DynamicScaffold::Engine.root.join('app', 'assets', 'images', 'dynamic_scaffold', 'fontawesome', path)
         file = File.open(full_path)
-        file.read.gsub!('<svg ', '<svg class="ds-svg-icon" ').html_safe # rubocop:disable Rails/OutputSafety, Metrics/LineLength
+        file.read.gsub!('<svg ', '<svg class="ds-svg-icon" ').html_safe # rubocop:disable Rails/OutputSafety
       end
     end
   end

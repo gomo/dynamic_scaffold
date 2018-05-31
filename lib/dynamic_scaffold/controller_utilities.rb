@@ -9,7 +9,7 @@ module DynamicScaffold
         when Array then
           dynamic_scaffold.scope.each_with_object({}) do |val, res|
             if val.is_a? Hash
-              val.each {|k, v| res[k] = v}
+              val.each {|k, v| res[k] = v }
             else
               res[val] = params[val]
             end

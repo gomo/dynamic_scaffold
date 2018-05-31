@@ -151,7 +151,7 @@ RSpec.describe SpecsController, type: :controller do
       render_views
       it 'should be able to fix the value.' do
         controller.class.send(:dynamic_scaffold, User) do |c|
-          c.scope [{role: :admin}]
+          c.scope [{ role: :admin }]
           c.list.sorter sequence: :desc
         end
 
