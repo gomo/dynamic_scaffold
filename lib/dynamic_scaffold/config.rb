@@ -139,8 +139,8 @@ module DynamicScaffold
       end
     end
 
-    def scope(parameter_names = nil)
-      @scope = parameter_names unless parameter_names.nil?
+    def scope(scopes = nil)
+      @scope = scopes unless scopes.nil?
       @scope
     end
 

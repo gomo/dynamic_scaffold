@@ -146,5 +146,84 @@ RSpec.describe SpecsController, type: :controller do
         end.to raise_error(::ActiveRecord::RecordNotFound)
       end
     end
+
+    describe 'With value' do
+      render_views
+      it 'should be able to fix the value.' do
+        controller.class.send(:dynamic_scaffold, User) do |c|
+          c.scope [{role: :admin}]
+          c.list.sorter sequence: :desc
+        end
+
+        FactoryBot.create_list(:user, 3, role_value: :admin)
+        FactoryBot.create_list(:user, 3, role_value: :staff)
+        FactoryBot.create_list(:user, 3, role_value: :member)
+
+        # index
+        get :index, params: { locale: :en }
+        records = assigns(:records)
+        expect(records.length).to eq 3
+        expect(records.map(&:role)).to all(eq 'admin')
+
+        # new
+        get :new, params: { locale: :en }
+        doc = Nokogiri::HTML(response.body)
+        input = doc.xpath("//input[@name='user[role]']").first
+        expect(input.attribute('value').value).to eq 'admin'
+
+        # edit
+        expect do
+          get :edit, params: { locale: :en, id: User.admin.first.id }
+        end.not_to raise_error
+        expect do
+          get :edit, params: { locale: :en, id: User.staff.first.id }
+        end.to raise_error(::ActiveRecord::RecordNotFound)
+        expect do
+          get :edit, params: { locale: :en, id: User.member.first.id }
+        end.to raise_error(::ActiveRecord::RecordNotFound)
+
+        # update
+        expect do
+          admin = User.admin.first
+          patch :update, params: { id: admin.id, locale: :en, user: {
+            id: admin.id,
+            email: 'udpate@example.com'
+          } }
+        end.not_to raise_error
+        expect do
+          staff = User.staff.first
+          patch :update, params: { id: staff.id, locale: :en, user: {
+            id: staff.id,
+            email: 'udpate@example.com'
+          } }
+        end.to raise_error(::ActiveRecord::RecordNotFound)
+        expect do
+          member = User.member.first
+          patch :update, params: { id: member.id, locale: :en, user: {
+            id: member.id,
+            email: 'udpate@example.com'
+          } }
+        end.to raise_error(::ActiveRecord::RecordNotFound)
+
+        # sort
+        staffs = User.staff.order(sequence: :desc)
+        pkeys = []
+        pkeys << { id: staffs[1].id }
+        pkeys << { id: staffs[0].id }
+        pkeys << { id: staffs[2].id }
+        expect do
+          patch :sort, params: { locale: :en, pkeys: pkeys, submit_sort: '' }
+        end.to raise_error(::ActiveRecord::RecordNotFound)
+
+        # delete
+        staff = User.staff.first
+        expect do
+          delete :destroy, params: {
+            locale: :en,
+            id: staff.id
+          }
+        end.to raise_error(::ActiveRecord::RecordNotFound)
+      end
+    end
   end
 end

@@ -5,7 +5,18 @@ module DynamicScaffold
       # Get the hash of the key and value specified for the scope.
       def scope_params
         return {} if dynamic_scaffold.scope.nil?
-        dynamic_scaffold.scope.each_with_object({}) {|attr, res| res[attr] = params[attr] }
+        case dynamic_scaffold.scope
+        when Array then
+          dynamic_scaffold.scope.each_with_object({}) do |val, res|
+            if val.is_a? Hash
+              val.each {|k, v| res[k] = v}
+            else
+              res[val] = params[val]
+            end
+          end
+        when Hash then
+          dynamic_scaffold.scope
+        end
       end
 
       # Convert pkey_string value to hash.
