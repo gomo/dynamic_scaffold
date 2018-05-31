@@ -1,22 +1,22 @@
-.dynamicScaffold-row{
+.ds-row{
   margin-bottom: 10px
 }
 
-.dynamicScaffold-error-message{
+.ds-error-message{
   color: #dc3545;
   
 }
 
-.dynamicScaffold-error-message path{
+.ds-error-message path{
   fill: #dc3545;
 }
 
-.dynamicScaffold-destorying{
+.ds-destorying{
   background-color: #fdd8df !important;
   opacity: 0.6;
 }
 
-.dynamicScaffold-svg-icon{
+.ds-svg-icon{
   width: 15px;
   height: 15px;
   vertical-align: baseline;
@@ -88,7 +88,7 @@
   fill: #fff;
 }
 
-.dynamicScaffold-overlay{
+.ds-overlay{
   position: fixed;
   top: 0;
   left: 0;
@@ -98,13 +98,13 @@
   background-color: rgba(0,0,0,0.2);
 }
 
-.dynamicScaffold-confirm{
+.ds-confirm{
   position: fixed;
   top: 40px;
   width: 100%;
 }
 
-.dynamicScaffold-confirm-inner{
+.ds-confirm-inner{
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
@@ -116,16 +116,16 @@
   margin: 0 auto;
 }
 
-.dynamicScaffold-confirm-message{
+.ds-confirm-message{
   height: 68px;
   font-size: 16px;
 }
 
-.dynamicScaffold-confirm-buttons{
+.ds-confirm-buttons{
   text-align: right;
 }
 
-.dynamicScaffold-confirm-buttons .btn{
+.ds-confirm-buttons .btn{
   margin-left: 10px;
 }
 

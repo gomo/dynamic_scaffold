@@ -34,7 +34,7 @@ document.addEventListener('dynamic_scaffold:load', function (){
     const row = button.closest('.js-ds-list-row')
     button.addEventListener('click', function(e){
       e.preventDefault()
-      row.classList.add('dynamicScaffold-destorying')
+      row.classList.add('ds-destorying')
       DynamicScaffold.confirm({
         message: button.getAttribute('data-confirm-message'),
         ok: {
@@ -48,7 +48,7 @@ document.addEventListener('dynamic_scaffold:load', function (){
           text: wrapper.getAttribute('data-confirm-cancel'),
           class: wrapper.getAttribute('data-confirm-cancel-class'),
           action: function(){
-            row.classList.remove("dynamicScaffold-destorying")
+            row.classList.remove("ds-destorying")
           }
         }
       })

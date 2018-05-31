@@ -60,23 +60,23 @@ window.DynamicScaffold.createElement = function(tagName, attributes, style, inne
 //confirm
 ;(function(){  
   window.DynamicScaffold.confirm = function(options){
-    const exists = document.querySelector('.dynamicScaffold-overlay')
+    const exists = document.querySelector('.ds-overlay')
     if(exists){
       return
     }
   
-    const overlay = DynamicScaffold.createElement('div', {class: 'dynamicScaffold-overlay'})
-    const confirm = DynamicScaffold.createElement('div', {class: 'dynamicScaffold-confirm'})
-    const inner = DynamicScaffold.createElement('div', {class: 'dynamicScaffold-confirm-inner'})
+    const overlay = DynamicScaffold.createElement('div', {class: 'ds-overlay'})
+    const confirm = DynamicScaffold.createElement('div', {class: 'ds-confirm'})
+    const inner = DynamicScaffold.createElement('div', {class: 'ds-confirm-inner'})
     overlay.appendChild(confirm)
     confirm.appendChild(inner)
   
-    const message = DynamicScaffold.createElement('div', {class: 'dynamicScaffold-confirm-message'}, null, options.message)
+    const message = DynamicScaffold.createElement('div', {class: 'ds-confirm-message'}, null, options.message)
     inner.appendChild(message)
     
     const ok = DynamicScaffold.createElement('button', {class: options.ok.class}, {}, options.ok.text)
     const cancel = DynamicScaffold.createElement('button', {class: options.cancel.class}, {}, options.cancel.text)
-    const buttons = DynamicScaffold.createElement('div', {class: 'dynamicScaffold-confirm-buttons'})
+    const buttons = DynamicScaffold.createElement('div', {class: 'ds-confirm-buttons'})
     buttons.appendChild(cancel)
     buttons.appendChild(ok)
     inner.appendChild(buttons)

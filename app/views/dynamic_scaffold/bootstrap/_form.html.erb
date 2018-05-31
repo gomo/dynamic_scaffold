@@ -57,7 +57,7 @@
             <%-end-%>
           </div>
           <%- if errors.present? -%>
-            <ul class="list-unstyled dynamicScaffold-error-message">
+            <ul class="list-unstyled ds-error-message">
               <% errors.each do |err|%>
               <li><%= dynamic_scaffold_icon :error %> <%= err %></li>
               <%end%>
