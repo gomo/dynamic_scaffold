@@ -89,7 +89,7 @@ Style/ClassAndModuleChildren:
     - spec/dummy/app/controllers/**/*
 
 Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented_relative_to_receiver
+  Enabled: false
 
 Metrics/CyclomaticComplexity:
   Max: 7
