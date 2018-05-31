@@ -10,7 +10,7 @@
     <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.button.add') %>
     <%- unless dynamic_scaffold.max_count.nil? -%>
       &nbsp;<span class="badge badge-light">
-        <%= @count %>/<%= dynamic_scaffold.max_count%>
+        <%= @count %>&nbsp;/&nbsp;<%= dynamic_scaffold.max_count%>
       </span>
     <% end %>
   <%end%>
