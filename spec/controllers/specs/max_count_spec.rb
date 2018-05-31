@@ -41,7 +41,7 @@ RSpec.describe SpecsController, type: :controller do
           sequence: 1
         } }
       end.to raise_error(DynamicScaffold::Error::InvalidOperation)
-               .and change(Country, :count).by(0)
+         .and change(Country, :count).by(0)
     end
   end
 end

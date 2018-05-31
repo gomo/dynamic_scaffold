@@ -157,6 +157,7 @@ module DynamicScaffold
       @sorter = nil
       @order = []
       @title = nil
+      @filter = nil
     end
 
     def pagination(options = nil)
@@ -222,7 +223,19 @@ module DynamicScaffold
     def build_sql(scope_params)
       sql = @config.model.all
       sql = sql.where scope_params
+      sql = @config.controller.instance_exec(sql, &@filter) unless @filter.nil?
+      unless sql.is_a? ::ActiveRecord::Relation
+        raise(
+          Error::InvalidOperation,
+          'You must return ActiveRecord::Relation from filter block'
+        )
+      end
       sql
+    end
+
+    def filter(&block)
+      @filter = block if block_given?
+      @filter
     end
   end
 
