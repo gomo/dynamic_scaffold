@@ -125,5 +125,14 @@ module DynamicScaffold
       def request_queries(*except)
         request.query_parameters.to_hash.delete_if {|k, _v| except.select(&:present?).include?(k.to_sym) }
       end
+
+      def check_max_count!
+        return if dynamic_scaffold.max_count.nil?
+        instance_exec(@record, &dynamic_scaffold.lock_before_count) if dynamic_scaffold.lock_before_count
+        count_query = dynamic_scaffold.list.build_sql(scope_params)
+        count_query = count_query.lock if dynamic_scaffold.max_count_options[:lock]
+        count = count_query.count
+        raise Error::InvalidOperation, 'You can not add any more.' if dynamic_scaffold.max_count?(count)
+      end
   end
 end

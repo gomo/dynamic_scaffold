@@ -22,7 +22,7 @@ RSpec.describe SpecsController, type: :controller do
 
     it 'should also affect max_count.' do
       controller.class.send(:dynamic_scaffold, Country) do |c|
-        c.max_count = 1
+        c.max_count 1
         c.list.filter do |query|
           query.where(name: 'foo')
         end

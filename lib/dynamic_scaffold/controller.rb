@@ -29,8 +29,8 @@ module DynamicScaffold
 
       if dynamic_scaffold.list.pagination
         @records = @records
-                     .page(params[dynamic_scaffold.list.pagination.param_name])
-                     .per(dynamic_scaffold.list.pagination.per_page)
+          .page(params[dynamic_scaffold.list.pagination.param_name])
+          .per(dynamic_scaffold.list.pagination.per_page)
       end
 
       @records = @records.order dynamic_scaffold.list.sorter if dynamic_scaffold.list.sorter
@@ -63,10 +63,7 @@ module DynamicScaffold
       @record.attributes = update_values
       bind_sorter_value(@record) if dynamic_scaffold.list.sorter
       dynamic_scaffold.model.transaction do
-        unless dynamic_scaffold.max_count.nil?
-          count = dynamic_scaffold.list.build_sql(scope_params).count
-          raise Error::InvalidOperation, 'You can not add any more.' if dynamic_scaffold.max_count?(count)
-        end
+        check_max_count!
         yield(@record) if block_given?
         if @record.save
           redirect_to dynamic_scaffold_path(:index, request_queries)

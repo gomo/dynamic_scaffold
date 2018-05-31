@@ -119,8 +119,7 @@ module DynamicScaffold
   end
 
   class Config
-    attr_reader :model, :form, :list, :title, :controller
-    attr_accessor :max_count
+    attr_reader :model, :form, :list, :title, :controller, :lock_before_count, :max_count_options
     def initialize(model, controller)
       @model = model
       @controller = controller
@@ -128,6 +127,7 @@ module DynamicScaffold
       @list = ListBuilder.new(self)
       @title = Title.new(self)
       @vars = Vars.new(self)
+      @max_count_options = {}
     end
 
     def vars(name = nil, &block)
@@ -142,6 +142,13 @@ module DynamicScaffold
     def scope(scopes = nil)
       @scope = scopes unless scopes.nil?
       @scope
+    end
+
+    def max_count(count = nil, options = nil, &block)
+      @max_count = count unless count.nil?
+      @max_count_options = options unless options.nil?
+      @lock_before_count = block if block_given?
+      @max_count
     end
 
     def max_count?(count)
