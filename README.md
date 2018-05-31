@@ -182,6 +182,11 @@ class ShopController < ApplicationController
     config.list.item do |rec, name|
       link_to "Show #{rec.name}", controls_master_shops_path
     end
+
+    # If you want filtering that can not be handled by the scope described later, you can use the filter method.
+    config.list.filter do |query|
+      query.where(parent_id: nil)
+    end
   end
 end
 ```
@@ -388,6 +393,57 @@ class UsersController < ApplicationController
     ...
 ```
 
+The scope can fix value also.
+
+```rb
+# app/controllers/users_controller.rb
+class UsersController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold User do |c|
+    c.scope [{role: :admin}]
+    # or if you use only fixed values, you can use Hash
+    c.scope role: :admin
+    ...
+```
+
+#### Limit count
+
+You can specify the maximum count of registrations.
+
+```rb
+# app/controllers/users_controller.rb
+class UsersController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold User do |c|
+    c.max_count 10
+    ...
+```
+
+If database support lock, you can lock the table before count.
+
+```rb
+# app/controllers/users_controller.rb
+class UsersController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold User do |c|
+    c.max_count 10, lock: true
+    ...
+```
+
+If you want a finer lock control, you can use the block.
+
+```rb
+# app/controllers/users_controller.rb
+class UsersController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold User do |c|
+    c.max_count 10 do |record|
+      ActiveRecord::Base.connection.execute("...")
+    end
+    ...
+```
+
+Please remember that it is affected by scope and list.filter when counting the number of records.
 
 ### View helper
 
