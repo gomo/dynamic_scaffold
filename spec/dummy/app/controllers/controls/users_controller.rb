@@ -3,7 +3,8 @@ module Controls
     include DynamicScaffold::Controller
     dynamic_scaffold User do |c|
       c.scope [:role]
-
+      c.max_count 3
+      
       c.list.sorter sequence: :desc
 
       c.list.item(:id, style: 'width: 80px')

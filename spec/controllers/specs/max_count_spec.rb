@@ -13,8 +13,8 @@ RSpec.describe SpecsController, type: :controller do
 
       get :index, params: { locale: :en }
       doc = Nokogiri::HTML(response.body)
-      btn_add = doc.css('.spec-ds-add').first
-      expect(btn_add.attribute('disabled')).to be nil
+      btn_add = doc.css('.spec-ds-add.disabled').first
+      expect(btn_add).to be nil
 
       get :new, params: { locale: :en }
       expect(response.status).to eq(200)
@@ -28,8 +28,8 @@ RSpec.describe SpecsController, type: :controller do
 
       get :index, params: { locale: :en }
       doc = Nokogiri::HTML(response.body)
-      btn_add = doc.css('.spec-ds-add').first
-      expect(btn_add.attribute('disabled').value).to eq 'disabled'
+      btn_add = doc.css('.spec-ds-add.disabled').first
+      expect(btn_add).not_to be nil
 
       expect do
         get :new, params: { locale: :en }
