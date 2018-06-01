@@ -153,9 +153,15 @@ You can customize the list through the `DynamicScaffold::Config#list` property.
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
+    # If you want filtering that can not be handled by `config.scope`, you can use the filter method.
+    # Please note that returning nil will be ignored.
+    config.list.filter do |query|
+      query.where(parent_id: nil)
+    end
+
     # You can set each title in the list header through title method.
     # Pass the attribute name,
-    # config.list.title(:name)
+    config.list.title(:name)
     # or
     # config.list.title do |record|
     #   record.name
@@ -179,13 +185,8 @@ class ShopController < ApplicationController
 
     # The first argument can also be omitted, to display item that is not model attribute.
     # The block is executed in the context of view, so you can call the method of view.
-    config.list.item do |rec, name|
+    config.list.item do |rec|
       link_to "Show #{rec.name}", controls_master_shops_path
-    end
-
-    # If you want filtering that can not be handled by `config.scope`, you can use the filter method.
-    config.list.filter do |query|
-      query.where(parent_id: nil)
     end
   end
 end

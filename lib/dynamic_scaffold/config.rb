@@ -230,7 +230,8 @@ module DynamicScaffold
     def build_sql(scope_params)
       sql = @config.model.all
       sql = sql.where scope_params
-      sql = @config.controller.instance_exec(sql, &@filter) unless @filter.nil?
+      ret = @config.controller.instance_exec(sql, &@filter) unless @filter.nil?
+      sql = ret unless ret.nil?
       unless sql.is_a? ::ActiveRecord::Relation
         raise(
           Error::InvalidOperation,

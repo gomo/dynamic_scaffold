@@ -36,11 +36,12 @@ module DynamicScaffold
       @records = @records.order dynamic_scaffold.list.sorter if dynamic_scaffold.list.sorter
       @records = @records.order(*dynamic_scaffold.list.order) unless dynamic_scaffold.list.order.empty?
 
-      @records = yield(@records) if block_given?
-      unless @records.is_a? ActiveRecord::Relation
+      ret = yield(@records) if block_given?
+      @records = ret unless ret.nil?
+      unless @records.is_a? ::ActiveRecord::Relation
         raise(
           Error::InvalidOperation,
-          'You must return ActiveRecord::Relation'
+          'You must return ActiveRecord::Relation from super block'
         )
       end
 

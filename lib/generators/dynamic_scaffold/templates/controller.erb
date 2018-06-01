@@ -76,7 +76,7 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
   #   super do |query|
   #     # If you want to add a search to the page, please add it to the query here.
   #     # The condition added here does not affect max_count.
-  #     # Do not forget to return query.
+  #     # Please note that returning nil will be ignored.
   #   end
   # end
 
