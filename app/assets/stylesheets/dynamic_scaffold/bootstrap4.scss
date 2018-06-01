@@ -49,3 +49,7 @@ $dynamic_scaffold_danger: #dc3545 !default;
 .page-item.disabled .page-link path{
   fill: $dynamic_scaffold_secondary;
 }
+
+.btn-outline-primary.disabled, .btn-outline-primary:disabled{
+  background-color: transparent;
+}

@@ -2,6 +2,7 @@ module Controls
   class ShopsController < BaseController
     include DynamicScaffold::Controller
     dynamic_scaffold Shop do |c|
+      c.max_count(5)
       c.list.title(:name)
       c.list.item(:id, style: 'width: 80px').label('Number')
       c.list.item :updated_at, style: 'width: 180px' do |rec, name|
