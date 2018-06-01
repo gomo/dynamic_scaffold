@@ -43,7 +43,7 @@ module DynamicScaffold
           'You must return ActiveRecord::Relation'
         )
       end
-      
+
       @records
     end
 
