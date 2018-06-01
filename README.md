@@ -153,7 +153,7 @@ You can customize the list through the `DynamicScaffold::Config#list` property.
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-    # You can set each title in the list through title method.
+    # You can set each title in the list header through title method.
     # Pass the attribute name,
     # config.list.title(:name)
     # or
@@ -183,7 +183,7 @@ class ShopController < ApplicationController
       link_to "Show #{rec.name}", controls_master_shops_path
     end
 
-    # If you want filtering that can not be handled by the scope described later, you can use the filter method.
+    # If you want filtering that can not be handled by `config.scope`, you can use the filter method.
     config.list.filter do |query|
       query.where(parent_id: nil)
     end
@@ -443,7 +443,7 @@ class UsersController < ApplicationController
     ...
 ```
 
-Please remember that it is affected by scope and list.filter when counting the number of records.
+Please note that the count of records is affected by scope and list.filter.
 
 ### View helper
 

@@ -16,6 +16,14 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
     # Please see https://github.com/gomo/dynamic_scaffold#view-helper for details.
     # config.title.name = 'Model'
 
+    # To enable scoping, call scope with parameter names you want.
+    # Please see https://github.com/gomo/dynamic_scaffold#scoping for details.
+    # config.scope([role])
+
+    # You can specify the maximum count of registrations.
+    # Please see https://github.com/gomo/dynamic_scaffold#limit-count for details.
+    # config.max_count 10
+
     # When you want a simple sort on the column of record, please call order.
     # config.list.order created_at: :desc
 
@@ -37,20 +45,21 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
     #   highlight_current: false, # Whether to highlight the current page.
     # )
 
-    # To enable scoping, call scope with parameter names you want.
-    # Please see https://github.com/gomo/dynamic_scaffold#scoping for details.
-    # config.scope([role])
+    # If you want filtering that can not be handled by `config.scope`, you can use the filter method.
+    # config.list.filter do |query|
+    #   query.where(parent_id: nil)
+    # end
 
-    # You can change the items displayed in the list through the `config.list.item`.
-    # Please see https://github.com/gomo/dynamic_scaffold#customize-list for details.
-
-    # You can set each title in the list through title method.
+    # You can set each title in the list header through title method.
     # Pass the attribute name,
     # config.list.title(:name)
     # or
     # config.list.title do |record|
     #   record.name
     # end
+
+    # You can change the items displayed in the list through the `config.list.item`.
+    # Please see https://github.com/gomo/dynamic_scaffold#customize-list for details.
 
   <%- @model.column_names.each do |column| -%>
     config.list.item(:<%= column %>, style: 'width: 120px;')
@@ -64,7 +73,11 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
   end
   
   # def index
-  #   super
+  #   super do |query|
+  #     # If you want to add a search to the page, please add it to the query here.
+  #     # The condition added here does not affect max_count.
+  #     # Do not forget to return query.
+  #   end
   # end
 
   # def new
