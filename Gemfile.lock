@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dynamic_scaffold (0.6.0)
+    dynamic_scaffold (0.6.1)
       classnames-rails-view (>= 1.0)
       kaminari (>= 1.0)
       rails (>= 5.0, < 5.3)
