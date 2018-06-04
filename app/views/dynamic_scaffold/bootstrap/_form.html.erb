@@ -48,6 +48,7 @@
                 <%= elem.render(self, form, 'form-control-file dynamicScaffoldJs-image') do |attr|%>
                   <%= form.file_field(elem.name, attr) %>
                 <%end%>
+                <%= form.hidden_field "#{elem.name}_cache" %>
               </div>
             <% else %>
               <%= elem.render(self, form, class_names('form-control', {'is-invalid': errors.present?})) %>
