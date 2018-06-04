@@ -26,13 +26,7 @@ module DynamicScaffold
     def index # rubocop:disable Metrics/AbcSize
       @records = dynamic_scaffold.list.build_sql(scope_params)
       @count = @records.count unless dynamic_scaffold.max_count.nil?
-
-      if dynamic_scaffold.list.pagination
-        @records = @records
-          .page(params[dynamic_scaffold.list.pagination.param_name])
-          .per(dynamic_scaffold.list.pagination.per_page)
-      end
-
+      @records = handle_pagination(@records)
       @records = @records.order dynamic_scaffold.list.sorter if dynamic_scaffold.list.sorter
       @records = @records.order(*dynamic_scaffold.list.order) unless dynamic_scaffold.list.order.empty?
 

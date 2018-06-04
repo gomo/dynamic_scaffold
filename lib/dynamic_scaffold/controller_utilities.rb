@@ -134,5 +134,12 @@ module DynamicScaffold
         count = count_query.count
         raise Error::InvalidOperation, 'You can not add any more.' if dynamic_scaffold.max_count?(count)
       end
+
+      def handle_pagination(query)
+        return query unless dynamic_scaffold.list.pagination
+        query
+          .page(params[dynamic_scaffold.list.pagination.param_name])
+          .per(dynamic_scaffold.list.pagination.per_page)
+      end
   end
 end
