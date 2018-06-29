@@ -533,43 +533,6 @@ class ShopController < ApplicationController
 <%= dynamic_scaffold.vars.shop_type.name %>
 ```
 
-### Password Handling Tips
-
-Passwords are not displayed on the editing screen and should be skipped　validation when sent with empty.
-
-You can do it by preparing virtual attributes for the edit action, and switching between edit and new action.
-
-```rb
-class User < ApplicationRecord
-  validates :password, presence: true
-
-  attr_reader :password_edit
-
-  def password_edit=(value)
-    @password_edit = value
-    self.password = value if value.present?
-  end
-end
-```
-
-```rb
-class UsersController < ScaffoldController
-  include DynamicScaffold::Controller
-  dynamic_scaffold User do |config|
-
-    # If the block given to the `if` method returns false, the element is ignored.
-    # The block argument is `params` in controller.
-    config.form.item(:password_field, :password)
-      .if {|p| %w[new create].include? p[:action] }
-
-    # When you call the `proxy` method, the element's error messages and label will be used for the specified attribute.
-    config.form.item(:password_field, :password_edit)
-      .proxy(:password)
-      .if {|p| %w[edit update].include? p[:action] }
-  end
-end
-```
-
 
 ## Contributing
 
