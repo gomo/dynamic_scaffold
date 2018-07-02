@@ -4,11 +4,11 @@ module Controls
     dynamic_scaffold Shop do |c|
       c.max_count(5)
       c.list.title(:name)
-      c.list.item(:id, style: 'width: 80px').label('Number')
-      c.list.item :updated_at, style: 'width: 180px' do |rec, name|
+      c.list.item(:id).label('Number')
+      c.list.item :updated_at do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
       end
-      c.list.item(:created_at, style: 'width: 180px').label 'Create Date' do |rec, name|
+      c.list.item(:created_at).label 'Create Date' do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
       end
       c.list.item do |rec, _name|

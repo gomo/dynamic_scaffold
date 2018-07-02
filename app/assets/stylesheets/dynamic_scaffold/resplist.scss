@@ -41,14 +41,6 @@
     <div class="ds-list-footer">Some Footer</div>
   </li>
 </ul>*/
-.ds-list-items:before, .ds-list-item:before, .ds-list-row:before, .ds-list-items:after, .ds-list-item:after, .ds-list-row:after {
-  content: " ";
-  display: table;
-}
-.ds-list-items:after, .ds-list-item:after, .ds-list-row:after {
-  clear: both;
-}
-
 .ds-list {
   list-style: none;
   padding: 0;
@@ -104,8 +96,12 @@
   line-height: 22px;
 }
 
+.ds-list-items{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .ds-list-item {
-  float: left;
   max-width: 100%;
   margin: 8px 0;
   padding: 0;
