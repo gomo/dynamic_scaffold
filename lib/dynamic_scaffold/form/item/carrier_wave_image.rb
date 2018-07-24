@@ -9,6 +9,12 @@ module DynamicScaffold
           @options[:removable] = true if @options[:removable].nil?
         end
 
+        def cropper
+          return nil unless @options.key? :cropper
+          return {} if @options[:cropper] == true
+          @options[:cropper]
+        end
+
         def preview_image_style
           max_size = @options[:preview_max_size]
           return '' unless max_size
@@ -25,7 +31,10 @@ module DynamicScaffold
         end
 
         def strong_parameter
-          params = [@name, "#{@name}_cache"]
+          params = []
+          # If you do not permit before the image body you can not use cropper value in uploader.
+          params << "cropper_#{@name}" unless cropper.nil?
+          params.concat([@name, "#{@name}_cache"])
           params << "remove_#{@name}" if @options[:removable]
           params
         end

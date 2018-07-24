@@ -290,6 +290,8 @@ class ShopController < ApplicationController
 end
 ```
 
+`carrierwave_image` supports [cropper](https://github.com/fengyuanchen/cropperjs). For details, please read [Crop the image](https://github.com/gomo/dynamic_scaffold/wiki/Crop-the-image).
+
 ### Sorting
 
 You can sort records having integer column for order in the list page.
