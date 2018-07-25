@@ -29,16 +29,18 @@ document.addEventListener('dynamic_scaffold:load', function (){
     }
 
     // change event
+    var cropper = undefined
     input.addEventListener('change', function(e){
       const reader = new FileReader();
       reader.onload = function (e) {
+        if(cropper) cropper.destroy()
         img.src = e.target.result
         if(cropper_input){
           const options = JSON.parse(cropper_input.getAttribute('data-options'))
           options.crop = function(event){
             cropper_input.value = JSON.stringify(event.detail)
           }
-          const cropper = new Cropper(img, options)
+          cropper = new Cropper(img, options)
         }
 
         preview.style.display = 'inline-block'
