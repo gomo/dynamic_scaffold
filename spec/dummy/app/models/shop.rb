@@ -12,9 +12,11 @@ class Shop < ApplicationRecord
   validates :memo, length: { maximum: 30 }
 
   mount_uploader :image, ShopImageUploader
+  before_save :resize_image
 
-  def store_image!
+  def resize_image
+    return unless image_changed?
+    return if image.blank?
     image.crop_and_resize
-    super
   end
 end
