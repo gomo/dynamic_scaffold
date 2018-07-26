@@ -15,8 +15,8 @@ gemspec
 
 group :development, :test do
   gem 'carrierwave', '~> 1.0'
-  gem 'mini_magick', '~>4.8'
   gem 'kaminari', '~> 1.1'
+  gem 'mini_magick', '~>4.8'
   gem 'rails-controller-testing', '~> 1.0'
   gem 'sassc-rails', '~> 1.3'
 end

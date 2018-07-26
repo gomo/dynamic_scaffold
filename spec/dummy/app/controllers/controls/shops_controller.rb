@@ -21,8 +21,9 @@ module Controls
       c.form.item(:hidden_field, :id)
 
       c.form.item(:carrierwave_image, :image, preview_max_size: { width: '450px' }, cropper: {
-        aspectRatio: 1,
-      })
+        aspectRatio: 1
+      }
+    )
 
       # `label` method change label from I18n model attribute name.
       c.form.item(:text_field, :name).label 'Shop Name'

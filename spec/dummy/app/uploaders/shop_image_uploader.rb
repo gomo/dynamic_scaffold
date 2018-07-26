@@ -14,23 +14,22 @@ class ShopImageUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  process :crop_and_resize
+  # process :crop_and_resize
+  # after :validate, :crop_and_resize
 
   # process :cropper
   # process resize_to_limit: [150, 150]
 
   def crop_and_resize
-    if model.valid?
-      if model.cropper_image
-        detail = JSON.parse(model.cropper_image)
-        manipulate! do |img|
-          img.crop("#{detail['width']}x#{detail['height']}+#{detail['x']}+#{detail['y']}")
-          img
-        end
+    if model.cropper_image
+      detail = JSON.parse(model.cropper_image)
+      manipulate! do |img|
+        img.crop("#{detail['width']}x#{detail['height']}+#{detail['x']}+#{detail['y']}")
+        img
       end
-
-      resize_to_limit(150, 150)
     end
+
+    resize_to_limit(150, 150)
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
