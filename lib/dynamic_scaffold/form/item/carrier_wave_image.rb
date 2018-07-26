@@ -34,8 +34,8 @@ module DynamicScaffold
           params = []
           # If you do not permit before the image body you can not use cropper value in uploader.
           params << "cropper_#{@name}" unless cropper.nil?
-          params.concat([@name, "#{@name}_cache"])
           params << "remove_#{@name}" if @options[:removable]
+          params.concat(["#{@name}_cache", @name])
           params
         end
       end
