@@ -30,9 +30,6 @@
             <% elsif elem.type? :carrierwave_image %>
               <%- image = form.object.public_send(elem.name) -%>
               <div class="js-ds-image-wrapper">
-                <%- if elem.cropper.present? -%>
-                <%= form.hidden_field "cropper_#{elem.name}", class: "js-ds-image-cropper", data:{options: elem.cropper.to_json} %>
-                <%- end -%>
                 <div class="js-ds-image-preview panel panel-default card mb-1">
                   <% if elem.options[:removable] %>
                   <div class="text-right panel-heading card-header">
@@ -42,6 +39,12 @@
                   </div>
                   <% end %>
                   <div class="panel-body card-body">
+                    <%- if elem.cropper.present? -%>
+                      <%= form.hidden_field "cropper_#{elem.name}", class: "js-ds-image-cropper", data:{options: elem.cropper.to_json} %>
+                      <div class="text-right" style="height: 24px;">
+                        <span class="js-ds-image-cropper-display badge badge-primary"></span>
+                      </div>
+                    <%- end -%>
                     <div style="<%= elem.preview_image_style %>">
                       <img src="<%= image.url if image.file.present? %>" alt="" class="img-responsive img-fluid">
                     </div>

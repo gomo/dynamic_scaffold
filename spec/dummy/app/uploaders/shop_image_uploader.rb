@@ -14,16 +14,22 @@ class ShopImageUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  process :cropper
-  process resize_to_limit: [150, 150]
+  process :crop_and_resize
 
-  def cropper
-    if model.cropper_image
-      detail = JSON.parse(model.cropper_image)
-      manipulate! do |img|
-        img.crop("#{detail['width']}x#{detail['height']}+#{detail['x']}+#{detail['y']}")
-        img
+  # process :cropper
+  # process resize_to_limit: [150, 150]
+
+  def crop_and_resize
+    if model.valid?
+      if model.cropper_image
+        detail = JSON.parse(model.cropper_image)
+        manipulate! do |img|
+          img.crop("#{detail['width']}x#{detail['height']}+#{detail['x']}+#{detail['y']}")
+          img
+        end
       end
+
+      resize_to_limit(150, 150)
     end
   end
 

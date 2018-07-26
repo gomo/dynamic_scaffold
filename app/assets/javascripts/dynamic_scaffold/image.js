@@ -6,7 +6,8 @@ document.addEventListener('dynamic_scaffold:load', function (){
     const preview = wrapper.querySelector('.js-ds-image-preview')
     const img = preview.querySelector('img')
     const cropper_input = wrapper.querySelector('.js-ds-image-cropper')
-
+    const cropper_display = wrapper.querySelector('.js-ds-image-cropper-display')
+    
     // init preview display
     preview.style.display = 'inline-block'
 
@@ -28,19 +29,37 @@ document.addEventListener('dynamic_scaffold:load', function (){
       })
     }
 
-    // change event
+    
+    function initCropper(detail){
+      const options = JSON.parse(cropper_input.getAttribute('data-options'))
+      options.crop = function(event){
+        cropper_input.value = JSON.stringify(event.detail)
+        cropper_display.innerHTML = 'W:' + Math.round(event.detail.width) + ' x H:' + Math.round(event.detail.height)
+      }
+      options.ready = function(){
+        if(detail){
+          this.cropper.setData(detail)
+        }
+      }
+      const result = new Cropper(img, options)
+
+      return result
+    }
+
+    
     var cropper = undefined
+    if(cropper_input && cropper_input.value){
+      cropper = initCropper(JSON.parse(cropper_input.value))
+    }
+
+    // change event
     input.addEventListener('change', function(e){
       const reader = new FileReader();
       reader.onload = function (e) {
         if(cropper) cropper.destroy()
         img.src = e.target.result
         if(cropper_input){
-          const options = JSON.parse(cropper_input.getAttribute('data-options'))
-          options.crop = function(event){
-            cropper_input.value = JSON.stringify(event.detail)
-          }
-          cropper = new Cropper(img, options)
+          cropper = initCropper()
         }
 
         preview.style.display = 'inline-block'
