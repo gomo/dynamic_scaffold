@@ -6,6 +6,8 @@ The Scaffold system which dynamically generates CRUD and sort functions.
 * This is generate the pages using same views dynamically.
 * Support the responsive design and touch UI.
 * Support sort and pagination.
+* Support image upload with preview.
+* Support image crop.
 * This has the views with the Twitter Bootstrap. Support bootstrap3/4.
 * Customizable and flexible.
 
