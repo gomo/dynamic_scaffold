@@ -59,8 +59,10 @@
             <% elsif elem.type? :globalize_fields %>
               <% elem.locales.each do |locale, name| %>
                 <%= form.globalize_fields_for(locale) do |gform|%>
-                  <div class="ds-inner-form-group">
-                    <span><%= name %></span>
+                  <div class="ds-globalize-group">
+                    <%= tag.span(elem.lang_attributes('ds-globalize-lang')) do%>
+                      <%= name %>
+                    <%end%>
                     <%= elem.render(self, gform, class_names('form-control', {'is-invalid': errors.present?})) %>
                   </div>
                 <%end%>

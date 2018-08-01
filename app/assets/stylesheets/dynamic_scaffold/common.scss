@@ -129,11 +129,34 @@
   margin-left: 10px;
 }
 
-.ds-inner-form-group{
-  margin-bottom: 7px;
-}
-
 // Fixed a problem that font-awesome icon and text link do not match in height.
 .page-link{
   line-height: 1.6;
+}
+
+
+.ds-globalize-group{
+  margin-bottom: 7px;
+  display: flex;
+  .ds-globalize-lang{
+    display: flex;
+    padding: .375rem .75rem;
+    font-size: 12px;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-control{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 }

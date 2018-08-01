@@ -4,8 +4,8 @@ module DynamicScaffold
       class GlobalizeFields < Base
         attr_reader :locales
 
-        def initialize(config, type, locales)
-          super(config, type, :translations_attributes, {})
+        def initialize(config, type, locales, options = {})
+          super(config, type, :translations_attributes, options)
           @locales = locales
         end
 
@@ -32,6 +32,10 @@ module DynamicScaffold
           else
             trans[:translations_attributes] << @item.name
           end
+        end
+
+        def lang_attributes(classnames = nil)
+          build_html_attributes(classnames)
         end
       end
     end

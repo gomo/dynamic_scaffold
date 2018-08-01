@@ -28,8 +28,8 @@ module Controls
       c.form.item(:text_field, :name).label 'Shop Name'
 
       locales = {en: 'English', ja: '日本語'}
-      c.form.item(:globalize_fields, locales).for(:text_field, :keyword)
-      c.form.item(:globalize_fields, locales).for(:text_area, :desc)
+      c.form.item(:globalize_fields, locales, style: 'width: 64px;').for(:text_field, :keyword)
+      c.form.item(:globalize_fields, locales, style: 'width: 64px;').for(:text_area, :desc, rows: 10)
 
       # Last hash arg is given to HTML attributes.
       c.form.item :text_area, :memo, rows: 8
