@@ -4,7 +4,7 @@ class Shop < ApplicationRecord
   has_many :states, inverse_of: :shops, through: :shop_states
   enum status: { draft: 0, published: 1, hidden: 2 }
 
-  attr_accessor :foobar, :cropper_image
+  attr_accessor :foobar, :cropper_image, :locale_keywords_require
 
   validates :name, presence: true, length: { in: 3..20 }
   validates :category_id, presence: true
@@ -18,7 +18,7 @@ class Shop < ApplicationRecord
   globalize_accessors :locales => [:en, :ja], :attributes => [:keyword]
   accepts_nested_attributes_for :translations
   [:en, :ja].each do |locale|
-    validates :"keyword_#{locale}", presence: true
+    validates :"keyword_#{locale}", presence: true, if: :locale_keywords_require
   end
 
   def resize_image
