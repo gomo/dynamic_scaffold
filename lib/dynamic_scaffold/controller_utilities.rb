@@ -114,10 +114,6 @@ module DynamicScaffold
         public_send("#{route.name}_path", options)
       end
 
-      def primary_key_value(record)
-        [*record.class.primary_key].each_with_object({}) {|col, res| res[col] = record[col] }
-      end
-
       def bind_sorter_value(record)
         attr = dynamic_scaffold.list.sorter_attribute
         value = dynamic_scaffold.model.maximum(attr)
