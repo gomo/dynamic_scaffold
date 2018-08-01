@@ -4,6 +4,7 @@ module Controls
     dynamic_scaffold Shop do |c|
       c.max_count(5)
       c.list.title(:name)
+      c.list.item(:keyword)
       c.list.item(:id).label('Number')
       c.list.item :updated_at do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
