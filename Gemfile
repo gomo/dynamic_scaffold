@@ -16,6 +16,7 @@ gemspec
 group :development, :test do
   gem 'carrierwave', '~> 1.0'
   gem 'globalize', git: 'https://github.com/globalize/globalize'
+  gem 'globalize-accessors'
   gem 'kaminari', '~> 1.1'
   gem 'mini_magick', '~>4.8'
   gem 'rails-controller-testing', '~> 1.0'

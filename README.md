@@ -271,6 +271,20 @@ class ShopController < ApplicationController
       end
     end
 
+    # This support [globalize](https://github.com/globalize/globalize)
+    # To save it you need to set accepts_nested_attributes_for in your model.
+    #
+    # class Shop < ApplicationRecord
+    #   translates :keyword
+    #   accepts_nested_attributes_for :translations
+    #
+    c.form
+      # Each language input field specified in the second argument will generate.
+      .item(:globalize_fields, { en: 'English', ja: 'Japanese' }, style: 'width: 78px;')
+      # You can specify the type of element to generate, :text_field or :text_area.
+      # Specify the attribute name in the second argument of the `for` method.
+      .for(:text_field, :keyword)
+
     # You need to permit the new form parameters you inserted.
     # And if necessary, add virtual attributes to the model.
     config.form.permit_params(:delete_image)

@@ -96,6 +96,8 @@ GEM
     ffi (1.9.23)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    globalize-accessors (0.2.1)
+      globalize (~> 5.0, >= 5.0.0)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     kaminari (1.1.1)
@@ -245,6 +247,7 @@ DEPENDENCIES
   factory_bot_rails (~> 4.8)
   faker (~> 1.8)
   globalize!
+  globalize-accessors
   kaminari (~> 1.1)
   mini_magick (~> 4.8)
   nokogiri (~> 1.8)

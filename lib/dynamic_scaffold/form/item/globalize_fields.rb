@@ -3,6 +3,7 @@ module DynamicScaffold
     module Item
       class GlobalizeFields < Base
         attr_reader :locales
+        delegate :proxy_field, :notes?, :render_notes, :render, to: :@item
 
         def initialize(config, type, locales, options = {})
           super(config, type, :translations_attributes, options)
@@ -11,14 +12,6 @@ module DynamicScaffold
 
         def for(type, *args, &block)
           @item = Form::Item::Base.create(@config, type, *args, &block)
-        end
-
-        def render(view, form, classnames = nil)
-          @item.render(view, form, classnames)
-        end
-
-        def proxy_field
-          @item.proxy_field
         end
 
         def strong_parameter
@@ -36,6 +29,10 @@ module DynamicScaffold
 
         def lang_attributes(classnames = nil)
           build_html_attributes(classnames)
+        end
+
+        def locale_errors(locale, record)
+          record.errors.full_messages_for("#{@item.proxy_field.name}_#{locale}")
         end
       end
     end

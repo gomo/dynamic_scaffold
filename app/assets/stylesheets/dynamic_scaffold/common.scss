@@ -140,7 +140,6 @@
   display: flex;
   .ds-globalize-lang{
     display: flex;
-    padding: .375rem .75rem;
     font-size: 12px;
     color: #495057;
     text-align: center;
@@ -153,6 +152,12 @@
     border-right: none;
     justify-content: center;
     align-items: center;
+  }
+
+  &.has-error{
+    .ds-globalize-lang{
+      border-color: #a94442;
+    }
   }
 
   .form-control{

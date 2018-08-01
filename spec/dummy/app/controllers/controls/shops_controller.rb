@@ -28,9 +28,20 @@ module Controls
       # `label` method change label from I18n model attribute name.
       c.form.item(:text_field, :name).label 'Shop Name'
 
-      locales = { en: 'English', ja: '日本語' }
-      c.form.item(:globalize_fields, locales, style: 'width: 64px;').for(:text_field, :keyword)
-      c.form.item(:globalize_fields, locales, style: 'width: 64px;').for(:text_area, :desc, rows: 10)
+      locales = { en: 'English', ja: 'Japanese' }
+      c.form.item(:globalize_fields, locales, style: 'width: 78px;').for(:text_field, :keyword).note do
+        content_tag :p do
+          out = []
+          out << 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+          out << 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+          out << tag(:br)
+          out << 'Ut enim ad minim veniam, quis nostrud exercitation ullamco '
+          out << 'laboris nisi ut aliquip ex ea commodo consequat. '
+          out << tag(:br)
+          safe_join(out)
+        end
+      end
+      c.form.item(:globalize_fields, locales, style: 'width: 78px;').for(:text_area, :desc, rows: 10)
 
       # Last hash arg is given to HTML attributes.
       c.form.item :text_area, :memo, rows: 8

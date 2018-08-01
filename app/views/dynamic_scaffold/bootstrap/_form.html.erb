@@ -58,13 +58,15 @@
               </div>
             <% elsif elem.type? :globalize_fields %>
               <% elem.locales.each do |locale, name| %>
+                <%- locale_errors = elem.locale_errors(locale, @record) -%>
                 <%= form.globalize_fields_for(locale) do |gform|%>
-                  <div class="ds-globalize-group">
+                  <div class="<%= class_names('ds-globalize-group', 'has-error': locale_errors.present?) %>">
                     <%= tag.span(elem.lang_attributes('ds-globalize-lang')) do%>
                       <%= name %>
                     <%end%>
-                    <%= elem.render(self, gform, class_names('form-control', {'is-invalid': errors.present?})) %>
+                    <%= elem.render(self, gform, class_names('form-control', {'is-invalid': locale_errors.present?})) %>
                   </div>
+                  <%= render_form_errors(locale_errors) -%>
                 <%end%>
               <% end %>
             <% else %>
@@ -74,13 +76,7 @@
               <%= self.instance_exec(@record, &block) %>
             <%-end-%>
           </div>
-          <%- if errors.present? -%>
-            <ul class="list-unstyled ds-error-message">
-              <% errors.each do |err|%>
-              <li><%= dynamic_scaffold_icon :error %> <%= err %></li>
-              <%end%>
-            </ul>
-          <%- end -%>
+          <%= render_form_errors(errors) -%>
           <%if elem.notes?%>
             <div class="form-text text-muted"><%= elem.render_notes(form.object, self) %></div>
           <%end%>
