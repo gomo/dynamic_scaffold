@@ -9,7 +9,7 @@ module ActionView
       #
       # Use it like this:
       #
-      # <h1>Editing post</h1> 
+      # <h1>Editing post</h1>
       #
       # <% form_for(@post) do |f| %>
       #   <%= f.error_messages %>
@@ -36,11 +36,11 @@ module ActionView
       #     <p><%= g.text_field :teaser %></p>
       #     <p><%= g.text_field :body %></p>
       #   <% end %>
-      #  
+      #
       # <% end %>
       #
       def globalize_fields_for(locale, *args, &proc)
-        raise ArgumentError, "Missing block" unless block_given?
+        raise ArgumentError, 'Missing block' unless block_given?
         @locales ||= []
 
         first = false
@@ -49,11 +49,11 @@ module ActionView
           first = true
         end
         object_name = "#{@object_name}[translations_attributes][#{@locales.index(locale) + 1}]"
-        object = @object.translations.find_by_locale locale.to_s
+        object = @object.translations.find_by locale: locale.to_s
 
         # The following tags are added only once for the first time.
         if first
-          @template.concat @template.hidden_field_tag("#{object_name}[id]", object ? object.id : "")
+          @template.concat @template.hidden_field_tag("#{object_name}[id]", object ? object.id : '')
           @template.concat @template.hidden_field_tag("#{object_name}[locale]", locale)
         end
 

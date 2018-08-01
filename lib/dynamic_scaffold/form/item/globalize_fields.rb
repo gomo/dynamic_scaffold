@@ -26,7 +26,7 @@ module DynamicScaffold
         end
 
         def extract_parameters(permitting)
-          trans = permitting.find{|item| item.is_a?(Hash) && item.key?(:translations_attributes) }
+          trans = permitting.find {|item| item.is_a?(Hash) && item.key?(:translations_attributes) }
           if trans.nil?
             permitting << { translations_attributes: [:id, :locale, @item.name] }
           else

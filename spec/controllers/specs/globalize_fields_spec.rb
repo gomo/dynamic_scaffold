@@ -5,7 +5,7 @@ RSpec.describe SpecsController, type: :controller do
     render_views
     it 'should display additional elements on the page.' do
       controller.class.send(:dynamic_scaffold, Shop) do |c|
-        locales = {en: 'English', ja: '日本語'}
+        locales = { en: 'English', ja: '日本語' }
         c.form.item(:text_field, :name)
         c.form.item(:text_field, :category_id)
         c.form.item(:text_field, :status)
