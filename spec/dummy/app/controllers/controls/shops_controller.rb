@@ -1,7 +1,7 @@
 module Controls
   class ShopsController < BaseController
     include DynamicScaffold::Controller
-    dynamic_scaffold Shop do |c|
+    dynamic_scaffold Shop do |c| # rubocop:disable Metrics/BlockLength
       c.max_count(5)
       c.list.title(:name)
       c.list.item(:keyword)

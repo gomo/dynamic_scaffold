@@ -15,9 +15,9 @@ class Shop < ApplicationRecord
   before_save :resize_image
 
   translates :desc, :keyword
-  globalize_accessors :locales => [:en, :ja], :attributes => [:keyword]
+  globalize_accessors locales: %i[en ja], attributes: [:keyword]
   accepts_nested_attributes_for :translations
-  [:en, :ja].each do |locale|
+  %i[en ja].each do |locale|
     validates :"keyword_#{locale}", presence: true, if: :locale_keywords_require
   end
 
