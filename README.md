@@ -272,12 +272,6 @@ class ShopController < ApplicationController
     end
 
     # This support [globalize](https://github.com/globalize/globalize)
-    # To save it you need to set accepts_nested_attributes_for in your model.
-    #
-    # class Shop < ApplicationRecord
-    #   translates :keyword
-    #   accepts_nested_attributes_for :translations
-    #
     c.form
       # Each language input field specified in the second argument will generate.
       .item(:globalize_fields, { en: 'English', ja: 'Japanese' }, style: 'width: 78px;')
@@ -306,7 +300,8 @@ class ShopController < ApplicationController
 end
 ```
 
-`carrierwave_image` supports [cropper](https://github.com/fengyuanchen/cropperjs). For details, please read [Crop the image](https://github.com/gomo/dynamic_scaffold/wiki/Crop-the-image).
+* `carrierwave_image` supports [cropper](https://github.com/fengyuanchen/cropperjs). For details, please read [Crop the image](https://github.com/gomo/dynamic_scaffold/wiki/Crop-the-image).
+* Setting the model for globalize_fields with validates is [here](https://github.com/gomo/dynamic_scaffold/wiki/Model-setting-for-globalize).
 
 ### Sorting
 
