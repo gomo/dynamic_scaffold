@@ -42,10 +42,14 @@ module DynamicScaffold
       # Get paramters for update record.
       def update_values # rubocop:disable Metrics/AbcSize
         # set the parameters of carrierwave_image at the end for validates.
-        permitting = dynamic_scaffold.form.items.map {|f| f.strong_parameter unless f.type?(:carrierwave_image) }.compact
+        permitting = []
+        dynamic_scaffold.form.items.reject {|i| i.type?(:carrierwave_image) }.each do |item|
+          item.extract_parameters(permitting)
+        end
         permitting.concat(dynamic_scaffold.form.permit_params)
-        permitting.concat(dynamic_scaffold.form.items.map {|f| f.strong_parameter if f.type?(:carrierwave_image) }.compact)
-        permitting.flatten!
+        dynamic_scaffold.form.items.select {|i| i.type?(:carrierwave_image) }.each do |item|
+          item.extract_parameters(permitting)
+        end
 
         values = params
                    .require(dynamic_scaffold.model.name.underscore)

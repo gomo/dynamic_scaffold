@@ -56,6 +56,15 @@
                 <%end%>
                 <%= form.hidden_field "#{elem.name}_cache" %>
               </div>
+            <% elsif elem.type? :globalize_fields %>
+              <% elem.locales.each do |locale, name| %>
+                <%= form.globalize_fields_for(locale) do |gform|%>
+                  <div class="ds-inner-form-group">
+                    <span><%= name %></span>
+                    <%= elem.render(self, gform, class_names('form-control', {'is-invalid': errors.present?})) %>
+                  </div>
+                <%end%>
+              <% end %>
             <% else %>
               <%= elem.render(self, form, class_names('form-control', {'is-invalid': errors.present?})) %>
             <% end %>

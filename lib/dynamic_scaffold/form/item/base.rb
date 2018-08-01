@@ -1,7 +1,50 @@
 module DynamicScaffold
   module Form
     module Item
-      class Base
+      class Base # rubocop:disable Metrics/ClassLength
+        class << self
+          def create(config, type, *args, &block) # rubocop:disable Metrics/MethodLength
+            case type
+            when
+              :check_box,
+              :radio_button,
+              :text_area,
+              :text_field,
+              :password_field,
+              :hidden_field,
+              :file_field,
+              :color_field,
+              :number_field,
+              :telephone_field then
+              item = Form::Item::SingleOption.new(config, type, *args)
+            when
+              :time_select,
+              :date_select,
+              :datetime_select,
+              :collection_select,
+              :grouped_collection_select then
+              item = Form::Item::TwoOptions.new(config, type, *args)
+            when
+              :collection_check_boxes,
+              :collection_radio_buttons then
+              item = Form::Item::TwoOptionsWithBlock.new(config, type, *args)
+            when
+              :block then
+              item = Form::Item::Block.new(config, type, *args, block)
+            when
+              :carrierwave_image then
+              item = Form::Item::CarrierWaveImage.new(config, type, *args)
+            when
+              :globalize_fields then
+              item = Form::Item::GlobalizeFields.new(config, type, *args)
+            else
+              raise DynamicScaffold::Error::InvalidParameter, "Unknown form item type #{type}"
+            end
+
+            item
+          end
+        end
+
         attr_reader :name
         def initialize(config, type, name, html_attributes = {})
           @config = config
@@ -54,9 +97,12 @@ module DynamicScaffold
           end
         end
 
-        def strong_parameter
-          return { @name => [] } if @multiple
-          @name
+        def extract_parameters(permitting)
+          if @multiple
+            permitting << { @name => [] }
+          else
+            permitting << @name
+          end
         end
 
         def if(&block)

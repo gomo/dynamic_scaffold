@@ -30,13 +30,11 @@ module DynamicScaffold
           yield(html_attributes)
         end
 
-        def strong_parameter
-          params = []
+        def extract_parameters(permitting)
           # If you do not permit before the image body you can not use cropper value in uploader.
-          params << "cropper_#{@name}" unless cropper.nil?
-          params << "remove_#{@name}" if @options[:removable]
-          params.concat(["#{@name}_cache", @name])
-          params
+          permitting << "cropper_#{@name}" unless cropper.nil?
+          permitting << "remove_#{@name}" if @options[:removable]
+          permitting.concat(["#{@name}_cache", @name])
         end
       end
     end

@@ -14,6 +14,9 @@ class Shop < ApplicationRecord
   mount_uploader :image, ShopImageUploader
   before_save :resize_image
 
+  translates :desc, :keyword
+  accepts_nested_attributes_for :translations
+
   def resize_image
     return unless image_changed?
     return if image.blank?

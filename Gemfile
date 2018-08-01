@@ -19,6 +19,7 @@ group :development, :test do
   gem 'mini_magick', '~>4.8'
   gem 'rails-controller-testing', '~> 1.0'
   gem 'sassc-rails', '~> 1.3'
+  gem 'globalize', git: 'https://github.com/globalize/globalize'
 end
 
 group :test do

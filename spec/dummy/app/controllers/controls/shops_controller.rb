@@ -21,12 +21,15 @@ module Controls
       c.form.item(:hidden_field, :id)
 
       c.form.item(:carrierwave_image, :image, preview_max_size: { width: '450px' }, cropper: {
-        aspectRatio: 1
-      }
-    )
+          aspectRatio: 1
+      })
 
       # `label` method change label from I18n model attribute name.
       c.form.item(:text_field, :name).label 'Shop Name'
+
+      locales = {en: 'English', ja: '日本語'}
+      c.form.item(:globalize_fields, locales).for(:text_field, :keyword)
+      c.form.item(:globalize_fields, locales).for(:text_area, :desc)
 
       # Last hash arg is given to HTML attributes.
       c.form.item :text_area, :memo, rows: 8

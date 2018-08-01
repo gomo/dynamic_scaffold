@@ -274,40 +274,8 @@ module DynamicScaffold
       end
     end
 
-    def item(type, *args, &block) # rubocop:disable Metrics/MethodLength
-      case type
-      when
-        :check_box,
-        :radio_button,
-        :text_area,
-        :text_field,
-        :password_field,
-        :hidden_field,
-        :file_field,
-        :color_field,
-        :number_field,
-        :telephone_field then
-        item = Form::Item::SingleOption.new(@config, type, *args)
-      when
-        :time_select,
-        :date_select,
-        :datetime_select,
-        :collection_select,
-        :grouped_collection_select then
-        item = Form::Item::TwoOptions.new(@config, type, *args)
-      when
-        :collection_check_boxes,
-        :collection_radio_buttons then
-        item = Form::Item::TwoOptionsWithBlock.new(@config, type, *args)
-      when
-        :block then
-        item = Form::Item::Block.new(@config, type, *args, block)
-      when
-        :carrierwave_image then
-        item = Form::Item::CarrierWaveImage.new(@config, type, *args)
-      else
-        raise DynamicScaffold::Error::InvalidParameter, "Unknown form item type #{type}"
-      end
+    def item(type, *args, &block)
+      item = Form::Item::Base.create(@config, type, *args, &block)
       @items << item
       item
     end

@@ -4,6 +4,7 @@ require 'dynamic_scaffold/routes'
 require 'dynamic_scaffold/controller_utilities'
 require 'dynamic_scaffold/controller'
 require 'dynamic_scaffold/config'
+require 'dynamic_scaffold/form_builder'
 
 module DynamicScaffold
   module Error
@@ -25,6 +26,7 @@ module DynamicScaffold
       autoload :SingleOption,         'dynamic_scaffold/form/item/single_option'
       autoload :TwoOptionsWithBlock,  'dynamic_scaffold/form/item/two_options_with_block'
       autoload :TwoOptions,           'dynamic_scaffold/form/item/two_options'
+      autoload :GlobalizeFields,       'dynamic_scaffold/form/item/globalize_fields'
     end
   end
 end
