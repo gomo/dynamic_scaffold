@@ -53,10 +53,16 @@ module Controls
       c.form.item(:collection_radio_buttons, :status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
     end
 
-    private
-
-      def before_save_scaffold(record, _prev)
-        raise DynamicScaffoldSpecError, record.name
+    def create
+      super do |record|
+        record.locale_keywords_require = true
       end
+    end
+
+    def update
+      super do |record|
+        record.locale_keywords_require = true
+      end
+    end
   end
 end
