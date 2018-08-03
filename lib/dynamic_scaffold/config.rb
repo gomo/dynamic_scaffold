@@ -119,7 +119,16 @@ module DynamicScaffold
   end
 
   class Config
-    attr_reader :model, :form, :list, :title, :controller, :lock_before_count, :max_count_options
+    attr_reader(
+      :model,
+      :form,
+      :list,
+      :title,
+      :controller,
+      :lock_before_count,
+      :max_count_options,
+      :scope_options
+    )
     def initialize(model, controller)
       @model = model
       @controller = controller
@@ -139,8 +148,11 @@ module DynamicScaffold
       end
     end
 
-    def scope(scopes = nil)
-      @scope = scopes unless scopes.nil?
+    def scope(*args)
+      if args.present?
+        @scope_options = args.extract_options!
+        @scope = args[0]
+      end
       @scope
     end
 
