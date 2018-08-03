@@ -33,7 +33,10 @@ module DynamicScaffold
         class << self
           def create(config, type, *args, &block)
             if ITEM_TYPES[type].nil?
-              raise DynamicScaffold::Error::InvalidParameter, "Unknown form item type #{type}. supported: #{ITEM_TYPES.keys.join(', ')}"
+              raise(
+                DynamicScaffold::Error::InvalidParameter,
+                "Unknown form item type #{type}. supported: #{ITEM_TYPES.keys.join(', ')}"
+              )
             end
 
             if ITEM_TYPES[type] == Form::Item::Block
