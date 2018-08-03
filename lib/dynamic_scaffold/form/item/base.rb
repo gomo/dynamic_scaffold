@@ -13,15 +13,20 @@ module DynamicScaffold
           color_field: Form::Item::SingleOption,
           number_field: Form::Item::SingleOption,
           telephone_field: Form::Item::SingleOption,
+
           time_select: Form::Item::TwoOptions,
           date_select: Form::Item::TwoOptions,
           datetime_select: Form::Item::TwoOptions,
           collection_select: Form::Item::TwoOptions,
           grouped_collection_select: Form::Item::TwoOptions,
+
           collection_check_boxes: Form::Item::TwoOptionsWithBlock,
           collection_radio_buttons: Form::Item::TwoOptionsWithBlock,
+
           block: Form::Item::Block,
+
           carrierwave_image: Form::Item::CarrierWaveImage,
+
           globalize_fields: Form::Item::GlobalizeFields
         }.freeze
 
