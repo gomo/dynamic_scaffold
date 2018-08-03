@@ -2,46 +2,40 @@ module DynamicScaffold
   module Form
     module Item
       class Base # rubocop:disable Metrics/ClassLength
+        ITEM_TYPES = {
+          check_box: Form::Item::SingleOption,
+          radio_button: Form::Item::SingleOption,
+          text_area: Form::Item::SingleOption,
+          text_field: Form::Item::SingleOption,
+          password_field: Form::Item::SingleOption,
+          hidden_field: Form::Item::SingleOption,
+          file_field: Form::Item::SingleOption,
+          color_field: Form::Item::SingleOption,
+          number_field: Form::Item::SingleOption,
+          telephone_field: Form::Item::SingleOption,
+          time_select: Form::Item::TwoOptions,
+          date_select: Form::Item::TwoOptions,
+          datetime_select: Form::Item::TwoOptions,
+          collection_select: Form::Item::TwoOptions,
+          grouped_collection_select: Form::Item::TwoOptions,
+          collection_check_boxes: Form::Item::TwoOptionsWithBlock,
+          collection_radio_buttons: Form::Item::TwoOptionsWithBlock,
+          block: Form::Item::Block,
+          carrierwave_image: Form::Item::CarrierWaveImage,
+          globalize_fields: Form::Item::GlobalizeFields
+        }.freeze
+
         class << self
-          def create(config, type, *args, &block) # rubocop:disable Metrics/MethodLength
-            case type
-            when
-              :check_box,
-              :radio_button,
-              :text_area,
-              :text_field,
-              :password_field,
-              :hidden_field,
-              :file_field,
-              :color_field,
-              :number_field,
-              :telephone_field then
-              item = Form::Item::SingleOption.new(config, type, *args)
-            when
-              :time_select,
-              :date_select,
-              :datetime_select,
-              :collection_select,
-              :grouped_collection_select then
-              item = Form::Item::TwoOptions.new(config, type, *args)
-            when
-              :collection_check_boxes,
-              :collection_radio_buttons then
-              item = Form::Item::TwoOptionsWithBlock.new(config, type, *args)
-            when
-              :block then
-              item = Form::Item::Block.new(config, type, *args, block)
-            when
-              :carrierwave_image then
-              item = Form::Item::CarrierWaveImage.new(config, type, *args)
-            when
-              :globalize_fields then
-              item = Form::Item::GlobalizeFields.new(config, type, *args)
-            else
-              raise DynamicScaffold::Error::InvalidParameter, "Unknown form item type #{type}"
+          def create(config, type, *args, &block)
+            if ITEM_TYPES[type].nil?
+              raise DynamicScaffold::Error::InvalidParameter, "Unknown form item type #{type}. supported: #{ITEM_TYPES.keys.join(', ')}"
             end
 
-            item
+            if ITEM_TYPES[type] == Form::Item::Block
+              ITEM_TYPES[type].new(config, type, *args, block)
+            else
+              ITEM_TYPES[type].new(config, type, *args)
+            end
           end
         end
 
