@@ -3,12 +3,9 @@ RSpec.describe SpecsController, type: :controller do
   delegate :dynamic_scaffold, to: :controller
   describe 'globalize_fields' do
     render_views
-    it 'should display additional elements on the page.' do
+    it 'should display form elements for the specified language.' do
       controller.class.send(:dynamic_scaffold, Shop) do |c|
         locales = { en: 'English', ja: '日本語' }
-        c.form.item(:text_field, :name)
-        c.form.item(:text_field, :category_id)
-        c.form.item(:text_field, :status)
         c.form.item(:globalize_fields, locales).for(:text_field, :keyword)
         c.form.item(:globalize_fields, locales).for(:text_area, :desc)
       end
@@ -26,6 +23,17 @@ RSpec.describe SpecsController, type: :controller do
 
       expect(doc.css('textarea[name="shop[translations_attributes][1][desc]"]').length).to eq 1
       expect(doc.css('textarea[name="shop[translations_attributes][2][desc]"]').length).to eq 1
+    end
+
+    it 'should be able to update translate records in the specified language.' do
+      controller.class.send(:dynamic_scaffold, Shop) do |c|
+        locales = { en: 'English', ja: '日本語' }
+        c.form.item(:text_field, :name)
+        c.form.item(:text_field, :category_id)
+        c.form.item(:text_field, :status)
+        c.form.item(:globalize_fields, locales).for(:text_field, :keyword)
+        c.form.item(:globalize_fields, locales).for(:text_area, :desc)
+      end
 
       category = FactoryBot.create(:category)
       expect do
