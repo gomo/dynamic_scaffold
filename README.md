@@ -282,15 +282,16 @@ end
 
 ##### carrierwave_image
 
-You can add an image uploader with preview to the form. The save and remove part to the model corresponds to [carrierwave](https://github.com/carrierwaveuploader/carrierwave).
+You can add an image uploader with preview to the form. It uses [carrierwave](https://github.com/carrierwaveuploader/carrierwave) to save images and associate with records.
 
-
-For example, you mount the carrierwave uploader on the thumb column of the model.
+For example, you mount the carrierwave uploader on the `thumb` column of Shop model.
 
 ```rb
 class Shop < ApplicationRecord
   mount_uploader :thumb, ShopThumbUploader
 ```
+
+The controller code is as follows.
 
 ```rb
 class ShopController < ApplicationController
@@ -310,7 +311,7 @@ The `carrierwave_image` supports [cropper](https://github.com/fengyuanchen/cropp
 
 ##### globalize_fields
 
-This support [globalize](https://github.com/globalize/globalize).
+We support [globalize](https://github.com/globalize/globalize). Below is the controller code.
 
 ```rb
 class ShopController < ApplicationController
