@@ -8,6 +8,7 @@ The Scaffold system which dynamically generates CRUD and sort functions.
 * Support sort and pagination.
 * Support image upload with preview.
 * Support image crop.
+* Support [globalize](https://github.com/globalize/globalize) form fields.
 * This has the views with the Twitter Bootstrap. Support bootstrap3/4.
 * Customizable and flexible.
 
