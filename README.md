@@ -235,19 +235,6 @@ class ShopController < ApplicationController
     config.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
     config.form.item(:collection_radio_buttons, :status, Shop.statuses.map{|k, _v| [k, k.titleize]}, :first, :last)
 
-    # You can add an image uploader with preview to the form. The save and remove part to the model corresponds to [carrierwave](https://github.com/carrierwaveuploader/carrierwave).
-    # In the example below, you need to mount the carrierwave uploader on the thumb column of the model.
-    #
-    # class Shop < ApplicationRecord
-    #   mount_uploader :thumb, ShopThumbUploader
-    #
-    config.form.item(
-      :carrierwave_image,
-      :thumb,
-      preview_max_size: {width: '300px', height: '300px'},
-      removable: false #　If you want to require image, please set removable to false. the default is true.
-    )
-
     # If you want to display more free form field, use block.
     # The block is executed in the context of view, so you can call the method of view.
     config.form.item :block, :free do |form, field|
@@ -271,14 +258,6 @@ class ShopController < ApplicationController
       end
     end
 
-    # This support [globalize](https://github.com/globalize/globalize)
-    c.form
-      # Each language input field specified in the second argument will generate.
-      .item(:globalize_fields, { en: 'English', ja: 'Japanese' }, style: 'width: 78px;')
-      # You can specify the type of element to generate, :text_field or :text_area.
-      # Specify the attribute name in the second argument of the `for` method.
-      .for(:text_field, :keyword)
-
     # You need to permit the new form parameters you inserted.
     # And if necessary, add virtual attributes to the model.
     config.form.permit_params(:delete_image)
@@ -300,8 +279,53 @@ class ShopController < ApplicationController
 end
 ```
 
-* `carrierwave_image` supports [cropper](https://github.com/fengyuanchen/cropperjs). For details, please read [Crop the image](https://github.com/gomo/dynamic_scaffold/wiki/Crop-the-image).
-* Setting the model for globalize_fields with validates is [here](https://github.com/gomo/dynamic_scaffold/wiki/Model-setting-for-globalize).
+##### carrierwave_image
+
+You can add an image uploader with preview to the form. The save and remove part to the model corresponds to [carrierwave](https://github.com/carrierwaveuploader/carrierwave).
+
+
+For example, you mount the carrierwave uploader on the thumb column of the model.
+
+```rb
+class Shop < ApplicationRecord
+  mount_uploader :thumb, ShopThumbUploader
+```
+
+```rb
+class ShopController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+...
+    config.form.item(
+      :carrierwave_image,
+      :thumb,
+      preview_max_size: {width: '300px', height: '300px'},
+      removable: false #　If you want to require image, please set removable to false. the default is true.
+    )
+```
+
+The `carrierwave_image` supports [cropper](https://github.com/fengyuanchen/cropperjs) too. For details, please read [Crop the image](https://github.com/gomo/dynamic_scaffold/wiki/Crop-the-image).
+
+
+##### globalize_fields
+
+This support [globalize](https://github.com/globalize/globalize).
+
+```rb
+class ShopController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+...
+    c.form
+      # Each language input field specified in the second argument will generate.
+      .item(:globalize_fields, { en: 'English', ja: 'Japanese' }, style: 'width: 78px;')
+      # You can specify the type of element to generate to `for` method. it support `:text_field` or `:text_area` for type.
+      # Specify the attribute name in the second argument of the `for` method.
+      .for(:text_field, :keyword)
+```
+
+Setting the model for globalize_fields with validates is [here](https://github.com/gomo/dynamic_scaffold/wiki/Model-setting-for-globalize).
+
 
 ### Sorting
 
