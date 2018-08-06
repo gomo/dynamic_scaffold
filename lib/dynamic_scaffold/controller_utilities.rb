@@ -42,10 +42,14 @@ module DynamicScaffold
       # Get paramters for update record.
       def update_values # rubocop:disable Metrics/AbcSize
         # set the parameters of carrierwave_image at the end for validates.
-        permitting = dynamic_scaffold.form.items.map {|f| f.strong_parameter unless f.type?(:carrierwave_image) }.compact
+        permitting = []
+        dynamic_scaffold.form.items.reject {|i| i.type?(:carrierwave_image) }.each do |item|
+          item.extract_parameters(permitting)
+        end
         permitting.concat(dynamic_scaffold.form.permit_params)
-        permitting.concat(dynamic_scaffold.form.items.map {|f| f.strong_parameter if f.type?(:carrierwave_image) }.compact)
-        permitting.flatten!
+        dynamic_scaffold.form.items.select {|i| i.type?(:carrierwave_image) }.each do |item|
+          item.extract_parameters(permitting)
+        end
 
         values = params
                    .require(dynamic_scaffold.model.name.underscore)
@@ -60,6 +64,7 @@ module DynamicScaffold
 
       # Check if there are inconsistent scopes in update parameters
       def valid_for_scope?(update_params)
+        return true if dynamic_scaffold.scope_options[:changeable]
         result = true
         scope_params.each do |key, value|
           if update_params.key?(key) && update_params[key] != value
@@ -108,14 +113,6 @@ module DynamicScaffold
         options.merge!(scope_params)
 
         public_send("#{route.name}_path", options)
-      end
-
-      def dynamic_scaffold_icon(name)
-        view_context.instance_exec name, &::Rails.application.config.dynamic_scaffold.icons
-      end
-
-      def primary_key_value(record)
-        [*record.class.primary_key].each_with_object({}) {|col, res| res[col] = record[col] }
       end
 
       def bind_sorter_value(record)

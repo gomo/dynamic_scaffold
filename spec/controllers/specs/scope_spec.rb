@@ -108,6 +108,21 @@ RSpec.describe SpecsController, type: :controller do
           } }
         end.to raise_error(DynamicScaffold::Error::InvalidOperation)
       end
+      it 'should be able to change with changable option.' do
+        controller.class.send(:dynamic_scaffold, User) do |c|
+          c.scope [:role], changeable: true
+        end
+
+        admin = FactoryBot.create(:user, role_value: :admin)
+        patch :update, params: { id: admin.id, locale: :en, role: 'admin', user: {
+          id: admin.id,
+          email: 'udpate@example.com',
+          role: :staff
+        } }
+        user = assigns(:record)
+        user.reload
+        expect(user.role).to eq 'staff'
+      end
     end
 
     describe 'Sort' do

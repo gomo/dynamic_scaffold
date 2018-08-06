@@ -8,6 +8,7 @@ The Scaffold system which dynamically generates CRUD and sort functions.
 * Support sort and pagination.
 * Support image upload with preview.
 * Support image crop.
+* Support [globalize](https://github.com/globalize/globalize) form fields.
 * This has the views with the Twitter Bootstrap. Support bootstrap3/4.
 * Customizable and flexible.
 
@@ -235,19 +236,6 @@ class ShopController < ApplicationController
     config.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
     config.form.item(:collection_radio_buttons, :status, Shop.statuses.map{|k, _v| [k, k.titleize]}, :first, :last)
 
-    # You can add an image uploader with preview to the form. The save and remove part to the model corresponds to [carrierwave](https://github.com/carrierwaveuploader/carrierwave).
-    # In the example below, you need to mount the carrierwave uploader on the thumb column of the model.
-    #
-    # class Shop < ApplicationRecord
-    #   mount_uploader :thumb, ShopThumbUploader
-    #
-    config.form.item(
-      :carrierwave_image,
-      :thumb,
-      preview_max_size: {width: '300px', height: '300px'},
-      removable: false #　If you want to require image, please set removable to false. the default is true.
-    )
-
     # If you want to display more free form field, use block.
     # The block is executed in the context of view, so you can call the method of view.
     config.form.item :block, :free do |form, field|
@@ -292,7 +280,54 @@ class ShopController < ApplicationController
 end
 ```
 
-`carrierwave_image` supports [cropper](https://github.com/fengyuanchen/cropperjs). For details, please read [Crop the image](https://github.com/gomo/dynamic_scaffold/wiki/Crop-the-image).
+##### carrierwave_image
+
+You can add an image uploader with preview to the form. It uses [carrierwave](https://github.com/carrierwaveuploader/carrierwave) to save images and associate with records.
+
+For example, you mount the carrierwave uploader on the `thumb` column of Shop model.
+
+```rb
+class Shop < ApplicationRecord
+  mount_uploader :thumb, ShopThumbUploader
+```
+
+The controller code is as follows.
+
+```rb
+class ShopController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+...
+    config.form.item(
+      :carrierwave_image,
+      :thumb,
+      preview_max_size: {width: '300px', height: '300px'},
+      removable: false #　If you want to require image, please set removable to false. the default is true.
+    )
+```
+
+The `carrierwave_image` supports [cropper](https://github.com/fengyuanchen/cropperjs) too. For details, please read [Crop the image](https://github.com/gomo/dynamic_scaffold/wiki/Crop-the-image).
+
+
+##### globalize_fields
+
+We support [globalize](https://github.com/globalize/globalize). Below is the controller code.
+
+```rb
+class ShopController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold Shop do |config|
+...
+    c.form
+      # Each language input field specified in the second argument will generate.
+      .item(:globalize_fields, { en: 'English', ja: 'Japanese' }, style: 'width: 78px;')
+      # You can specify the type of element to generate to `for` method. it support `:text_field` or `:text_area` for type.
+      # Specify the attribute name in the second argument of the `for` method.
+      .for(:text_field, :keyword)
+```
+
+Setting the model for globalize_fields with validates is [here](https://github.com/gomo/dynamic_scaffold/wiki/Model-setting-for-globalize).
+
 
 ### Sorting
 
@@ -408,6 +443,17 @@ class UsersController < ApplicationController
     c.scope [{role: :admin}]
     # or if you use only fixed values, you can use Hash
     c.scope role: :admin
+    ...
+```
+
+By default, the value can not update to a value other than the value specified in the scope( or parameter). This behavior can change with `changeable` option.
+
+```rb
+# app/controllers/users_controller.rb
+class UsersController < ApplicationController
+  include DynamicScaffold::Controller
+  dynamic_scaffold User do |c|
+    c.scope([:role], changeable: true)
     ...
 ```
 

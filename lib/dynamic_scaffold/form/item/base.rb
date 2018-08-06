@@ -1,7 +1,52 @@
 module DynamicScaffold
   module Form
     module Item
-      class Base
+      class Base # rubocop:disable Metrics/ClassLength
+        ITEM_TYPES = {
+          check_box: Form::Item::SingleOption,
+          radio_button: Form::Item::SingleOption,
+          text_area: Form::Item::SingleOption,
+          text_field: Form::Item::SingleOption,
+          password_field: Form::Item::SingleOption,
+          hidden_field: Form::Item::SingleOption,
+          file_field: Form::Item::SingleOption,
+          color_field: Form::Item::SingleOption,
+          number_field: Form::Item::SingleOption,
+          telephone_field: Form::Item::SingleOption,
+
+          time_select: Form::Item::TwoOptions,
+          date_select: Form::Item::TwoOptions,
+          datetime_select: Form::Item::TwoOptions,
+          collection_select: Form::Item::TwoOptions,
+          grouped_collection_select: Form::Item::TwoOptions,
+
+          collection_check_boxes: Form::Item::TwoOptionsWithBlock,
+          collection_radio_buttons: Form::Item::TwoOptionsWithBlock,
+
+          block: Form::Item::Block,
+
+          carrierwave_image: Form::Item::CarrierWaveImage,
+
+          globalize_fields: Form::Item::GlobalizeFields
+        }.freeze
+
+        class << self
+          def create(config, type, *args, &block)
+            if ITEM_TYPES[type].nil?
+              raise(
+                DynamicScaffold::Error::InvalidParameter,
+                "Unknown form item type #{type}. supported: #{ITEM_TYPES.keys.join(', ')}"
+              )
+            end
+
+            if ITEM_TYPES[type] == Form::Item::Block
+              ITEM_TYPES[type].new(config, type, *args, block)
+            else
+              ITEM_TYPES[type].new(config, type, *args)
+            end
+          end
+        end
+
         attr_reader :name
         def initialize(config, type, name, html_attributes = {})
           @config = config
@@ -54,9 +99,12 @@ module DynamicScaffold
           end
         end
 
-        def strong_parameter
-          return { @name => [] } if @multiple
-          @name
+        def extract_parameters(permitting)
+          if @multiple
+            permitting << { @name => [] }
+          else
+            permitting << @name
+          end
         end
 
         def if(&block)

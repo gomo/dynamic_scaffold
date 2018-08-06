@@ -4,7 +4,7 @@ class Shop < ApplicationRecord
   has_many :states, inverse_of: :shops, through: :shop_states
   enum status: { draft: 0, published: 1, hidden: 2 }
 
-  attr_accessor :foobar, :cropper_image
+  attr_accessor :foobar, :cropper_image, :locale_keywords_require
 
   validates :name, presence: true, length: { in: 3..20 }
   validates :category_id, presence: true
@@ -13,6 +13,13 @@ class Shop < ApplicationRecord
 
   mount_uploader :image, ShopImageUploader
   before_save :resize_image
+
+  translates :desc, :keyword
+  globalize_accessors locales: %i[en ja], attributes: [:keyword]
+  accepts_nested_attributes_for :translations
+  %i[en ja].each do |locale|
+    validates :"keyword_#{locale}", presence: true, if: :locale_keywords_require
+  end
 
   def resize_image
     return unless image_changed?

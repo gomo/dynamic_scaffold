@@ -1,9 +1,10 @@
 module Controls
   class ShopsController < BaseController
     include DynamicScaffold::Controller
-    dynamic_scaffold Shop do |c|
+    dynamic_scaffold Shop do |c| # rubocop:disable Metrics/BlockLength
       c.max_count(5)
       c.list.title(:name)
+      c.list.item(:keyword)
       c.list.item(:id).label('Number')
       c.list.item :updated_at do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
@@ -28,6 +29,21 @@ module Controls
       # `label` method change label from I18n model attribute name.
       c.form.item(:text_field, :name).label 'Shop Name'
 
+      locales = { en: 'English', ja: 'Japanese' }
+      c.form.item(:globalize_fields, locales, style: 'width: 78px;').for(:text_field, :keyword).note do
+        content_tag :p do
+          out = []
+          out << 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+          out << 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+          out << tag(:br)
+          out << 'Ut enim ad minim veniam, quis nostrud exercitation ullamco '
+          out << 'laboris nisi ut aliquip ex ea commodo consequat. '
+          out << tag(:br)
+          safe_join(out)
+        end
+      end
+      c.form.item(:globalize_fields, locales, style: 'width: 78px;').for(:text_area, :desc, rows: 10)
+
       # Last hash arg is given to HTML attributes.
       c.form.item :text_area, :memo, rows: 8
       c.form.item(:collection_select,
@@ -37,10 +53,16 @@ module Controls
       c.form.item(:collection_radio_buttons, :status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
     end
 
-    private
-
-      def before_save_scaffold(record, _prev)
-        raise DynamicScaffoldSpecError, record.name
+    def create
+      super do |record|
+        record.locale_keywords_require = true
       end
+    end
+
+    def update
+      super do |record|
+        record.locale_keywords_require = true
+      end
+    end
   end
 end

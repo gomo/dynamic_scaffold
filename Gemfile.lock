@@ -1,7 +1,16 @@
+GIT
+  remote: https://github.com/globalize/globalize
+  revision: e37c471775d196cd4318e61954572c300c015467
+  specs:
+    globalize (5.1.0)
+      activemodel (>= 4.2, < 5.3)
+      activerecord (>= 4.2, < 5.3)
+      request_store (~> 1.0)
+
 PATH
   remote: .
   specs:
-    dynamic_scaffold (0.8.5)
+    dynamic_scaffold (0.9.0)
       classnames-rails-view (>= 1.0)
       kaminari (>= 1.0)
       rails (>= 5.0, < 5.3)
@@ -87,6 +96,8 @@ GEM
     ffi (1.9.23)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    globalize-accessors (0.2.1)
+      globalize (~> 5.0, >= 5.0.0)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     kaminari (1.1.1)
@@ -170,6 +181,8 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    request_store (1.4.1)
+      rack (>= 1.4)
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -233,6 +246,8 @@ DEPENDENCIES
   dynamic_scaffold!
   factory_bot_rails (~> 4.8)
   faker (~> 1.8)
+  globalize!
+  globalize-accessors
   kaminari (~> 1.1)
   mini_magick (~> 4.8)
   nokogiri (~> 1.8)
