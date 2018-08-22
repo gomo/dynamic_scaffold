@@ -25,4 +25,5 @@ end
 
 group :test do
   gem 'nokogiri', '~> 1.8'
+  gem 'spring-commands-rspec'
 end
