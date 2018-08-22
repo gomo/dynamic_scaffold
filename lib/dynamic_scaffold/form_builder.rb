@@ -49,7 +49,7 @@ module ActionView
           first = true
         end
         object_name = "#{@object_name}[translations_attributes][#{@locales.index(locale) + 1}]"
-        object = @object.translations.to_a.find{|t| t.locale.to_s == locale.to_s }
+        object = @object.translations.to_a.find {|t| t.locale.to_s == locale.to_s }
 
         # The following tags are added only once for the first time.
         if first

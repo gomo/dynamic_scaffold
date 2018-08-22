@@ -115,12 +115,12 @@ RSpec.describe SpecsController, type: :controller do
           1 => {
             id: '',
             locale: :en,
-            keyword: 'English keyword',
+            keyword: 'English keyword'
           },
           2 => {
             id: '',
             locale: :ja,
-            keyword: '日本語　キーワード',
+            keyword: '日本語　キーワード'
           }
         }
       } }
@@ -137,12 +137,12 @@ RSpec.describe SpecsController, type: :controller do
           1 => {
             id: shop.translations.find_by(locale: :en),
             locale: :en,
-            keyword: '',
+            keyword: ''
           },
           2 => {
             id: shop.translations.find_by(locale: :ja),
             locale: :ja,
-            keyword: 'ほげ',
+            keyword: 'ほげ'
           }
         }
       } }
