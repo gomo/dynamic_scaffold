@@ -19,7 +19,7 @@ module DynamicScaffold
           max_size = @options[:preview_max_size]
           return '' unless max_size
 
-          ''.tap do |s|
+          ' '.tap do |s|
             s << "max-width: #{max_size[:width]};" if max_size[:width]
             s << "max-height: #{max_size[:height]};" if max_size[:height]
           end

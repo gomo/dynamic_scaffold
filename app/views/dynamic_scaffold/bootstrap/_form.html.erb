@@ -45,7 +45,7 @@
                         <span class="js-ds-image-cropper-display badge badge-primary"></span>
                       </div>
                     <%- end -%>
-                    <div style="<%= elem.preview_image_style %>">
+                    <div style="overflow: hidden;<%= elem.preview_image_style %>">
                       <img src="<%= image.url if image.file.present? %>" alt="" class="img-responsive img-fluid">
                     </div>
                   </div>

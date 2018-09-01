@@ -21,7 +21,7 @@ module Controls
       # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select
       c.form.item(:hidden_field, :id)
 
-      c.form.item(:carrierwave_image, :image, preview_max_size: { width: '450px' }, cropper: {
+      c.form.item(:carrierwave_image, :image, cropper: {
         aspectRatio: 1
       }
     )
