@@ -218,8 +218,13 @@ class ShopController < ApplicationController
     config.form.item :text_field, :name
     # You can specify `label`. 
     config.form.item(:text_field, :name).label 'Shop Name'
+
     # You can set default value for new action.
     config.form.item(:text_field, :name).default('Foo Bar')
+    # default also accept block.
+    config.form.item(:text_field, :name).default do
+      Shop.find_by(shop_id: params[:shop_id])
+    end
 
     # If you use hidden_field, the label will also be hidden.
     config.form.item :hidden_field, :id
@@ -542,7 +547,7 @@ If you want to dynamically set according to url parameters, you can also use blo
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
-    config.title.name do |params|
+    config.title.name do
       I18n.t "enum.user.role.#{params[role]}", default: params[role].titleize
     end
 ```

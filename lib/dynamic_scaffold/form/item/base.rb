@@ -135,9 +135,17 @@ module DynamicScaffold
           proxy_target.first
         end
 
-        def default(value = nil)
-          return @default if value.nil?
-          @default = value
+        def default(value = nil, &block)
+          if block_given?
+            @default = block
+          else
+            @default = value
+          end
+        end
+
+        def default_value(view)
+          return view.instance_exec(&@default) if @default.is_a? Proc
+          @default
         end
 
         def insert(position, &block)

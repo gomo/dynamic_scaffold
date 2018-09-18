@@ -52,7 +52,7 @@ module DynamicScaffold
       @record = dynamic_scaffold.model.new
 
       defaults = dynamic_scaffold.form.items.each_with_object({}) do |item, memo|
-        memo[item.name] = item.default if dynamic_scaffold.model.column_names.include?(item.name.to_s)
+        memo[item.name] = item.default_value(view_context) if dynamic_scaffold.model.column_names.include?(item.name.to_s)
       end
 
       @record.attributes = defaults.merge(scope_params)
