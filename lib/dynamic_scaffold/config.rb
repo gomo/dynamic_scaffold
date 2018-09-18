@@ -80,13 +80,13 @@ module DynamicScaffold
       titles(:new)
     end
 
-    # def update
-    #   edit
-    # end
+    def update
+      titles(:edit)
+    end
 
-    # def create
-    #   create
-    # end
+    def create
+      titles(:new)
+    end
 
     private
 
