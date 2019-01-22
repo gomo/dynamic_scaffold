@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :country do
     transient do
-      with_name false
+      with_name { false }
     end
 
     sequence(:name) {|n| "Country #{n}" }
