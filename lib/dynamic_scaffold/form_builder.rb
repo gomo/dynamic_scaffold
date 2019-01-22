@@ -41,6 +41,7 @@ module ActionView
       #
       def globalize_fields_for(locale, *args, &proc)
         raise ArgumentError, 'Missing block' unless block_given?
+
         @locales ||= []
 
         first = false

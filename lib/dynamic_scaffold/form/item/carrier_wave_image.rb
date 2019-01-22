@@ -12,6 +12,7 @@ module DynamicScaffold
         def cropper
           return nil unless @options.key? :cropper
           return {} if @options[:cropper] == true
+
           @options[:cropper]
         end
 

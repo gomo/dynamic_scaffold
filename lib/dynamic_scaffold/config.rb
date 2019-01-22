@@ -31,6 +31,7 @@ module DynamicScaffold
 
     def page_number(page, records)
       return page unless total_count
+
       "#{page} / #{records.total_pages}"
     end
 
@@ -142,6 +143,7 @@ module DynamicScaffold
     def vars(name = nil, &block)
       if block_given?
         raise ArgumentError, 'Missing var name.' if name.nil?
+
         @vars._register(name, block)
       else
         @vars
@@ -165,6 +167,7 @@ module DynamicScaffold
 
     def max_count?(count)
       return false if max_count.nil?
+
       count >= max_count
     end
   end
@@ -231,6 +234,7 @@ module DynamicScaffold
       else
         record = args[0]
         return @config.controller.view_context.instance_exec(record, &@title[:block]) if @title[:block]
+
         record.public_send(@title[:column_name])
       end
     end

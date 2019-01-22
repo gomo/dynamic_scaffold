@@ -10,7 +10,7 @@ class DynamicScaffoldGenerator < Rails::Generators::Base
     @namespases = path.split('/')
     @plural_model_name = @namespases.pop.camelize
     @class_scope = @namespases.map(&:camelize).join('::')
-    @model_name = model ? model : @plural_model_name.singularize
+    @model_name = model || @plural_model_name.singularize
     @model_name = @model_name.camelize
     @model = @model_name.constantize
     @content_for = options['content_for']

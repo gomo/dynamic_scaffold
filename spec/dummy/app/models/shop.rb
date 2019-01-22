@@ -24,6 +24,7 @@ class Shop < ApplicationRecord
   def resize_image
     return unless image_changed?
     return if image.blank?
+
     image.crop_and_resize
   end
 end

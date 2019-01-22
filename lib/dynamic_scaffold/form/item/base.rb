@@ -88,6 +88,7 @@ module DynamicScaffold
         def label(label = nil, &block)
           if block_given?
             raise Error::InvalidParameter, 'Only the block type accepts block.' unless type? :block
+
             @block = block
           end
           if label
@@ -95,6 +96,7 @@ module DynamicScaffold
             self
           else
             return @label if @label
+
             @config.model.human_attribute_name @name
           end
         end
@@ -130,8 +132,10 @@ module DynamicScaffold
 
         def proxy_field
           return self unless @proxy
+
           proxy_target = @config.form.items.select {|f| f.name == @proxy }
           raise DynamicScaffold::Error::InvalidParameter, "Missing proxy target element: #{@proxy}" if proxy_target.empty?
+
           proxy_target.first
         end
 
@@ -145,6 +149,7 @@ module DynamicScaffold
 
         def default_value(view)
           return view.instance_exec(&@default) if @default.is_a? Proc
+
           @default
         end
 

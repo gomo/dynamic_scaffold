@@ -5,6 +5,7 @@ module DynamicScaffold
       # Get the hash of the key and value specified for the scope.
       def scope_params
         return {} if dynamic_scaffold.scope.nil?
+
         case dynamic_scaffold.scope
         when Array then
           dynamic_scaffold.scope.each_with_object({}) do |val, res|
@@ -65,6 +66,7 @@ module DynamicScaffold
       # Check if there are inconsistent scopes in update parameters
       def valid_for_scope?(update_params)
         return true if dynamic_scaffold.scope_options[:changeable]
+
         result = true
         scope_params.each do |key, value|
           if update_params.key?(key) && update_params[key] != value
@@ -96,6 +98,7 @@ module DynamicScaffold
       def find_record(params)
         rec = dynamic_scaffold.model.find_by(params.merge(scope_params))
         raise ::ActiveRecord::RecordNotFound if rec.nil?
+
         rec
       end
 
@@ -127,6 +130,7 @@ module DynamicScaffold
 
       def check_max_count!
         return if dynamic_scaffold.max_count.nil?
+
         instance_exec(@record, &dynamic_scaffold.lock_before_count) if dynamic_scaffold.lock_before_count
         count_query = dynamic_scaffold.list.build_sql(scope_params)
         count_query = count_query.lock if dynamic_scaffold.max_count_options[:lock]
@@ -136,6 +140,7 @@ module DynamicScaffold
 
       def handle_pagination(query)
         return query unless dynamic_scaffold.list.pagination
+
         query
           .page(params[dynamic_scaffold.list.pagination.param_name])
           .per(dynamic_scaffold.list.pagination.per_page)
