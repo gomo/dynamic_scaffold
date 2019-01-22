@@ -27,6 +27,7 @@ module DynamicScaffold
       autoload :TwoOptionsWithBlock,  'dynamic_scaffold/form/item/two_options_with_block'
       autoload :TwoOptions,           'dynamic_scaffold/form/item/two_options'
       autoload :GlobalizeFields, 'dynamic_scaffold/form/item/globalize_fields'
+      autoload :Cocoon, 'dynamic_scaffold/form/item/cocoon'
     end
   end
 end

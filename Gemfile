@@ -21,6 +21,8 @@ group :development, :test do
   gem 'mini_magick', '~>4.8'
   gem 'rails-controller-testing', '~> 1.0'
   gem 'sassc-rails', '~> 1.3'
+  gem 'cocoon'
+  gem 'jquery-rails'
 
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'

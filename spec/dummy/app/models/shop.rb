@@ -2,6 +2,10 @@ class Shop < ApplicationRecord
   belongs_to :category
   has_many :shop_states
   has_many :states, inverse_of: :shops, through: :shop_states
+
+  has_many :shop_memos, dependent: :destroy
+  accepts_nested_attributes_for :shop_memos, allow_destroy: true
+
   enum status: { draft: 0, published: 1, hidden: 2 }
 
   attr_accessor :foobar, :cropper_image, :locale_keywords_require

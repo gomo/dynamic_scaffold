@@ -27,7 +27,9 @@ module DynamicScaffold
 
           carrierwave_image: Form::Item::CarrierWaveImage,
 
-          globalize_fields: Form::Item::GlobalizeFields
+          globalize_fields: Form::Item::GlobalizeFields,
+
+          cocoon: Form::Item::Cocoon
         }.freeze
 
         class << self
@@ -39,11 +41,7 @@ module DynamicScaffold
               )
             end
 
-            if ITEM_TYPES[type] == Form::Item::Block
-              ITEM_TYPES[type].new(config, type, *args, block)
-            else
-              ITEM_TYPES[type].new(config, type, *args)
-            end
+            ITEM_TYPES[type].new(config, type, *args, &block)
           end
         end
 

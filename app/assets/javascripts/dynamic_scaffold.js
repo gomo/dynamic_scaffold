@@ -3,3 +3,5 @@
 //= require dynamic_scaffold/pagination
 //= require dynamic_scaffold/sorter
 //= require dynamic_scaffold/image
+//= require jquery3
+//= require cocoon
