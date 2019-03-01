@@ -20,5 +20,45 @@ RSpec.describe SpecsController, type: :controller do
       expect(cocoon.form.items[1].type?(:text_area)).to be true
       expect(cocoon.form.items[1].name).to eq :body
     end
+
+    it 'should create shop memos on post.' do
+      controller.class.send(:dynamic_scaffold, Shop) do |c|
+        c.form.item(:text_field, :name).label 'Shop Name'
+        c.form.item(:text_field, :category_id)
+        c.form.item(:text_field, :status)
+        c.form.item :cocoon, :shop_memos do |form|
+          form.item(:text_field, :title)
+          form.item(:text_area, :body)
+        end
+      end
+      category = FactoryBot.create(:category)
+      expect do
+        post :create, params: { locale: :en, shop: {
+          name: 'foobar',
+          category_id: category.id,
+          status: Shop.statuses.keys.first,
+          shop_memos_attributes: {
+            '1551409107999': {
+              _destroy: false,
+              title: 'hoge',
+              body: 'fuga'
+            },
+            '1551409108000': {
+              _destroy: false,
+              title: 'foo',
+              body: 'bar'
+            }
+          }
+        } }
+      end.to change(ShopMemo, :count).by(2)
+      shop = assigns(:record)
+      shop_memos = shop.shop_memos.order(:id)
+
+      expect(shop_memos.first.title).to eq 'hoge'
+      expect(shop_memos.first.body).to eq 'fuga'
+
+      expect(shop_memos.last.title).to eq 'foo'
+      expect(shop_memos.last.body).to eq 'bar'
+    end
   end
 end
