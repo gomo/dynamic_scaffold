@@ -12,3 +12,5 @@
 //
 //= require_tree .
 //= require dynamic_scaffold
+//= require jquery3
+//= require cocoon
