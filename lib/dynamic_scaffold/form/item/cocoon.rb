@@ -12,6 +12,17 @@ module DynamicScaffold
         def extract_parameters(permitting)
           permitting << {"#{@name}_attributes": [*@form.items.map(&:name).push(:_destroy)]}
         end
+
+        def filter(&block)
+          @filter = block
+          self
+        end
+
+        def build_children(record)
+          children = record.public_send(name).to_a
+          children = @filter.call(children) if @filter.present?
+          children
+        end
       end
     end
   end

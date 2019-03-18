@@ -55,6 +55,8 @@ module Controls
         form.item(:hidden_field, :id)
         form.item(:text_field, :title)
         form.item(:text_area, :body)
+      end.filter do |records|
+        records.sort_by{|rec| rec.id ? rec.id : records.length + 1 }.reverse!
       end
     end
 
