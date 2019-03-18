@@ -31,8 +31,8 @@ module DynamicScaffold
           build_html_attributes(classnames)
         end
 
-        def locale_errors(locale, record)
-          record.errors.full_messages_for("#{@item.proxy_field.name}_#{locale}")
+        def locale_errors(locale, form)
+          form.object.errors.full_messages_for("#{@item.proxy_field.name}_#{locale}")
         end
       end
     end

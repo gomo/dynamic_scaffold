@@ -2,7 +2,7 @@
   <% if !elem.label? && elem.type?(:hidden_field) %>
     <%= elem.render(self, form) %>
   <% else %>
-    <%- errors = elem.errors(@record) -%>
+    <%- errors = elem.errors(form) -%>
     <div class="<%= class_names('form-group', 'has-error': errors.present?) %>">
       <label><%= elem.proxy_field.label %></label>
       <div class="clearfix">
@@ -56,7 +56,7 @@
           </div>
         <% elsif elem.type? :globalize_fields %>
           <% elem.locales.each do |locale, name| %>
-            <%- locale_errors = elem.locale_errors(locale, @record) -%>
+            <%- locale_errors = elem.locale_errors(locale, form) -%>
             <%= form.globalize_fields_for(locale) do |gform|%>
               <div class="<%= class_names('ds-globalize-group', 'has-error': locale_errors.present?) %>">
                 <%= tag.span(elem.lang_attributes('ds-globalize-lang')) do%>
