@@ -51,7 +51,7 @@ module Controls
       )
       c.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
       c.form.item(:collection_radio_buttons, :status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
-      c.form.item(:cocoon, :shop_memos) do |form|
+      c.form.item(:cocoon, :shop_memos, add_text: 'Add Memo') do |form|
         form.item(:hidden_field, :id)
         form.item(:text_field, :title)
         form.item(:text_area, :body)

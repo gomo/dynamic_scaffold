@@ -71,7 +71,7 @@
           <%= form.fields_for elem.name, elem.build_children(@record) do |child_form| %>
             <%= render 'dynamic_scaffold/bootstrap/form/cocoon', f: child_form, items: elem.form.items %>
           <% end %>
-          <%= link_to_add_association "Add #{elem.proxy_field.label}", form, elem.name, class: 'btn btn-outline-secondary btn-sm', partial: 'dynamic_scaffold/bootstrap/form/cocoon', render_options: { locals: { items: elem.form.items } } %>
+          <%= link_to_add_association "#{dynamic_scaffold_icon(:add)} #{elem.add_text}".html_safe, form, elem.name, class: 'btn btn-outline-secondary btn-sm', partial: 'dynamic_scaffold/bootstrap/form/cocoon', render_options: { locals: { items: elem.form.items } } %>
         <% else %>
           <%= elem.render(self, form, class_names('form-control', {'is-invalid': errors.present?})) %>
         <% end %>
