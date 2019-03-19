@@ -6,6 +6,7 @@ require 'dynamic_scaffold/controller_utilities'
 require 'dynamic_scaffold/controller'
 require 'dynamic_scaffold/config'
 require 'dynamic_scaffold/list_builder'
+require 'dynamic_scaffold/form_builder'
 require 'dynamic_scaffold/title'
 require 'dynamic_scaffold/vars'
 
