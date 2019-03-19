@@ -45,7 +45,9 @@ module Controls
       c.form.item(:globalize_fields, locales, style: 'width: 78px;').for(:text_area, :desc, rows: 10)
 
       # Last hash arg is given to HTML attributes.
-      c.form.item :text_area, :memo, rows: 8
+      c.form.item(:text_area, :memo, rows: 8).label do |text|
+        tag.label text, class: 'h1'
+      end
       c.form.item(:collection_select,
         :category_id, Category.all, :id, :name, include_blank: 'Select Category'
       )

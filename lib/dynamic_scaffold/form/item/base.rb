@@ -58,6 +58,7 @@ module DynamicScaffold
           @multiple = type == :collection_check_boxes || html_attributes[:multiple]
           @inserts = { before: [], after: [] }
           @label_attributes = {}
+          @label_block = nil
         end
 
         def notes?
@@ -84,11 +85,13 @@ module DynamicScaffold
           !@label.nil?
         end
 
-        def label(label = nil, html_attributes = {})
+        def label(label = nil, html_attributes = {}, &block)
           if label
             @label = label
             @label_attributes = html_attributes
             self
+          elsif block_given?
+            @label_block = block
           else
             return @label if @label
 
@@ -97,6 +100,8 @@ module DynamicScaffold
         end
 
         def render_label(view)
+          return view.instance_exec(proxy_field.label, &@label_block) if @label_block.present?
+
           view.tag.label(proxy_field.label, @label_attributes)
         end
 
