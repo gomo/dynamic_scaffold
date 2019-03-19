@@ -9,9 +9,9 @@ module Controls
       c.list.item :updated_at do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
       end
-      c.list.item(:created_at).label 'Create Date' do |rec, name|
+      c.list.item(:created_at) do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
-      end
+      end.label 'Create Date'
       c.list.item do |rec, _name|
         link_to "Show #{rec.name}", controls_master_shops_path
       end

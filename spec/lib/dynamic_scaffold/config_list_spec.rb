@@ -80,9 +80,9 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
       it 'should be able to pass blocks to Label.' do
         config = DynamicScaffold::Config.new(Country, nil)
-        config.list.item.label('To State') do |record, _name|
+        config.list.item do |record, _name|
           content_tag :a, record.name, href: 'foobar'
-        end
+        end.label('To State')
         item = config.list.items[0]
         country = FactoryBot.create(:country)
         expect(item.label).to eq 'To State'

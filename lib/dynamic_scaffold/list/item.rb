@@ -19,8 +19,7 @@ module DynamicScaffold
         end
       end
 
-      def label(label = nil, &block)
-        @block = block if block
+      def label(label = nil)
         if label
           @label = label
           self

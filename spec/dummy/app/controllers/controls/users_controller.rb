@@ -13,9 +13,9 @@ module Controls
       c.list.item :updated_at, style: 'width: 180px' do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
       end
-      c.list.item(:created_at, style: 'width: 180px').label 'Create Date' do |rec, name|
+      c.list.item(:created_at, style: 'width: 180px') do |rec, name|
         rec.fdate name, '%Y-%m-%d %H:%M:%S'
-      end
+      end.label 'Create Date'
 
       c.form.item(:hidden_field, :id)
       c.form.item(:hidden_field, :role)

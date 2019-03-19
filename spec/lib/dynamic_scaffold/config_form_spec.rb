@@ -333,9 +333,9 @@ RSpec.describe ApplicationHelper, type: :helper do
         expect(elem.render(helper, form)).to eq 'HOHOHOHO'
       end
 
-      elem = config.form.item(:block, :with_label).label('FOOOO') do |_form, _field|
+      elem = config.form.item(:block, :with_label) do |_form, _field|
         'HAHAHA'
-      end
+      end.label('FOOOO')
 
       helper.form_with url: './new' do |form|
         expect(elem.type?(:block)).to be true

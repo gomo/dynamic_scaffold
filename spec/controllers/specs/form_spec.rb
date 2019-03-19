@@ -10,9 +10,9 @@ RSpec.describe SpecsController, type: :controller do
             form.text_field field.name, class: 'form-control'
           end
         end
-        c.form.item(:block, :block_with_label).label 'Block with label' do |form, field|
+        c.form.item(:block, :block_with_label) do |form, field|
           form.text_field field.name, class: 'form-control'
-        end
+        end.label 'Block with label'
       end
       get :new, params: { locale: :en }
       body = response.body.delete!("\n").gsub!(/> +</, '><')

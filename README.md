@@ -181,11 +181,6 @@ class ShopController < ApplicationController
       rec.fdate name, '%Y-%m-%d %H:%M:%S'
     end
 
-    # The `label` method also accepts block.
-    config.list.item(:created_at, style: 'width: 180px').label 'Create Date' do |rec, name|
-      rec.fdate name, '%Y-%m-%d %H:%M:%S'
-    end
-
     # The first argument can also be omitted, to display item that is not model attribute.
     # The block is executed in the context of view, so you can call the method of view.
     config.list.item do |rec|
