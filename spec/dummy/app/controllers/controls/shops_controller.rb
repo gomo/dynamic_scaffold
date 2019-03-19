@@ -27,7 +27,7 @@ module Controls
     )
 
       # `label` method change label from I18n model attribute name.
-      c.form.item(:text_field, :name).label 'Shop Name'
+      c.form.item(:text_field, :name).label('Shop Name', class: 'h2')
 
       locales = { en: 'English', ja: 'Japanese' }
       c.form.item(:globalize_fields, locales, style: 'width: 78px;').for(:text_field, :keyword).note do

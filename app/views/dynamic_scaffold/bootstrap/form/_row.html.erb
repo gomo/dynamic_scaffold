@@ -4,7 +4,7 @@
   <% else %>
     <%- errors = elem.errors(form) -%>
     <div class="<%= class_names('form-group', 'has-error': errors.present?) %>">
-      <label><%= elem.proxy_field.label %></label>
+      <%= elem.render_label(self) %>
       <div class="clearfix">
         <%- elem.insert(:before).each do |block| -%>
           <%= self.instance_exec(@record, &block) %>
