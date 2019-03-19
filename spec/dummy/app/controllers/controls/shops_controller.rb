@@ -56,7 +56,12 @@ module Controls
         form.item(:text_field, :title)
         form.item(:text_area, :body)
       end.filter do |records|
-        records.sort_by{|rec| rec.id ? rec.id : records.length + 1 }.reverse!
+        # The records with empty id are first, then in descending order of id
+        records.partition do |rec|
+          rec.id.nil?
+        end.yield_self do |nils, others|
+          nils + others.sort_by {|rec| -rec.id }
+        end
       end
     end
 
