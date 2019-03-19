@@ -16,6 +16,7 @@ module DynamicScaffold
 
   module List
     autoload :Item, 'dynamic_scaffold/list/item'
+    autoload :Pagination, 'dynamic_scaffold/list/pagination'
   end
 
   module Form
