@@ -11,19 +11,6 @@ require 'dynamic_scaffold/title'
 require 'dynamic_scaffold/vars'
 
 module DynamicScaffold
-  def self.config
-    @config ||= DynamicScaffold::GlobalConfig.new
-  end
-
-  def self.configure
-    yield config if block_given?
-  end
-
-  # This method is for rspec testing.
-  def self.reset
-    @config = nil
-  end
-
   module Error
     autoload :Base,             'dynamic_scaffold/error/base'
     autoload :InvalidIcon,      'dynamic_scaffold/error/invalid_icon'
