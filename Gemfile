@@ -13,16 +13,16 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-gem 'uglifier', '>= 1.3.0'
 gem 'carrierwave', '~> 1.0'
+gem 'cocoon'
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'globalize-accessors'
+gem 'jquery-rails'
 gem 'kaminari', '~> 1.1'
 gem 'mini_magick', '~>4.8'
 gem 'rails-controller-testing', '~> 1.0'
 gem 'sassc-rails', '~> 1.3'
-gem 'cocoon'
-gem 'jquery-rails'
+gem 'uglifier', '>= 1.3.0'
 
 gem 'spring'
 gem 'spring-watcher-listen', '~> 2.0.0'

@@ -12,7 +12,7 @@ RSpec.describe SpecsController, type: :controller do
 
       get :new, params: { locale: :en }
 
-      cocoon = dynamic_scaffold.form.items.find{|e| e.type? :cocoon }
+      cocoon = dynamic_scaffold.form.items.find {|e| e.type? :cocoon }
 
       expect(cocoon.form.items.length).to eq 2
       expect(cocoon.form.items[0].type?(:text_field)).to be true

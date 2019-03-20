@@ -29,13 +29,13 @@ module DynamicScaffold
         @param_name = @kaminari_options[:param_name]
         options.each {|name, value| instance_variable_set("@#{name}", value) }
       end
-  
+
       def page_number(page, records)
         return page unless total_count
-  
+
         "#{page} / #{records.total_pages}"
       end
-  
+
       def page_class(page, _records)
         if page.inside_window?
           'inner'

@@ -14,7 +14,7 @@ module DynamicScaffold
   def self.config
     @config ||= DynamicScaffold::GlobalConfig.new
   end
- 
+
   def self.configure
     yield config if block_given?
   end
