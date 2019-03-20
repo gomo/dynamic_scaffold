@@ -13,20 +13,19 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-group :development, :test do
-  gem 'carrierwave', '~> 1.0'
-  gem 'globalize', git: 'https://github.com/globalize/globalize'
-  gem 'globalize-accessors'
-  gem 'kaminari', '~> 1.1'
-  gem 'mini_magick', '~>4.8'
-  gem 'rails-controller-testing', '~> 1.0'
-  gem 'sassc-rails', '~> 1.3'
-  gem 'cocoon'
-  gem 'jquery-rails'
+gem 'uglifier', '>= 1.3.0'
+gem 'carrierwave', '~> 1.0'
+gem 'globalize', git: 'https://github.com/globalize/globalize'
+gem 'globalize-accessors'
+gem 'kaminari', '~> 1.1'
+gem 'mini_magick', '~>4.8'
+gem 'rails-controller-testing', '~> 1.0'
+gem 'sassc-rails', '~> 1.3'
+gem 'cocoon'
+gem 'jquery-rails'
 
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-end
+gem 'spring'
+gem 'spring-watcher-listen', '~> 2.0.0'
 
 group :test do
   gem 'nokogiri', '~> 1.8'
