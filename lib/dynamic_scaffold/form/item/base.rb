@@ -99,8 +99,16 @@ module DynamicScaffold
           end
         end
 
-        def render_label(view)
-          return view.instance_exec(proxy_field.label, &@label_block) if @label_block.present?
+        def render_label(view, depth)
+          if @label_block.present?
+            label = view.instance_exec(proxy_field.label, depth, &@label_block)
+            return label unless label.nil?
+          end
+
+          if DynamicScaffold.config.form.label.present?
+            label = view.instance_exec(proxy_field.label, depth, &DynamicScaffold.config.form.label)
+            return label unless label.nil?
+          end
 
           view.tag.label(proxy_field.label, @label_attributes)
         end

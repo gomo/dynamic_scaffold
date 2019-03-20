@@ -4,7 +4,7 @@
   </div>
   <div class="card-body">
     <%- items.each do |elem|-%>
-      <%= render 'dynamic_scaffold/bootstrap/form/row', form: f, elem: elem %>
+      <%= render 'dynamic_scaffold/bootstrap/form/row', form: f, elem: elem, depth: depth + 1 %>
     <% end %>
   </div>
 </div>

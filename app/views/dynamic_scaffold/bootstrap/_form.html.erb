@@ -1,6 +1,6 @@
 <%= form_with method: method, model: @record, url: url, local: true do |form| %>
   <%-dynamic_scaffold.form.items.each do |elem|-%>
-    <%= render 'dynamic_scaffold/bootstrap/form/row', form: form, elem: elem %>
+    <%= render 'dynamic_scaffold/bootstrap/form/row', form: form, elem: elem, depth: 0 %>
   <% end %>
   <div>
     <%= link_to dynamic_scaffold_path(:index, request_queries), class: 'btn btn-outline-secondary btn-default back' do%>

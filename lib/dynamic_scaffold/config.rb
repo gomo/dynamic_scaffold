@@ -51,4 +51,19 @@ module DynamicScaffold
       count >= max_count
     end
   end
+
+  class GlobalConfig
+    attr_accessor :form
+
+    class Form
+      def label(&block)
+        @label = block if block_given?
+        @label
+      end
+    end
+
+    def initialize
+      @form = Form.new
+    end
+  end
 end
