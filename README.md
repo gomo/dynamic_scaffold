@@ -615,6 +615,36 @@ class ShopController < ApplicationController
 <%= dynamic_scaffold.vars.shop_type.name %>
 ```
 
+### global configuration
+
+You can change the whole configuration in `config/initializers`.
+
+```rb
+# config/initializers/dynamic_scaffold.rb
+DynamicScaffold.configure do |config|
+
+end
+```
+
+#### form.label
+
+You can customize the label tag of all forms.
+
+```rb
+DynamicScaffold.configure do |config|
+  # `depth` is the depth of the form of child hierarchy using Cocoon. The top level is 0.
+  config.form.label do |text, depth, attrs|
+    if depth == 0
+      tag.div class: 'h3 mb-1' do
+        tag.label text
+      end
+    end
+
+    # Return nil to generate a normal label.
+  end
+end
+```
+
 
 ## Contributing
 

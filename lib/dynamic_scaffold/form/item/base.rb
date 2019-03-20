@@ -106,15 +106,15 @@ module DynamicScaffold
             return label unless label.nil?
           end
 
-          # if DynamicScaffold.config.form.label.present?
-          #   label = view.instance_exec(
-          #     proxy_field.label,
-          #     depth,
-          #     @label_attributes,
-          #     &DynamicScaffold.config.form.label
-          #   )
-          #   return label unless label.nil?
-          # end
+          if DynamicScaffold.config.form.label.present?
+            label = view.instance_exec(
+              proxy_field.label,
+              depth,
+              @label_attributes,
+              &DynamicScaffold.config.form.label
+            )
+            return label unless label.nil?
+          end
 
           view.tag.label(proxy_field.label, @label_attributes)
         end
