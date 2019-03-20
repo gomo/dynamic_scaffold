@@ -9,6 +9,7 @@ The Scaffold system which dynamically generates CRUD and sort functions.
 * Support image upload with preview.
 * Support image crop.
 * Support [globalize](https://github.com/globalize/globalize) form fields.
+* Support [cocoon](https://github.com/nathanvda/cocoon).
 * This has the views with the Twitter Bootstrap. Support bootstrap3/4.
 * Customizable and flexible.
 
