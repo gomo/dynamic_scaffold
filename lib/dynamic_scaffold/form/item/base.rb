@@ -85,28 +85,34 @@ module DynamicScaffold
           !@label.nil?
         end
 
-        def label(label = nil, html_attributes = {}, &block)
-          if label
-            @label = label
-            @label_attributes = html_attributes
-            self
-          elsif block_given?
-            @label_block = block
-          else
-            return @label if @label
+        def label(*args, &block)
+          return @label || @config.model.human_attribute_name(@name) if args.empty? && block.nil?
 
-            @config.model.human_attribute_name @name
-          end
+          @label_attributes = args.extract_options!
+          @label = args.first unless args.empty?
+          @label_block = block if block_given?
+
+          self
         end
 
         def render_label(view, depth)
           if @label_block.present?
-            label = view.instance_exec(proxy_field.label, depth, &@label_block)
+            label = view.instance_exec(
+              proxy_field.label,
+              depth,
+              @label_attributes,
+              &@label_block
+            )
             return label unless label.nil?
           end
 
           if DynamicScaffold.config.form.label.present?
-            label = view.instance_exec(proxy_field.label, depth, &DynamicScaffold.config.form.label)
+            label = view.instance_exec(
+              proxy_field.label,
+              depth,
+              @label_attributes,
+              &DynamicScaffold.config.form.label
+            )
             return label unless label.nil?
           end
 

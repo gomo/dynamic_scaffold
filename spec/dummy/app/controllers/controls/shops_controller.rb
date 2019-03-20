@@ -27,7 +27,7 @@ module Controls
     )
 
       # `label` method change label from I18n model attribute name.
-      c.form.item(:text_field, :name).label('Shop Name', class: 'h2')
+      c.form.item(:text_field, :name).label(class: 'h2')
 
       locales = { en: 'English', ja: 'Japanese' }
       c.form.item(:globalize_fields, locales, style: 'width: 78px;').for(:text_field, :keyword).note do
@@ -46,7 +46,7 @@ module Controls
 
       # Last hash arg is given to HTML attributes.
       c.form.item(:text_area, :memo, rows: 8).label do |text|
-        tag.label text, class: 'h1'
+        tag.label text, class: 'h1', style: 'color: red'
       end
       c.form.item(:collection_select,
         :category_id, Category.all, :id, :name, include_blank: 'Select Category'
@@ -55,7 +55,7 @@ module Controls
       c.form.item(:collection_radio_buttons, :status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
       c.form.item(:cocoon, :shop_memos, add_text: 'Add Memo') do |form|
         form.item(:hidden_field, :id)
-        form.item(:text_field, :title)
+        form.item(:text_field, :title).label(style: 'color: red;')
         form.item(:text_area, :body)
       end.filter do |records|
         # The records with empty id are first, then in descending order of id
