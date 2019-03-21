@@ -187,6 +187,9 @@ class ShopController < ApplicationController
     config.list.item do |rec|
       link_to "Show #{rec.name}", controls_master_shops_path
     end
+
+    # You can hide item by calling the show_only method.
+    config.list.item(:name).show_only {|rec| rec.foobar? }
   end
 end
 ```

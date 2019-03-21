@@ -14,7 +14,11 @@ module Controls
       end.label 'Create Date'
       c.list.item do |rec, _name|
         link_to "Show #{rec.name}", controls_master_shops_path
-      end
+      end.label('foo').show_only {|rec| rec.name != 'Hosnian Prime' }
+
+      c.list.item do |rec, _name|
+        ''
+      end.label('bar')
 
       # You can use form helper methods like ...
       # text_field, check_box, radio_button, password_field, hidden_field, file_field, text_area, color_field

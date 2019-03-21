@@ -9,6 +9,18 @@ module DynamicScaffold
         @classnames = @html_attributes.delete(:class)
         @attribute_name = args[0]
         @block = block
+        @show_only = nil
+      end
+
+      def show_only(&block)
+        @show_only = block
+        self
+      end
+
+      def show?(view, record)
+        return true if @show_only.nil?
+
+        view.instance_exec(record, &@show_only)
       end
 
       def value(view, record)
