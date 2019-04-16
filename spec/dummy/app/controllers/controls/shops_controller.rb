@@ -57,6 +57,9 @@ module Controls
       )
       c.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
       c.form.item(:collection_radio_buttons, :status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
+      c.form.item(:date_field, :foo_date, min:'2018-01-01', max:'2018-1-31')
+      c.form.item(:date_select, :bar_date)
+      c.form.item(:datetime_select, :quz_datetime)
       c.form.item(:cocoon, :shop_memos, add_text: 'Add Memo') do |form|
         form.item(:hidden_field, :id)
         form.item(:text_field, :title).label(style: 'color: red;')

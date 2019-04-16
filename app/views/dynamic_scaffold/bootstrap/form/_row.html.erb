@@ -5,7 +5,7 @@
     <%- errors = elem.errors(form) -%>
     <div class="<%= class_names('form-group', 'has-error': errors.present?) %>">
       <%= elem.render_label(self, depth) %>
-      <div class="clearfix">
+      <div>
         <%- elem.insert(:before).each do |block| -%>
           <%= self.instance_exec(@record, &block) %>
         <%-end-%>
@@ -79,6 +79,13 @@
             partial: 'dynamic_scaffold/bootstrap/form/cocoon',
             render_options: { locals: { items: elem.form.items, depth: depth } }
           ) %>
+        <% elsif elem.type?(:date_select, :datetime_select) %>
+          <div class="form-inline">
+            <%== elem.render(self, form, class_names('form-control mr-2', {'is-invalid': errors.present?}))
+              .gsub(/ &mdash; /, '<span class="m-2" style="display: inline-block;">&nbsp;</span>')
+              .gsub(/ : /, '<span class="mr-2" style="display: inline-block;">:</span>')
+            %>
+          </div>
         <% else %>
           <%= elem.render(self, form, class_names('form-control', {'is-invalid': errors.present?})) %>
         <% end %>

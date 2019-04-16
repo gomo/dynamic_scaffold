@@ -7,6 +7,7 @@ module DynamicScaffold
           radio_button: Form::Item::SingleOption,
           text_area: Form::Item::SingleOption,
           text_field: Form::Item::SingleOption,
+          date_field: Form::Item::SingleOption,
           password_field: Form::Item::SingleOption,
           hidden_field: Form::Item::SingleOption,
           file_field: Form::Item::SingleOption,
@@ -77,8 +78,8 @@ module DynamicScaffold
           view.safe_join(htmls)
         end
 
-        def type?(type)
-          @type == type
+        def type?(*args)
+          args.include?(@type)
         end
 
         def label?

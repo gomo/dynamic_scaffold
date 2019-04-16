@@ -19,7 +19,7 @@ CREATE INDEX "index_shop_states_on_shop_id" ON "shop_states" ("shop_id");
 CREATE INDEX "index_shop_states_on_state_id" ON "shop_states" ("state_id");
 CREATE TABLE IF NOT EXISTS "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar NOT NULL, "encrypted_password" varchar NOT NULL, "role" integer(2) NOT NULL, "sequence" integer NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE TABLE IF NOT EXISTS "shop_translations" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "shop_id" integer NOT NULL, "locale" varchar NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "desc" text, "keyword" varchar);
-CREATE TABLE IF NOT EXISTS "shops" ("id" integer NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "memo" text DEFAULT NULL, "category_id" integer DEFAULT NULL, "status" integer(1) DEFAULT 0 NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "image" varchar DEFAULT NULL);
+CREATE TABLE IF NOT EXISTS "shops" ("id" integer NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "memo" text DEFAULT NULL, "category_id" integer DEFAULT NULL, "status" integer(1) DEFAULT 0 NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "image" varchar DEFAULT NULL, "foo_date" date, "bar_date" date, "quz_datetime" datetime);
 CREATE INDEX "index_shops_on_category_id" ON "shops" ("category_id");
 CREATE INDEX "index_shop_translations_on_shop_id" ON "shop_translations" ("shop_id");
 CREATE INDEX "index_shop_translations_on_locale" ON "shop_translations" ("locale");
@@ -37,6 +37,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20171207055523'),
 ('20180522060727'),
 ('20180731051454'),
-('20190122032620');
+('20190122032620'),
+('20190416013444');
 
 
