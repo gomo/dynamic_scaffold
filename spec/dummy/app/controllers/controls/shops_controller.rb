@@ -16,7 +16,7 @@ module Controls
         link_to "Show #{rec.name}", controls_master_shops_path
       end.label('foo').show_only {|rec| rec.name != 'Hosnian Prime' }
 
-      c.list.item do |rec, _name|
+      c.list.item do |_rec, _name|
         ''
       end.label('bar')
 
@@ -57,7 +57,7 @@ module Controls
       )
       c.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
       c.form.item(:collection_radio_buttons, :status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)
-      c.form.item(:date_field, :foo_date, min:'2018-01-01', max:'2018-1-31')
+      c.form.item(:date_field, :foo_date, min: '2018-01-01', max: '2018-1-31')
       c.form.item(:date_select, :bar_date)
       c.form.item(:datetime_select, :quz_datetime)
       c.form.item(:cocoon, :shop_memos, add_text: 'Add Memo') do |form|
