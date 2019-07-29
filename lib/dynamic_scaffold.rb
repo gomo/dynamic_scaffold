@@ -25,6 +25,7 @@ module DynamicScaffold
 
   module Form
     module Item
+      autoload :Type,                 'dynamic_scaffold/form/item/type'
       autoload :Base,                 'dynamic_scaffold/form/item/base'
       autoload :Block,                'dynamic_scaffold/form/item/block'
       autoload :CarrierWaveImage,     'dynamic_scaffold/form/item/carrier_wave_image'
