@@ -18,11 +18,11 @@ module DynamicScaffold
     end
 
     def permit_params(*params)
-      if !params.empty?
+      if params.empty?
+        @permit_params
+      else
         @permit_params.concat(params)
         self
-      else
-        @permit_params
       end
     end
 
