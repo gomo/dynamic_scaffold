@@ -271,8 +271,7 @@ class ShopController < ApplicationController
       end
     end
 
-    # You need to permit the new form parameters you inserted.
-    # And if necessary, add virtual attributes to the model.
+    # IF You need to permit the new form parameters,  Call config.form.permit_params.
     config.form.permit_params(:delete_image)
 
     # You can also add a note to the form field.
@@ -362,6 +361,26 @@ We support [cocoon](https://github.com/nathanvda/cocoon).
       nils + others.sort_by {|rec| -rec.id }
     end
   end
+```
+
+#### Overwrite actions
+
+You can pass the block to super in index/create/update actions.
+
+```rb
+def index
+  super do |records|
+    # `records` is ActiveRecord::Relation.
+    # You must return ActiveRecord::Relation instance.
+  end
+end
+
+def update|create
+  super do |record|
+    # `record` is a Model.
+    # This block is called before saving.
+  end
+end
 ```
 
 
