@@ -28,6 +28,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-doc', '~> 0.11'
   s.add_development_dependency 'pry-rails', '~> 0.3'
   s.add_development_dependency 'pry-stack_explorer', '~> 0.4'
-  s.add_development_dependency 'rspec-rails', '~> 3.7'
+  s.add_development_dependency 'rspec-rails', '~> 4.0.0.beta2'
   s.add_development_dependency 'sqlite3', '~>1.3'
 end
