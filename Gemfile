@@ -21,7 +21,7 @@ gem 'jquery-rails'
 gem 'kaminari', '~> 1.1'
 gem 'mini_magick', '~>4.8'
 gem 'rails-controller-testing', '~> 1.0'
-gem 'sassc-rails', '~> 1.3'
+gem 'sassc-rails'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'spring'
