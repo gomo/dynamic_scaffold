@@ -133,6 +133,7 @@ module DynamicScaffold
           else
             @default = value
           end
+          self
         end
 
         def default_value(view)
