@@ -1,5 +1,5 @@
 ## Release
 
 1. Update version number in `lib/version.rb`
-1. `rake build`
-1. `rake release`
+1. `bundle exec rails build`
+1. `bundle exec rails release`
