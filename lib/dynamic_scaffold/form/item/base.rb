@@ -42,7 +42,9 @@ module DynamicScaffold
 
         def render_notes(record, view)
           htmls = @notes.map do |note|
-            view.instance_exec(record, &note)
+            view.capture do
+              view.instance_exec(record, &note)
+            end
           end
           view.safe_join(htmls)
         end
