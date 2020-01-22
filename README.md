@@ -276,16 +276,12 @@ class ShopController < ApplicationController
 
     # You can also add a note to the form field.
     config.form.item(:text_field, :name).note do
-      content_tag :p do
-        out = []
-        out << 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-        out << 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        out << tag(:br)
-        out << 'Ut enim ad minim veniam, quis nostrud exercitation ullamco '
-        out << 'laboris nisi ut aliquip ex ea commodo consequat. '
-        out << tag(:br)
-        safe_join(out)
-      end
+      concat(tag.p do
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+      end)
+      concat(tag.p do
+        'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      end)
     end
   end
 end
