@@ -15,7 +15,7 @@ class Bootstrap3::CountriesController < Bootstrap3::BaseController
       # total_count: true,        # Whether to display total count on active page like `2 / 102`
       # end_buttons: true,        # Whether to display buttons to the first and last page.
       # neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
-      gap_buttons: true, # Whether to display gap buttons.
+      gap_buttons: true # Whether to display gap buttons.
       # highlight_current: false, # Whether to highlight the current page.
     )
 

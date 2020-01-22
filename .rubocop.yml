@@ -41,9 +41,6 @@ Layout/FirstParameterIndentation:
   EnforcedStyle: consistent
 
 Metrics/LineLength:
-  Enabled: false
-
-Metrics/LineLength:
   Max: 128
   AllowURI: true
   URISchemes:

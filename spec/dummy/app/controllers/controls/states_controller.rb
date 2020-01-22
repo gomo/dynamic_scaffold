@@ -16,7 +16,7 @@ class Controls::StatesController < Controls::BaseController
       end_buttons: true,        # Whether to display buttons to the first and last page.
       neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
       gap_buttons: false,       # Whether to display gap buttons.
-      highlight_current: false, # Whether to highlight the current page.
+      highlight_current: false # Whether to highlight the current page.
     )
 
     # You can change the items displayed in the list through the `config.list.item`.

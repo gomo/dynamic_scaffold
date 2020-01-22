@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
@@ -29,5 +31,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-rails', '~> 0.3'
   s.add_development_dependency 'pry-stack_explorer', '~> 0.4'
   s.add_development_dependency 'rspec-rails', '~> 4.0.0.beta2'
+  s.add_development_dependency 'rubocop', '~> 0.67.2'
+  s.add_development_dependency 'rubocop-performance', '~> 1.0.0'
   s.add_development_dependency 'sqlite3', '~>1.3'
 end

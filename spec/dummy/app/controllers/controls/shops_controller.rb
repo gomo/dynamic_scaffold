@@ -28,7 +28,7 @@ module Controls
       c.form.item(:carrierwave_image, :image, cropper: {
         aspectRatio: 1
       }
-    )
+      )
 
       # `label` method change label from I18n model attribute name.
       c.form.item(:text_field, :name).label(class: 'h2')

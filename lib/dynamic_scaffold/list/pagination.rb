@@ -23,7 +23,7 @@ module DynamicScaffold
           end_buttons: true,        # Whether to display buttons to the first and last page.
           neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
           gap_buttons: false,       # Whether to display gap buttons.
-          highlight_current: false, # Whether to highlight the current page.
+          highlight_current: false # Whether to highlight the current page.
         }.merge(options)
         @kaminari_options = options.extract!(:window, :outer_window, :left, :right, :param_name)
         @param_name = @kaminari_options[:param_name]

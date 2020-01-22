@@ -99,11 +99,12 @@ module DynamicScaffold
         dynamic_scaffold.model.transaction do
           record.destroy
         end
-      rescue ::ActiveRecord::InvalidForeignKey => _error
+      rescue ::ActiveRecord::InvalidForeignKey => e
         flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.invalid_foreign_key')
-      rescue StandardError => error
+        logger.error(e)
+      rescue StandardError => e
         flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.failed')
-        logger.error(error)
+        logger.error(e)
       end
       redirect_to dynamic_scaffold_path(:index, request_queries)
     end

@@ -34,7 +34,7 @@ class Request::CountriesController < ApplicationController
       end_buttons: true,        # Whether to display buttons to the first and last page.
       neighbor_buttons: true,   # Whether to display buttons to the next and prev page.
       gap_buttons: false,       # Whether to display gap buttons.
-      highlight_current: false, # Whether to highlight the current page.
+      highlight_current: false # Whether to highlight the current page.
     )
 
     # To enable scoping, call scope with parameter names you want.
