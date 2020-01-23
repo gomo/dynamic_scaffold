@@ -16,9 +16,9 @@ RSpec.describe SpecsController, type: :controller do
       end
       get :new, params: { locale: :en }
       body = response.body.delete!("\n").gsub!(/> +</, '><')
-      expect(body).to match(/<label>Block<\/label>/)
+      expect(body).to match(/<label class="ds-label">Block<\/label>/)
       expect(body).to match(/<div><input class="form-control" type="text" name="shop\[block\]" \/><\/div>/)
-      expect(body).to match(/<label>Block with label<\/label>/)
+      expect(body).to match(/<label class="ds-label">Block with label<\/label>/)
       expect(body).to match(/<input class="form-control" type="text" name="shop\[block_with_label\]" \/>/)
     end
   end

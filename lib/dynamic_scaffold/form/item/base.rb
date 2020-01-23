@@ -68,11 +68,18 @@ module DynamicScaffold
         end
 
         def render_label(view, depth)
+          label_attrs = @label_attributes.dup
+          if label_attrs[:class].present?
+            label_attrs[:class] = "ds-label #{label_attrs[:class]}"
+          else
+            label_attrs[:class] = 'ds-label'
+          end
+
           if @label_block.present?
             label = view.instance_exec(
               proxy_field.label,
               depth,
-              @label_attributes,
+              label_attrs,
               &@label_block
             )
             return label unless label.nil?
@@ -82,13 +89,13 @@ module DynamicScaffold
           #   label = view.instance_exec(
           #     proxy_field.label,
           #     depth,
-          #     @label_attributes,
+          #     label_attrs,
           #     &DynamicScaffold.config.form.label
           #   )
           #   return label unless label.nil?
           # end
 
-          view.tag.label(proxy_field.label, @label_attributes)
+          view.tag.label(proxy_field.label, label_attrs)
         end
 
         def extract_parameters(permitting)

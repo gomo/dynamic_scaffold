@@ -11,7 +11,7 @@ RSpec.describe SpecsController, type: :controller do
 
         get :new, params: { locale: :en }
         body = response.body.delete!("\n").gsub!(/> +</, '><')
-        expect(body).to match(/<label>Name<\/label>/)
+        expect(body).to match(/<label class="ds-label">Name<\/label>/)
       end
     end
     context 'Call with only name' do
@@ -22,7 +22,7 @@ RSpec.describe SpecsController, type: :controller do
 
         get :new, params: { locale: :en }
         body = response.body.delete!("\n").gsub!(/> +</, '><')
-        expect(body).to match(/<label>Foobar<\/label>/)
+        expect(body).to match(/<label class="ds-label">Foobar<\/label>/)
       end
     end
     context 'Call with name and attributes' do
@@ -33,7 +33,7 @@ RSpec.describe SpecsController, type: :controller do
 
         get :new, params: { locale: :en }
         body = response.body.delete!("\n").gsub!(/> +</, '><')
-        expect(body).to match(/<label class="quz">Foobar<\/label>/)
+        expect(body).to match(/<label class="ds-label quz">Foobar<\/label>/)
       end
     end
     context 'Call with only attributes' do
@@ -44,7 +44,7 @@ RSpec.describe SpecsController, type: :controller do
 
         get :new, params: { locale: :en }
         body = response.body.delete!("\n").gsub!(/> +</, '><')
-        expect(body).to match(/<label class="quz">Name<\/label>/)
+        expect(body).to match(/<label class="ds-label quz">Name<\/label>/)
       end
     end
     context 'Call with block' do
@@ -83,7 +83,7 @@ RSpec.describe SpecsController, type: :controller do
 
         get :new, params: { locale: :en }
         body = response.body.delete!("\n").gsub!(/> +</, '><')
-        expect(body).to match(/<label class="hoge">Foobar<\/label>/)
+        expect(body).to match(/<label class="ds-label hoge">Foobar<\/label>/)
       end
     end
   end
