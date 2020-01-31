@@ -97,6 +97,7 @@ module DynamicScaffold
       record = find_record(dynamic_scaffold.model.primary_key => params['id'])
       begin
         dynamic_scaffold.model.transaction do
+          yield(record) if block_given?
           record.destroy
         end
       rescue ::ActiveRecord::InvalidForeignKey => e
@@ -117,7 +118,8 @@ module DynamicScaffold
           rec = find_record(pkeys.to_hash)
           next_sec = next_sequence!
           rec[dynamic_scaffold.list.sorter_attribute] = next_sec
-          rec.save
+          yield(rec) if block_given?
+          rec.save!
         end
       end
       redirect_to dynamic_scaffold_path(:index, request_queries)
