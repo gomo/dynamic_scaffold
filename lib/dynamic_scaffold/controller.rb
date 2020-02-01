@@ -77,13 +77,13 @@ module DynamicScaffold
       end
     end
 
-    def update
+    def update # rubocop:disable Metrics/AbcSize
       values = update_values
       @record = find_record(dynamic_scaffold.model.primary_key => params['id'])
-      prev_attribute = @record.attributes
+      prev_values = values.keys.map {|k| [k, @record.public_send(k)] }.to_h.with_indifferent_access
       @record.attributes = values
       dynamic_scaffold.model.transaction do
-        yield(@record, prev_attribute) if block_given?
+        yield(@record, prev_values) if block_given?
         if @record.save
           redirect_to dynamic_scaffold_path(:index, request_queries)
         else
