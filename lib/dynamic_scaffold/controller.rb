@@ -80,7 +80,18 @@ module DynamicScaffold
     def update # rubocop:disable Metrics/AbcSize
       values = update_values
       @record = find_record(dynamic_scaffold.model.primary_key => params['id'])
-      prev_values = values.keys.map {|k| [k, @record.public_send(k)] }.to_h.with_indifferent_access
+      datetime_select_keys = []
+      prev_values = values.keys.map do |k|
+        # handle paramters like `start_time(1i)`
+        match = k.match(/(.*?)\(\d+i\)/)
+        if match
+          next if datetime_select_keys.include?(match[1])
+
+          datetime_select_keys << k = match[1]
+        end
+        [k, @record.public_send(k)]
+      end.compact.to_h.with_indifferent_access
+
       @record.attributes = values
       dynamic_scaffold.model.transaction do
         yield(@record, prev_values) if block_given?
