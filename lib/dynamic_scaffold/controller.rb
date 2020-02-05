@@ -89,6 +89,10 @@ module DynamicScaffold
 
           datetime_select_keys << k = match[1]
         end
+
+        # globalize
+        next [:translations_attributes, @record.translations] if k == 'translations_attributes'
+
         [k, @record.public_send(k)]
       end.compact.to_h.with_indifferent_access
 
