@@ -3,9 +3,9 @@
     <%= elem.render(self, form) %>
   <% else %>
     <%- errors = elem.errors(form) -%>
-    <div class="<%= class_names('form-group', 'has-error': errors.present?) %>">
+    <div class="<%= class_names('form-group', 'has-error': errors.present?) %>" data-name="<%= elem.unique_name %>">
       <%= elem.render_label(self, depth) %>
-      <div>
+      <div class="ds-form-item">
         <%- elem.insert(:before).each do |block| -%>
           <%= self.instance_exec(@record, &block) %>
         <%-end-%>

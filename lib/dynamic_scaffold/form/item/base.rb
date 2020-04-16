@@ -31,6 +31,10 @@ module DynamicScaffold
           @label_block = nil
         end
 
+        def unique_name
+          "#{@config.model.table_name}_#{name}"
+        end
+
         def notes?
           !@notes.empty?
         end
@@ -95,7 +99,7 @@ module DynamicScaffold
           #   return label unless label.nil?
           # end
 
-          view.tag.label(proxy_field.label, label_attrs)
+          view.tag.label(proxy_field.label, label_attrs) if proxy_field.label.present?
         end
 
         def extract_parameters(permitting)

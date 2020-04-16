@@ -14,7 +14,7 @@ RSpec.describe SpecsController, type: :controller do
       get :edit, params: { locale: :en, id: user.id }
       body = response.body.delete!("\n").gsub!(/> +</, '><')
       expect(body).to match(
-        /<label class="ds-label">FooBar<\/label><div><input class="form-control" type="text" name="user\[password_for_edit\]"/
+        /<label class="ds-label">FooBar<\/label><div class="ds-form-item"><input class="form-control" type="text" name="user\[password_for_edit\]"/
       )
 
       patch :update, params: {
