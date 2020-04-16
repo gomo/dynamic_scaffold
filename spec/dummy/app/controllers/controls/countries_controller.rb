@@ -13,7 +13,7 @@ module Controls
         rec.fdate(name, '%Y-%m-%d %H:%M:%S')
       end
       c.list.item('To state', style: 'width: 240px;') do |rec, _name|
-        content_tag :a, "To state of #{rec.name}", href: 'foobar'
+        content_tag :a, "To state of #{rec.name}", href: controls_master_states_path(country_id: rec.id)
       end
 
       c.form.item(:hidden_field, :id)
