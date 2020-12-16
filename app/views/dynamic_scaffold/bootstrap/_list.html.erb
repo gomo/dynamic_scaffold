@@ -1,6 +1,6 @@
 <%unless flash[:dynamic_scaffold_danger].nil? -%>
   <div class="alert alert-danger" role="alert">
-    <%= flash[:dynamic_scaffold_danger] %>
+    <%== flash[:dynamic_scaffold_danger] %>
   </div>
 <%end%>
 <input type="hidden" class="authenticity_param_name" value="<%= request_forgery_protection_token %>">

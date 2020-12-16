@@ -77,7 +77,7 @@ module DynamicScaffold
       end
     end
 
-    def update # rubocop:disable Metrics/AbcSize
+    def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       values = update_values
       @record = find_record(dynamic_scaffold.model.primary_key => params['id'])
       datetime_select_keys = []
@@ -107,7 +107,7 @@ module DynamicScaffold
       end
     end
 
-    def destroy
+    def destroy # rubocop:disable Metrics/AbcSize
       # `Destroy` also does not support multiple primary keys too.
       record = find_record(dynamic_scaffold.model.primary_key => params['id'])
       begin
@@ -122,6 +122,9 @@ module DynamicScaffold
         flash[:dynamic_scaffold_danger] = I18n.t('dynamic_scaffold.alert.destroy.failed')
         logger.error(e)
       end
+
+      flash[:dynamic_scaffold_danger] = record.errors[:base].join('<br>') if record.errors[:base].any?
+
       redirect_to dynamic_scaffold_path(:index, request_queries)
     end
 
