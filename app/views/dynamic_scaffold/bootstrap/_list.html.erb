@@ -30,8 +30,8 @@
       data-confirm-cancel="<%= t('dynamic_scaffold.message.confirm_cancel') %>"
       data-confirm-cancel-class="btn btn-outline-secondary btn-default btn-sm"
     >
-      <%@records.each do |record|%>
-        <li class="ds-list-row js-ds-list-row">
+      <%@records.each_with_index do |record, index|%>
+        <li class="<%= class_names('ds-list-row js-ds-list-row', dynamic_scaffold.list.row_class(record)) %>">
           <% if dynamic_scaffold.list.title? %>
             <div class="ds-list-heading"><%= dynamic_scaffold.list.title(record) %></div>
           <% end %>

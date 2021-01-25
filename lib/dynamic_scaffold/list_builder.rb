@@ -7,6 +7,7 @@ module DynamicScaffold
       @order = []
       @title = nil
       @filter = nil
+      @row_class_block = nil
     end
 
     def pagination(options = nil)
@@ -87,6 +88,14 @@ module DynamicScaffold
     def filter(&block)
       @filter = block if block_given?
       @filter
+    end
+
+    def row_class(record = nil, &block)
+      if block_given?
+        @row_class_block = block
+      elsif record.present? && @row_class_block
+        @config.controller.view_context.instance_exec(record, &@row_class_block)
+      end
     end
   end
 end

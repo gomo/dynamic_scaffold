@@ -170,6 +170,11 @@ class ShopController < ApplicationController
     # config.list.title do |record|
     #   record.name
     # end
+
+    # You can add class to list page's each row.
+    config.list.row_class do |record|
+      'disabled' unless record.active?
+    end
   
     # First arg is attribute name of model.
     # Last hash arg is given to HTML attributes options.
