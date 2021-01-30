@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    dynamic_scaffold (1.7.0)
+    dynamic_scaffold (1.7.1)
       classnames-rails-view (>= 1.0)
       kaminari (>= 1.0)
       rails (>= 5.0, <= 6.1)
