@@ -13,7 +13,7 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-gem 'carrierwave', '~> 1.0'
+gem 'carrierwave', '~> 2.1'
 gem 'cocoon'
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'globalize-accessors'
