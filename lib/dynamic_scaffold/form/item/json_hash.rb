@@ -1,7 +1,7 @@
 module DynamicScaffold
   module Form
     module Item
-      class JSON < Base
+      class JSONHash < Base
         attr_reader :form
         def initialize(config, type, name, options = {})
           super
@@ -11,7 +11,7 @@ module DynamicScaffold
         end
 
         # the lable is always empty.
-        def render_label(view, depth)
+        def render_label(_view, _depth)
           ''
         end
 

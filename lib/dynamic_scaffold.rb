@@ -34,7 +34,7 @@ module DynamicScaffold
       autoload :TwoOptions,           'dynamic_scaffold/form/item/two_options'
       autoload :GlobalizeFields,      'dynamic_scaffold/form/item/globalize_fields'
       autoload :Cocoon,               'dynamic_scaffold/form/item/cocoon'
-      autoload :JSON,                 'dynamic_scaffold/form/item/json'
+      autoload :JSONHash,             'dynamic_scaffold/form/item/json_hash'
     end
   end
 end
