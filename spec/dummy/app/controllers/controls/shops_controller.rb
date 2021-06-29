@@ -72,6 +72,10 @@ module Controls
           nils + others.sort_by {|rec| -rec.id }
         end
       end
+
+      c.form.item(:json, :data, model: ShopData) do |form|
+        form.item(:text_field, :foobar).label('Foobar')
+      end
     end
 
     def create

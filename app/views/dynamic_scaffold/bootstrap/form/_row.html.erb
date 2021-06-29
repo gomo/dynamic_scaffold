@@ -68,7 +68,7 @@
             <%end%>
           <% end %>
         <% elsif elem.type? :cocoon %>
-          <%= form.fields_for elem.name, elem.build_children(@record) do |child_form| %>
+          <%= form.fields_for(elem.name, elem.build_children(@record)) do |child_form| %>
             <%= render 'dynamic_scaffold/bootstrap/form/cocoon', f: child_form, items: elem.form.items, depth: depth %>
           <% end %>
           <%= link_to_add_association(
@@ -86,6 +86,12 @@
               .gsub(/ : /, '<span class="mr-2" style="display: inline-block;">:</span>')
             %>
           </div>
+        <% elsif elem.type?(:json) %>
+          <%= form.fields_for(elem.name, elem.build_child(@record)) do |child_form| %>
+            <%- elem.form.items.each do |child_elem|-%>
+              <%= render 'dynamic_scaffold/bootstrap/form/row', form: child_form, elem: child_elem, depth: depth %>
+            <% end %>
+          <% end %>
         <% else %>
           <%= elem.render(self, form, class_names('form-control', {'is-invalid': errors.present?})) %>
         <% end %>

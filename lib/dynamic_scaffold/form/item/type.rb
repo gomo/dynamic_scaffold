@@ -30,7 +30,9 @@ module DynamicScaffold
 
           globalize_fields: Form::Item::GlobalizeFields,
 
-          cocoon: Form::Item::Cocoon
+          cocoon: Form::Item::Cocoon,
+
+          json: Form::Item::JSON
         }.freeze
       end
     end
