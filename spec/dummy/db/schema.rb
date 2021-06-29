@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_15_090652) do
+ActiveRecord::Schema.define(version: 2021_06_29_055019) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(version: 2019_10_15_090652) do
   create_table "shop_translations", force: :cascade do |t|
     t.integer "shop_id", null: false
     t.string "locale", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.text "desc"
     t.string "keyword"
     t.index ["locale"], name: "index_shop_translations_on_locale"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_090652) do
     t.date "foo_date"
     t.date "bar_date"
     t.datetime "quz_datetime"
+    t.text "data"
     t.index ["category_id"], name: "index_shops_on_category_id"
   end
 
@@ -88,5 +89,6 @@ ActiveRecord::Schema.define(version: 2019_10_15_090652) do
   add_foreign_key "shop_memos", "shops"
   add_foreign_key "shop_states", "shops"
   add_foreign_key "shop_states", "states"
+  add_foreign_key "shops", "categories"
   add_foreign_key "states", "countries"
 end

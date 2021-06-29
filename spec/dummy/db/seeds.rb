@@ -20,8 +20,8 @@ ActiveRecord::Base.logger = Logger.new(STDOUT)
   end
 
   Shop.create!(
-    name: Faker::StarWars.planet,
-    memo: Faker::StarWars.quote.slice(0, 30),
+    name: Faker::Movies::StarWars.planet,
+    memo: Faker::Movies::StarWars.quote.slice(0, 30),
     category: category
   )
 end

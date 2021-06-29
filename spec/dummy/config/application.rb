@@ -17,6 +17,8 @@ module Dummy
     # the framework and any gems in your application.
 
     config.time_zone = 'Tokyo'
-    config.active_record.schema_format = :sql
+
+    # Comment out once. because it failed to migrate test db.
+    # config.active_record.schema_format = :sql
   end
 end
