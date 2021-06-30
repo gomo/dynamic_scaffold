@@ -1,4 +1,6 @@
 class Shop < ApplicationRecord
+  include JSONObjectAttribute
+
   belongs_to :category
   has_many :shop_states
   has_many :states, inverse_of: :shops, through: :shop_states
@@ -25,7 +27,7 @@ class Shop < ApplicationRecord
     validates :"keyword_#{locale}", presence: true, if: :locale_keywords_require
   end
 
-  serialize :data, ::ShopData
+  json_object_attributte :data, ::ShopData
 
   def resize_image
     return unless image_changed?
