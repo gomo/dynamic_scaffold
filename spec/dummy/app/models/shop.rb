@@ -25,12 +25,17 @@ class Shop < ApplicationRecord
     validates :"keyword_#{locale}", presence: true, if: :locale_keywords_require
   end
 
-  serialize :data, JSON
+  serialize :data, ::ShopData
 
   def resize_image
     return unless image_changed?
     return if image.blank?
 
     image.crop_and_resize
+  end
+
+  def valid?(context = nil)
+    result = super(context)
+    data.valid?(context) && result
   end
 end

@@ -87,7 +87,7 @@
             %>
           </div>
         <% elsif elem.type?(:json_hash) %>
-          <%= form.fields_for(elem.name, elem.build_child(@record)) do |child_form| %>
+          <%= form.fields_for(elem.name, @record.public_send(elem.name)) do |child_form| %>
             <%- elem.form.items.each do |child_elem|-%>
               <%= render 'dynamic_scaffold/bootstrap/form/row', form: child_form, elem: child_elem, depth: depth %>
             <% end %>
