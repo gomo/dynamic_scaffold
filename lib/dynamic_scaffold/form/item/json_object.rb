@@ -1,7 +1,7 @@
 module DynamicScaffold
   module Form
     module Item
-      class JSONHash < Base
+      class JSONObject < Base
         attr_reader :form
         def initialize(config, type, name, options = {})
           super

@@ -32,7 +32,7 @@ module DynamicScaffold
 
           cocoon: Form::Item::Cocoon,
 
-          json_hash: Form::Item::JSONHash
+          json_object: Form::Item::JSONObject
         }.freeze
       end
     end

@@ -73,11 +73,11 @@ module Controls
         end
       end
 
-      c.form.item(:json_hash, :data) do |form|
+      c.form.item(:json_object, :data) do |form|
         form.item(:text_field, :foobar)
       end
 
-      c.form.item(:json_hash, :data) do |form|
+      c.form.item(:json_object, :data) do |form|
         form.item(:text_area, :quz)
       end
     end
