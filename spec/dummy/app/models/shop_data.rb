@@ -3,7 +3,8 @@ class ShopData
   include ActiveModel::Attributes
 
   attribute :foobar, :string
-
+  attribute :quz, :string
+  
   validates :foobar, presence: true
 
   class << self

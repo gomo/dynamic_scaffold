@@ -73,8 +73,12 @@ module Controls
         end
       end
 
-      c.form.item(:json_hash, :data, model: ShopData) do |form|
-        form.item(:text_field, :foobar).label('Foobar')
+      c.form.item(:json_hash, :data) do |form|
+        form.item(:text_field, :foobar)
+      end
+
+      c.form.item(:json_hash, :data) do |form|
+        form.item(:text_area, :quz)
       end
     end
 

@@ -16,9 +16,14 @@ module DynamicScaffold
         end
 
         def extract_parameters(permitting)
-          hash = {}
-          hash[name] = form.items.map(&:name)
-          permitting << hash
+          hash = permitting.find {|e| e.is_a?(Hash) && e.key?(name) }
+          if hash.nil?
+            hash = {}
+            hash[name] = form.items.map(&:name)
+            permitting << hash
+          else
+            hash[name].concat(form.items.map(&:name))
+          end
         end
       end
     end
