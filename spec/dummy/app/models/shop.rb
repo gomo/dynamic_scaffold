@@ -35,9 +35,4 @@ class Shop < ApplicationRecord
 
     image.crop_and_resize
   end
-
-  def valid?(context = nil)
-    result = super(context)
-    data.valid?(context) && result
-  end
 end

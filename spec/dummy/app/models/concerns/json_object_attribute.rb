@@ -17,6 +17,15 @@ module JSONObjectAttribute
       end
 
       serialize attribute_name, model
+
+      @json_object_attribute_names ||= []
+      @json_object_attribute_names << attribute_name
+
+      define_method :valid? do |context = nil|
+        result = super(context)
+        json_object_attribute_names = self.class.instance_variable_get(:@json_object_attribute_names)
+        json_object_attribute_names.all? {|method| public_send(method).valid?(context) } && result
+      end
     end
   end
 end
