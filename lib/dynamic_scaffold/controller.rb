@@ -77,7 +77,7 @@ module DynamicScaffold
       end
     end
 
-    def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def update # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
       values = update_values
       @record = find_record(dynamic_scaffold.model.primary_key => params['id'])
       datetime_select_keys = []
@@ -92,6 +92,9 @@ module DynamicScaffold
 
         # globalize
         next [:translations_attributes, @record.translations] if k == 'translations_attributes'
+
+        # skip nested_attributes
+        next unless @record.respond_to? k
 
         [k, @record.public_send(k)]
       end.compact.to_h.with_indifferent_access
