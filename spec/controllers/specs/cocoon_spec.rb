@@ -27,6 +27,7 @@ RSpec.describe SpecsController, type: :controller do
         c.form.item(:text_field, :category_id)
         c.form.item(:text_field, :status)
         c.form.item :cocoon, :shop_memos do |form|
+          form.item(:hidden_field, :id)
           form.item(:text_field, :title)
           form.item(:text_area, :body)
         end
@@ -59,6 +60,33 @@ RSpec.describe SpecsController, type: :controller do
 
       expect(shop_memos.last.title).to eq 'foo'
       expect(shop_memos.last.body).to eq 'bar'
+
+      patch(:update, params: { id: shop.id, locale: :en, shop: {
+        name: 'foobar',
+        category_id: category.id,
+        status: Shop.statuses.keys.first,
+        shop_memos_attributes: {
+          '0': {
+            _destroy: 'false',
+            id: shop_memos.first.id,
+            title: 'hoge_update',
+            body: 'fuga_update'
+          },
+          '1': {
+            _destroy: '1',
+            id: shop_memos.last.id,
+            title: 'foo',
+            body: 'bar'
+          }
+        }
+      } })
+
+      shop = assigns(:record)
+      shop_memos = shop.shop_memos.order(:id)
+
+      expect(shop_memos.length).to eq 1
+      expect(shop_memos.first.title).to eq 'hoge_update'
+      expect(shop_memos.first.body).to eq 'fuga_update'
     end
   end
 end
