@@ -7,6 +7,7 @@ module DynamicScaffold
           super
           @options = options
           @form = FormBuilder.new(config)
+          @form.parent_item = self
           yield(@form)
         end
 

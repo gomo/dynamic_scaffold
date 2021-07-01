@@ -1,5 +1,7 @@
 module DynamicScaffold
   class FormBuilder
+    attr_accessor :parent_item
+
     def initialize(config)
       @config = config
       @items = []
@@ -11,7 +13,9 @@ module DynamicScaffold
         @config.model.column_names.each do |column|
           type = :text_field
           type = :hidden_field if @config.scope && @config.scope.include?(column.to_sym)
-          @items << Form::Item::SingleOption.new(@config, type, column)
+          item = Form::Item::SingleOption.new(@config, type, column)
+          item.parent_item = parent_item
+          @items << item
         end
       end
       @items
@@ -28,6 +32,7 @@ module DynamicScaffold
 
     def item(type, *args, &block)
       item = Form::Item::Base.create(@config, type, *args, &block)
+      item.parent_item = parent_item
       @items << item
       item
     end

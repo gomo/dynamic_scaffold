@@ -15,6 +15,7 @@ module DynamicScaffold
           end
         end
 
+        attr_accessor :parent_item
         attr_reader :name
         def initialize(config, type, name, html_attributes = {})
           @config = config
@@ -32,7 +33,10 @@ module DynamicScaffold
         end
 
         def unique_name
-          "#{@config.model.table_name}_#{name}"
+          results = [@config.model.table_name]
+          results << parent_item.name if parent_item.present?
+          results << name
+          results.join('_')
         end
 
         def notes?
