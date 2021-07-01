@@ -364,6 +364,12 @@ We support [cocoon](https://github.com/nathanvda/cocoon).
   end
 ```
 
+##### json_object
+
+You can save json object string in a column using each form items and validations.
+Check this [wiki](https://github.com/gomo/dynamic_scaffold/wiki/Handling-json-object-string-column)
+
+
 #### Overwrite actions
 
 You can pass the block to super in index/create/update actions.
