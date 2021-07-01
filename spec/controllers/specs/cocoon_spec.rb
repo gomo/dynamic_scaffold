@@ -61,7 +61,7 @@ RSpec.describe SpecsController, type: :controller do
       expect(shop_memos.last.title).to eq 'foo'
       expect(shop_memos.last.body).to eq 'bar'
 
-      patch(:update, params: { id: shop.id, locale: :en, shop: {
+      patch :update, params: { id: shop.id, locale: :en, shop: {
         name: 'foobar',
         category_id: category.id,
         status: Shop.statuses.keys.first,
@@ -79,7 +79,7 @@ RSpec.describe SpecsController, type: :controller do
             body: 'bar'
           }
         }
-      } })
+      } }
 
       shop = assigns(:record)
       shop_memos = shop.shop_memos.order(:id)
