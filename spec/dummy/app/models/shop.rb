@@ -1,5 +1,5 @@
 class Shop < ApplicationRecord
-  include JSONObjectAttribute
+  include DynamicScaffold::JSONObject::Attribute
 
   belongs_to :category
   has_many :shop_states

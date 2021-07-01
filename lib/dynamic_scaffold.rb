@@ -37,4 +37,9 @@ module DynamicScaffold
       autoload :JSONObject,           'dynamic_scaffold/form/item/json_object'
     end
   end
+
+  module JSONObject
+    autoload :Attribute,              'dynamic_scaffold/json_object/attribute'
+    autoload :Model,                  'dynamic_scaffold/json_object/model'
+  end
 end

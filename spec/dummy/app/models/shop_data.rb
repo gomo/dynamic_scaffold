@@ -1,7 +1,7 @@
 class ShopData
   include ActiveModel::Model
   include ActiveModel::Attributes
-  include JSONObjectModel
+  include DynamicScaffold::JSONObject::Model
 
   attribute :foobar, :string
   attribute :quz, :string
