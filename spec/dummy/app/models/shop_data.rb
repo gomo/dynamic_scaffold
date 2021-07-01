@@ -5,5 +5,4 @@ class ShopData
 
   attribute :foobar, :string
   attribute :quz, :string
-  validates :foobar, presence: true
 end
