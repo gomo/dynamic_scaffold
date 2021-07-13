@@ -16,7 +16,7 @@ module DynamicScaffold
         end
 
         attr_accessor :parent_item
-        attr_reader :name
+        attr_reader :name, :multiple
         def initialize(config, type, name, html_attributes = {})
           @config = config
           @name = name
