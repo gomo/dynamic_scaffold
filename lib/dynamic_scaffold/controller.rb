@@ -44,6 +44,8 @@ module DynamicScaffold
     end
 
     def new # rubocop:disable Metrics/AbcSize
+      raise ActionController::RoutingError, '`Add Button` is disabled.' unless dynamic_scaffold.list.add_button
+
       unless dynamic_scaffold.max_count.nil?
         count = dynamic_scaffold.list.build_sql(scope_params).count
         raise Error::InvalidOperation, 'You can not add any more.' if dynamic_scaffold.max_count?(count)
@@ -60,6 +62,8 @@ module DynamicScaffold
 
     def edit
       @record = find_record(edit_params)
+
+      raise ActionController::RoutingError, '`Edit Button` is disabled.' unless dynamic_scaffold.list.edit_buttons(@record)
     end
 
     def create
