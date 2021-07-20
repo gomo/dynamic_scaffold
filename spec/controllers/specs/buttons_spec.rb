@@ -68,5 +68,47 @@ RSpec.describe SpecsController, type: :controller do
         expect(row.css('.spec-ds-edit').length).to eq 0
       end
     end
+
+    describe 'destroy_buttons' do
+      it 'should disable all destroy buttons when set destroy_buttons to false.' do
+        controller.class.send(:dynamic_scaffold, Country) do |c|
+          c.list.destroy_buttons = false
+        end
+
+        FactoryBot.create_list(:country, 3)
+
+        get :index, params: { locale: :en }
+        doc = Nokogiri::HTML(response.body)
+
+        list = doc.css('.ds-list-row')
+        expect(list.length).to eq 3
+
+        list.each do |row|
+          expect(row.css('.spec-ds-destroy').length).to eq 0
+        end
+      end
+      it 'should destroy buttons when the passed block return false.' do
+        controller.class.send(:dynamic_scaffold, Country) do |c|
+          c.list.destroy_buttons do |record|
+            record.name == 'foo'
+          end
+        end
+
+        FactoryBot.create(:country, name: 'foo')
+        FactoryBot.create(:country, name: 'bar')
+
+        get :index, params: { locale: :en }
+        doc = Nokogiri::HTML(response.body)
+
+        list = doc.css('.ds-list-row')
+        expect(list.length).to eq 2
+
+        row = list.find {|r| r.css('.ds-list-item:nth-child(2) .ds-list-value').text == 'foo' }
+        expect(row.css('.spec-ds-destroy').length).to eq 1
+
+        row = list.find {|r| r.css('.ds-list-item:nth-child(2) .ds-list-value').text == 'bar' }
+        expect(row.css('.spec-ds-destroy').length).to eq 0
+      end
+    end
   end
 end

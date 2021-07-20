@@ -75,15 +75,17 @@
                 </button>
               </div>
               <% end %>
-              <div class="btn-group">
-                <button
-                  data-action="<%= dynamic_scaffold_path(:update, request_queries(dynamic_scaffold.list.page_param_name).merge(id: record[record.class.primary_key])) %>"
-                  data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>"
-                  class="btn btn-danger btn-sm js-ds-destory"
-                >
-                  <%= dynamic_scaffold_icon(:delete) %>
-                </button>
-              </div>
+              <%- if dynamic_scaffold.list.destroy_buttons(record) -%>
+                <div class="btn-group">
+                  <button
+                    data-action="<%= dynamic_scaffold_path(:update, request_queries(dynamic_scaffold.list.page_param_name).merge(id: record[record.class.primary_key])) %>"
+                    data-confirm-message="<%= t('dynamic_scaffold.message.destroy_confirm') %>"
+                    class="btn btn-danger btn-sm js-ds-destory spec-ds-destroy"
+                  >
+                    <%= dynamic_scaffold_icon(:delete) %>
+                  </button>
+                </div>
+              <%- end -%>
             </div>
           </div>
         </li>

@@ -1,6 +1,6 @@
 module DynamicScaffold
   class ListBuilder
-    attr_writer :add_button, :edit_buttons
+    attr_writer :add_button, :edit_buttons, :destroy_buttons
 
     def initialize(config)
       @config = config
@@ -12,6 +12,7 @@ module DynamicScaffold
       @row_class_block = nil
       @add_button = true
       @edit_buttons = true
+      @destroy_buttons = true
     end
 
     def pagination(options = nil)
@@ -119,6 +120,16 @@ module DynamicScaffold
         @config.controller.view_context.instance_exec(record, &@edit_buttons_block)
       else
         @edit_buttons
+      end
+    end
+
+    def destroy_buttons(record = nil, &block)
+      if block_given?
+        @destroy_buttons_block = block
+      elsif record.present? && @destroy_buttons_block
+        @config.controller.view_context.instance_exec(record, &@destroy_buttons_block)
+      else
+        @destroy_buttons
       end
     end
   end
