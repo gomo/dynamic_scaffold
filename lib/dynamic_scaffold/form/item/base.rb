@@ -184,6 +184,14 @@ module DynamicScaffold
             options[:class] = classnames_list.join(' ') unless classnames_list.empty?
             options
           end
+
+          def build_args(view, args)
+            args.map do |arg|
+              next arg unless arg.is_a? Proc
+
+              view.instance_exec(&arg)
+            end
+          end
       end
     end
   end
