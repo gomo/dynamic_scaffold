@@ -157,6 +157,34 @@ You can customize the list through the `DynamicScaffold::Config#list` property.
 class ShopController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Shop do |config|
+    # Add button and new action to disabled, You can still post to create action.
+    config.list.add_button = false
+    # or
+    config.list.add_button do 
+      # This block is called in view scope
+      false if params[:foo] == 1
+    end
+
+    # Edit button and edit action to disabled, You can still post to update action.
+    config.list.edit_buttons = false
+    # or
+    config.list.edit_buttons do |record|
+      # This block is called in view scope
+      # You can disable only specific record's button.
+      false if record.id != 1
+    end
+
+    # Destroy button to disabled, You can still post to destroy action.
+    config.list.destroy_buttons = false
+    # or
+    config.list.destroy_buttons do |record|
+      # This block is called in view scope
+      # You can disable only specific record's button.
+      false if record.id != 1
+    end
+
+
+
     # If you want filtering that can not be handled by `config.scope`, you can use the filter method.
     # Please note that returning nil will be ignored.
     config.list.filter do |query|
