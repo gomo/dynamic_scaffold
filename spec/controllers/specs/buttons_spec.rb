@@ -45,6 +45,28 @@ RSpec.describe SpecsController, type: :controller do
           expect(row.css('.spec-ds-edit').length).to eq 0
         end
       end
+      it 'should edit buttons when the passed block return false.' do
+        controller.class.send(:dynamic_scaffold, Country) do |c|
+          c.list.edit_buttons do |record|
+            record.name == 'foo'
+          end
+        end
+
+        FactoryBot.create(:country, name: 'foo')
+        FactoryBot.create(:country, name: 'bar')
+
+        get :index, params: { locale: :en }
+        doc = Nokogiri::HTML(response.body)
+
+        list = doc.css('.ds-list-row')
+        expect(list.length).to eq 2
+
+        row = list.find {|r| r.css('.ds-list-item:nth-child(2) .ds-list-value').text == 'foo' }
+        expect(row.css('.spec-ds-edit').length).to eq 1
+
+        row = list.find {|r| r.css('.ds-list-item:nth-child(2) .ds-list-value').text == 'bar' }
+        expect(row.css('.spec-ds-edit').length).to eq 0
+      end
     end
   end
 end
