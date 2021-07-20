@@ -1,5 +1,7 @@
 module DynamicScaffold
   class ListBuilder
+    attr_writer :add_button
+
     def initialize(config)
       @config = config
       @items = []
@@ -8,6 +10,7 @@ module DynamicScaffold
       @title = nil
       @filter = nil
       @row_class_block = nil
+      @add_button = true
     end
 
     def pagination(options = nil)
@@ -96,6 +99,10 @@ module DynamicScaffold
       elsif record.present? && @row_class_block
         @config.controller.view_context.instance_exec(record, &@row_class_block)
       end
+    end
+
+    def add_button
+      @add_button
     end
   end
 end
