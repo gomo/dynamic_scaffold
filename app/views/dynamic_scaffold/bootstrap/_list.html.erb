@@ -49,11 +49,13 @@
           </div>
           <div class="ds-list-footer clearfix">
             <div class="float-right pull-right">
-              <div class="btn-group">
-                <%= link_to dynamic_scaffold_path(:edit, request_queries.merge(id: record[record.class.primary_key])), class: 'btn btn-primary btn-outline-primary btn-sm spec-ds-edit' do %>
-                  <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.button.edit') %>
-                <%end%>
-              </div>
+              <%- if dynamic_scaffold.list.edit_buttons(record) -%>
+                <div class="btn-group">
+                  <%= link_to dynamic_scaffold_path(:edit, request_queries.merge(id: record[record.class.primary_key])), class: 'btn btn-primary btn-outline-primary btn-sm spec-ds-edit' do %>
+                    <%= dynamic_scaffold_icon(:edit) %> <%= t('dynamic_scaffold.button.edit') %>
+                  <%end%>
+                </div>
+              <%- end -%>
               <% if dynamic_scaffold.list.sorter %>
               <%[*dynamic_scaffold.model.primary_key].each do |pkey|%>
                 <input type="hidden" name="pkeys[][<%=pkey%>]" value="<%= record[pkey] %>">

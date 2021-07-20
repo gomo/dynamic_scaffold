@@ -26,5 +26,25 @@ RSpec.describe SpecsController, type: :controller do
         expect(doc.css('.spec-ds-add').length).to eq 0
       end
     end
+
+    describe 'edit_buttons' do
+      it 'should disable all edit buttons when set edit_buttons to false.' do
+        controller.class.send(:dynamic_scaffold, Country) do |c|
+          c.list.edit_buttons = false
+        end
+
+        FactoryBot.create_list(:country, 3)
+
+        get :index, params: { locale: :en }
+        doc = Nokogiri::HTML(response.body)
+
+        list = doc.css('.ds-list-row')
+        expect(list.length).to eq 3
+
+        list.each do |row|
+          expect(row.css('.spec-ds-edit').length).to eq 0
+        end
+      end
+    end
   end
 end

@@ -1,6 +1,6 @@
 module DynamicScaffold
   class ListBuilder
-    attr_writer :add_button
+    attr_writer :add_button, :edit_buttons
 
     def initialize(config)
       @config = config
@@ -11,6 +11,7 @@ module DynamicScaffold
       @filter = nil
       @row_class_block = nil
       @add_button = true
+      @edit_buttons = true
     end
 
     def pagination(options = nil)
@@ -108,6 +109,16 @@ module DynamicScaffold
         @config.controller.view_context.instance_exec(&@add_button_block)
       else
         @add_button
+      end
+    end
+
+    def edit_buttons(record = nil, &block)
+      if block_given?
+        @edit_buttons_block = block
+      elsif record.present? && @edit_buttons_block
+        @config.controller.view_context.instance_exec(record, &@edit_buttons_block)
+      else
+        @edit_buttons
       end
     end
   end
