@@ -253,6 +253,9 @@ class ShopController < ApplicationController
     config.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
     config.form.item(:collection_radio_buttons, :status, Shop.statuses.map{|k, _v| [k, k.titleize]}, :first, :last)
 
+    # If you want to use parameters to get list, Pass Proc or Lambda to argument. It will be called in view scope.
+    config.form.item(:collection_select, :status, -> { Shop.where(area_id: params[:area_id]) }, :first, :last)
+
     # If you want to display more free form field, use block.
     # The block is executed in the context of view, so you can call the method of view.
     config.form.item :block, :free do |form, field|
