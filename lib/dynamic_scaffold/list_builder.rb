@@ -101,8 +101,14 @@ module DynamicScaffold
       end
     end
 
-    def add_button
-      @add_button
+    def add_button(&block)
+      if block_given?
+        @add_button_block = block
+      elsif @add_button_block
+        @config.controller.view_context.instance_exec(&@add_button_block)
+      else
+        @add_button
+      end
     end
   end
 end

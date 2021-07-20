@@ -13,6 +13,18 @@ RSpec.describe SpecsController, type: :controller do
         doc = Nokogiri::HTML(response.body)
         expect(doc.css('.spec-ds-add').length).to eq 0
       end
+
+      it 'should be called in view scope when pass the block.' do
+        controller.class.send(:dynamic_scaffold, Country) do |c|
+          c.list.add_button do
+            params[:foo] == 'bar'
+          end
+        end
+
+        get :index, params: { locale: :en, foo: 'quz' }
+        doc = Nokogiri::HTML(response.body)
+        expect(doc.css('.spec-ds-add').length).to eq 0
+      end
     end
   end
 end
