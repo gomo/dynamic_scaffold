@@ -90,3 +90,6 @@ Layout/MultilineMethodCallIndentation:
 
 Metrics/CyclomaticComplexity:
   Max: 7
+
+Metrics/ClassLength:
+  Max: 120
