@@ -1,4 +1,4 @@
-<% if elem.needs_rendering?(self)%>
+<% if elem.needs_rendering?(self, form.object)%>
   <% if !elem.label? && elem.type?(:hidden_field) %>
     <%= elem.render(self, form) %>
   <% else %>

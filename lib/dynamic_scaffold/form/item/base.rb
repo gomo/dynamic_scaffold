@@ -124,10 +124,10 @@ module DynamicScaffold
           self
         end
 
-        def needs_rendering?(view)
+        def needs_rendering?(view, record)
           return true unless @if_block || @unless_block
-          return view.instance_exec(view.controller.params, &@if_block) if @if_block
-          return !view.instance_exec(view.controller.params, &@unless_block) if @unless_block
+          return view.instance_exec(view.controller.params, record, &@if_block) if @if_block
+          return !view.instance_exec(view.controller.params, record, &@unless_block) if @unless_block
         end
 
         def proxy(attribute_name)
