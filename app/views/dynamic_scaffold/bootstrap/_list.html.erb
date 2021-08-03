@@ -38,9 +38,9 @@
             <div class="ds-list-heading"><%= dynamic_scaffold.list.title(record) %></div>
           <% end %>
           <div class="ds-list-items">
-          <%dynamic_scaffold.list.items.each do |disp|%>
+          <%dynamic_scaffold.list.items.each_with_index do |disp, index|%>
             <%- if disp.show?(self, record) -%>
-              <%= content_tag :div, class: class_names('ds-list-item', disp.classnames), **disp.html_attributes do%>
+              <%= content_tag :div, class: class_names('ds-list-item js-ds-list-item', disp.classnames), **{**disp.html_attributes, 'data-index': index} do%>
                 <div class="ds-list-label"><%= disp.label %></div>
                 <div class="ds-list-value"><%= disp.value self, record %></div>
               <%end%>

@@ -3,3 +3,4 @@
 //= require dynamic_scaffold/pagination
 //= require dynamic_scaffold/sorter
 //= require dynamic_scaffold/image
+//= require dynamic_scaffold/auto_width

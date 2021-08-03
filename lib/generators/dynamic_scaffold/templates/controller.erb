@@ -62,7 +62,7 @@ class <%= @class_scope.present? ? "#{@class_scope}::" : '' %><%= @plural_model_n
     # Please see https://github.com/gomo/dynamic_scaffold#customize-list for details.
 
   <%- @model.column_names.each do |column| -%>
-    config.list.item(:<%= column %>, style: 'width: 120px;')
+    config.list.item(:<%= column %>, class: 'ds-auto-width')
   <%- end -%>
 
     # You can customize the form fields through `config.form`.

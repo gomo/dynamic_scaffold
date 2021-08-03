@@ -13,6 +13,7 @@ if (window.Element && !Element.prototype.closest) {
   };
 }
 
+// dynamic_scaffold:load
 (function(){
   var fireEvent = function(){
     var event = document.createEvent("HTMLEvents");
@@ -25,7 +26,25 @@ if (window.Element && !Element.prototype.closest) {
     // Not fire after the initial page load
     if (e.data.timing.visitEnd) fireEvent()
   })
-})()
+})();
+
+
+// dynamic_scaffold:window_resized
+(function(){
+  var fireEvent = function(){
+    var event = document.createEvent("HTMLEvents");
+    event.initEvent('dynamic_scaffold:window_resized', false, false)
+    document.dispatchEvent(event)
+  }
+
+  var timeout = 0
+  window.addEventListener('resize', function(e){
+    this.clearTimeout(timeout)
+    timeout = setTimeout(function(){
+      fireEvent()
+    }, 300)
+  })
+})();
 
 // promise polyfill
 // IE 11 has no Promise? Are you kidding?
