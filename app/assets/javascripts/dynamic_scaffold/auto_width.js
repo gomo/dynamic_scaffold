@@ -1,5 +1,8 @@
 var calcWidth = function(){
   var firstRow = document.querySelector('.js-ds-list-row:first-child')
+  if(!firstRow){
+    return
+  }
 
   var wrapperWidth = firstRow.clientWidth
 
