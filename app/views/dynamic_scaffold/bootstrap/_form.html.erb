@@ -1,4 +1,4 @@
-<%= form_with method: method, model: @record, url: url, local: true, class: 'ds-form' do |form| %>
+<%= form_with method: method, model: @record, scope: dynamic_scaffold.model.name.underscore, url: url, local: true, class: 'ds-form' do |form| %>
   <%-dynamic_scaffold.form.items.each do |elem|-%>
     <%= render 'dynamic_scaffold/bootstrap/form/row', form: form, elem: elem, depth: 0 %>
   <% end %>
