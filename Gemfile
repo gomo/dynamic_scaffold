@@ -28,6 +28,6 @@ gem 'spring'
 gem 'spring-watcher-listen', '~> 2.0.0'
 
 group :test do
-  gem 'nokogiri', '~> 1.8'
+  gem 'nokogiri', '~> 1.12'
   gem 'spring-commands-rspec'
 end
