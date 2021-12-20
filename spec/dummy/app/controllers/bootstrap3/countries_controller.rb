@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Bootstrap3::CountriesController < Bootstrap3::BaseController
   include DynamicScaffold::Controller
   dynamic_scaffold Country do |config|

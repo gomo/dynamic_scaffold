@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   enum role: { admin: 1, staff: 2, member: 3 }
   validates :email, presence: true, uniqueness: true

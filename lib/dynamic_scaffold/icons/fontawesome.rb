@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DynamicScaffold
   module Fontawesome
     def self.inline_svg(path)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ShopMemo < ApplicationRecord
   belongs_to :shop
 

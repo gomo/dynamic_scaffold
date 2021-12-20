@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SpecsController < ApplicationController
   layout 'layouts/spec_base'
   include DynamicScaffold::Controller

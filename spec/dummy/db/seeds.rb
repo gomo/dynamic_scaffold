@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 3.times do |nc|

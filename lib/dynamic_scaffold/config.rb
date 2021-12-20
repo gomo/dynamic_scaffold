@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DynamicScaffold
   class Config
     attr_reader(

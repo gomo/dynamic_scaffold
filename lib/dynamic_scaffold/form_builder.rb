@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DynamicScaffold
   class FormBuilder
     attr_accessor :parent_item

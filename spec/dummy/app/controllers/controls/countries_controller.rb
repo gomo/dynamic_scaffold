@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Controls
   class CountriesController < BaseController
     include DynamicScaffold::Controller

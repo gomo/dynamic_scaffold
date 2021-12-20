@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DynamicScaffold
   class ListBuilder
     attr_writer :add_button, :edit_buttons, :destroy_buttons

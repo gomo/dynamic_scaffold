@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'classnames-rails-view'
 module DynamicScaffold
   class Engine < ::Rails::Engine

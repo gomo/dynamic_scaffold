@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dynamic_scaffold/version'
 require 'dynamic_scaffold/engine'
 require 'dynamic_scaffold/monkeypatch/action_view/helpers/form_builder'

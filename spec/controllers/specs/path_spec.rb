@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 RSpec.describe SpecsController, type: :controller do
   delegate :dynamic_scaffold, to: :controller

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Shop < ApplicationRecord
   include DynamicScaffold::JSONObject::Attribute
 

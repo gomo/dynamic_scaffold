@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Take over queries', type: :request do # rubocop:disable Metrics/BlockLength

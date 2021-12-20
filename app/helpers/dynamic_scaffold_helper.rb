@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DynamicScaffoldHelper
   def render_form_errors(errors)
     return '' if errors.blank?

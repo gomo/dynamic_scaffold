@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DynamicScaffold
   module Routes
     extend ActiveSupport::Concern

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Controls::StatesController < Controls::BaseController
   include DynamicScaffold::Controller
   dynamic_scaffold State do |config|

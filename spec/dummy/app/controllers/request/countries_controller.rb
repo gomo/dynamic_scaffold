@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Request::CountriesController < ApplicationController
   include DynamicScaffold::Controller
   dynamic_scaffold Country do |config|
