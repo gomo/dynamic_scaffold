@@ -104,8 +104,7 @@ module DynamicScaffold
           #   )
           #   return label unless label.nil?
           # end
-
-          view.tag.label(proxy_field.label, label_attrs) if proxy_field.label.present?
+          view.tag.label(proxy_field.label, **label_attrs) if proxy_field.label.present?
         end
 
         def extract_parameters(permitting)

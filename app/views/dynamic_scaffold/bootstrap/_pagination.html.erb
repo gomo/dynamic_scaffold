@@ -1,5 +1,5 @@
 <%if dynamic_scaffold.list.pagination %>
   <div class="ds-row">
-    <%= paginate @records, {views_prefix: 'dynamic_scaffold/bootstrap'}.merge(dynamic_scaffold.list.pagination.kaminari_options) %>
+    <%= paginate @records, **{views_prefix: 'dynamic_scaffold/bootstrap'}.merge(dynamic_scaffold.list.pagination.kaminari_options) %>
   </div>
 <%end%>

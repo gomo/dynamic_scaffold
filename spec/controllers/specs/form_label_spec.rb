@@ -79,7 +79,7 @@ RSpec.describe SpecsController, type: :controller do
       it 'should change argment to sepcified.' do
         controller.class.send(:dynamic_scaffold, Shop) do |c|
           c.form.item(:text_field, :name).label(:Foobar, class: :hoge) do |text, _depth, attrs|
-            tag.label text, attrs
+            tag.label text, **attrs
           end
         end
 
