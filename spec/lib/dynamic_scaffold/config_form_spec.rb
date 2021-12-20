@@ -65,11 +65,11 @@ RSpec.describe ApplicationHelper, type: :helper do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new(Country, nil)
         config.form.item(:text_field,
-          :id,
-          class: 'foobar',
-          'data-foobar' => 'foobar value',
-          style: 'width: 50%;'
-        )
+                         :id,
+                         class: 'foobar',
+                         'data-foobar' => 'foobar value',
+                         style: 'width: 50%;'
+                        )
         elem = config.form.items[0]
         helper.form_with model: country, url: './create' do |form|
           expect(elem.render(helper, form)).to(
@@ -82,9 +82,9 @@ RSpec.describe ApplicationHelper, type: :helper do
         country = FactoryBot.create(:country)
         config = DynamicScaffold::Config.new(Country, nil)
         config.form.item(:text_field,
-          :id,
-          class: 'foobar'
-        )
+                         :id,
+                         class: 'foobar'
+                        )
         elem = config.form.items[0]
         helper.form_with model: country, url: './create' do |form|
           expect(elem.render(helper, form, 'add')).to(
@@ -150,15 +150,15 @@ RSpec.describe ApplicationHelper, type: :helper do
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new(Shop, nil)
         config.form.item(:collection_check_boxes,
-          :states,
-          State.all,
-          :id,
-          :name, {
-            disabled: State.all.map(&:id)
-          }, {
-            class: 'foobar',
-            style: 'font-size: 20px;'
-          }
+                         :states,
+                         State.all,
+                         :id,
+                         :name, {
+                           disabled: State.all.map(&:id)
+                         }, {
+                           class: 'foobar',
+                           style: 'font-size: 20px;'
+                         }
         )
         elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
@@ -196,15 +196,15 @@ RSpec.describe ApplicationHelper, type: :helper do
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new(Shop, nil)
         config.form.item(:collection_radio_buttons,
-          :status,
-          statuses,
-          :first,
-          :last, {
-            disabled: [1, 2, 3]
-          }, {
-            class: 'foobar',
-            style: 'font-size: 20px;'
-          }
+                         :status,
+                         statuses,
+                         :first,
+                         :last, {
+                           disabled: [1, 2, 3]
+                         }, {
+                           class: 'foobar',
+                           style: 'font-size: 20px;'
+                         }
         )
         elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|
@@ -250,15 +250,15 @@ RSpec.describe ApplicationHelper, type: :helper do
         shop = FactoryBot.create(:shop)
         config = DynamicScaffold::Config.new(Shop, nil)
         config.form.item(:collection_select,
-          :category_id,
-          Category.all,
-          :id,
-          :name, {
-            include_blank: 'Select Category'
-          }, {
-            class: 'foobar',
-            style: 'width: 200px;'
-          }
+                         :category_id,
+                         Category.all,
+                         :id,
+                         :name, {
+                           include_blank: 'Select Category'
+                         }, {
+                           class: 'foobar',
+                           style: 'width: 200px;'
+                         }
         )
         elem = config.form.items[0]
         helper.form_with model: shop, url: './create' do |form|

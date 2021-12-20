@@ -55,7 +55,7 @@ module Controls
         tag.label text, class: 'h1', style: 'color: red'
       end
       c.form.item(:collection_select,
-        :category_id, Category.all, :id, :name, include_blank: 'Select Category'
+                  :category_id, Category.all, :id, :name, include_blank: 'Select Category'
       )
       c.form.item(:collection_check_boxes, :state_ids, State.all, :id, :name)
       c.form.item(:collection_radio_buttons, :status, Shop.statuses.map {|k, _v| [k, k.titleize] }, :first, :last)

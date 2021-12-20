@@ -112,7 +112,7 @@ module DynamicScaffold
 
         if route.nil?
           raise DynamicScaffold::Error::RouteNotFound,
-            "Missing controller#action #{params[:controller]}##{action}"
+                "Missing controller#action #{params[:controller]}##{action}"
         end
 
         options.merge!(scope_params)
