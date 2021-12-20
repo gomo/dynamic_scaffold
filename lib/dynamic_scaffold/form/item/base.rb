@@ -173,7 +173,7 @@ module DynamicScaffold
         def errors(form)
           msg = form.object.errors.full_messages_for(proxy_field.name)
           rel = @config.model.reflect_on_all_associations.find {|r| r.foreign_key.to_s == name.to_s }
-          msg.concat(form.object.errors.full_messages_for(rel.name)) if rel.present?
+          msg = msg.dup.concat(form.object.errors.full_messages_for(rel.name)) if rel.present?
           msg
         end
 
