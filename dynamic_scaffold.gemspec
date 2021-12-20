@@ -7,6 +7,7 @@ require 'dynamic_scaffold/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
+  s.required_ruby_version = '>= 2.6.0'
   s.name        = 'dynamic_scaffold'
   s.version     = DynamicScaffold::VERSION
   s.authors     = ['Masamoto Miyata']
