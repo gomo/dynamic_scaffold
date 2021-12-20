@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-stack_explorer'
   s.add_development_dependency 'rspec', '=3.10'
   s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'rubocop', '~> 0.67.2'
+  s.add_development_dependency 'rubocop', '= 0.71.0'
   s.add_development_dependency 'rubocop-performance', '~> 1.0.0'
   s.add_development_dependency 'sqlite3', '~>1.3'
   s.add_development_dependency 'psych', '~> 3.1'

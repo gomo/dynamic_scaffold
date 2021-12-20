@@ -25,7 +25,7 @@ Style/ConditionalAssignment:
 Layout/IndentationConsistency:
   EnforcedStyle: rails
 
-Layout/IndentHash:
+Layout/IndentFirstHashElement:
   EnforcedStyle: 'consistent'
 
 Layout/AlignParameters:
@@ -37,7 +37,7 @@ Layout/SpaceInsideBlockBraces:
 Style/BracesAroundHashParameters:
   EnforcedStyle: context_dependent
 
-Layout/FirstParameterIndentation:
+Layout/IndentFirstArgument:
   EnforcedStyle: consistent
 
 Metrics/LineLength:
