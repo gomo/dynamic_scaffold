@@ -14,7 +14,7 @@ module DynamicScaffold
       if @items.empty?
         @config.model.column_names.each do |column|
           type = :text_field
-          type = :hidden_field if @config.scope && @config.scope.include?(column.to_sym)
+          type = :hidden_field if @config.scope&.include?(column.to_sym)
           item = Form::Item::SingleOption.new(@config, type, column)
           item.parent_item = parent_item
           @items << item

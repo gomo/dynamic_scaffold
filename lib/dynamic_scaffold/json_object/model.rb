@@ -8,7 +8,7 @@ module DynamicScaffold
       module ClassMethods
         def  dump(obj)
           obj = obj.attributes if obj.is_a? ActiveModel::Attributes
-          obj.to_json if obj
+          obj&.to_json
         end
 
         def load(source)
