@@ -9,7 +9,7 @@ module DynamicScaffold
         return {} if dynamic_scaffold.scope.nil?
 
         case dynamic_scaffold.scope
-        when Array then
+        when Array
           dynamic_scaffold.scope.each_with_object({}) do |val, res|
             if val.is_a? Hash
               val.each {|k, v| res[k] = v }
@@ -17,7 +17,7 @@ module DynamicScaffold
               res[val] = params[val]
             end
           end
-        when Hash then
+        when Hash
           dynamic_scaffold.scope
         end
       end

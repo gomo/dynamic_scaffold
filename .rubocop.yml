@@ -18,6 +18,9 @@ AllCops:
 Rails:
   Enabled: true
 
+Rails/FilePath:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 

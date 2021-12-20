@@ -22,4 +22,4 @@ module DynamicScaffold
   end
 end
 
-::ActionDispatch::Routing::Mapper.send :include, DynamicScaffold::Routes
+::ActionDispatch::Routing::Mapper.include DynamicScaffold::Routes
