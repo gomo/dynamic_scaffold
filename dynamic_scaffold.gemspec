@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'classnames-rails-view', '>= 1.0'
   s.add_dependency 'kaminari', '>= 1.0'
-  s.add_dependency 'rails', '>= 5.0', '<= 6.1'
+  s.add_dependency 'rails', '>= 5.0', '<= 6.0.3.4'
 
   s.add_development_dependency 'capybara', '~> 2.13'
   s.add_development_dependency 'database_cleaner', '~> 1.6'
