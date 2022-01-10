@@ -9,12 +9,22 @@ en:
         index: 'List'
         edit: 'Edit'
         new: 'Create'
+    button:
+      add: 'Add'
+      edit: 'Edit'
+      save_order: 'Sort'
+      save: 'Save'
+      back: 'Back'
     message:
       no_records: '%{model} was not found.'
       destroy_confirm: 'Are you sure you want to delete this?'
       confirm_cancel: 'Cancel'
       confirm_ok: 'OK'
+      sort_error: 'The sort has been failed, because the following record failed to save.'
     alert:
       destroy:
         invalid_foreign_key: 'That item can not be deleted because it has associated record(s).'
         failed: 'That item can not be deleted'
+  views:
+    pagination:
+      truncate: '…'

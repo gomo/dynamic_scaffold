@@ -147,5 +147,9 @@ module DynamicScaffold
           .page(params[dynamic_scaffold.list.pagination.param_name])
           .per(dynamic_scaffold.list.pagination.per_page)
       end
+
+      def sort_validation_error_title(record)
+        "ID: #{record.id}"
+      end
   end
 end

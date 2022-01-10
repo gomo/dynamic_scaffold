@@ -140,15 +140,23 @@ module DynamicScaffold
     def sort
       pkeys_list = sort_params
       reset_sequence(pkeys_list.size)
-      dynamic_scaffold.model.transaction do
-        pkeys_list.each do |pkeys|
-          rec = find_record(pkeys.to_hash)
-          next_sec = next_sequence!
-          rec[dynamic_scaffold.list.sorter_attribute] = next_sec
-          yield(rec) if block_given?
-          rec.save!
+
+      begin
+        dynamic_scaffold.model.transaction do
+          pkeys_list.each do |pkeys|
+            rec = find_record(pkeys.to_hash)
+            next_sec = next_sequence!
+            rec[dynamic_scaffold.list.sorter_attribute] = next_sec
+            yield(rec) if block_given?
+            rec.save!
+          end
         end
+      rescue ActiveRecord::RecordInvalid => ex
+        messages = [I18n.t('dynamic_scaffold.message.sort_error'), '', sort_validation_error_title(ex.record)]
+        messages.concat(ex.record.errors.full_messages)
+        flash[:dynamic_scaffold_danger] = messages.join('<br>')
       end
+
       redirect_to dynamic_scaffold_path(:index, request_queries)
     end
   end

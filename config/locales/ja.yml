@@ -20,6 +20,7 @@ ja:
       destroy_confirm: '削除します。よろしいですか？'
       confirm_cancel: 'キャンセル'
       confirm_ok: 'OK'
+      sort_error: '下記のレコードの保存に失敗したため、ソートを完了できませんでした。'
     alert:
       destroy:
         invalid_foreign_key: '関連づいたレコードがあるので削除できません。'
