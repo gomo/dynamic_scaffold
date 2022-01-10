@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DynamicScaffold
-  module Controller
+  module Controller # rubocop:disable Metrics/ModuleLength
     extend ActiveSupport::Concern
     include ControllerUtilities
 
@@ -137,7 +137,7 @@ module DynamicScaffold
       redirect_to dynamic_scaffold_path(:index, request_queries)
     end
 
-    def sort
+    def sort # rubocop:disable Metrics/AbcSize
       pkeys_list = sort_params
       reset_sequence(pkeys_list.size)
 
@@ -151,9 +151,9 @@ module DynamicScaffold
             rec.save!
           end
         end
-      rescue ActiveRecord::RecordInvalid => ex
-        messages = [I18n.t('dynamic_scaffold.message.sort_error'), '', sort_validation_error_title(ex.record)]
-        messages.concat(ex.record.errors.full_messages)
+      rescue ActiveRecord::RecordInvalid => e
+        messages = [I18n.t('dynamic_scaffold.message.sort_error'), '', sort_validation_error_title(e.record)]
+        messages.concat(e.record.errors.full_messages)
         flash[:dynamic_scaffold_danger] = messages.join('<br>')
       end
 
