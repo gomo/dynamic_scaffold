@@ -92,6 +92,8 @@
               <%= render 'dynamic_scaffold/bootstrap/form/row', form: child_form, elem: child_elem, depth: depth %>
             <% end %>
           <% end %>
+        <% elsif elem.type?(:collection_select) %>
+          <%= elem.render(self, form, class_names('form-select', {'is-invalid': errors.present?})) %>
         <% else %>
           <%= elem.render(self, form, class_names('form-control', {'is-invalid': errors.present?})) %>
         <% end %>
