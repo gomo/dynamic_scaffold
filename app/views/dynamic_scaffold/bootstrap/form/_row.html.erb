@@ -30,7 +30,7 @@
           <div class="js-ds-image-wrapper">
             <div class="js-ds-image-preview panel panel-default card mb-1">
               <% if elem.options[:removable] %>
-              <div class="text-right panel-heading card-header">
+              <div class="text-right text-end panel-heading card-header">
                 <button type="button" class="btn btn-outline-danger btn-danger btn-sm js-ds-image-remove">
                   <%= dynamic_scaffold_icon :times %>
                 </button>
@@ -39,7 +39,7 @@
               <div class="panel-body card-body">
                 <%- if elem.cropper.present? -%>
                   <%= form.hidden_field "cropper_#{elem.name}", class: "js-ds-image-cropper", data:{options: elem.cropper.to_json} %>
-                  <div class="text-right" style="height: 24px;">
+                  <div class="text-right text-end" style="height: 24px;">
                     <span class="js-ds-image-cropper-display badge badge-primary"></span>
                   </div>
                 <%- end -%>

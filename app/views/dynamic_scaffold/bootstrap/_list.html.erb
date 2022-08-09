@@ -48,7 +48,7 @@
           <%end%>
           </div>
           <div class="ds-list-footer clearfix">
-            <div class="float-right pull-right">
+            <div class="float-right pull-right float-end">
               <%- if dynamic_scaffold.list.edit_buttons(record) -%>
                 <div class="btn-group">
                   <%= link_to dynamic_scaffold_path(:edit, request_queries.merge(id: record[record.class.primary_key])), class: 'btn btn-primary btn-outline-primary btn-sm spec-ds-edit' do %>
