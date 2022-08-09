@@ -17,4 +17,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w[
   controllers/bootstrap3/base.css
   controllers/bootstrap4/base.css
+  controllers/bootstrap5/base.css
 ]
