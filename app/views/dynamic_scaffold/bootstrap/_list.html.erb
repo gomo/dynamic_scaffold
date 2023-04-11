@@ -5,21 +5,21 @@
 <%end%>
 <input type="hidden" class="authenticity_param_name" value="<%= request_forgery_protection_token %>">
 <%= form_with method: :patch, url: dynamic_scaffold_path(:sort, request_queries(dynamic_scaffold.list.page_param_name)), local: true do%>
-<%- if dynamic_scaffold.list.add_button -%>
-  <div class="ds-row d-flex justify-content-between align-items-center">
-    <%= link_to dynamic_scaffold_path(:new, request_queries), class: class_names('btn btn-outline-primary btn-primary btn-sm spec-ds-add', 'disabled': dynamic_scaffold.max_count?(@count)) do%>
-      <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.button.add') %>
-      <%- unless dynamic_scaffold.max_count.nil? -%>
-        &nbsp;<span class="badge badge-light text-bg-light">
-          <%= @count %>&nbsp;/&nbsp;<%= dynamic_scaffold.max_count%>
-        </span>
-      <% end %>
-    <%end%>
+  <div class="<%= class_names('ds-row d-flex align-items-center', dynamic_scaffold.list.add_button ? 'justify-content-between' : 'justify-content-end') %>">
+    <%- if dynamic_scaffold.list.add_button -%>
+      <%= link_to dynamic_scaffold_path(:new, request_queries), class: class_names('btn btn-outline-primary btn-primary btn-sm spec-ds-add', 'disabled': dynamic_scaffold.max_count?(@count)) do%>
+        <%= dynamic_scaffold_icon(:add) %> <%= t('dynamic_scaffold.button.add') %>
+        <%- unless dynamic_scaffold.max_count.nil? -%>
+          &nbsp;<span class="badge badge-light text-bg-light">
+            <%= @count %>&nbsp;/&nbsp;<%= dynamic_scaffold.max_count%>
+          </span>
+        <% end %>
+      <%end%>
+    <%- end -%>
     <span class="badge badge-light text-bg-light fs-6 border h6 mb-0">
       <%= t('dynamic_scaffold.count', count: @records.total_count) %>
     </span>
   </div>
-<%- end -%>
 <%= render 'dynamic_scaffold/bootstrap/pagination' %>
 <div class="ds-row">
   <%= render 'dynamic_scaffold/bootstrap/save_order'%>
