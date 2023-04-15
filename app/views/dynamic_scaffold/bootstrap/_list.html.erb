@@ -17,7 +17,11 @@
       <%end%>
     <%- end -%>
     <span class="badge badge-light text-bg-light fs-6 border h6 mb-0">
-      <%= t('dynamic_scaffold.count', count: @records.total_count) %>
+      <% if @records.respond_to?(:total_count) %>
+        <%= t('dynamic_scaffold.count', count: @records.total_count) %>
+      <%- else -%>
+        <%= t('dynamic_scaffold.count', count: @records.count) %>
+      <%- end -%>
     </span>
   </div>
 <%= render 'dynamic_scaffold/bootstrap/pagination' %>
