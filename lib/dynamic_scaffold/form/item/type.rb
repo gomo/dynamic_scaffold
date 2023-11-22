@@ -16,6 +16,7 @@ module DynamicScaffold
           color_field: Form::Item::SingleOption,
           number_field: Form::Item::SingleOption,
           telephone_field: Form::Item::SingleOption,
+          datetime_local_field: Form::Item::SingleOption,
 
           time_select: Form::Item::TwoOptions,
           date_select: Form::Item::TwoOptions,
