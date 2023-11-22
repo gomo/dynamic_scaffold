@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
     namespace 'bootstrap5' do
       dynamic_scaffold_for 'countries'
+      dynamic_scaffold_for 'shops'
     end
   end
 end

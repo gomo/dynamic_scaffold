@@ -31,7 +31,7 @@
             <div class="js-ds-image-preview panel panel-default card mb-1">
               <% if elem.options[:removable] %>
               <div class="text-right text-end panel-heading card-header">
-                <button type="button" class="btn btn-outline-danger btn-danger btn-sm js-ds-image-remove">
+                <button type="button" class="btn btn-danger btn-sm js-ds-image-remove">
                   <%= dynamic_scaffold_icon :times %>
                 </button>
               </div>
@@ -49,7 +49,7 @@
               </div>
             </div>
             <%= form.hidden_field "remove_#{elem.name}", value: "1", disabled:"disabled", class: 'js-ds-image-remove-flag' if elem.options[:removable]%>
-            <%= elem.render(self, form, 'form-control-file js-ds-image') do |attr|%>
+            <%= elem.render(self, form, 'form-control js-ds-image') do |attr|%>
               <%= form.file_field(elem.name, attr) %>
             <%end%>
             <%= form.hidden_field "#{elem.name}_cache" %>
@@ -59,7 +59,7 @@
             <%- locale_errors = elem.locale_errors(locale, form) -%>
             <%= form.globalize_fields_for(locale) do |gform|%>
               <div class="<%= class_names('ds-globalize-group', 'has-error': locale_errors.present?) %>">
-                <%= tag.span(elem.lang_attributes('ds-globalize-lang')) do%>
+                <%= tag.span(**elem.lang_attributes('ds-globalize-lang')) do%>
                   <%= name %>
                 <%end%>
                 <%= elem.render(self, gform, class_names('form-control', {'is-invalid': locale_errors.present?})) %>
@@ -81,9 +81,8 @@
           ) %>
         <% elsif elem.type?(:date_select, :datetime_select) %>
           <div class="form-inline">
-            <%== elem.render(self, form, class_names('form-control mr-2', {'is-invalid': errors.present?}))
-              .gsub(/ &mdash; /, '<span class="m-2" style="display: inline-block;">&nbsp;</span>')
-              .gsub(/ : /, '<span class="mr-2" style="display: inline-block;">:</span>')
+            <%== elem.render(self, form, class_names('form-select mr-2 me-2 mb-1', {'is-invalid': errors.present?}))
+              .gsub(/^(.*) &mdash; (.*) : (.*)/m, '<div class="mr-3 me-3" style="display: inline-block;">\1</div><div style="display: inline-block;">\2<span class="ds-time-sep">:</span>\3</div>')
             %>
           </div>
         <% elsif elem.type?(:json_object) %>
