@@ -39,7 +39,9 @@ RSpec.describe SpecsController, type: :controller do
 
         get :new, params: { locale: :en, role: 'admin' }
         # Check whether scope column is hidden.
-        expect(response.body).to match(/<input class="form-control" type="text" name="user\[email\]" \/>/)
+        expect(response.body).to match(
+          /<input autocomplete="new-password" class="form-control" type="text" name="user\[email\]" \/>/
+        )
         expect(response.body).to match(/<input type="hidden" value="admin" name="user\[role\]" \/>/)
 
         get :new, params: { locale: :en, role: 'staff' }

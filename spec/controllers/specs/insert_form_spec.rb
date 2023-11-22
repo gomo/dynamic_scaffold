@@ -16,7 +16,7 @@ RSpec.describe SpecsController, type: :controller do
       get :new, params: { locale: :en }
 
       expect(response.body).to match(
-        /<input class="form-control" type="text" name="country\[id\]" \/>[\s\S]*?<div>foobar<\/div>/
+        /<input autocomplete="new-password" class="form-control" type="text" name="country\[id\]" \/>[\s\S]*?<div>foobar<\/div>/
       )
     end
   end
@@ -33,7 +33,7 @@ RSpec.describe SpecsController, type: :controller do
       get :new, params: { locale: :en }
 
       expect(response.body).to match(
-        /<div>foobar<\/div>[\s\S]*?<input class="form-control" type="text" name="country\[id\]" \/>/
+        /<div>foobar<\/div>[\s\S]*?<input autocomplete="new-password" class="form-control" type="text" name="country\[id\]" \/>/
       )
     end
   end
