@@ -151,5 +151,7 @@ module DynamicScaffold
       def sort_validation_error_title(record)
         "ID: #{record.id}"
       end
+
+      def before_render_form_with_errors(record); end
   end
 end
