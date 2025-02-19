@@ -5,8 +5,8 @@ document.addEventListener('dynamic_scaffold:load', function(){
   function swapAnimation(promises, source, target){
     promises.push(new Promise(function(resolve){
       source.dynamicScaffoldSortingResolver = resolve
-      sourceRect = source.getBoundingClientRect()
-      targetRect = target.getBoundingClientRect()
+      const sourceRect = source.getBoundingClientRect()
+      const targetRect = target.getBoundingClientRect()
 
 
       // Find the distance between two points and calculate the animation duration.
