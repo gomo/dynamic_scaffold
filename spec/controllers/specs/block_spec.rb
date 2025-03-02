@@ -3,7 +3,7 @@
 require 'rails_helper'
 RSpec.describe SpecsController, type: :controller do
   delegate :dynamic_scaffold, to: :controller
-  describe 'Form' do
+  describe 'Block' do
     render_views
     it 'should display additional elements on the page.' do
       controller.class.send(:dynamic_scaffold, Shop) do |c|

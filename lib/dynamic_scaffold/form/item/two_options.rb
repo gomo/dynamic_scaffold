@@ -20,8 +20,8 @@ module DynamicScaffold
           super(config, type, name, html_attributes)
         end
 
-        def render(view, form, classnames = nil)
-          html_attributes = build_html_attributes(classnames)
+        def render(view, form, classnames = nil, html_attributes = {})
+          html_attributes = build_html_attributes(classnames, html_attributes)
           form.public_send(@type, @name, *build_args(view, @args), @options, html_attributes)
         end
       end

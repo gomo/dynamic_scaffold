@@ -178,10 +178,10 @@ module DynamicScaffold
 
         protected
 
-          def build_html_attributes(classnames)
+          def build_html_attributes(classnames, html_attributes = {})
             classnames_list = @classnames_list
             classnames_list = [*classnames_list, classnames] if classnames
-            options = @html_attributes.dup
+            options = @html_attributes.merge(html_attributes)
             options[:class] = classnames_list.join(' ') unless classnames_list.empty?
             options
           end

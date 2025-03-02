@@ -11,8 +11,8 @@ module DynamicScaffold
           super(config, type, name, html_attributes)
         end
 
-        def render(view, form, classnames = nil)
-          html_attributes = build_html_attributes(classnames)
+        def render(view, form, classnames = nil, html_attributes = {})
+          html_attributes = build_html_attributes(classnames, html_attributes)
           # Retain the value of the password field on error.
           html_attributes[:value] = form.object.public_send(@name) if @type == :password_field
           form.public_send(@type, @name, *build_args(view, @args), html_attributes)

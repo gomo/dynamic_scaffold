@@ -243,7 +243,7 @@ class ShopController < ApplicationController
     # You can use form helper methods for type,
     # text_field, check_box, radio_button, password_field, hidden_field, file_field, text_area, color_field,
     # collection_check_boxes, collection_radio_buttons, collection_select, grouped_collection_select,
-    # time_select, date_select, datetime_select, date_field, number_field, telephone_field
+    # time_select, date_select, datetime_select, date_field, datetime_local_field, number_field, telephone_field
 
 
     # Default label is I18n model attribute name.

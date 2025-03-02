@@ -78,6 +78,7 @@ module DynamicScaffold
         if @record.save
           redirect_to dynamic_scaffold_path(:index, request_queries)
         else
+          before_render_form_with_errors(@record)
           render "#{params[:controller]}/new"
         end
       end
@@ -111,6 +112,7 @@ module DynamicScaffold
         if @record.save
           redirect_to dynamic_scaffold_path(:index, request_queries)
         else
+          before_render_form_with_errors(@record)
           render "#{params[:controller]}/edit"
         end
       end

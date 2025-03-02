@@ -1,0 +1,51 @@
+@import 'common';
+@import 'resplist';
+
+
+.btn-outline-primary, .btn-outline-secondary, .btn-outline-warning, .btn-outline-danger{
+  background-color: #fff;
+}
+
+.btn-outline-primary path{
+  fill: #007bff;
+}
+
+.btn-outline-primary:hover path {
+  fill: #fff;
+}
+
+.btn-outline-secondary path{
+  fill: #868e96;
+}
+
+.btn-outline-secondary:hover path{
+  fill: #fff;
+}
+
+.btn-outline-warning path{
+  fill: #ffc107;
+}
+
+.btn-outline-danger path{
+  fill: #dc3545;
+}
+
+.btn-outline-warning:hover, .btn-outline-danger:hover{
+  path{
+    fill: #fff;
+  }
+
+  color: #fff;
+}
+
+.page-item .page-link path{
+  fill: #007bff;
+}
+
+.page-item.disabled .page-link path{
+  fill: #868e96;
+}
+
+.btn-outline-primary.disabled, .btn-outline-primary:disabled{
+  background-color: transparent;
+}

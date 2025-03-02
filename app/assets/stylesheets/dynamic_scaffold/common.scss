@@ -129,7 +129,7 @@
   margin-left: 10px;
 }
 
-// Fixed a problem that font-awesome icon and text link do not match in height.
+/* Fixed a problem that font-awesome icon and text link do not match in height. */
 .page-link{
   line-height: 1.6;
 }
@@ -172,4 +172,16 @@
 
 .ds-form .form-group{
   margin-bottom: 1.5rem;
+}
+
+.ds-time-sep{
+  display: inline-block;
+  margin-left: -5px;
+  margin-right: 5px;
+}
+
+.form-inline .form-select {
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
 }
