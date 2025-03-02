@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'psych', '~> 3.1'
   s.add_development_dependency 'rspec', '=3.10'
   s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'rubocop', '= 0.75.0'
+  s.add_development_dependency 'rubocop', '= 0.89.1'
   s.add_development_dependency 'rubocop-rails'
-  s.add_development_dependency 'sqlite3', '~>1.3'
+  s.add_development_dependency 'sqlite3', "~> 1.6.0"
 end

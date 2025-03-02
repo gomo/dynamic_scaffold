@@ -25,9 +25,14 @@ gem 'mini_magick', '~>4.8'
 gem 'rails-controller-testing', '~> 1.0'
 gem 'sassc-rails'
 gem 'uglifier', '>= 1.3.0'
+gem 'nio4r', '=2.5.9'
 
 gem 'spring'
 gem 'spring-watcher-listen', '~> 2.0.0'
+
+group :development do
+  gem "puma"
+end
 
 group :test do
   gem 'nokogiri', '~> 1.8'
