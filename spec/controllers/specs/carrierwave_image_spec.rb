@@ -68,6 +68,42 @@ RSpec.describe SpecsController, type: :controller do
       expect(shop.image.file).to be nil
     end
 
+    [
+      [nil, [150, 100]],
+      [{ width: 100, height: 80, x: 20, y: 10 }, [100, 80]]
+    ].each do |crop, expected_dimensions|
+      it "stores the expected image dimensions #{expected_dimensions.inspect} with crop #{crop.inspect}" do
+        controller.class.send(:dynamic_scaffold, Shop) do |c|
+          c.form.item(:carrierwave_image, :image, cropper: true)
+          c.form.item(:text_field, :name)
+          c.form.item(:text_field, :category_id)
+          c.form.item(:text_field, :status)
+        end
+        category = FactoryBot.create(:category)
+
+        Tempfile.create(['carrierwave-resize', '.png']) do |file|
+          image = MiniMagick::Image.open(Rails.root.join('..', '..', 'spec', 'fixtures', 'images', '150x150.png'))
+          image.resize('300x200!')
+          image.write(file.path)
+          post :create, params: { locale: :en, shop: {
+            name: 'resize test', category_id: category.id, status: 'draft',
+            cropper_image: crop&.to_json,
+            image: Rack::Test::UploadedFile.new(file.path, 'image/png')
+          }.compact }
+
+          expect(response).to have_http_status(:redirect)
+          shop = assigns(:record).reload
+          stored_path = shop.image.current_path
+          expect(File).to exist(stored_path)
+          expect(MiniMagick::Image.open(stored_path).dimensions).to eq(expected_dimensions)
+
+          patch :update, params: { locale: :en, id: shop.id, shop: { remove_image: '1' } }
+          expect(assigns(:record).reload.image_identifier).to be_nil
+          expect(File).not_to exist(stored_path)
+        end
+      end
+    end
+
     it 'should be able to dispable remove.' do
       controller.class.send(:dynamic_scaffold, Shop) do |c|
         c.form.item :carrierwave_image, :image, removable: false

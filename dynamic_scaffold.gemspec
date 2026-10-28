@@ -21,7 +21,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'classnames-rails-view', '>= 1.0'
   s.add_dependency 'kaminari', '>= 1.0'
-  s.add_dependency 'rails', '>= 5.0', '< 8.0'
+  s.add_dependency 'ostruct'
+  s.add_dependency 'rails', '>= 5.0', '< 8.2'
 
   s.add_development_dependency 'capybara', '~> 2.13'
   s.add_development_dependency 'database_cleaner', '~> 1.6'
@@ -33,8 +34,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry-stack_explorer'
   s.add_development_dependency 'psych', '~> 3.1'
   s.add_development_dependency 'rspec', '~> 3.13'
-  s.add_development_dependency 'rspec-rails', '~> 7.1'
+  s.add_development_dependency 'rspec-rails', '~> 8.0'
   s.add_development_dependency 'rubocop', '= 0.89.1'
   s.add_development_dependency 'rubocop-rails'
-  s.add_development_dependency 'sqlite3', "~> 1.6.0"
+  s.add_development_dependency 'sqlite3', '~> 2.1'
 end

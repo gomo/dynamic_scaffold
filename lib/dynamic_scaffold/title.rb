@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ostruct'
+
 module DynamicScaffold
   class Title
     attr_writer :name

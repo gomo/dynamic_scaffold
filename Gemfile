@@ -7,8 +7,13 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# Exercise the latest Rails 7 release in the development and test application.
-gem 'rails', '~> 7.2.4'
+# Exercise the latest Rails 8 release in the development and test application.
+gem 'rails', '~> 8.1.4'
+
+# Explicit dependencies for libraries no longer bundled with Ruby.
+gem 'mutex_m'
+gem 'observer'
+gem 'benchmark'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
@@ -18,7 +23,7 @@ gem 'rails', '~> 7.2.4'
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-gem 'carrierwave', '~> 1.0'
+gem 'carrierwave', '~> 3.1', '>= 3.1.4'
 gem 'cocoon'
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'globalize-accessors'
