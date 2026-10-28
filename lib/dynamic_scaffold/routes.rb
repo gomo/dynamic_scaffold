@@ -12,7 +12,7 @@ module DynamicScaffold
       def dynamic_scaffold_for(*resources)
         options = resources.extract_options!.dup
         path = resources[0]
-        resources path, options.merge(except: %i[show]) do
+        resources path, **options.merge(except: %i[show]) do
           collection do
             patch :sort, controller: options[:controller]
           end
