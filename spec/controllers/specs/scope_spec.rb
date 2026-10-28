@@ -37,18 +37,14 @@ RSpec.describe SpecsController, type: :controller do
           c.scope [:role]
         end
 
-        get :new, params: { locale: :en, role: 'admin' }
-        # Check whether scope column is hidden.
-        expect(response.body).to match(
-          /<input autocomplete="new-password" class="form-control" type="text" name="user\[email\]" \/>/
-        )
-        expect(response.body).to match(/<input type="hidden" value="admin" name="user\[role\]" \/>/)
+        %w[admin staff member].each do |role|
+          get :new, params: { locale: :en, role: role }
+          document = Nokogiri::HTML(response.body)
 
-        get :new, params: { locale: :en, role: 'staff' }
-        expect(response.body).to match(/<input type="hidden" value="staff" name="user\[role\]" \/>/)
-
-        get :new, params: { locale: :en, role: 'member' }
-        expect(response.body).to match(/<input type="hidden" value="member" name="user\[role\]" \/>/)
+          expect(document.css('input[type="text"][name="user[email]"].form-control').size).to eq(1)
+          expect(document.css('input[type="hidden"][name="user[role]"]').size).to eq(1)
+          expect(document.at_css('input[name="user[role]"]')['value']).to eq(role)
+        end
       end
     end
 
