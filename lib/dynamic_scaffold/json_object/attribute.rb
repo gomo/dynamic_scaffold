@@ -18,7 +18,11 @@ module DynamicScaffold
       module ClassMethods
         def json_object_attributte(attribute_name, model)
           @json_object_attribute_names << attribute_name
-          serialize attribute_name, model
+          if ActiveRecord.gem_version >= Gem::Version.new('7.1')
+            serialize attribute_name, coder: model
+          else
+            serialize attribute_name, model
+          end
         end
       end
     end
