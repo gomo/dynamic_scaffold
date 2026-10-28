@@ -56,7 +56,6 @@ $dynamic_scaffold_danger: #dc3545 !default;
 
 
 .form-select {
-  --bs-form-select-bg-img: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e);
   --bs-body-color: #212529;
   --bs-body-bg: #fff;
   --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
@@ -83,3 +82,36 @@ $dynamic_scaffold_danger: #dc3545 !default;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+// Bootstrap 4 does not define form-select, so provide its interactive states too.
+.form-select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba($dynamic_scaffold_primary, 0.25);
+}
+
+.form-select:disabled {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
+.form-select[multiple], .form-select[size]:not([size="1"]) {
+  height: auto;
+  padding-right: 0.75rem;
+  background-image: none;
+}
+
+.form-select.is-invalid, .was-validated .form-select:invalid {
+  border-color: $dynamic_scaffold_danger;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($dynamic_scaffold_danger, 0.25);
+  }
+}
+
+.form-select.is-valid, .was-validated .form-select:valid {
+  border-color: #28a745;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(#28a745, 0.25);
+  }
+}

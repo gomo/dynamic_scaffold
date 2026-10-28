@@ -10,7 +10,7 @@ The Scaffold system which dynamically generates CRUD and sort functions.
 * Support image crop.
 * Support [globalize](https://github.com/globalize/globalize) form fields.
 * Support [cocoon](https://github.com/nathanvda/cocoon).
-* This has the views with the Twitter Bootstrap. Support bootstrap3/4.
+* This has the views with the Twitter Bootstrap. Support Bootstrap 4/5. Bootstrap 3 is no longer supported.
 * Customizable and flexible.
 
 <img src="images/list_with_pager.png">
@@ -118,13 +118,13 @@ class Admin::ShopsController < Admin::BaseController
 
 ### Prepare CSS and Javascript
 
-You need to load the files for CSS and Javascript.　Currently, we support the Bootstrap 3 and Bootstrap 4.
+You need to load the files for CSS and Javascript.　Currently, we support Bootstrap 4 and Bootstrap 5.
 
 ```sass
 # app/assets/stylesheets/application.scss
-@import 'dynamic_scaffold/bootstrap3'
-# or
 @import 'dynamic_scaffold/bootstrap4'
+# or
+@import 'dynamic_scaffold/bootstrap5'
 ```
 
 ```js
@@ -684,7 +684,7 @@ class ShopController < ApplicationController
 
 ### Development hints.
 
-Please support both Bootstrap 3/4. You can change CSS to Bootstrap3 by registering `bootstrap=3` in cookie in the sample page.
+Please support both Bootstrap 4/5. Compare the `/en/controls/master/shops` (Bootstrap 4) and `/en/bootstrap5/shops` (Bootstrap 5) sample pages.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

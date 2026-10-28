@@ -181,7 +181,8 @@ module DynamicScaffold
           def build_html_attributes(classnames, html_attributes = {})
             classnames_list = @classnames_list
             classnames_list = [*classnames_list, classnames] if classnames
-            options = @html_attributes.merge(html_attributes)
+            # Attributes supplied by the view are defaults; explicit field settings take priority.
+            options = html_attributes.stringify_keys.merge(@html_attributes.stringify_keys)
             options[:class] = classnames_list.join(' ') unless classnames_list.empty?
             options
           end
