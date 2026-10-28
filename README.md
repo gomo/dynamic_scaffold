@@ -13,7 +13,7 @@ The Scaffold system which dynamically generates CRUD and sort functions.
 * This has the views with the Twitter Bootstrap. Support Bootstrap 4/5. Bootstrap 3 is no longer supported.
 * Customizable and flexible.
 
-Version 3.0.0 supports Bootstrap 4/5 and has been tested with Rails 7.2.4 on Ruby 3.2.3. Bootstrap 3 is no longer a supported target.
+Version 3.1.0 adds Rails 8.0/8.1 to the allowed dependency range and has been tested with Rails 8.1.4 on Ruby 3.4.12, using CarrierWave 3.1.4 in the sample application. Bootstrap 4/5 are supported; Bootstrap 3 is no longer a supported target.
 
 <img src="images/list_with_pager.png">
 
